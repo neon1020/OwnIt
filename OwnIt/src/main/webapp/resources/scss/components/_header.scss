@@ -1,0 +1,191 @@
+//
+// header
+//
+//
+
+
+// global
+.header {
+	@include selection(none);
+	position: static;
+	width: 100%;
+	z-index: 1050;
+	background: transparent;
+
+	nav { width: 100%; }
+}
+
+.header-sticky {
+	@include translate(0,0);
+	@include transition(.4s);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: auto;
+	left: 0;
+}
+
+.header-dark {
+	@include media-breakpoint-down(md) {
+		background: rgba($dark, .95);
+	}
+
+	&.separator-bottom {
+		border-color: rgba($dark, .2);
+	}
+}
+
+.header-light {
+	@include media-breakpoint-down(md) {
+		background: rgba($white, .95);
+	}
+
+	&.separator-bottom {
+		border-color: $border-color;
+	}
+}
+
+
+// on scroll down
+.headroom--unpinned {
+	.header-sticky {
+		@include translate(0,-100%);
+		opacity: 0;
+	}
+}
+
+.headroom--not-top {
+
+	.header-dark {
+		background: rgba($dark, .95);
+	}
+
+	.header-light {
+		background: rgba($white, .95);
+	}
+
+	.header-with-eyebrow {
+		@include translate(0,-50px);
+	}
+}
+
+
+
+@include media-breakpoint-down(md) {
+	body.overlay-active {
+		overflow: hidden;
+
+		.header {
+			max-height: 100vh;
+			overflow: hidden;
+			overflow-y: scroll;
+		}
+	}
+}
+
+
+.navbar {
+	.nav-item {
+		position: relative;
+
+		> a { cursor: pointer; }
+	}
+}
+
+
+
+// eyebrow
+.header-eyebrow {
+	background: rgba($black, .2);
+
+	.navbar {
+		min-height: rem(40);
+		padding: 0;
+	}
+
+	.navbar-nav {
+		flex-direction: row;
+
+		.nav-link {
+		  font-size: rem(12);
+		}
+	}
+
+	.dropdown-menu {
+		position: absolute;
+	}
+}
+
+
+// cart
+.cart {
+	max-width: rem(100);
+	border: $border-width solid rgba($white, .5);
+
+	a {
+		display: flex;
+		padding: 0!important;
+
+		> * {
+			text-align: center;
+			padding: rem(5) rem(10);
+
+			&:not(:first-child) {
+				border-left: $border-width solid rgba($white, .5);
+			}
+		}
+	}
+
+	&:hover {
+		border-color: $white;
+
+		a {
+			color: $white!important;
+
+			> *:not(:first-child) {
+				border-color: $white;
+			}
+		}
+	}
+}
+
+.header-light {
+	.cart {
+		border-color: rgba($dark, .5);
+
+		a {
+			> * {
+				&:not(:first-child) {
+					border-color: rgba($dark, .5);
+				}
+			}
+		}
+
+		&:hover {
+			border-color: $dark;
+
+			a {
+				color: $dark!important;
+
+				> *:not(:first-child) {
+					border-color: $dark;
+				}
+			}
+		}
+	}
+}
+
+// phone
+.phone {
+	display: block;
+	font-size: rem(12);
+	line-height: rem(20);
+	letter-spacing: .1em;
+	color: $black;
+}
+
+.header-dark {
+	.phone {
+		color: $white;
+	}
+}

@@ -1,0 +1,122 @@
+//
+// widgets
+//
+//
+
+.rate {
+	display: inline-block;
+
+	span {
+		display: block;
+		font-size: rem(80);
+		line-height: 1em;
+		color: $black;
+	}
+}
+
+
+// filters
+.filters {
+	li {
+		display: inline-block;
+		margin: rem(5) rem(5) 0 0;
+	}
+
+	span {
+		position: relative;
+		display: block;
+		padding: rem(10) rem(50) rem(10) rem(20);
+		line-height: rem(20);
+		font-size: $font-size-sm;
+		letter-spacing: .05em;
+		color: $black;
+		border: $border-width solid $border-color;
+
+		a {
+			@include transition;
+			position: absolute;
+			top: -$border-width;
+			right: -$border-width;
+			display: block;
+			width: rem(40);
+			height: rem(40);
+			line-height: rem(40);
+			text-align: center;
+			font-size: $font-size-lg;
+			font-family: $headings-font-family;
+			color: $body-color;
+
+			&:hover {
+				background: $border-color;
+			}
+		}
+	}
+}
+
+
+// timer
+.timer {
+	display: flex;
+	border: $border-width solid rgba($white, .2);
+
+	> * {
+		flex-grow: 1;
+		padding: $spacer;
+		font-size: rem(30);
+		text-align: center;
+		font-family: $headings-font-family;
+		font-weight: $font-weight-normal;
+
+		span {
+			font-size: rem(12);
+			text-transform: uppercase;
+			display: block;
+			opacity: .5;
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		display: block;
+		overflow: hidden;
+
+		> * {
+			display: block;
+			float: left;
+			width: 50%;
+		}
+	}
+}
+
+
+// pagination
+.page-item {
+	.page-link {
+		@include transition;
+		font-size: $font-size-sm;
+		text-transform: uppercase;
+	}
+
+	&.active {
+		.page-link {
+			z-index: 10;
+		}
+	}
+}
+
+
+// banner
+.banner {
+	overflow: hidden;
+}
+
+
+// cta
+.cta {
+
+	.cta-image {
+		min-height: auto;
+		height: 50vh;
+		max-height: rem(400);
+		overflow: hidden;
+	}
+}

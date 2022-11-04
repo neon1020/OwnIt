@@ -1,0 +1,77 @@
+//
+//	Partners
+//
+.partners {
+	position: relative;
+	border: $border-width solid $border-color;
+	margin-top: rem(30);
+	margin-bottom: rem(60);
+
+	.owl-stage-outer {
+
+		.owl-stage {
+			display: -ms-flexbox!important;
+			display: flex !important;
+			align-items: center;
+			height: rem(150);
+
+			.owl-item {
+				text-align: center;
+				
+				img {
+					display: inline-block;
+					width: initial;
+					max-width: 60%;
+				}
+
+			}
+		}
+
+	}
+
+	.owl-carousel {
+		.owl-nav {
+			position: absolute;
+			top: auto;
+			right: 0;
+			bottom: rem(-60);
+			display: block;
+			width: rem(120);
+
+			button.owl-prev,
+			button.owl-next {
+				@include transition;
+				position: static;
+				width: rem(60);
+				height: rem(60);
+				float: left;
+				margin-top: 0;
+				text-align: center;
+				background: $border-color;
+				border-radius: 0;
+				z-index: 20;
+
+				&::before {
+					color: $black;
+				}
+
+				span {
+					display: none;
+				}
+
+				&:hover {
+					background: darken($border-color, 10%);
+				}
+
+			}
+
+		}
+	}
+
+
+	.eyebrow {
+		position: absolute;
+		top: rem(-30);
+		line-height: rem(20);
+	}
+}

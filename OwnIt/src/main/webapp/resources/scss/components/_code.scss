@@ -1,0 +1,171 @@
+//
+// code
+//
+//
+
+
+code[class*="language-"], 
+pre[class*="language-"] {
+  font-family: $font-family-monospace;
+  font-size: $font-size-sm;
+  text-shadow: none;
+}
+
+pre[class*="language-"] {
+  padding: $card-spacer-x;
+  background: transparent;
+  border: $border-width solid $border-color;
+}
+
+div.code-toolbar {
+
+  &:hover {
+    .toolbar {
+      opacity: 1;
+    }
+  }
+
+  > .toolbar {
+    opacity: 0;
+    top: 0;
+    right: 0;
+
+    .toolbar-item {
+      display: block;
+    }
+
+    a {
+      @include transition;
+      @include no-shadow;
+      display: block;
+      padding: rem(5) rem(10);
+      font-size: rem(12);
+      line-height: rem(20);
+      background: $border-color;
+      color: $black;
+      border-radius: 0;
+      text-transform: uppercase;
+      font-weight: $font-weight-normal;
+
+      &:hover {
+        color: $white;
+        background: $primary;
+      }
+    }
+  }
+}
+
+
+
+// component
+.component {
+  margin-top: $grid-gutter-width / 2;
+  
+  > *:not(:first-child) {
+    margin-top: $grid-gutter-width / 2;
+  }
+}
+
+.component-demo {
+  padding: $card-spacer-x;
+  border: $border-width solid $light;
+}
+
+.component-info {
+  padding: $card-spacer-x;
+  background: $light;
+  margin-top: 0!important;
+
+  code {
+    font-weight: $font-weight-normal;
+    color: $primary;
+  }
+
+  pre[class*="language-"] {
+    padding: 0;
+    background: transparent;
+    border: 0;
+  }
+}
+
+
+// changelog
+.changelog {
+  padding-left: rem(40);
+  padding-bottom: rem(40);
+  border-left: $border-width solid $border-color;
+  border-bottom: $border-width solid $border-color;
+
+  > li {
+    position: relative;
+
+    &:not(:first-child) {
+      margin-top: rem(40);
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: rem(-40);
+      content: "";
+      width: rem(30);
+      height: $border-width;
+      background: $border-color;
+    }
+  }
+
+  ol {
+    font-size: $font-size-sm;
+  }
+}
+
+.log {
+  @include translate(0,-10px);
+  margin-bottom: rem(20);
+
+  .log-title {
+    margin-bottom: 0;
+    font-size: rem(24);
+    line-height: 1em;
+  }
+
+  .log-time {
+    font-size: rem(12);
+    text-transform: uppercase;
+  }
+}
+
+
+// steps
+.steps {
+  list-style: none;
+  margin-top: rem(40);
+  margin-bottom: rem(40);
+  padding-left: rem(60);
+
+  li {
+    position: relative;
+    min-height: rem(40);
+    counter-increment: item;
+
+    &:not(:first-child) {
+      margin-top: rem(30);
+    }
+
+    &::before {
+      @include translate(0,-50%);
+      position: absolute;
+      top: 1em;
+      left: rem(-60);
+      content: counter(item);
+      color: $black;
+      line-height: rem(40);
+      text-align: center;
+      display: block;
+      width: rem(40);
+      height: rem(40);
+      background: $border-color;
+      border-radius: 50%;
+    }
+  }
+}

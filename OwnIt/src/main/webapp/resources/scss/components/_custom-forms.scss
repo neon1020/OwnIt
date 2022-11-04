@@ -1,0 +1,222 @@
+//
+// custom forms
+//
+//
+
+
+// switch
+.custom-switch {
+  padding-left: $custom-switch-width + $custom-control-gutter;
+
+  .custom-control-input:checked ~ .custom-control-label {
+    &::after {
+      background-color: rgba($white, .4);
+    }
+  }
+
+  .custom-control-input:disabled {
+    &:checked ~ .custom-control-label::before {
+      background-color: $custom-control-indicator-checked-disabled-bg;
+    }
+  }
+}
+
+
+// choice ( address / payment )
+.custom-choice {
+	padding: 0;
+
+	.custom-control-label {
+		@include selection(none);
+		&::after,
+		&::before {
+			@include transition;
+			top: 0;
+			left: 0;
+			width: rem(30);
+			height: rem(30);
+		}
+
+		&::before {
+			border: $border-width solid $border-color;
+			background: transparent;
+		}
+
+		&::after {
+			content: "\eaf6";
+			font-family: 'icomoon' !important;
+			font-size: $font-size-lg;
+			line-height: rem(30);
+			width: rem(30);
+			text-align: center;
+			color: $white;
+			opacity: 0;
+		}
+	}
+
+	.choice-indicator {
+		@include selection(none);
+		@include transition;
+		position: absolute;
+		content: "";
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border: $border-width solid $border-color;
+		z-index: 5;
+	}
+
+	.custom-control-label {
+		padding: rem(30) rem(30) rem(30) rem(40);
+		cursor: pointer;
+	}
+
+	.custom-control-input:checked ~ .choice-indicator {
+		border-color: $primary;
+	}
+
+	.custom-control-input:checked ~ .custom-control-label {
+		&::before {
+			background: $primary;
+			border-color: $primary;
+		}
+
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	.custom-control-input:checked:hover ~ .choice-indicator {
+		border-color: $primary;
+	}
+
+	.custom-control-input:checked:hover ~ .custom-control-label {
+		&::before {
+			background: $primary;
+			border-color: $primary;
+		}
+
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	.custom-control-input:hover ~ .choice-indicator {
+		border-color: darken($border-color, 10%);
+	}
+
+	.custom-control-input:hover ~ .custom-control-label {
+		&::before {
+			border-color: darken($border-color, 10%);
+		}
+	}
+
+	label {
+		position: relative;
+		z-index: 10;
+	}
+}
+
+
+// counter
+.counter {
+	@include selection(none);
+	position: relative;
+	display: inline-block;
+	padding: 0 rem(30);
+	background: $light;
+	border-radius: 10rem;
+
+	.counter-minus,
+	.counter-plus {
+		@include transition;
+		position: absolute;
+		top: 0;
+		display: block;
+		width: rem(30);
+		height: rem(30);
+		line-height: rem(30);
+		border-radius: 50%;
+		cursor: pointer;
+
+		&:hover {
+			background: darken($light, 10%);
+		}
+	}
+
+	.counter-minus {
+		left: 0;
+	}
+
+	.counter-plus {
+		right: 0;
+	}
+}
+.counter-value {
+	width: rem(30);
+	line-height: rem(30);
+	text-align: center;
+	font-family: $headings-font-family;
+	font-size: $font-size-base;
+	color: $black;
+	background: transparent;
+	border: 0;
+	-moz-appearance: textfield;
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+
+// ion range slider
+.irs {
+	.irs-min,
+	.irs-max { display: none; }
+
+	.irs-from,
+	.irs-to,
+	.irs-single {
+		background: transparent;
+		padding: 0;
+		border-radius: 0;
+		color: $black;
+		font-size: rem(12);
+
+		&:before {
+			display: none;
+		}
+	}
+
+	.irs-line {
+		top: rem(30);
+		height: rem(2);
+		background: $border-color;
+	}
+
+	.irs-bar {
+		top: rem(30);
+		height: rem(2);
+		background: $black;
+	}
+
+	.irs-handle {
+		top: rem(21);
+		width: rem(20);
+		height: rem(20);
+		border-radius: 50%;
+		background: $black;
+		cursor: pointer;
+
+		> i {
+			display: none!important;
+		}
+
+		&:hover {
+			background: $primary;
+		}
+	}
+}

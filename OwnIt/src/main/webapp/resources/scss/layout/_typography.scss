@@ -1,0 +1,367 @@
+//
+// typography
+//
+//
+
+
+
+
+// spacing
+h1, h2, h3, h4, h5,
+.h1, .h2, .h3, .h4, .h5 {  
+  &:last-child { margin-bottom: 0; }
+}
+
+p, blockquote, .alert, ul, ol {
+  // margin-bottom: 1em;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+b, strong {
+  font-weight: $font-weight-bold;
+}
+
+hr {
+  margin-top: ($grid-gutter-width / 2);
+  margin-bottom: ($grid-gutter-width / 2 );
+}
+
+dt {
+  font-weight: $font-weight-normal;
+}
+
+// underline
+%underline {
+  position: relative;
+
+  &::before {
+    @include transition(.4s);
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    border-bottom: $border-width solid currentColor;
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    &::before {
+      left: 0;
+      width: 100%;
+    }
+  }
+}
+
+.underline { @extend %underline; }
+
+
+
+// blockquote
+.blockquote {
+  position: relative;
+  padding-left: $grid-gutter-width;
+  border-left: $border-width solid $primary;
+
+  p {
+    font-size: $font-size-lg;
+  }
+}
+
+
+// custom inlines
+.external,
+.code,
+.kbd,
+.scroll,
+.folder,
+.file {
+  @include transition;
+  position: relative;
+  display: inline-block;
+  margin: .2rem;
+  padding: 0 .5rem 0 2.5rem;
+  border: $border-width solid $border-color;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  
+  &::before {
+    @include transition;
+    @include translate(0,-50%);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: inline-block;
+    width: rem(30);
+    height: 100%;
+    text-align: center;
+    content: "\ebae";
+    color: $black;
+    background-color: $border-color;
+    font-family: 'icomoon' !important;
+    border-right: $border-width solid $border-color;
+  }
+}
+
+.external {
+  &::before {
+    content: "\eadf";
+  }
+
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-color: $primary;
+
+    &::before {
+      background: rgba($black, .1);
+      color: $white;
+      border-color: rgba($black, .1);
+    }
+  }
+}
+
+.code {
+  &::before {
+    content: "\ebae";
+  }
+}
+
+.folder {
+  &::before {
+    content: "\eb35";
+  }
+}
+
+.file {
+  &::before {
+    content: "\eb2f";
+  }
+}
+
+.kbd {
+  &::before {
+    content: "\e987";
+  }
+}
+
+
+
+// icons
+[class^="icon-"], [class*=" icon-"] {
+  display: inline-block;
+  width: 1em;
+  line-height: 1em;
+  box-sizing: content-box;
+  text-align: center;
+  border: $border-width solid transparent;
+
+  &[class*="-bordered"] {
+    border-color: currentColor;
+    border-radius: 50%;
+    border-width: $border-width;
+    padding: .5em;
+
+  }
+
+  &[class*="-filled"] {
+    border-radius: 50%;
+    border-color: transparent;
+    padding: .5em;
+  }
+
+}
+
+
+
+// line height
+.lh-sm { line-height: 1.2em; }
+.lh-lg { line-height: 1.6em; }
+
+
+
+// text styles
+%eyebrow {
+  display: inline-block;
+  font-size: rem(12);
+  font-family: $headings-font-family;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.eyebrow {
+  @extend %eyebrow;
+}
+
+
+%decorated {
+  position: relative;
+  padding-left: rem(50);
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    content: "";
+    width: rem(30);
+    height: $border-width;
+    background: currentColor;
+  }
+}
+
+.decorated {
+  @extend %decorated;
+}
+
+
+
+p {
+  line-height: 1.8;
+}
+
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+
+// section title
+.section-title {
+  @extend %eyebrow;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0;
+  width: 100%;
+
+  > * {
+    display: inline-flex;
+  }
+
+  &::after {
+    content: '';
+    flex-grow: 1;
+    margin-left: rem(20);
+    border-top: $border-width solid $border-color;
+  }
+}
+
+
+.section-title-2 {
+  padding-right: 0;
+  font-size: 1.875rem;
+
+  .anchor {
+    @include transition;
+    opacity: 0;
+    color: $gray-500;
+    outline: none;
+
+    &:hover {
+      color: $primary;
+    }
+
+    &.copied {
+      opacity: 1;
+      color: $green;
+    }
+  }
+
+  &:hover {
+    .anchor {
+      opacity: 1;
+    }
+  }
+}
+
+
+
+// action link style
+%action {
+  @include transition;
+  display: inline-block;
+  position: relative;
+  padding-right: 2em;
+  cursor: pointer;
+
+  &::after {
+    @include transition;
+    @include translate(0,-50%);
+    position: absolute;
+    right: .5em;
+    top: 50%;
+    content: "\eadc";
+    display: block;
+    font-family: 'icomoon' !important;
+    font-size: 1em;
+    width: 1em;
+    line-height: 1em;
+  }
+
+  &:hover {
+    &::after {
+      right: 0;
+    }
+  }
+}
+
+.action {
+  @extend %action;
+}
+
+
+//
+// text white
+//
+.text-white {
+
+  h1, h2, h3, h4, h5, h6
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: $white;
+  }
+
+  p { 
+    color: rgba($white, .5);
+  }
+
+  hr {
+    border-color: $white;
+  }
+
+  a {
+    color: $white;
+  }
+
+  .eyebrow {
+    color: rgba($white, .5);
+  }
+
+  .decorated::before {
+    background: rgba($white, .5);
+  }
+
+  .text-muted {
+    color: rgba($white, .5)!important;
+  }
+
+}
+
+
+// responsive
+@include media-breakpoint-down(md) {
+  .display-1 { font-size: ($display1-size * .75) }
+  .display-2 { font-size: ($display2-size * .75) }
+  .display-3 { font-size: ($display3-size * .75) }
+  .display-4 { font-size: ($display4-size * .75) }
+  h1, .h1 { font-size: ($h1-font-size * .75) }
+  h2, .h2 { font-size: ($h2-font-size * .75) }
+  h3, .h3 { font-size: ($h3-font-size * .75) }
+  h4, .h4 { font-size: ($h4-font-size * .75) }
+  h5, .h5 { font-size: ($h5-font-size * .75) }
+}

@@ -1,0 +1,84 @@
+//
+// sizing
+//
+//
+
+
+// equal
+//
+// equalise width and height of a box
+%equal {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  &::before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 100%;
+  }
+
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      @each $size, $length in $sizes {
+        &.equal#{$infix}-#{$size} {
+          &::before {
+            padding-top: $length;
+          }
+        }
+      }
+
+    }
+  }
+
+}
+
+.equal {
+  @extend %equal;
+
+  &.zoom {
+    .zoom-img {
+      @include translate(0,-50%);
+      position: absolute;
+      top: 50%;
+    }
+  }
+}
+
+
+
+// flex width
+@each $size, $length in $sizes {
+  .fw-#{$size} {
+    flex: 0 0 $length!important;
+    width: $length!important;
+  }
+}
+
+
+// vertical height
+$height-list: ( 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100);
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $value in $height-list {
+      .vh#{$infix}-#{$value} {
+        height: #{$value}vh;
+        min-height: #{$value}vh;
+      }
+    }
+
+  }
+}
+
+@include media-breakpoint-down(md) {
+  &[class*="vh-"] {
+    height: auto!important;
+  }
+} 

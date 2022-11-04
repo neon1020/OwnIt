@@ -1,0 +1,92 @@
+//
+// forms
+//
+//
+
+
+// form group label
+.form-group {
+	margin: 0;
+	
+	label {
+		font-size: rem(12);
+		text-transform: uppercase;
+		letter-spacing: .1em;
+	}
+}
+
+
+// custom select
+.custom-select {
+	@include prefix(appearance, none, webkit moz);
+}
+
+
+
+// checkbox
+.custom-control-label {
+	font-size: $font-size-sm;
+	cursor: pointer;
+}
+
+
+// nested forms
+.form-group-nested {
+	> * {
+	  padding: 0;
+	}
+
+	+ .form-group-nested {
+		margin-top: -$border-width;
+
+		.col-form-label {
+			border-top-color: darken($border-color, 5%);
+		}
+	}
+
+	.col-form-label {
+		border: $border-width solid $border-color;
+		padding: $input-padding-y $input-padding-x;
+		line-height: $input-line-height;
+		text-transform: none;
+		font-size: $input-font-size;
+		letter-spacing: 0;
+		border-right: 0;
+		background: $border-color;
+	}
+
+	.form-control,
+	.custom-select {
+		position: relative;
+
+		&:focus {
+			z-index: 10;
+		}
+	}
+}
+
+
+// inverted
+.text-white {
+	.form-group {
+		
+		label {
+			color: rgba($white, .5);
+		}
+	}
+
+	.form-control,
+	.custom-select {
+		border-color: rgba($white, .5);
+		color: $white;
+
+		// placeholder
+		&::placeholder {
+			color: rgba($white, .5);
+		}
+
+		&:focus {
+			border-color: $white;
+		}
+	}
+}

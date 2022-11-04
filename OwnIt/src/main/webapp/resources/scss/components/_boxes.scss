@@ -1,0 +1,40 @@
+//
+// boxes
+//
+//
+
+
+
+.box-title {
+	@include shadow;
+	position: relative;
+	display: block;
+	padding: rem(15) rem(30);
+	background: $white;
+	font-size: $font-size-base;
+	line-height: rem(30);
+	color: $black;
+}
+
+
+// bordered
+%bordered {
+	@include border-radius;
+	@include transition;
+	background-color: transparent;
+	border: $border-width solid $border-color;
+}
+
+%bordered-text-white {
+	border-color: $white;
+}
+
+
+[class*="bordered"] { @extend %bordered; }
+
+
+// inverted
+//
+.text-white {
+	[class*="bordered"] { @extend %bordered-text-white; }
+}

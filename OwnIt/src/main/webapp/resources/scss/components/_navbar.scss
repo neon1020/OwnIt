@@ -1,0 +1,51 @@
+//
+// navbar
+//
+//
+
+
+.navbar {
+  min-height: $header-height;
+
+
+  @include media-breakpoint-down(md) {
+    min-height: auto;
+    padding: ($grid-gutter-width / 2);
+
+    .navbar-toggler {
+      border: 0;
+    }
+  }
+}
+
+.navbar-brand {
+  margin: 0;
+}
+
+@include media-breakpoint-up(lg) {
+  .navbar-collapse {
+    flex-basis: 40%!important;
+  }
+}
+
+.navbar-nav {
+
+  @include media-breakpoint-up(lg) {
+    .nav-item + .nav-item {
+      margin-left: $grid-gutter-width;
+    }
+  }
+
+  .nav-link {
+    @include transition;
+    padding: rem(5);
+    padding-left: 0!important;
+    padding-right: 0!important;
+    text-transform: uppercase;
+    font-size: $font-size-sm;
+  }
+
+  @include media-breakpoint-down(md) {
+    margin-top: $grid-gutter-width;
+  }
+}

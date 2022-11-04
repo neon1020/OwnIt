@@ -1,0 +1,83 @@
+//
+// sidebar
+//
+//
+
+.sidebar {
+	.card {
+		border-color: transparent;
+	}
+}
+
+.widget {
+	position: relative;
+
+	+ .widget {
+		margin-top: $grid-gutter-width;
+
+		@include media-breakpoint-down(md) {
+			margin-top: -$border-width;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		border: $border-width solid $border-color;
+
+		&.active {
+			border-color: $primary;
+			z-index: 10;
+		}
+	}
+}
+
+.widget-title {
+	display: block;
+	color: $black;
+	font-size: $font-size-base;
+
+	@include media-breakpoint-down(md) {
+		display: none;
+	}
+}
+
+.widget-collapse {
+	@extend %eyebrow;
+	position: relative;
+	display: block;
+	padding: rem(5) 0;
+	color: $black;
+	cursor: pointer;
+
+	&::before {
+		position: absolute;
+	    content: "\eaf7";
+	    width: 1em;
+	    line-height: 1em;
+	    right: rem(15);
+	    top: 50%;
+	    font-family: 'icomoon' !important;
+	    font-size: $font-size-lg;
+	    margin-top: -0.5em;
+	    color: $gray-400;
+	    @include transition(0.2s);
+	}
+
+	&[aria-expanded="true"] {
+		&::before {
+			@include rotate(180deg);
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		padding: rem(15);
+	}
+}
+
+.widget-content {
+	margin-top: $card-spacer-y;
+
+	@include media-breakpoint-down(md) {
+		margin-top: 0;
+		padding: 0 $card-spacer-y $card-spacer-y $card-spacer-y;
+	}
+}

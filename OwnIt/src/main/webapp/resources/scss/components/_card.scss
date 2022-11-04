@@ -1,0 +1,145 @@
+//
+// card
+//
+//
+
+
+// equal
+.card-equal {
+	@extend %equal;
+	overflow: hidden;
+	border: 0;
+
+	.card-header,
+	.card-body,
+	.card-footer {
+		position: absolute;
+		left: 0;
+		right: 0;
+		border: 0;
+		background: none;
+	}
+
+	> a { 
+		@extend %stretch;
+	}
+
+	.card-header { top: $card-spacer-y; }
+	.card-footer { bottom: $card-spacer-y; }
+
+	.card-body {
+		@include translate(0,-50%);
+		top: 50%;
+	}
+
+	&:hover {
+		.btn-action {
+			padding-right: calc(#{$btn-padding-x * 2});
+
+			span {
+				@include translate(0,0);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+// data
+.card-data {
+	.card-text {
+		color: $black;
+		font-size: rem(15);
+	}
+
+	.card-header {
+		padding-top: 0;
+		padding-right: 0;
+		padding-bottom: 0;
+	}
+
+	.card-title {
+		font-size: $font-size-base;
+	}
+}
+
+
+.card-header {
+	background: transparent;
+}
+
+
+// post
+.card-post {
+	border: 0;
+
+	.card-body {
+		width: 90%;
+		padding: rem(10) 0 0 0;
+	}
+
+	.card-title {
+		margin-top: rem(5);
+		font-size: rem(20);
+		line-height: 1.25em;
+
+		a {
+			@include transition;
+			color: $black;
+
+			&:hover {
+				color: $primary;
+			}
+		}
+	}
+}
+
+
+//
+// animation
+.card {
+
+	&[class*="-scale"] {
+		.image {
+			@include transition;
+			@include scale(1.1);
+		}
+
+		&:hover {
+			.image {
+				@include scale(1);
+			}
+		}
+	}
+
+	&[class*="-highlight"] {
+		@include transition;
+		border: $border-width solid transparent;
+
+		&:hover {
+			border-color: $black;
+		}
+	}
+
+	&[class*="-fade"] {
+		&:hover {
+			.image::after {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+
+
+// text white
+.text-white {
+	.card {
+		border-color: $white;
+
+		.card-footer,
+		.card-header {
+			border: 0;
+			background: 0;
+		}
+	}
+}

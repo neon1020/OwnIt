@@ -1,0 +1,293 @@
+//
+// buttons
+//
+//
+
+
+.btn {
+	text-transform: uppercase;
+	letter-spacing: .05rem;
+	cursor: pointer;
+}
+
+// icon button
+.btn-ico {
+  position: relative;
+  box-sizing: content-box;
+  width: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2});
+  height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2});
+  padding: 0;
+
+  &[class*="-sm"] {
+  	width: calc(#{$input-line-height-sm * 1em} + #{$input-padding-y-sm * 2});
+  	height: calc(#{$input-line-height-sm * 1em} + #{$input-padding-y-sm * 2});
+  }
+
+  &[class*="-lg"] {
+  	width: calc(#{$input-line-height-lg * 1em} + #{$input-padding-y-lg * 2});
+  	height: calc(#{$input-line-height-lg * 1em} + #{$input-padding-y-lg * 2});
+  }
+
+  i {
+    @include translate(-50%,-50%);
+    position: absolute;
+    font-size: $font-size-lg;
+    top: 50%;
+    left: 50%;
+  }
+}
+
+
+
+// btn link
+.btn-link {
+	font-size: $font-size-sm;
+}
+
+
+// btn action
+.btn-action {
+	@include transition;
+	position: relative;
+	overflow: hidden;
+
+	&:hover {
+		padding-right: calc(#{$btn-padding-x * 2});
+
+		span {
+			@include translate(0,0);
+			opacity: 1;
+		}
+	}
+
+	span {
+		@include translate(-25%, 0);
+		@include transition;
+		position: absolute;
+		top: -$border-width;
+		right: -$border-width;
+		bottom: -$border-width;
+		width: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2});
+		text-align: center;
+		opacity: 0;
+
+		&::before {
+			@include translate(-50%,-50%);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			font-size: inherit;
+		}
+	}
+
+	&.btn-sm {
+		&:hover { padding-right: calc(#{$btn-padding-x-sm * 2}); }
+		span { width: calc(#{$input-line-height-sm * 1em} + #{$input-padding-y-sm * 2}); }
+	}
+
+	&.btn-lg {
+		&:hover { padding-right: calc(#{$btn-padding-x-lg * 2}); }
+		span { width: calc(#{$input-line-height-lg * 1em} + #{$input-padding-y-lg * 2}); }
+	}
+
+	&.btn-white:hover {
+		background: $white;
+		border-color: $white;
+	}
+}
+
+
+.btn-rounded {
+	border-radius: rem(50);
+}
+
+
+
+// button group toggle
+.btn-group-toggle {
+
+	> .btn {
+		cursor: pointer;
+	}
+}
+
+
+// outlined buttons group
+.btn-group-outline {
+	@include clearfix;
+	margin: $border-width 0 0 $border-width;
+
+	&[class*="-sm"] {
+		.btn {
+			height: calc(#{$input-line-height-sm * 1em} + #{$input-btn-padding-y-sm * 2} + #{$input-height-border});
+			line-height: calc(#{$input-line-height-sm * 1em} + #{$input-btn-padding-y-sm * 2} + #{$input-height-border});
+		}
+	}
+
+	&[class*="-lg"] {
+		.btn {
+			height: calc(#{$input-line-height-lg * 1em} + #{$input-btn-padding-y-lg * 2} + #{$input-height-border});
+			line-height: calc(#{$input-line-height-lg * 1em} + #{$input-btn-padding-y-lg * 2} + #{$input-height-border});
+		}
+	}
+
+	.btn {
+		@include transition;
+		position: relative;
+		float: left;
+		padding: 0 rem(20);
+		height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border});
+		margin-top: -$border-width;
+		margin-left: -$border-width;
+		font-size: $font-size-sm;
+		line-height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2});
+		border: $border-width solid $border-color;
+		z-index: 5;
+
+		&:hover {
+			color: $black;
+		}
+
+		&.active {
+			color: $black;
+			border: $border-width solid $black;
+			z-index: 10;
+		}
+	}
+}
+
+// square buttons group
+.btn-group-square {
+	@include clearfix;
+	margin: $border-width 0 0 $border-width;
+
+	&[class*="-sm"] {
+		.btn {
+			width: calc(#{$input-line-height-sm * 1em} + #{$input-btn-padding-y-sm * 2} + #{$input-height-border});
+			height: calc(#{$input-line-height-sm * 1em} + #{$input-btn-padding-y-sm * 2} + #{$input-height-border});
+			line-height: calc(#{$input-line-height-sm * 1em} + #{$input-btn-padding-y-sm * 2} + #{$input-height-border});
+		}
+	}
+
+	&[class*="-lg"] {
+		.btn {
+			width: calc(#{$input-line-height-lg * 1em} + #{$input-btn-padding-y-lg * 2} + #{$input-height-border});
+			height: calc(#{$input-line-height-lg * 1em} + #{$input-btn-padding-y-lg * 2} + #{$input-height-border});
+			line-height: calc(#{$input-line-height-lg * 1em} + #{$input-btn-padding-y-lg * 2} + #{$input-height-border});
+		}
+	}
+
+	.btn {
+		@include transition;
+		position: relative;
+		float: left;
+		padding: 0;
+		width: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border});
+		height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border});
+		margin-top: -$border-width;
+		margin-left: -$border-width;
+		font-size: $font-size-sm;
+		line-height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2});
+		border: $border-width solid $border-color;
+		z-index: 5;
+
+		&:hover {
+			color: $black;
+		}
+
+		&.active {
+			color: $black;
+			border: $border-width solid $black;
+			z-index: 10;
+		}
+	}
+}
+
+aside {
+	.btn-group-square {
+		.btn {
+			width: 25%;
+		}
+	}
+}
+
+
+
+// square buttons group - colors
+.btn-group-colors {
+	> .btn {
+		&::after {
+			@include translate(-50%,-50%);
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			display: block;
+			width: rem(20);
+			height: rem(20);
+			background: currentColor;
+			border-radius: 50%;
+		}
+	}
+}
+
+.btn-outline-secondary {
+	color: $body-color;
+}
+
+
+//
+// inverted
+// 
+.text-white {
+	.btn-group-square {
+		> .btn {
+			border-color: rgba($white, .25);
+			color: rgba($white, .5);
+
+			&:hover {
+				z-index: 5;
+			}
+
+			&.active {
+				border-color: $white;
+				color: $white;
+			}
+		}
+	}
+
+	.btn-white {
+		color: $black;
+	}
+
+	.btn-group-outline {
+
+		.btn {
+			border: $border-width solid rgba($white, .25);
+
+			&:hover {
+				color: $white;
+			}
+
+			&.active {
+				color: $white;
+				border: $border-width solid $white;
+				z-index: 10;
+			}
+		}
+	}
+}
+
+
+// colors
+@each $color, $value in $colors {
+  .btn-#{$color} {
+    @include button-variant($value, $value);
+  }
+}
+
+@each $color, $value in $colors {
+  .btn-outline-#{$color} {
+    @include button-outline-variant($value);
+  }
+}

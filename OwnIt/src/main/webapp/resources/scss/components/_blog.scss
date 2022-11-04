@@ -1,0 +1,79 @@
+//
+// blog
+//
+//
+
+
+// interpost
+.interpost {
+	font-size: $font-size-base;
+	font-family: $font-family-base;
+
+	a {
+		@include transition;
+		position: relative;
+		display: block;	
+		padding: $grid-gutter-width;
+		color: $black;
+
+		&:hover {
+			background: rgba($black, .05);
+		}
+	}
+
+	// previous button
+	&[class*="-prev"] {
+		a {
+			padding-left: ($grid-gutter-width * 2);
+			padding-right: $grid-gutter-width;
+
+			&::after {
+				@include transition;
+				position: absolute;
+				left: $grid-gutter-width;
+			    content: "\eada";
+			    width: 1em;
+			    line-height: 1em;
+			    top: 50%;
+			    font-family: 'icomoon' !important;
+			    font-size: rem(20);
+			    margin-top: -0.5em;
+			}
+
+			&:hover {
+				&::after {
+					@include translate(-25%,0);
+				}
+			}
+		}
+	}
+
+	// next button
+	&[class*="-next"] {
+		text-align: right;
+
+		a {
+			padding-left: $grid-gutter-width;
+			padding-right: ($grid-gutter-width * 2);
+
+			&::after {
+				@include transition;
+				position: absolute;
+				right: $grid-gutter-width;
+			    content: "\eadc";
+			    width: 1em;
+			    line-height: 1em;
+			    top: 50%;
+			    font-family: 'icomoon' !important;
+			    font-size: rem(20);
+			    margin-top: -0.5em;
+			}
+
+			&:hover {
+				&::after {
+					@include translate(25%,0);
+				}
+			}
+		}
+	}
+}

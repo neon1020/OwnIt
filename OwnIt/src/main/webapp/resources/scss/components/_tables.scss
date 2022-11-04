@@ -1,0 +1,43 @@
+//
+// Tables
+//
+//
+
+.table {
+	border-radius: $border-radius;
+
+	th {
+		font-weight: $font-weight-normal;
+		color: $gray-600;
+	}
+
+	thead th {
+		font-size: rem(12);
+		text-transform: uppercase;
+	}
+
+	th,
+	td {
+		padding: $table-cell-padding-sm $table-cell-padding;
+	}
+
+	thead {
+		th {
+			border-bottom: 0;
+			border-top: 0;
+		}
+	}
+
+	&[class*="-striped"] {
+		border: $border-width solid $light;
+
+		tbody tr:nth-of-type(odd) {
+			background: $light;
+		}
+
+		th,
+		td {
+			border-top: 0;
+		}
+	}
+}

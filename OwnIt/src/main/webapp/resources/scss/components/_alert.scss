@@ -1,0 +1,68 @@
+//
+// alert
+//
+//
+
+.alert {
+	color: rgba($white, .75);
+
+	a {
+		@extend %underline;
+		color: $white!important;
+	}
+
+	.alert-heading {
+		color: $white;
+	}
+
+	&[class*="-secondary"],
+	&[class*="-warning"],
+	&[class*="-light"] {
+		color: rgba($black, .75);
+
+		a {
+			color: $black!important;
+		}
+
+		.alert-heading {
+			color: $black;
+		}
+	}
+}
+
+
+
+// top alert
+.header {
+	.alert {
+		font-size: rem(12);
+		text-transform: uppercase;
+		font-weight: $font-weight-bold;
+		letter-spacing: .1em;
+	}
+}
+
+
+// bottom alert
+.headroom--unpinned {
+	.alert-bottom {
+		@include translate(0,100%);
+		opacity: 0;
+		margin: 0;
+	}
+}
+
+.alert-bottom {
+	@include transition;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	margin: 0;
+	opacity: 1;
+	font-size: rem(12);
+	text-transform: uppercase;
+	font-weight: $font-weight-bold;
+	letter-spacing: .1em;
+}

@@ -1,0 +1,216 @@
+//
+// accordions
+//
+//
+
+.accordion {
+
+	.card {
+		@include transition;
+		padding: ($card-spacer-x / 2) 0;
+		background: transparent;
+		overflow: visible;
+
+		&:first-of-type,
+		&:not(:first-of-type):not(:last-of-type) { border-bottom: $border-width solid $border-color; }
+		&:not(:first-of-type) { margin-top: -$border-width; }
+
+		&.active,
+		&.active:hover {
+			border-color: $dark;
+			z-index: 15;
+
+			&:first-of-type,
+			&:not(:first-of-type):not(:last-of-type) { border-color: $dark; }
+		}
+
+		&:hover {
+			border-color: lighten($dark, 55%);
+			z-index: 10;
+
+			&:first-of-type,
+			&:not(:first-of-type):not(:last-of-type) { border-color: lighten($dark, 55%); }
+		}
+
+		.card-header {
+			padding: 0;
+			border: 0;
+
+			> * {
+				font-family: $font-family-sans-serif;
+				font-weight: $font-weight-normal;
+				font-size: $font-size-lg;
+			}
+		}
+
+		button {
+			@include transition;
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: ($card-spacer-x / 2) $card-spacer-x;
+			text-align: left;
+			text-transform: none;
+			font-weight: $font-weight-normal;
+			font-size: 1rem;
+			letter-spacing: 0;
+			color: inherit;
+			white-space: normal;
+			cursor: pointer;
+
+			&::before {
+				@include transition(0.2s);
+				position: absolute;
+			    content: "\eaf7";
+			    width: 1em;
+			    line-height: 1em;
+			    right: $card-spacer-x;
+			    top: 50%;
+			    font-family: 'icomoon' !important;
+			    font-size: $font-size-lg;
+			    margin-top: -0.5em;
+			    color: $body-color;
+			}
+
+			&[aria-expanded="true"] {
+				&::before {
+					@include rotate(180deg);
+				}
+			}
+		}
+
+		.card-body {
+			padding: 0 $card-spacer-x ($card-spacer-x / 2) $card-spacer-x;
+			padding-top: 0;
+		}
+	}
+
+	input[type="radio"] {
+		position: absolute;
+		left: 9999px;
+		top: 0;
+		opacity: 0;
+	}
+
+}
+
+
+
+// flat
+.accordion-flat {
+	.card {
+		background: transparent;
+		border-color: $border-color;
+
+		p { font-size: $font-size-sm; }
+
+		button {
+			color: $body-color;
+			
+			&::before {
+				display: none;
+			}
+		}
+
+		&.active,
+		&.active:hover {
+			button { color: $black; }
+		}
+	}
+}
+
+
+// portal
+.accordion-portal {
+	.card {
+		padding: rem(20);
+		background: $white;
+		border-color: transparent;
+
+		@include media-breakpoint-down(sm) {
+			padding: 0;
+		}
+
+		&:not(:first-of-type) { margin-top: rem(2); }
+
+		&.active {
+			border-color: transparent;
+			z-index: 15;
+
+			&:first-of-type,
+			&:hover {
+				border-color: transparent;
+			}
+		}
+
+		&:hover {
+			border-color: transparent;
+			z-index: 10;
+		}
+
+		button {
+			font-size: $font-size-lg;
+
+			&::before {
+			    content: "\eb83";
+			    font-size: rem(22);
+			}
+
+			&[aria-expanded="true"] {
+				&::before {
+					@include rotate(45deg);
+				}
+			}
+		}
+	}
+}
+
+
+// minimal
+.accordion-minimal {
+	.card {
+		border: 0;
+
+		&:first-child {
+			padding-top: 0;
+
+			button {
+				padding-top: 0;
+			}
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+
+			.card-body {
+				padding-bottom: 0;
+			}
+		}
+
+		button,
+		.card-body {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		button::before {
+		    right: 0;
+		}
+
+		&.active,
+		&.active:hover {
+			border-color: $border-color;
+
+			&:first-of-type,
+			&:not(:first-of-type):not(:last-of-type) { border-color: $border-color; }
+		}
+
+		&:hover {
+			border-color: $border-color;
+
+			&:first-of-type,
+			&:not(:first-of-type):not(:last-of-type) { border-color: $border-color; }
+		}
+	}
+}

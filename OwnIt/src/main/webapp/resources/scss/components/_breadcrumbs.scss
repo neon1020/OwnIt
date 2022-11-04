@@ -1,0 +1,70 @@
+//
+// breadcrumbs
+//
+//
+
+.breadcrumbs {
+  padding-bottom: rem(20);
+
+  &.text-white {
+    border-color: transparent;
+  }
+}
+
+.breadcrumb {
+  display: inline-flex;
+  padding: 0;
+  background: transparent;
+}
+
+.breadcrumb-item {
+  position: relative;
+  font-size: rem(12);
+  color: $body-color;
+
+  a {
+    @extend %underline;
+  	color: $body-color;
+    font-size: rem(12);
+
+  	&:hover {
+		  color: $primary;
+  	}
+  }
+
+  + .breadcrumb-item {
+  	padding-left: rem(30);
+
+    &::before {
+      @include translate(0,-50%);
+      position: absolute;
+      top: 50%;
+      left: rem(10);
+      content: "\eaf9";
+      display: block;
+      width: 1em;
+      line-height: 1em;
+      font-size: rem(12);
+      font-family: 'icomoon' !important;
+    }
+  }
+}
+
+
+.text-white {
+  .breadcrumb-item {
+    color: rgba($white, .5);
+
+    a {
+      color: rgba($white, .5);
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    &::before {
+      color: rgba($white, .5);
+    }
+  }
+}

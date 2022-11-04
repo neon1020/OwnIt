@@ -1,0 +1,169 @@
+//
+// global
+//
+//
+
+
+body {
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	> section,
+	> footer {
+		position: relative;
+		margin: 0 auto;
+		padding: $section-padding 0;
+	}
+}
+
+
+.row {
+	&:not(:last-child) { margin-bottom: rem(40); }
+
+	.row {
+		&:not(:last-child) { margin-bottom: rem(30); }
+	}
+}
+
+
+// hero
+.hero {
+	padding-top: $header-height * 2;
+
+	&[class*="-small"] {
+		padding-top: rem(140);
+		padding-bottom: rem(60);
+	}
+}
+
+
+// container full
+.container-full {
+	width: 100vw;
+	overflow: hidden;
+}
+
+
+// move to foreground
+@include media-breakpoint-up(lg) {
+	.foreground {
+		position: relative;
+		z-index: 5;
+	}
+
+	.foreground-bg {
+		display: block;
+		width: 250%;
+		height: 200%;
+		position: absolute;
+		top: -50%;
+		left: rem(-20);
+	}
+}
+
+
+// separator
+[class*="separator"] {
+	border-width: 0;
+	border-color: $border-color;
+	border-style: solid;
+
+	&[class*="-top"] { border-top-width: $border-width; }
+	&[class*="-right"] { border-right-width: $border-width; }
+	&[class*="-bottom"] { border-bottom-width: $border-width; }
+	&[class*="-left"] { border-left-width: $border-width; }
+
+	&.text-white {
+		border-color: rgba($white, .1);
+	}
+}
+
+// separated items
+.separated {
+	overflow: hidden;
+
+	> * {
+		@include prefix(box-shadow, -1px -1px 0px 0px $border-color, webkit moz);
+
+		&:not(:last-child) {
+			margin-bottom: 0!important;
+		}
+	}
+}
+
+
+// stretch
+%stretch {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.stretch { @extend %stretch };
+
+// levels
+[class*="level-"] { position: relative; }
+.level-1 { z-index: 10; }
+.level-2 { z-index: 5; }
+
+
+article {
+	> section {
+		position: relative;
+		margin-top: $grid-gutter-width;
+
+		+ section {
+			padding-top: $grid-gutter-width;
+		}
+	}
+}
+
+
+// decoration
+.decoration {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-size: cover;
+	opacity: .05;
+
+	&[class*="-center"] {
+		background-position: center center;
+	}
+
+	&[class*="-top"] {
+		background-position: center 50%;
+	}
+}
+
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+  }
+}
+
+
+.no-overflow {
+	overflow: hidden;
+}
+
+
+//
+// inverted
+//
+.text-white {
+	.separated {
+		> * {
+			@include prefix(box-shadow, -1px -1px 0px 0px rgba($white, .1), webkit moz);
+		}
+	}
+}

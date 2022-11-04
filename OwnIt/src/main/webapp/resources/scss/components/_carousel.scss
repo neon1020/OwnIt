@@ -1,0 +1,427 @@
+//
+// carousel
+//
+//
+
+
+// general
+.owl-carousel {
+	position: relative;
+
+	&.visible {
+		.owl-stage-outer { overflow: visible; }
+	}
+
+	.owl-item {
+		> figure {
+			margin: 0;
+		}
+	}
+
+	&[data-dots="true"] { 
+	    margin-bottom: rem(40);
+	}
+}
+
+
+// navigation
+.owl-carousel {
+
+	&:hover {
+		.owl-nav {
+			button.owl-prev,
+			button.owl-next {
+				@include translate(0,0);
+				opacity: 1;
+			}
+		}
+	}
+
+	.owl-nav {
+		button.owl-prev,
+		button.owl-next {
+			@include transition;
+			position: absolute;
+			top: 50%;
+			display: block;
+			width: rem(60);
+			height: rem(60);
+			margin-top: rem(-30);
+			text-align: center;
+			background: rgba($black, .2);
+			border-radius: 50%;
+			z-index: 20;
+
+			&::before {
+				@include transition;
+				display: block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				line-height: rem(60);
+				font-family: 'icomoon';
+				font-size: rem(22);
+				color: $white;
+			}
+
+			span {
+				display: none;
+			}
+
+			&:hover {
+				background: rgba($black, .4);
+			}
+
+		    &[class*="disabled"] {
+				opacity: 0;
+		    }
+		}
+
+
+		button.owl-prev {
+			@include translate(-50%, 0);
+			opacity: 0;
+			left: $grid-gutter-width / 2;
+
+			&::before { content: "\eaf8" }
+		}
+
+
+		button.owl-next {
+			@include translate(50%, 0);
+			opacity: 0;
+			right: $grid-gutter-width / 2;
+
+			&::before { content: "\eaf9" }
+		}
+	}
+}
+
+// alt navigation
+.owl-carousel-alt {
+	.owl-nav {
+		position: absolute;
+		top: auto;
+		right: 0;
+		bottom: 0;
+		display: block;
+		width: rem(120);
+
+		button.owl-prev,
+		button.owl-next {
+			@include transition;
+			position: static;
+			width: rem(60);
+			height: rem(60);
+			float: left;
+			margin-top: 0;
+			text-align: center;
+			background: $primary;
+			border-radius: 0;
+			z-index: 20;
+
+			&::before {
+				color: $white;
+			}
+
+			span {
+				display: none;
+			}
+
+			&:hover {
+				background: darken($primary, 10%);
+			}
+
+		    &[class*="disabled"] {
+				opacity: 0;
+		    }
+		}
+
+
+		button.owl-prev {
+			@include translate(0, 0);
+			opacity: 1;
+			left: $grid-gutter-width / 2;
+
+			&::before { content: "\eaf8" }
+		}
+
+
+		button.owl-next {
+			@include translate(0, 0);
+			opacity: 1;
+			right: $grid-gutter-width / 2;
+
+			&::before { content: "\eaf9" }
+		}
+	}
+}
+
+// arrows
+.owl-carousel-arrows {
+	.owl-nav {
+		position: absolute;
+		top: auto;
+		right: rem(-10);
+		bottom: rem(-40);
+		display: block;
+		width: rem(60);
+		z-index: 20;
+
+		button.owl-prev,
+		button.owl-next {
+			@include transition;
+			position: static;
+			width: rem(30);
+			height: rem(30);
+			float: left;
+			margin-top: 0;
+			text-align: center;
+			background: transparent;
+			border-radius: 0;
+
+			&::before {
+				color: rgba($black, .5);
+				line-height: rem(30);
+			}
+
+			&:hover {
+				background: transparent;
+
+				&::before {
+					color: $black;
+				}
+			}
+
+		    &[class*="disabled"] {
+				opacity: 0;
+		    }
+		}
+
+
+		button.owl-prev {
+			@include translate(0, 0);
+			opacity: 1;
+			left: $grid-gutter-width / 2;
+
+			&::before { content: "\eada" }
+		}
+
+
+		button.owl-next {
+			@include translate(0, 0);
+			opacity: 1;
+			right: $grid-gutter-width / 2;
+
+			&::before { content: "\eadc" }
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.owl-carousel {
+		.owl-nav {
+			button.owl-prev,
+			button.owl-next {
+				@include translate(0,0);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+
+// pagination
+.owl-dots {
+	position: absolute;
+	right: rem(-10);
+	bottom: rem(-40);
+	left: rem(-10);
+	z-index: 10;
+
+	&.disabled {
+		display: none;
+	}
+
+	.owl-dot {
+		display: inline-block;
+		vertical-align: top;
+
+		span {
+			display: block;
+			width: rem(10);
+			height: rem(10);
+			margin: rem(10);
+			border-radius: 50%;
+			background: rgba($black,0.2);
+			@include transition();
+		}
+
+		&:hover {
+			span {
+				background: rgba($black, 0.4);
+			}
+		}
+
+		&.active {
+			span {
+				background: $black; 
+			}
+		}
+
+	}
+}
+
+
+
+
+// thumbs naviagation
+.thumbs {
+	.nav-item {
+		&:not(:last-child) {
+			margin-bottom: rem(10);
+		}
+	}
+
+	.nav-link {
+		@include transition;
+		display: block;
+		padding: 0;
+		border: $border-width solid $border-color;
+		overflow: hidden;
+
+		&.active,
+		&:hover {
+			border-color: $black;
+		}
+	}
+}
+
+.owl-thumbs {
+	.owl-thumb-item {
+		@include transition;
+		display: block;
+		border: $border-width solid $border-color;
+		cursor: pointer;
+		overflow: hidden;
+
+		&:not(:last-child) {
+			margin-bottom: rem(10);
+		}
+
+		&.active,
+		&:hover {
+			border-color: $black;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.owl-thumb-item {
+			display: inline-block;
+			max-width: rem(80);
+		}
+	}
+}
+
+
+
+
+// product image carousel
+.product .owl-carousel {
+	.owl-nav {
+		position: absolute;
+		top: auto;
+		right: 0;
+		bottom: 0;
+		display: block;
+		width: rem(100);
+
+		button.owl-prev,
+		button.owl-next {
+			@include transition;
+			position: static;
+			width: rem(50);
+			height: rem(50);
+			float: left;
+			margin-top: 0;
+			text-align: center;
+			background: $secondary;
+			border-radius: 0;
+			z-index: 20;
+
+			&::before {
+				color: $black;
+				line-height: rem(50);
+			}
+
+			&:hover {
+				background: darken($secondary, 10%);
+			}
+		}
+
+		button.owl-prev {
+			@include translate(0, 0);
+			opacity: 1;
+
+			&::before { content: "\eaf8" }
+		}
+
+
+		button.owl-next {
+			@include translate(0, 0);
+			opacity: 1;
+
+			&::before { content: "\eaf9" }
+		}
+	}
+}
+
+
+//
+// inverted
+//
+.text-white {
+	.owl-dots {
+
+		.owl-dot {
+
+			span {
+				background: rgba($white, .2);
+			}
+
+			&:hover {
+				span {
+					background: rgba($white, .4);
+				}
+			}
+
+			&.active {
+				span {
+					background: $white; 
+				}
+			}
+
+		}
+	}
+
+	.owl-carousel-arrows {
+		.owl-nav {
+
+			button.owl-prev,
+			button.owl-next {
+
+				&::before {
+					color: rgba($white, .55);
+				}
+
+				&:hover {
+					&::before {
+						color: $white;
+					}
+				}
+			}
+		}
+	}
+}
