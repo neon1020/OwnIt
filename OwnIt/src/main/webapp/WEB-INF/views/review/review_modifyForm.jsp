@@ -25,9 +25,10 @@
     </script>
     
     <style type="text/css">
-	    .pl-lg-5, .px-lg-5 { flex: 0 0 35%; max-width: 35%; padding: 0 !important; margin: 150px auto; }
-	    .form-control { margin-bottom: 10px; }
+	    .pl-lg-5, .px-lg-5 { flex: 0 0 35%; padding: 0 !important; margin: 150px auto; }
+	    .form-control { width: 600px; margin: 10px auto; }
 	    .form-control:focus { border-color: #101010; }
+	    #exampleInputEmail1 { width: 530px; height: 60px; }
 	    /* 사진업로드 */
 	    img #preview { width: 200px; height: 200px; }
 	    input[type=file]::file-selector-button, .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
@@ -35,19 +36,18 @@
     
   </head>
   <body>
-
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 
     <!-- 페이지 제목 -->
-    <article class="col-lg-9 pl-lg-5">
+    <article class="col-lg-9 pl-lg-5" style="width: 600px;">
       <h1 class="mb-0">Review</h1>
 
       <!-- **************************** 리뷰 작성 부분 **************************** -->
       <section id="component-1">
         <div class="component">
           <div class="form-group">
+          	<img src="resources/img/review/iphone1dt.jpg" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Apple iPhone 13 128GB Starlight (Korean Ver.)" readonly="readonly">
             <textarea rows="10" cols="30" class="form-control" placeholder="오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~"></textarea>
           </div>
