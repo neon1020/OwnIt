@@ -24,4 +24,7 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
+	
+//	김소희 주석입니다.
+	
 }
