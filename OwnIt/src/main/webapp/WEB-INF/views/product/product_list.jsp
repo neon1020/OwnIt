@@ -21,13 +21,16 @@
 	 
   }
   .items > a {
-  	margin-right: 135px;
+  	margin-right: 41px;
   	color: black;
   	font-size: 0.8em;
   	
   }
-  .items > a#watch {
+  .items > a#laptop {
   	margin-right: 0px;
+  	color: black;
+  	font-size: 0.8em;
+  	
   }
   .items > a > img {
   	width: 60px;
@@ -87,13 +90,19 @@
 			   		<img src="./resources/img/product/phone1.png" alt="휴대폰">휴대폰
 			   	</a>
 			   	<a href="#" id="tablet">
-			   		<img src="./resources/img/product/mac1.png">태블릿
+			   		<img src="./resources/img/product/tablet1.png">태블릿
+			   	</a>
+			   	<a href="#" id="watch">
+			   		<img src="./resources/img/product/watch1.png">스마트워치
+			   	</a>
+			   		<a href="#" id="earphone">
+			   		<img src="./resources/img/product/earphone1.jpeg">이어폰
 			   	</a>
 			   	<a href="#" id="headphone">
 			   		<img src="./resources/img/product/head1.png">헤드폰
 			   	</a>
-			   	<a href="#" id="watch">
-			   		<img src="./resources/img/product/watch1.png">스마트워치
+			   	<a href="#" id="laptop">
+			   		<img src="./resources/img/product/mac1.png">노트북
 			   	</a>
 		     </div>
             </div>
