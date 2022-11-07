@@ -61,17 +61,17 @@
               <div class="col-lg-10 order-lg-2">
                 <div class="owl-carousel gallery" data-slider-id="1" data-thumbs="true" data-nav="true">
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/demo/product-1.jpg" 
+                    <a class="image" href="resources/img/product/productDetail1.png" 
                       style="background-image: url(resources/img/product/productDetail1.png);">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/demo/product-1.jpg" 
+                    <a class="image" href="resources/img/product/productDetail2.png" 
                       style="background-image: url(resources/img/product/productDetail2.png);">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/demo/product-1.jpg" 
+                    <a class="image" href="resources/img/product/productDetail3.png" 
                       style="background-image: url(resources/img/product/productDetail3.png);">
                     </a>
                   </figure>
