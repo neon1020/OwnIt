@@ -40,4 +40,8 @@ public class HomeController {
 		return "ksh";
 	}
 	
+	@RequestMapping(value = "jcy", method = RequestMethod.GET)
+	public String jcy() {
+		return "jcy";
+	}
 }
