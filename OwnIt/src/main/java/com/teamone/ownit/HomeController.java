@@ -24,16 +24,4 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
-	//박주닮
-	//테스트1
-	//커밋1
-	
-//	김소희 주석입니다.
-	
-	// 1107 정채연
-	
-	@RequestMapping(value = "jcy", method = RequestMethod.GET)
-	public String jcy() {
-		return "jcy";
-	}
 }

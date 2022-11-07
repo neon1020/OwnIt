@@ -1,5 +1,5 @@
 package com.teamone.ownit.mapper;
 
-public interface OrderMapper {
+public interface OrderMapper { 
 	
 }
