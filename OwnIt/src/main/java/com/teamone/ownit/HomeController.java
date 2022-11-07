@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,5 +29,23 @@ public class HomeController {
 	public String main2() {
 		//맵핑테스트
 		return "hello";
+	//박주닮
+	//테스트1
+	//커밋1
+	
+//	김소희 주석입니다.
+	
+	// 1107 정채연
+	
+	
+	@PostMapping(value = "ksh") 
+	public String ksh() {
+		// 김소희 메서드 입니다.
+		return "ksh";
+	}
+	
+	@RequestMapping(value = "jcy", method = RequestMethod.GET)
+	public String jcy() {
+		return "jcy";
 	}
 }
