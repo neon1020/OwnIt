@@ -24,4 +24,6 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
+	
+	// 1107 정채연
 }
