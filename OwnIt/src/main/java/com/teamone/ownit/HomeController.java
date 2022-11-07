@@ -25,28 +25,4 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
-	@RequestMapping(value = "hello", method = RequestMethod.GET)
-	public String main2() {
-		//맵핑테스트
-		return "hello";
-	//박주닮
-	//테스트1
-	//커밋1
-		//1107 | 1635 서성민test
-	}
-//	김소희 주석입니다.
-	
-	// 1107 정채연
-	
-	
-	@PostMapping(value = "ksh") 
-	public String ksh() {
-		// 김소희 메서드 입니다.
-		return "ksh";
-	}
-	
-	@RequestMapping(value = "jcy", method = RequestMethod.GET)
-	public String jcy() {
-		return "jcy";
-	}
 }
