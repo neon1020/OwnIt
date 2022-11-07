@@ -27,7 +27,50 @@
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
 </head>
-<body>
+<script type="text/javascript">
+//새 주소 추가
+function func1(){
+	var popupWidth = 600;
+	var popupHeight = 600;
+	var popupX = (window.screen.width / 2) - (popupWidth / 2);
+	var popupY= (window.screen.height / 2) - (popupHeight / 2);
+	
+	window.open('address', '새 주소', 
+				'status=no, height=' + popupHeight  + ', width=' + popupWidth  +
+				', left='+ popupX + ', top='+ popupY);
+}
+
+//주소 변경
+function func2(){
+	var popupWidth = 600;
+	var popupHeight = 600;
+	var popupX = (window.screen.width / 2) - (popupWidth / 2);
+	var popupY= (window.screen.height / 2) - (popupHeight / 2);
+	
+	window.open('address', '주소 변경', 
+				'status=no, height=' + popupHeight  + ', width=' + popupWidth  + 
+				', left='+ popupX + ', top='+ popupY);
+}
+
+
+function checkForm(){
+	var checked = false;
+		$("#disabled").attr("disabled",true); 
+		
+		if($("#check1").is(":checked") && 
+			$("#check2").is(":checked") && 
+			$("#check3").is(":checked") && 
+			$("#check4").is(":checked") &&
+			$("#check5").is(":checked")){
+			$("#disabled").removeAttr("disabled"); 
+			checked = true;
+			return checked;
+		}
+		return checked;
+		
+	}
+</script>
+<body onload="checkForm()">
 
   <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -38,6 +81,7 @@
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
+          	<form action="member_sell_detail" method="get" >
 	          	<table class="table">
 	          		
 	          		<tr>
@@ -58,8 +102,8 @@
 	          			<th>
 	          			<span id="sell_span">반송 주소</span>
 	          			<span id="sell_span" style="float: right; font-size: 11px;">
-		          			<a href="#" style="border: none;">+ 새 주소 추가</a></span><br>
-		          			<span id="sell_span" style="float: right; font-size: 13px;"><a href="#">변경</a></span>
+		          			<a href="javascript:func1()" style="border: none;">+ 새 주소 추가</a></span><br>
+		          			<span id="sell_span" style="float: right; font-size: 13px;"><a href="javascript:func2()">변경</a></span>
 		          			받는분 : <br>
 		          			연락처 : <br>
 		          			배송주소 : <br>
@@ -80,37 +124,38 @@
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox">
+	          			<th><input type="checkbox" id="check1" onchange="checkForm()">
 	          			<span id="sell_span" style="font-size: 13px;">거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 KREAM으로 발송을 완료한 후<br>
 	          				발송 정보를 정확히 입력해야 합니다.</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox">
+	          			<th><input type="checkbox" id="check2" onchange="checkForm()">
 	          			<span id="sell_span" style="font-size: 13px;">송장 번호 미기재·오입력 시 입고가 진행되지 않으며, 발송 후 5일(일요일·공휴일 제외) 내 미도착은 허위 정보 입력으로 간주하여 미입고 페널티를 부과합니다.</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox">
+	          			<th><input type="checkbox" id="check3" onchange="checkForm()">
 	          			<span id="sell_span" style="font-size: 13px;">검수 기준과 페널티 및 이용 정책을 다시 한번 확인하였습니다.</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox">
+	          			<th><input type="checkbox" id="check4" onchange="checkForm()">
 	          			<span id="sell_span" style="font-size: 13px;">‘바로 판매하기’ 를 선택하시면 즉시 거래가 체결되며, 단순 변심이나 실수에 의한 취소가 불가능합니다.</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox">
+	          			<th><input type="checkbox" id="check5" onchange="checkForm()">
 	          			<span id="sell_span" style="font-size: 13px;">판매 조건을 모두 확인하였으며, 거래 진행에 동의합니다.</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th><span style="color: black; font-size: 15px;">정산금액</span><span style="float: right;color: #00A5FF;">280,000원</span>
-	          				<a href="member_sell_detail" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">바로 판매하기</a>
+	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
 	          			</th>
 	          		</tr>
 	          	</table>
+	          </form>
 	         </div>
           </div>
         </div>
