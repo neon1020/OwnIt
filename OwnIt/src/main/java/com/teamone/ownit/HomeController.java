@@ -31,4 +31,9 @@ public class HomeController {
 //	김소희 주석입니다.
 	
 	// 1107 정채연
+	
+	@RequestMapping(value = "jcy", method = RequestMethod.GET)
+	public String jcy() {
+		return "jcy";
+	}
 }
