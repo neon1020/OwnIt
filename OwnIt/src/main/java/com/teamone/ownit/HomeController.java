@@ -25,5 +25,7 @@ public class HomeController {
 		return "main";
 	}
 	
+//	김소희 주석입니다.
+	
 	// 1107 정채연
 }
