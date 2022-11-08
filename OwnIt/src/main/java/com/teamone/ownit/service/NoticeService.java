@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.NoticeMapper;
 @Service
 public class NoticeService {
 
-	@Autowired
-	private NoticeMapper mapper;
+//	@Autowired
+//	private NoticeMapper mapper;
 	
 }

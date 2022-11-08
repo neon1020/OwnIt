@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.ProductMapper;
 @Service
 public class ProductService {
 
-	@Autowired
-	private ProductMapper mapper;
+//	@Autowired
+//	private ProductMapper mapper;
 	
 }

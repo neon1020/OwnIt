@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.ReviewMapper;
 @Service
 public class ReviewService {
 
-	@Autowired
-	private ReviewMapper mapper;
+//	@Autowired
+//	private ReviewMapper mapper;
 	
 }
