@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.OrderMapper;
 @Service
 public class OrderService {
 
-	@Autowired
-	private OrderMapper mapper;
+//	@Autowired
+//	private OrderMapper mapper;
 	
 }

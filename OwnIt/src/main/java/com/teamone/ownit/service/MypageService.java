@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.MypageMapper;
 @Service
 public class MypageService {
 
-	@Autowired
-	private MypageMapper mapper;
+//	@Autowired
+//	private MypageMapper mapper;
 	
 }

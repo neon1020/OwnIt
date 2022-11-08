@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.MemberMapper;
 @Service
 public class MemberService {
 
-	@Autowired
-	private MemberMapper mapper;
+//	@Autowired
+//	private MemberMapper mapper;
 	
 }

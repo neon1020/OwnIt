@@ -8,7 +8,7 @@ import com.teamone.ownit.mapper.AdminMapper;
 @Service
 public class AdminService {
 
-	@Autowired
-	private AdminMapper mapper;
+//	@Autowired
+//	private AdminMapper mapper;
 	
 }
