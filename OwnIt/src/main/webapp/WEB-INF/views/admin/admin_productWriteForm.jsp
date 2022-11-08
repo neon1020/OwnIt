@@ -19,8 +19,8 @@
 
 </head>
 
-<script src="resources/js/jquery-3.6.1.js"></script>
-    <script>
+<!-- <script src="resources/js/jquery-3.6.1.js"></script> -->
+<script>
     $(document).ready(function (e){
 	    $("#imageFile").on("change", function(event) {
 	        var file = event.target.files[0];
@@ -31,6 +31,34 @@
 	        reader.readAsDataURL(file);
 	    });
     });  
+    
+    
+    function changeCategory(category) {
+		// 선택된 브랜드 값을 brand 의 value 값으로 변경
+		document.productWriteForm.category.value = category;
+		
+		// 단, 선택된 브랜드가 "직접입력"이 아닐 경우 brand 입력창 잠금(readOnly 속성 적용)
+		if(category == "") {
+			document.productWriteForm.category.readOnly = false;
+			document.productWriteForm.category.focus();
+		} else {
+			document.productWriteForm.category.readOnly = true;
+		}
+	}
+    
+    
+    function changeBrand(brand) {
+		// 선택된 브랜드 값을 brand 의 value 값으로 변경
+		document.productWriteForm.brand.value = brand;
+		
+		// 단, 선택된 브랜드가 "직접입력"이 아닐 경우 brand 입력창 잠금(readOnly 속성 적용)
+		if(brand == "") {
+			document.productWriteForm.brand.readOnly = false;
+			document.productWriteForm.brand.focus();
+		} else {
+			document.productWriteForm.brand.readOnly = true;
+		}
+	}
 </script>
 <body>
 
@@ -111,7 +139,7 @@
                             <h2>Product Write Form</h2>
                             <br>
                             <div class="basic-form">
-                                <form>
+                                <form action="ProductWritePro" method="post" name="productWriteForm">
                                 	<!-- Start Col -->
                                 	<div class="row">
 			                            <div class="col-md-6 col-lg-3">
@@ -133,30 +161,49 @@
 			                            </div>
 			                            <!-- End Col -->
 			                        </div>
-                                   	<div class="form-group">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control">
-                                   	</div>
                                     <div class="form-row">
-                                     	<div class="form-group col-md-6">
-                                            <label>Category</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected="selected">선택하세요</option>
-                                                <option>스마트폰</option>
-                                                <option>태블릿</option>
-                                                <option>기타</option>
-                                            </select>
+                                    	<div class="form-group col-md-3">
+                                     		<label>Category</label>
+                                            <input type="text" class="form-control" name="category">
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Brand</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected="selected">선택하세요</option>
-                                                <option>Apple</option>
-                                                <option>SAMSUNG</option>
-                                                <option>SONY</option>
+                                     	<div class="form-group col-md-3">
+                                     		<label>&nbsp;</label>
+                                            <select id="inputState" class="form-control" onchange="changeCategory(this.value)">
+                                                <option selected="selected" value="">직접입력</option>
+                                                <option value="노트북">노트북</option>
+                                                <option value="스마트워치">스마트워치</option>
+                                                <option value=스마트폰>스마트폰</option>
+                                                <option value="이어폰">이어폰</option>
+                                                <option value="태블릿">태블릿</option>
+                                                <option value="헤드폰">헤드폰</option>
                                             </select>
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-row">
+                                    	<div class="form-group col-md-3">
+                                     		<label>Brand</label>
+                                            <input type="text" class="form-control" name="brand">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>&nbsp;</label>
+                                            <select id="inputState" class="form-control" onchange="changeBrand(this.value)">
+                                                <option selected="selected" value="">직접입력</option>
+                                                <option value="APPLE">APPLE</option>
+                                                <option value="BOSE">BOSE</option>
+                                                <option value="LG">LG</option>
+                                                <option value="SAMSUNG">SAMSUNG</option>
+                                                <option value="SONY">SONY</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                   	<div class="form-row">
+                                   		<div class="form-group col-md-8">
+	                                        <label>Name</label>	
+	                                        <input type="text" class="form-control">
+										</div>
+                                   	</div>
                                     <div class="form-row">
                                    		<div class="form-group col-md-6">
                                             <label>Model Number</label>

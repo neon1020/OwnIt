@@ -28,7 +28,7 @@ public class HomeController {
 	@RequestMapping(value = "hello", method = RequestMethod.GET)
 	public String main2() {
 		//맵핑테스트
-		return "hello";
+		return "hello";}
 	//박주닮
 	//테스트1
 	//커밋1
