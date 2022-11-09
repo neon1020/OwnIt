@@ -8,8 +8,8 @@ public class ProductVO {
 	private String product_model_num;
 	private String product_color;
 	private String product_release_price;
-	private String product_sell_price;
 	private String product_buy_price;
+	private String product_sell_price;
 	private int product_left_count;
 	private int product_sell_count;
 	private String product_date;
@@ -18,9 +18,10 @@ public class ProductVO {
 	public ProductVO() {}
 
 	// 파라미터 생성자
+	
 	public ProductVO(int product_idx, String product_type, String product_brand, String product_name,
-			String product_model_num, String product_color, String product_release_price, String product_sell_price,
-			String product_buy_price, int product_left_count, int product_sell_count, String product_date) {
+			String product_model_num, String product_color, String product_release_price, String product_buy_price,
+			String product_sell_price, int product_left_count, int product_sell_count, String product_date) {
 		super();
 		this.product_idx = product_idx;
 		this.product_type = product_type;
@@ -29,8 +30,8 @@ public class ProductVO {
 		this.product_model_num = product_model_num;
 		this.product_color = product_color;
 		this.product_release_price = product_release_price;
-		this.product_sell_price = product_sell_price;
 		this.product_buy_price = product_buy_price;
+		this.product_sell_price = product_sell_price;
 		this.product_left_count = product_left_count;
 		this.product_sell_count = product_sell_count;
 		this.product_date = product_date;
@@ -40,6 +41,7 @@ public class ProductVO {
 	public int getProduct_idx() {
 		return product_idx;
 	}
+
 
 	public void setProduct_idx(int product_idx) {
 		this.product_idx = product_idx;
