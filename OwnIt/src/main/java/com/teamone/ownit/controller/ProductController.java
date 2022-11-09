@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.ProductService;
 import com.teamone.ownit.vo.*;
@@ -22,8 +23,8 @@ public class ProductController {
 
 	@GetMapping(value = "product_list")
 	public String product_list(Model model) {
-		List<ProductVO> productList = service.getProductList();
-		model.addAttribute(productList);
+//		List<ProductVO> productList = service.getProductList();
+//		model.addAttribute(productList);
 		return "product/product_list";
 	}
 	
@@ -100,14 +101,12 @@ public class ProductController {
 	
 // 박주닮
 	@GetMapping(value = "product_detail")
-	public String product_detail() {
-		int insertCount = service.insertwishlist();
+	public String product_detail(@RequestParam int product_idx, Model model) {
+		ProductVO productList = service.productDetail(product_idx);
 		
-		if(insertCount > 0) {
-			System.out.println("성공");
-		}
+			model.addAttribute("productList", productList);
+			return "product/product_detail";
 		
-		return "product/product_detail";
 	}
 
 
