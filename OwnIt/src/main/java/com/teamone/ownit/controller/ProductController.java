@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.teamone.ownit.service.ProductService;
 import com.teamone.ownit.vo.*;
@@ -18,20 +19,16 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService service;
-	
-	@GetMapping(value = "product_detail")
-	public String product_detail() {
-		return "product/product_detail";
-	}
-	
+
 	@GetMapping(value = "product_list")
-	public String product_list() {
+	public String product_list(Model model) {
+		List<ProductVO> productList = service.getProductList();
+		model.addAttribute(productList);
 		return "product/product_list";
 	}
 	
 	@GetMapping(value = "cart")
 	public String cart() {
-		
 		return "order/order_cart";
 	}
 	
@@ -40,16 +37,12 @@ public class ProductController {
 		return "product/product_order_complete";
 	}
 	
+	@GetMapping(value = "product_detail")
+	public String product_detail() {
+		return "product/product_detail";
+	}
+	
 }
-
-
-
-
-
-
-
-
-
 
 
 
