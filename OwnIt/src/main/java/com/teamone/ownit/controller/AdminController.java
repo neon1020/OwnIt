@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AdminController {
 	
+	// 김소희
 	@GetMapping(value = "admin")
 	public String admin() {
 		
@@ -42,33 +43,267 @@ public class AdminController {
 		return "admin/admin_productSell";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 300
 	@GetMapping(value = "admin_memberList")
 	public String admin7() {
 		
 		return "admin/admin_memberList";
 	}
 	
-	@GetMapping(value = "admin_noticeDetail")
-	public String admin8() {
-		
-		return "admin/admin_noticeDetail";
-	}
-	
-	@GetMapping(value = "admin_noticeList")
-	public String admin9() {
-		
-		return "admin/admin_noticeList";
-	}
-	
-	@GetMapping(value = "admin_noticeUpdate")
-	public String admin10() {
-		
-		return "admin/admin_noticeUpdate";
-	}
-	
-	@GetMapping(value = "admin_noticeWrite")
-	public String admin11() {
-		
-		return "admin/admin_noticeWrite";
-	}
+
 }
