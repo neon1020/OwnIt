@@ -1,10 +1,16 @@
 package com.teamone.ownit.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.teamone.ownit.service.ProductService;
+
 @Controller
 public class ProductController {
+	
+	@Autowired
+	private ProductService service;
 	
 	@GetMapping(value = "product_detail")
 	public String product_detail() {
@@ -18,6 +24,7 @@ public class ProductController {
 	
 	@GetMapping(value = "cart")
 	public String cart() {
+		
 		return "order/order_cart";
 	}
 	
@@ -27,3 +34,166 @@ public class ProductController {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 박주닮
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
