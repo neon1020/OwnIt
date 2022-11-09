@@ -47,7 +47,7 @@
                <tbody>
                  <tr>
                    <th scope="row" style="border-left: none; border-right: none;">3</th>
-                   <td style="border-left: none; border-right: none;"><a href="noticeDetail">[이벤트] 행운의 룰렛 돌리기 이벤트</a></td>
+                   <td style="border-left: none; border-right: none; text-align: left;"><a href="noticeDetail">[이벤트] 행운의 룰렛 돌리기 이벤트</a></td>
                    <td style="border-left: none; border-right: none;">2022-10-31</td>
                    <td style="border-left: none; border-right: none;">330</td>
                  </tr>
