@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!doctype html>
 <html lang="en">
   <head>
@@ -141,7 +142,7 @@
                   <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }"><b>${product.product_brand }</b></a></h3>
                     <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }">${product.product_name } </a></h3>
                     <div class="product-price">
-                      <span>${product.product_buy_price }원</span>
+                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action">
                         <a href="#!">장바구니에 추가</a>
                       </span>
