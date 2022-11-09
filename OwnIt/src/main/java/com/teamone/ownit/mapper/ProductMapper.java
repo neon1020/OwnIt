@@ -1,7 +1,6 @@
 package com.teamone.ownit.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.vo.ProductVO;
 
