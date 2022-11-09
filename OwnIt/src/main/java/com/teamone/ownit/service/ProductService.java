@@ -1,6 +1,7 @@
 package com.teamone.ownit.service;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
@@ -9,10 +10,14 @@ import com.teamone.ownit.vo.ProductVO;
 
 @Service
 public class ProductService {
-
-
 	@Autowired
 	private ProductMapper mapper;
+
+//	public List<ProductVO> getProductList() {
+//		System.out.println("ProductService - getProductList()");
+//		return mapper.getProductList();
+//	}
+
 	
 
 
@@ -90,17 +95,6 @@ public class ProductService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-//박주닮
 
 
 
@@ -192,6 +186,102 @@ public class ProductService {
 public ProductVO productDetail(int product_idx) {
 	return mapper.productDetail(product_idx);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
