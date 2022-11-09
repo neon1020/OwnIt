@@ -20,12 +20,12 @@ public class ProductController {
 	@Autowired
 	private ProductService service;
 
-	@GetMapping(value = "product_list")
-	public String product_list(Model model) {
-		List<ProductVO> productList = service.getProductList();
-		model.addAttribute(productList);
-		return "product/product_list";
-	}
+//	@GetMapping(value = "product_list")
+//	public String product_list(Model model) {
+//		List<ProductVO> productList = service.getProductList();
+//		model.addAttribute(productList);
+//		return "product/product_list";
+//	}
 	
 	@GetMapping(value = "cart")
 	public String cart() {
