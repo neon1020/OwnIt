@@ -98,16 +98,10 @@ public interface ProductMapper {
 
 
 
-
-
-
-
-
-
 // 박주닮
 
-	ProductVO productDetail(@Param("product_idx") int product_idx); 
 
+	ProductVO productDetail(@Param("product_idx") int product_idx); 
 
 
 

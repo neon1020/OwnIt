@@ -23,8 +23,8 @@ public class ProductController {
 
 	@GetMapping(value = "product_list")
 	public String product_list(Model model) {
-//		List<ProductVO> productList = service.getProductList();
-//		model.addAttribute("productList", productList);
+		List<ProductVO> productList = service.getProductList();
+		model.addAttribute("productList", productList);
 		return "product/product_list";
 	}
 	
