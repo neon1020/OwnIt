@@ -1,5 +1,7 @@
 package com.teamone.ownit.mapper;
 
-public interface ProductMapper { 
+public interface ProductMapper {
+
+	int wishlist(); 
 	
 }

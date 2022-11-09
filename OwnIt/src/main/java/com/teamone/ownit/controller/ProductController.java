@@ -101,6 +101,12 @@ public class ProductController {
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail() {
+		int insertCount = service.insertwishlist();
+		
+		if(insertCount > 0) {
+			System.out.println("성공");
+		}
+		
 		return "product/product_detail";
 	}
 

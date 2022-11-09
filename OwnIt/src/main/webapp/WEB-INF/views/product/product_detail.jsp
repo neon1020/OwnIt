@@ -186,9 +186,7 @@
             
             <div>
               <div class="col-lg-12">
-               <button type="button" class="btn"  onclick="location.href=''" style="background: black; color: white; width: 195px;">
-                	Add to Cart
-                </button>
+                	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;">Add to Cart</a>
 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;">
 					Add to wishlist
 				</button>
