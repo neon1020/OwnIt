@@ -6,6 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class NoticeController {
 	
+	//공지사항 writeForm - admin_noticeWrite
+	@GetMapping(value = "admin_noticeWrite")
+	public String write() {
+		
+		return "notice/admin_noticeWrite";
+	}
+	
+	//공지사항 writePro - admin_noticeWritePro
+	@PostMapping(value = "/admin_noticeWritePro")
+	public String writePro(@ModelAttribute NoticeVO board, Model model) {
+		int insertCount = service.registBoard(board);
+		
+		if(insertCount > 0) {
+			return "redirect:/noticeList";
+		} else {
+			model.addAttribute("msg", "글 쓰기 실패!");
+			return "notice/fail_back";
+		}
+		
+	}
+	
 	
 	@GetMapping(value = "noticeList")
 	public String noticeList() {
@@ -50,10 +71,15 @@ public class NoticeController {
 		return "notice/admin_noticeUpdate";
 	}
 	
-	@GetMapping(value = "admin_noticeWrite")
-	public String admin11() {
-		
-		return "notice/admin_noticeWrite";
-	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
