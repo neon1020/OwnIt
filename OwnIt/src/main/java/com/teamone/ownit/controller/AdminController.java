@@ -48,27 +48,5 @@ public class AdminController {
 		return "admin/admin_memberList";
 	}
 	
-	@GetMapping(value = "admin_noticeDetail")
-	public String admin8() {
-		
-		return "admin/admin_noticeDetail";
-	}
-	
-	@GetMapping(value = "admin_noticeList")
-	public String admin9() {
-		
-		return "admin/admin_noticeList";
-	}
-	
-	@GetMapping(value = "admin_noticeUpdate")
-	public String admin10() {
-		
-		return "admin/admin_noticeUpdate";
-	}
-	
-	@GetMapping(value = "admin_noticeWrite")
-	public String admin11() {
-		
-		return "admin/admin_noticeWrite";
-	}
+
 }
