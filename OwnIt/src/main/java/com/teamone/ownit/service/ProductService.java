@@ -102,9 +102,6 @@ public class ProductService {
 
 //박주닮
 
-public int insertwishlist() {
-	return mapper.wishlist();
-}
 
 
 
