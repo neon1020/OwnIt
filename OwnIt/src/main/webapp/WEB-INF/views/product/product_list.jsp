@@ -133,14 +133,14 @@
               <div class="col-6 col-md-4">
                 <div class="product">
                   <figure class="product-image">
-                    <a href="product_detail?product_idx=${product.product_idx }">
-                      <img src="resources/img//product/phone2.png" alt="Image">
-                      <img src="resources/img//product/phone3.png" alt="Image">
+                    <a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">
+                      <img src="resources/img//product/${product.image_original_file1 }" alt="Image">
+                      <img src="resources/img//product/${product.image_original_file2 }" alt="Image">
                     </a>
                   </figure>
                   <div class="product-meta">
-                  <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }"><b>${product.product_brand }</b></a></h3>
-                    <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }">${product.product_name } </a></h3>
+                  <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}"><b>${product.product_brand }</b></a></h3>
+                    <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action">

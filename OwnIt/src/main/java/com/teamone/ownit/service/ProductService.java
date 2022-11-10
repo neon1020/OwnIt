@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ProductMapper;
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
 
 @Service
@@ -19,7 +20,6 @@ public class ProductService {
 	}
 
 	
-
 
 
 
@@ -183,7 +183,7 @@ public class ProductService {
 
 
 
-
+	
 
 
 

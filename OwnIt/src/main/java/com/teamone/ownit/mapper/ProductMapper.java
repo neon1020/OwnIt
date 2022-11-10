@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface ProductMapper {
 	// 상품목록 조회
 	List<ProductVO> getProductList(); 
+
+	// 이미지 조회
+	List<ImageVO> selectImage(List<ProductVO> productList); 
 	
 
-
-	
-//	List<ProductVO> getProductList(); 
-	
 
 
 
@@ -101,10 +101,12 @@ public interface ProductMapper {
 // 박주닮
 
 
-	ProductVO productDetail(@Param("product_idx") int product_idx); 
+	ProductVO productDetail(@Param("product_idx") int product_idx);
 
 
 
+
+	
 
 
 

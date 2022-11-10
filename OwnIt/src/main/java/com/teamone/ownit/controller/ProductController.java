@@ -1,6 +1,5 @@
 package com.teamone.ownit.controller;
 
-import java.util.ArrayList;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -23,8 +22,10 @@ public class ProductController {
 
 	@GetMapping(value = "product_list")
 	public String product_list(Model model) {
-//		List<ProductVO> productList = service.getProductList();
-//		model.addAttribute("productList", productList);
+		List<ProductVO> productList = service.getProductList();
+		
+		model.addAttribute("productList", productList);
+		System.out.println(productList);
 		return "product/product_list";
 	}
 	
@@ -97,8 +98,7 @@ public class ProductController {
 
 
 	
-	
-// 박주닮
+	// 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {
 		ProductVO product = service.productDetail(product_idx);
@@ -106,6 +106,7 @@ public class ProductController {
 			return "product/product_detail";
 		
 	}
+
 
 
 
