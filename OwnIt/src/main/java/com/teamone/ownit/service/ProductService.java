@@ -19,10 +19,10 @@ public class ProductService {
 		return mapper.getProductList();
 	}
 
-	
-
-
-
+	public List<ProductVO> getCategorisedProduct(String id) {
+		System.out.println("getCategorisedProduct()");
+		return mapper.getCategorisedProduct(id);
+	}
 
 
 
@@ -181,20 +181,20 @@ public class ProductService {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
