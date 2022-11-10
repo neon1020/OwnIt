@@ -83,11 +83,18 @@
 							</div>
 						</div>
 						
-						<div class="col-12">
-							<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
+						<div class="col-12" style="height: 25px; margin-top: 15px;">
+							<div class="custom-control custom-checkbox mb-2" style="text-align: left;">
 								<input type="checkbox" class="custom-control-input" id="customCheck1" name="agree1">
-								<label class="custom-control-label" for="customCheck1">필수 동의 약관</label>
+								<label class="custom-control-label" for="customCheck1">[필수] 이용 약관 동의</label>
 								<button type="button" class="counter-plus icon-plus" style="background: white;" data-toggle="modal" data-target="#exampleModal-1"></button>
+							</div>
+						</div>
+						
+						<div class="col-12" style="height: 25px;">
+							<div class="custom-control custom-checkbox mb-2" style="text-align: left;">
+								<input type="checkbox" class="custom-control-input" id="customCheck2" name="agree2">
+								<label class="custom-control-label" for="customCheck2">[선택] 광고성 정보 수신 동의</label>
 							</div>
 						</div>
 
