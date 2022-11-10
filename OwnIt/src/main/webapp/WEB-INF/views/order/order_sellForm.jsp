@@ -81,11 +81,12 @@ function checkForm(){
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
-          	<form action="member_sell_detail" method="get" >
+          	<form action="order_sellDetail" method="get" >
+          	<input type="hidden" name="product_idx" value="${product.product_idx }">
 	          	<table class="table">
 	          		
 	          		<tr>
-	          			<th><img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+	          			<th><img src="resources/img/product/${image.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br>
 		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
 		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>

@@ -85,7 +85,7 @@
 		     color: #FFF; 
 	     }
 	    span{
-	    	font-size: 15px;
+	    	font-size: 14px;
 	    }
 	    #title1{
 	    	font-size: 13px; font: bold;
@@ -128,7 +128,7 @@
     </section>
 
 
-   <!-- product -->
+   <!-- product  상품 메인이미지 3개-->
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
@@ -138,28 +138,30 @@
               <div class="col-lg-10 order-lg-2">
                 <div class="owl-carousel gallery" data-slider-id="1" data-thumbs="true" data-nav="true">
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail1.png" 
-                      style="background-image: url(resources/img/product/productDetail1.png);">
+                  <!-- 클릭시 보여지는 작은 이미지 -->
+                    <a class="image" href="resources/img/product/${image.image_real_file1 }" 
+                      style="background-image: url(resources/img/product/${image.image_real_file1 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail2.png" 
-                      style="background-image: url(resources/img/product/productDetail2.png);">
+                    <a class="image" href="resources/img/product/${image.image_real_file2 }" 
+                      style="background-image: url(resources/img/product/${image.image_real_file2 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail3.png" 
-                      style="background-image: url(resources/img/product/productDetail3.png);">
+                    <a class="image" href="resources/img/product/${image.image_real_file3 }" 
+                      style="background-image: url(resources/img/product/${image.image_real_file3 });">
                     </a>
                   </figure>
                 </div>
               </div>
               
+              <!--  상품 왼쪽 작은 이미지 3개 -->
               <div class="col-lg-2 text-center text-lg-left order-lg-1">
                 <div class="owl-thumbs" data-slider-id="1">
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail1.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail2.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail3.png" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_real_file1 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_real_file2 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_real_file3 }" alt=""></span>
                 </div>
               </div>
             </div>
@@ -171,10 +173,10 @@
                 <h4 class="item-title">${product.product_brand }</h4>
                 <p>${product.product_name }</p>
                 <!-- 구매 판매 버튼 -->
-                <button id="btn1" type="button" class="btn"  onclick="location.href='member_buy_agree'" >
+                <button id="btn1" type="button" class="btn"  onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
                 	<p>구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</p>
                 </button>
-				<button id="btn2" type="button" class="btn" onclick="location.href='member_sell_agree'" >
+				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
 					<p>판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</p>
 				</button>
 				<!-- 구매 판매 버튼 끝 -->

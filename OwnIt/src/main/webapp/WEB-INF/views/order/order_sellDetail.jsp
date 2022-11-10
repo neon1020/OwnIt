@@ -41,7 +41,7 @@
 	          	<table class="table">
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+	          				<img src="resources/img/product/${image.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 		          			<span style="font: bold; color: black; font-size: 15px;">
 		          			MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)
 		          			</span><br>
