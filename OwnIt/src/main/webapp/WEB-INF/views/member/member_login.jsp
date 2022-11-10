@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div style="text-align: center;">
-							<a href="member_joinForm" >이메일 가입 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-1" style="cursor: pointer;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="cursor: pointer;">비밀번호 찾기</a>
+							<a href="member_joinForm" style="color: black;">이메일 가입 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-1" style="color: black;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black;">비밀번호 찾기</a>
 							
 							<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">

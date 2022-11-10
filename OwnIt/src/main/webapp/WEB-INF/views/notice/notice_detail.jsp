@@ -34,7 +34,7 @@
 
           <!-- content -->
           <article class="col-lg-9 pl-lg-5">
-          	<h1 class="mb-0">Notice</h1>
+<!--           	<h1 class="mb-0">Notice</h1> -->
 			<table class="table table-bordered" style="margin-top: 20px; text-align: center; border-left: none; border-right: none;">
                <tbody>
                  <tr>
@@ -47,7 +47,7 @@
                    <th width="100px" style="border-left: none; border-right: none;">Read&nbsp;&nbsp;&nbsp;131</th>
                  </tr>
                  <tr>
-                   <td colspan="4" style="border-left: none; border-right: none;">
+                   <td colspan="4" style="border-left: none; border-right: none; text-align: left;">
                    	안녕하세요. Own It 입니다.<br>
                    	11월 운영 일정 안내드립니다.<br><br>
                    	◎ 거래 일정<br>
