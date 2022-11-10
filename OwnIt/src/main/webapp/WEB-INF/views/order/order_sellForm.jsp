@@ -119,9 +119,9 @@ function checkForm(){
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
-	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="#" style="background-color: black; color: white;'">계좌 추가</a></span>
+	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
 	          			계좌 : 1234-12-123456<br>
-	          			에금주 : 박주닮
+	          			예금주 : 박주닮
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -137,7 +137,8 @@ function checkForm(){
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span" style="font-size: 15px; ">즉시 판매가</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF;"><fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span><br>
+		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF;">
+		          				<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span><br>
 		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">선불/판매자 부담</span>
@@ -146,7 +147,8 @@ function checkForm(){
 	          		<tr>
 	          			<th><span id="sell_span">최종 판매 정보</span><br>
 		          			거래금액<br>
-		          			<span id="sell_span" style="float: right;color: #00A5FF;">+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span>
+		          			<span id="sell_span" style="float: right;color: #00A5FF;">
+		          			+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
