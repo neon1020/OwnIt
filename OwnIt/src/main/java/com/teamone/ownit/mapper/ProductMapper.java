@@ -5,7 +5,7 @@ import java.util.List;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface ProductMapper {
-	
+	// 상품목록 조회
 	List<ProductVO> getProductList(); 
 	
 

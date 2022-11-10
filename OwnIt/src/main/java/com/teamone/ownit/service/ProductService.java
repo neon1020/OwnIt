@@ -12,7 +12,7 @@ import com.teamone.ownit.vo.ProductVO;
 public class ProductService {
 	@Autowired
 	private ProductMapper mapper;
-
+	// 상품목록 조회
 	public List<ProductVO> getProductList() {
 		System.out.println("ProductService - getProductList()");
 		return mapper.getProductList();
