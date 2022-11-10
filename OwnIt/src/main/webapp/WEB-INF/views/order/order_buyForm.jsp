@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,10 +59,11 @@
 	          	<h3 align="center" style="color: #6c757d;">주문확인서</h3>
 	          	<table class="table">
 	          		<tr>
-	          			<th><img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-		          			<span style="font: bold; color: black; font-size: 15px;">MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br>
-		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-		          			 <span style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>
+	          			<th>
+	          				<img src="resources/img/product/${image.image_original_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+		          			<span style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br>
+		          			 ${product.product_name }<br>
+		          			 <span style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
 	          			 </th>
 	          		</tr>
 	          		<tr>
@@ -75,11 +77,10 @@
 	          		</tr>
 	          		<tr>
 	          			<th><span>배송 방법</span><br>
-	          			<span style="font-size: 15px; float: right;"><a style="border: none;">일반배송 3000원</a></span><br>
-	          		
+	          			<span style="font-size: 15px; float: right;"><a style="border: none;">일반배송 무료</a></span><br>
 	          		</tr>
 	          		<tr>
-	          			<th>상품 금액<span style="float: right;font-size: 15px; color: #6c757d;">460,000원</span><br>
+	          			<th>상품 금액<span style="float: right;font-size: 15px; color: #6c757d;"><fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/></span><br>
 		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
@@ -101,7 +102,7 @@
 	          		<tr>
 	          			<th>
 	          				<span style="font-size: 15px; color: black;">총 결제금액</span><br>
-	          				<span style="float: right; font-size: 18px;color: red;">460,000원</span>
+	          				<span style="float: right; font-size: 18px;color: red;"><fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span>
 	          			</th>
 	          		</tr>
 	          		<tr>

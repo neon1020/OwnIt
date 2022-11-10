@@ -15,6 +15,13 @@
 	font: bold; 
 	color: black;
 	}
+	
+	#sellFormImage{
+		width: 90px; 
+		height: 90px; 
+		float: left; 
+		border-radius: 15px;
+	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
@@ -73,10 +80,10 @@
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/${image.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-	          				<span>MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br>
-	          				 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-	          				 <span>ONE SIZE</span>
+	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage">
+	          				<span>${product.product_brand }</span><br>
+	          				 ${product.product_name }<br>
+	          				 <span>${product.product_model_num }</span>
 	          			</th>
 	          		</tr>
 	          		<tr>

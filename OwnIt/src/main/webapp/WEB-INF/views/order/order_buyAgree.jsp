@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +66,10 @@ var checked = false;
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
+          	
+          	
           	<form action="order_buyForm" name="buyForm" method="get">
-          	<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		<input type="hidden" name="product_idx" value="${product.product_idx }">
 	          	<table class="table">
 	          		<tr>
 	          			<th style="font-size: 30px; font: bold; color: black;">
@@ -73,14 +77,16 @@ var checked = false;
 		          			하시기 전에 꼭 확인하세요.
 	          			</th>
 	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/${image.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-	          				<span >MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br> 
-	          				애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-	          				<span>ONE SIZE</span>
+	          				<img src="resources/img/product/${image.image_original_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+	          				<span >${product.product_brand }</span><br> 
+	          				${product.product_name }<br>
+	          				<span>${product.product_model_num }</span>
 	          			</th>
 	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
 	          				<input type="checkbox" id="check1" onchange="checkForm()">
@@ -88,6 +94,7 @@ var checked = false;
 		          			상품 이미지, 모델번호, 출시일, 상품명, 사이즈를 한 번 더 확인했습니다.
 	          			</th>
 	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
 	          				<input type="checkbox" id="check2" onchange="checkForm()">
@@ -96,6 +103,7 @@ var checked = false;
 		          				국내 발매 상품 여부는 확인드리지 않습니다.
 	          				</th>
 	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
 	          				<span>제조사에서 불량으로 인정하지 않는 기준은 하자로 판단하지 않습니다.</span><br>
@@ -103,6 +111,7 @@ var checked = false;
 	          				<a href="javascript:func1()"><span style="color: skyblue;">검수기준 보기</span></a>
 	          			</th>
 	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
 		          			<span>OwnIt의 최신 이용정책을 모두 확인하였으며, 구매를 계속합니다.</span><br>
