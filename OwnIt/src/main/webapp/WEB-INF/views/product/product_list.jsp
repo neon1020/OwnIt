@@ -64,8 +64,8 @@
   <script src="resources/js/jquery-3.6.1.js"></script>
   <script type="text/javascript">
 	$(function() {
- 		$(".dropdown-menu show").change(function() {
- 			alert("바뀜!" + this.value);
+ 		$("#price_high").click(function() {
+ 			alert("바뀜!");
  		});
  	});
   </script>
@@ -128,10 +128,10 @@
                </c:if>
              </a>
              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" >인기순</a><br>
-               <a class="dropdown-item"  id="price_high">가격높은순</a><br>
-               <a class="dropdown-item"  id="price_row">가격낮은순</a><br>
-               <a class="dropdown-item"  id="product_new">신제품</a>
+               <a class="dropdown-item" id="like_high">인기순</a><br>
+               <a class="dropdown-item" id="price_high">가격높은순</a><br>
+               <a class="dropdown-item" id="price_row">가격낮은순</a><br>
+               <a class="dropdown-item" id="product_new">신제품</a>
              </div>
            </div>
          </div>
