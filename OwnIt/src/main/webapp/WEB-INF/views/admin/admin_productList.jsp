@@ -135,18 +135,18 @@
 	                                </thead>
 	                                <tbody>
 	                                
-	                                	<c:forEach var="i" begin="1" items="${productList }">
+	                                	<c:forEach var="i" begin="1" items="${map.productList }">
 		                                    <tr>
 		                                    	<td>
 		                                    		<input type="checkbox" style="outline: 1px solid #000000">
 		                                    	</td>
-		                                        <td><img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${image.image_real_file1}" width="80" height="80"></td>
-		                                        <td>${product.product_model_num }</td>
-		                                        <td>${product.product_brand }</td>
-		                                        <td>${product.product_type }</td>
-		                                        <td>${product.product_name }</td>
+		                                        <td><img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${map.image.image_real_file1}" width="80" height="80"></td>
+		                                        <td>${map.product.product_model_num }</td>
+		                                        <td>${map.product.product_brand }</td>
+		                                        <td>${map.product.product_type }</td>
+		                                        <td>${map.product.product_name }</td>
 		                                        <td>
-		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${product.product_left_count }">
+		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${map.product.product_left_count }">
 		                                        </td>
 		                                        <td>
 													<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">

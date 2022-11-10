@@ -3,25 +3,25 @@
 <mapper namespace="com.teamone.ownit.mapper.AdminMapper">
 
 <!-- 김소희 -->
+	<select id="selectProductListCount" resultType="integer">
+		SELECT COUNT(*) FROM product
+	</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<select id="selectProductList" resultType="com.teamone.ownit.vo.ProductVO">
+		SELECT * 
+			FROM product
+			ORDER BY
+				product_idx DESC
+			LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<select id="selectImageList" resultType="com.teamone.ownit.vo.ImageVO">
+		SELECT * 
+			FROM image
+			ORDER BY
+				image_idx DESC
+			LIMIT #{startRow}, #{listLimit}
+	</select>
 
 
 
