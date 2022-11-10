@@ -56,7 +56,19 @@
   text-align: right;
   color: #6c757d; }
   
+  .product-like::after{
+  	color: red;
+  }
+  
   </style>
+  <script src="resources/js/jquery-3.6.1.js"></script>
+  <script type="text/javascript">
+	$(function() {
+ 		$(".dropdown-menu show").change(function() {
+ 			alert("바뀜!" + this.value);
+ 		});
+ 	});
+  </script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
 	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
@@ -83,26 +95,26 @@
           <div class="col-lg-9">
             <div class="row gutter-2 align-items-end">
               <div class="col-md-6">
-                <h1 class="mb-0">Tech</h1>
-                <span class="eyebrow">(총 개수) products</span>
+                <h1 class="mb-0"><a href="product_list" style="color: black;">Tech</a></h1>
+                <span class="eyebrow">${cnt } products</span>
               </div>
               <div class="items">
-			   	<a href="#GetMapping~~" id="phone">
+			   	<a href="listProductByCategory?id=스마트폰" id="phone" >
 			   		<img src="./resources/img/product/phone1.png" alt="휴대폰">휴대폰
 			   	</a>
-			   	<a href="#" id="tablet">
+			   	<a href="listProductByCategory?id=태블릿" id="tablet">
 			   		<img src="./resources/img/product/tablet1.png">태블릿
 			   	</a>
-			   	<a href="#" id="watch">
+			   	<a href="listProductByCategory?id=스마트워치" id="watch">
 			   		<img src="./resources/img/product/watch1.png">스마트워치
 			   	</a>
-			   		<a href="#" id="earphone">
+		   		<a href="listProductByCategory?id=이어폰" id="earphone">
 			   		<img src="./resources/img/product/earphone1.jpeg">이어폰
 			   	</a>
-			   	<a href="#" id="headphone">
+			   	<a href="listProductByCategory?id=헤드폰" id="headphone">
 			   		<img src="./resources/img/product/head1.png">헤드폰
 			   	</a>
-			   	<a href="#" id="laptop">
+			   	<a href="listProductByCategory?id=노트북" id="laptop">
 			   		<img src="./resources/img/product/mac1.png">노트북
 			   	</a>
 		     </div>
@@ -111,13 +123,15 @@
          <div class="col-md-6 text-md-right" style="margin-top: 25px">
            <div class="dropdown">
              <a class="btn btn-outline-secondary btn-sm dropdown-toggle" href="#!" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <c:if test="">
                인기순
+               </c:if>
              </a>
              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" href="#!">인기순</a><br>
-               <a class="dropdown-item" href="#!">가격높은순</a><br>
-               <a class="dropdown-item" href="#!">가격낮은순</a><br>
-               <a class="dropdown-item" href="#!">신제품</a>
+               <a class="dropdown-item" >인기순</a><br>
+               <a class="dropdown-item"  id="price_high">가격높은순</a><br>
+               <a class="dropdown-item"  id="price_row">가격낮은순</a><br>
+               <a class="dropdown-item"  id="product_new">신제품</a>
              </div>
            </div>
          </div>
@@ -134,21 +148,21 @@
                 <div class="product">
                   <figure class="product-image">
                     <a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">
-                      <img src="resources/img//product/${product.image_original_file1 }" alt="Image">
-                      <img src="resources/img//product/${product.image_original_file2 }" alt="Image">
+                      <img src="resources/img//product/${product.image_original_file1 }" alt="Image" width="261.66px" height="261.66px">
+                      <img src="resources/img//product/${product.image_original_file2 }" alt="Image" width="261.66px" height="261.66px">
                     </a>
                   </figure>
-                  <div class="product-meta">
+                  <div class="product-meta" style="width: 261.66px; height: 160.72px">
                   <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}"><b>${product.product_brand }</b></a></h3>
-                    <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
+                    <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
+                        <a href="#!" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
                     <a href="#!" class="product-like"></a>
-                    <a href="#!" class="style-icon"><img src="resources/img/product/review_icon.png">Review</a>
+                    <a href="#!" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
                   </div>
                 </div>
               </div>
