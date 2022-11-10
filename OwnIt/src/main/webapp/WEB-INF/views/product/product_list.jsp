@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!doctype html>
 <html lang="en">
   <head>
@@ -128,19 +129,20 @@
           <!-- 상품 목록 리스팅 코드 / content -->
           <div class="col-lg-9">
             <div class="row gutter-2 gutter-lg-3">
+             <c:forEach var="product" items="${productList }" >
               <div class="col-6 col-md-4">
                 <div class="product">
                   <figure class="product-image">
-                    <a href="product_detail">
+                    <a href="product_detail?product_idx=${product.product_idx }">
                       <img src="resources/img//product/phone2.png" alt="Image">
                       <img src="resources/img//product/phone3.png" alt="Image">
                     </a>
                   </figure>
                   <div class="product-meta">
-                  <h3 class="product-title"><a href="#!"><b>Apple</b></a></h3>
-                    <h3 class="product-title"><a href="#!">Apple iPhone 14 Pro 256GB Space Black (Korean Ver.) </a></h3>
+                  <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }"><b>${product.product_brand }</b></a></h3>
+                    <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }">${product.product_name } </a></h3>
                     <div class="product-price">
-                      <span>1,540,000원</span>
+                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action">
                         <a href="#!">장바구니에 추가</a>
                       </span>
@@ -150,155 +152,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <div class="owl-carousel" data-nav="true" data-loop="true">
-                      <a href="#!">
-                        <img src="resources/img/demo/product-2.jpg" alt="Image">
-                      </a>
-                      <a href="#!">
-                        <img src="resources/img/demo/product-2-2.jpg" alt="Image">
-                      </a>
-                      <a href="#!">
-                        <img src="resources/img/demo/product-2-3.jpg" alt="Image">
-                      </a>
-                    </div>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Dark Stained NY11 Dining Chair</a></h3>
-                    <div class="product-price">
-                      <span>$504</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-3.jpg" alt="Image">
-                      <img src="resources/img/demo/product-3-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Black IC Pendant Light</a></h3>
-                    <div class="product-price">
-                      <span>$410</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-24.jpg" alt="Image">
-                      <img src="resources/img/demo/product-24-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Black Closca Helmet</a></h3>
-                    <div class="product-price">
-                      <span>$132</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-25.jpg" alt="Image">
-                      <img src="resources/img/demo/product-25-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Gravel Black Sigg Water Bottle</a></h3>
-                    <div class="product-price">
-                      <span>$23</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-4.jpg" alt="Image">
-                      <img src="resources/img/demo/product-4-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Red Analog Magazine Rack</a></h3>
-                    <div class="product-price">
-                      <span>$120</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-5.jpg" alt="Image">
-                      <img src="resources/img/demo/product-5-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Black Piani Table Lamp</a></h3>
-                    <div class="product-price">
-                      <span>$290</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div class="product">
-                  <figure class="product-image">
-                    <a href="#!">
-                      <img src="resources/img/demo/product-6.jpg" alt="Image">
-                      <img src="resources/img/demo/product-6-2.jpg" alt="Image">
-                    </a>
-                  </figure>
-                  <div class="product-meta">
-                    <h3 class="product-title"><a href="#!">Grey Pendant Bell Lamp</a></h3>
-                    <div class="product-price">
-                      <span>$258</span>
-                      <span class="product-action">
-                        <a href="#!">장바구니에 추가</a>
-                      </span>
-                    </div>
-                    <a href="#!" class="product-like"></a>
-                  </div>
-                </div>
-              </div>
+              </c:forEach>
             </div>
             <div class="row">
               <div class="col">
