@@ -23,8 +23,8 @@ public class ProductController {
 
 	@GetMapping(value = "product_list")
 	public String product_list(Model model) {
-//		List<ProductVO> productList = service.getProductList();
-//		model.addAttribute("productList", productList);
+		List<ProductVO> productList = service.getProductList();
+		model.addAttribute("productList", productList);
 		return "product/product_list";
 	}
 	
@@ -101,15 +101,16 @@ public class ProductController {
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {
+		
+		ImageVO image = service.selectDetailImage(product_idx);
+			model.addAttribute("image", image);
+		
+		
 		ProductVO product = service.productDetail(product_idx);
 			model.addAttribute("product", product);
 			return "product/product_detail";
 		
 	}
-
-
-
-
 
 
 

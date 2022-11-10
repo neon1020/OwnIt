@@ -106,10 +106,10 @@
 		
 	</select>
 
-
-
-
-
+	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO">
+		SELECT * FROM image
+		WHERE image_idx=#{product_idx}
+	</select>
 
 
 

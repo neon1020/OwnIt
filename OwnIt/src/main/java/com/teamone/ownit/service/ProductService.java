@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ProductMapper;
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
 
 @Service
@@ -97,10 +98,14 @@ public class ProductService {
 
 
 
-
 // 박주닮
 	public ProductVO productDetail(int product_idx) {
 		return mapper.productDetail(product_idx);
+	}
+
+
+	public ImageVO selectDetailImage(int product_idx) {
+		return mapper.selectDetailImage(product_idx);
 	}
 
 
@@ -177,24 +182,19 @@ public class ProductService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
