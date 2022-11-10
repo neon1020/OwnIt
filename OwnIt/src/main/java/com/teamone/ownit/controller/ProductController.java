@@ -98,7 +98,6 @@ public class ProductController {
 
 	
 	
-	
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {
@@ -107,10 +106,6 @@ public class ProductController {
 			return "product/product_detail";
 		
 	}
-
-
-
-
 
 
 

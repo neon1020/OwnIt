@@ -1,12 +1,14 @@
 package com.teamone.ownit.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.teamone.ownit.vo.ProductVO;
 
 public interface ProductMapper {
-
-
+	// 상품목록 조회
+	List<ProductVO> getProductList(); 
 	
 
 
@@ -96,13 +98,10 @@ public interface ProductMapper {
 
 
 
-
 // 박주닮
 
 
 	ProductVO productDetail(@Param("product_idx") int product_idx); 
-
-
 
 
 
