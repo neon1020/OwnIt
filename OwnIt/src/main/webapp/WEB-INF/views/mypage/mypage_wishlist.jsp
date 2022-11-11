@@ -63,7 +63,7 @@
 			  </tr>
 			  <tr>
 				  <td style="width: 200px;"><img src="<%=request.getContextPath() %>/resources/img/demo/product-1.jpg" width="150" height="150"></td>
-				  <td style="width: 500px; vertical-align: middle; text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
+				  <td style="width: 500px; vertical-align: middle;"><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
 				  <td style="width: 200px; vertical-align: middle;">
 				    <input type="button" value="Add to Cart" class="btn btn-outline-dark btn-sm" style="width: 125px;">
 				    <input type="button" id="btn_remove" value="Remove" class="btn btn-outline-dark btn-sm" style="width: 125px;">
@@ -71,7 +71,7 @@
 			  </tr>
 			  <tr>
 				  <td style="width: 200px;"><img src="<%=request.getContextPath() %>/resources/img/demo/product-1.jpg" width="150" height="150"></td>
-				  <td style="width: 500px; vertical-align: middle; text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+				  <td style="width: 500px; vertical-align: middle;"><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 				  <td style="width: 200px; vertical-align: middle;"">
 				    <input type="button" value="Add to Cart" class="btn btn-outline-dark btn-sm" style="width: 125px;">
 				    <input type="button" id="btn_remove" value="Remove" class="btn btn-outline-dark btn-sm" style="width: 125px;">

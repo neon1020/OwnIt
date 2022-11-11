@@ -188,8 +188,8 @@
                           <input type="text" class="form-control" placeholder="계좌별칭">
                         </div>
                       </div>
-                      <div class="col-12" style="text-align: center;">
-                        <input type="button" value="추가하기" class="btn btn-dark btn-rounded" onclick="#">
+                      <div class="col-12">
+                        <a href="#!" class="btn btn-primary">Add</a>
                       </div>
                     </div>
                   </div>
