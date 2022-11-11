@@ -9,24 +9,19 @@
 
 	<select id="selectProductList" resultType="com.teamone.ownit.vo.ProductVO">
 		SELECT * 
-			FROM product
-			ORDER BY
-				product_idx DESC
-<!-- 			LIMIT #{startRow}, #{listLimit} -->
-
-<!-- 		SELECT * -->
-<!-- 			FROM product p LEFT OUTER JOIN image i -->
-<!-- 			ON p.product_idx = i.product_idx -->
-<!-- 			ORDER BY p.product_idx; -->
+			FROM product p LEFT OUTER JOIN image i
+			ON p.product_idx = i.product_idx
+			ORDER BY p.product_idx;
 	</select>
 	
-	<select id="selectImageList" resultType="com.teamone.ownit.vo.ImageVO">
-		SELECT * 
-			FROM image
-			ORDER BY
-				image_idx DESC
-<!-- 			LIMIT #{startRow}, #{listLimit} -->
-	</select>
+
+
+
+
+
+
+
+
 
 
 

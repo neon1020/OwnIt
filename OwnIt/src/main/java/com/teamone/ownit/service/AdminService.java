@@ -24,9 +24,9 @@ public class AdminService {
 		return mapper.selectProductList(startRow, listLimit);
 	}
 
-	public List<ImageVO> getImageList(int startRow, int listLimit) {
-		return mapper.selectImageList(startRow, listLimit);
-	}
+
+	
+	
 	
 	
 	

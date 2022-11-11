@@ -12,7 +12,7 @@ public interface AdminMapper {
 
 	List<ProductVO> selectProductList(int startRow, int listLimit);
 
-	List<ImageVO> selectImageList(int startRow, int listLimit); 
+	
 	
 	
 	

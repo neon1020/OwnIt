@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.teamone.ownit.service.AdminService;
-import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.PageInfo;
 import com.teamone.ownit.vo.ProductVO;
 
@@ -43,8 +42,6 @@ public class AdminController {
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
 		List<ProductVO> productList = service.getProductList(startRow, listLimit);
 		
-		// 이미지 목록 조회
-		List<ImageVO> imageList = service.getImageList(startRow, listLimit);
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 		int listCount = service.getProductListCount();
@@ -70,7 +67,6 @@ public class AdminController {
 		// --------------------------------------------------------------------------------
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productList", productList);
-		map.put("imageList", imageList);
 		map.put("pageInfo", pageInfo);
 		
 		return new ModelAndView("admin/admin_productList", "map", map);
@@ -99,6 +95,10 @@ public class AdminController {
 		
 		return "admin/admin_productSell";
 	}
+	
+	
+	
+	
 	
 	
 	

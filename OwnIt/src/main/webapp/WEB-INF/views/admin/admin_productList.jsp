@@ -141,11 +141,9 @@
 		                                    	<td>
 		                                    		<input type="checkbox" style="outline: 1px solid #000000">
 		                                    	</td>
-<%-- 		                                    	<c:forEach var="image" items="${map.imageList }"> --%>
-<!-- 		                                        	<td> -->
-<%-- 		                                        		<img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${image.image_real_file1}" width="80" height="80"> --%>
-<!-- 		                                        	</td> -->
-<%-- 		                                        </c:forEach> --%>
+	                                        	<td>
+	                                        		<img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${product.image_original_file1}" width="80" height="80">
+	                                        	</td>
 		                                        <td>${product.product_model_num }</td>
 		                                        <td>${product.product_brand }</td>
 		                                        <td>${product.product_type }</td>
@@ -178,50 +176,50 @@
 	                        </div>
 	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
 	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="func1()">선택 삭제</button>
-							<div class="bootstrap-pagination">
-								<nav>
-									<ul class="pagination justify-content-center">
-										<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
-										<li class="page-item disabled">
-											<a class="page-link" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum - 1}<%} %>" tabindex="-1">Previous</a>
-										</li>
-										<!-- 시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
-										<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
-										<!-- 현재 페이지 번호와 i 값이 같을 경우 하이퍼링크 없이 페이지 번호 표시 -->
-										<!-- 아니면, pageNum 파라미터를 i 값으로 설정하여 서블릿 주소 링크 -->
-											<c:choose>
-												<c:when test="${i eq pageInfo.pageNum }">
-													<li class="page-item">
-														<a class="page-link" href="#">${i }</a>
-													</li>
-												</c:when>
-												<c:otherwise>
-													<li class="page-item">
-														<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a>
-													</li>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
+<!-- 							<div class="bootstrap-pagination"> -->
+<!-- 								<nav> -->
+<!-- 									<ul class="pagination justify-content-center"> -->
+<%-- 										<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %> --%>
+<!-- 										<li class="page-item disabled"> -->
+<%-- 											<a class="page-link" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum - 1}<%} %>" tabindex="-1">Previous</a> --%>
+<!-- 										</li> -->
+<!-- 										시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
+<%-- 										<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }"> --%>
+<!-- 										현재 페이지 번호와 i 값이 같을 경우 하이퍼링크 없이 페이지 번호 표시 -->
+<!-- 										아니면, pageNum 파라미터를 i 값으로 설정하여 서블릿 주소 링크 -->
+<%-- 											<c:choose> --%>
+<%-- 												<c:when test="${i eq pageInfo.pageNum }"> --%>
+<!-- 													<li class="page-item"> -->
+<%-- 														<a class="page-link" href="#">${i }</a> --%>
+<!-- 													</li> -->
+<%-- 												</c:when> --%>
+<%-- 												<c:otherwise> --%>
+<!-- 													<li class="page-item"> -->
+<%-- 														<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a> --%>
+<!-- 													</li> -->
+<%-- 												</c:otherwise> --%>
+<%-- 											</c:choose> --%>
+<%-- 										</c:forEach> --%>
 											
-<!-- 										<li class="page-item"> -->
-<!-- 											<a class="page-link" href="#">1</a> -->
-<!-- 										</li> -->
-<!-- 										<li class="page-item"> -->
-<!-- 											<a class="page-link" href="#">2</a> -->
-<!-- 										</li> -->
-<!-- 										<li class="page-item"> -->
-<!-- 											<a class="page-link" href="#">3</a> -->
-<!-- 										</li> -->
+<!-- <!-- 										<li class="page-item"> --> -->
+<!-- <!-- 											<a class="page-link" href="#">1</a> --> -->
+<!-- <!-- 										</li> --> -->
+<!-- <!-- 										<li class="page-item"> --> -->
+<!-- <!-- 											<a class="page-link" href="#">2</a> --> -->
+<!-- <!-- 										</li> --> -->
+<!-- <!-- 										<li class="page-item"> --> -->
+<!-- <!-- 											<a class="page-link" href="#">3</a> --> -->
+<!-- <!-- 										</li> --> -->
 
-										<!-- 현재 페이지번호가 끝 페이지번호보다 작을 때 현재 페이지번호 + 1 값으로 페이지 이동 -->
-										<li class="page-item">
-											<a class="page-link"  <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum + 1}"<%} %>>Next</a>
-										</li>
+<!-- 										현재 페이지번호가 끝 페이지번호보다 작을 때 현재 페이지번호 + 1 값으로 페이지 이동 -->
+<!-- 										<li class="page-item"> -->
+<%-- 											<a class="page-link"  <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum + 1}"<%} %>>Next</a> --%>
+<!-- 										</li> -->
 										
 										
-									</ul>
-								</nav>
-							</div>
+<!-- 									</ul> -->
+<!-- 								</nav> -->
+<!-- 							</div> -->
 							
 	                    </div>
 	                </div>
