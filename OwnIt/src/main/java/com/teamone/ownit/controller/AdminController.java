@@ -38,6 +38,7 @@ public class AdminController {
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
+//		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
 		List<ProductVO> productList = service.getProductList(startRow, listLimit);
@@ -63,14 +64,14 @@ public class AdminController {
 		if(endPage > maxPage) {	endPage = maxPage; }
 
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
-		PageInfo pageInfo = new PageInfo(
-				pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		
 //		System.out.println(pageInfo);
 		// --------------------------------------------------------------------------------
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productList", productList);
 		map.put("imageList", imageList);
+		map.put("pageInfo", pageInfo);
 		
 		return new ModelAndView("admin/admin_productList", "map", map);
 	}
@@ -98,7 +99,6 @@ public class AdminController {
 		
 		return "admin/admin_productSell";
 	}
-	
 	
 	
 	

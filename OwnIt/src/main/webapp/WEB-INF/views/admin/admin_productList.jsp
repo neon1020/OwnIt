@@ -1,3 +1,4 @@
+<%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -135,18 +136,22 @@
 	                                </thead>
 	                                <tbody>
 	                                
-	                                	<c:forEach var="i" begin="1" items="${map.productList }">
+	                                	<c:forEach var="product" items="${map.productList }">
 		                                    <tr>
 		                                    	<td>
 		                                    		<input type="checkbox" style="outline: 1px solid #000000">
 		                                    	</td>
-		                                        <td><img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${map.image.image_real_file1}" width="80" height="80"></td>
-		                                        <td>${map.product.product_model_num }</td>
-		                                        <td>${map.product.product_brand }</td>
-		                                        <td>${map.product.product_type }</td>
-		                                        <td>${map.product.product_name }</td>
+<%-- 		                                    	<c:forEach var="image" items="${map.imageList }"> --%>
+<!-- 		                                        	<td> -->
+<%-- 		                                        		<img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${image.image_real_file1}" width="80" height="80"> --%>
+<!-- 		                                        	</td> -->
+<%-- 		                                        </c:forEach> --%>
+		                                        <td>${product.product_model_num }</td>
+		                                        <td>${product.product_brand }</td>
+		                                        <td>${product.product_type }</td>
+		                                        <td>${product.product_name }</td>
 		                                        <td>
-		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${map.product.product_left_count }">
+		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${product.product_left_count }">
 		                                        </td>
 		                                        <td>
 													<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
@@ -176,11 +181,44 @@
 							<div class="bootstrap-pagination">
 								<nav>
 									<ul class="pagination justify-content-center">
-	                                       <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">Next</a></li>
+										<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
+										<li class="page-item disabled">
+											<a class="page-link" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum - 1}<%} %>" tabindex="-1">Previous</a>
+										</li>
+										<!-- 시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
+										<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<!-- 현재 페이지 번호와 i 값이 같을 경우 하이퍼링크 없이 페이지 번호 표시 -->
+										<!-- 아니면, pageNum 파라미터를 i 값으로 설정하여 서블릿 주소 링크 -->
+											<c:choose>
+												<c:when test="${i eq pageInfo.pageNum }">
+													<li class="page-item">
+														<a class="page-link" href="#">${i }</a>
+													</li>
+												</c:when>
+												<c:otherwise>
+													<li class="page-item">
+														<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a>
+													</li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+											
+<!-- 										<li class="page-item"> -->
+<!-- 											<a class="page-link" href="#">1</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="page-item"> -->
+<!-- 											<a class="page-link" href="#">2</a> -->
+<!-- 										</li> -->
+<!-- 										<li class="page-item"> -->
+<!-- 											<a class="page-link" href="#">3</a> -->
+<!-- 										</li> -->
+
+										<!-- 현재 페이지번호가 끝 페이지번호보다 작을 때 현재 페이지번호 + 1 값으로 페이지 이동 -->
+										<li class="page-item">
+											<a class="page-link"  <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum + 1}"<%} %>>Next</a>
+										</li>
+										
+										
 									</ul>
 								</nav>
 							</div>
