@@ -24,9 +24,7 @@ public class ProductController {
 	public String product_list(Model model) {
 		List<ProductVO> productList = service.getProductList();
 		int cnt = 0;
-		for(ProductVO product : productList) {
-			cnt++;
-		}
+		for(ProductVO product : productList) cnt++;
 		model.addAttribute("productList", productList);
 		model.addAttribute("cnt", cnt);
 		return "product/product_list";
@@ -47,9 +45,7 @@ public class ProductController {
 		List<ProductVO> productList = service.getCategorisedProduct(id);
 //		System.out.println(productList);
 		int cnt = 0;
-		for(ProductVO product : productList) {
-			cnt++;
-		}
+		for(ProductVO product : productList) cnt++;
 		model.addAttribute("productList", productList);
 		model.addAttribute("cnt", cnt);
 		return "product/product_list";
@@ -57,13 +53,13 @@ public class ProductController {
 
 	@GetMapping(value = "arrayByCategory")
 	public String arrayByCategory(String id, Model model) {
-		System.out.println(id);
-
-
-
-
-
-		return "";
+		List<ProductVO> productList = service.arrayByCategory(id);
+		System.out.println(productList);
+		int cnt = 0;
+		for(ProductVO product : productList) cnt++;
+		model.addAttribute("productList", productList);
+		model.addAttribute("cnt", cnt);
+		return "product/product_list";
 	}
 
 
@@ -98,6 +94,10 @@ public class ProductController {
 
 
 
+	
+	
+	
+	
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {

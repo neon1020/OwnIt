@@ -24,10 +24,10 @@ public class ProductService {
 		return mapper.getCategorisedProduct(id);
 	}
 
-
-
-
-
+	public List<ProductVO> arrayByCategory(String id) {
+		System.out.println("arrayByCategory()");
+		return mapper.arrayByCategory(id);
+	}
 
 
 
@@ -107,6 +107,8 @@ public class ProductService {
 	public ImageVO selectDetailImage(int product_idx) {
 		return mapper.selectDetailImage(product_idx);
 	}
+
+	
 
 
 
