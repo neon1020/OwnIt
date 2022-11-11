@@ -102,6 +102,19 @@
 	    	color: white; 
 	    	width: 220px;
 	    }
+	    #btn3{
+	    	background: white; 
+	    	border: 0.5px black solid;
+	    	border-radius: 15px; 
+	    	color: black;
+	    	width: 460px;
+	    	margin-top: 15px;
+	    	
+	    }
+	    #btn3:hover{
+	    	background: black;
+	    	color: white;
+	    }
     </style>
   </head>
   <body>
@@ -117,9 +130,19 @@
           <div class="col">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                <li class="breadcrumb-item"><a href="product_list">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Product</li>
+                <li class="breadcrumb-item">
+                	<a href="./"
+                		>Home
+                	</a>
+                </li>
+                <li class="breadcrumb-item">
+                	<a href="product_list">
+                		Shop
+                	</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                	Product
+                </li>
               </ol>
             </nav>
           </div>
@@ -128,7 +151,7 @@
     </section>
 
 
-   <!-- product  상품 메인이미지 3개-->
+   <!-- product  상품 메인이미지 -->
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
@@ -171,26 +194,57 @@
             <div class="row">
               <div class="col-12">
                 <h4 class="item-title">${product.product_brand }</h4>
-                <p>${product.product_name }</p>
+             					    <p>${product.product_name }</p>
+                
                 <!-- 구매 판매 버튼 -->
                 <button id="btn1" type="button" class="btn"  onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
-                	<p>구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</p>
+                	<p>
+                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
+                	</p>
                 </button>
 				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
-					<p>판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</p>
+					<p>
+						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+					</p>
 				</button>
-				<!-- 구매 판매 버튼 끝 -->
+				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
+					<p>
+						∑관심상품 | <fmt:formatNumber value="9641" pattern="#,###"/>
+					</p>
+				</button>
               </div>
             </div>
+				
             <div class="row">
               <div class="col-12">
               
               <!--  모델번호 가격 -->
                <table class="table">
 					<tr>
-						<td><span id="title1">모델번호</span><br><span>${product.product_model_num }</span></td>
-						<td><span id="title1">컬러<br></span><span>${product.product_color }</span></td>
-						<td><span id="title1">발매가<br></span><span><fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원</span></td>
+						<td>
+							<span id="title1">
+								모델번호
+							</span><br>
+							<span>
+								${product.product_model_num }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								컬러<br>
+							</span>
+							<span>
+								${product.product_color }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								발매가<br>
+							</span>
+							<span>
+								<fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원
+							</span>
+						</td>
 					</tr>
 				</table>
 				
@@ -204,12 +258,12 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-1">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="false" aria-controls="collapse-2-1">
+			                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="true" aria-controls="collapse-2-1">
 			                      <span id="title1">배송 기간 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-1" class="collapse" aria-labelledby="heading-2-1" data-parent="#accordion-2">
+			                <div id="collapse-2-1" class="collapse show" aria-labelledby="heading-2-1" data-parent="#accordion-2">
 			                  <div class="card-body"  id="title1" >
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
@@ -265,12 +319,14 @@
             
             <div>
               <div class="col-lg-12">
-                	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;">
-                	Add to Cart
-                	</a>
-				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;">
-					Add to wishlist
-				</button>
+              		<!-- 카트 버튼 보류 -->
+<!--                 	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;"> -->
+<!--                 		Add to Cart -->
+<!--                 	</a> -->
+                	<!-- 관심상품 버튼 11월 11일 위쪽으로 수정  -->
+<!-- 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;"> -->
+<!-- 					Add to wishlist -->
+<!-- 				</button> -->
               </div>
               <img src="resources/img/product/productDetailNotice.png">
               <div class="col-12 mt-1">
