@@ -1,30 +1,30 @@
 package com.teamone.ownit.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
+import com.teamone.ownit.vo.ImageVO;
+import com.teamone.ownit.vo.ProductVO;
 
 @Service
 public class AdminService {
 
-//	@Autowired
-//	private AdminMapper mapper;
+	@Autowired
+	private AdminMapper mapper;
 	
 	// 김소희
+	public int getProductListCount() {
+		return mapper.selectProductListCount();
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public List<ProductVO> getProductList(int startRow, int listLimit) {
+		return mapper.selectProductList(startRow, listLimit);
+	}
+
+
 	
 	
 	

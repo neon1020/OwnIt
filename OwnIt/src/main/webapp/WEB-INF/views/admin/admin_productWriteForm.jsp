@@ -19,8 +19,8 @@
 
 </head>
 
-<script src="resources/js/jquery-3.6.1.js"></script>
-    <script>
+<!-- <script src="resources/js/jquery-3.6.1.js"></script> -->
+<script>
     $(document).ready(function (e){
 	    $("#imageFile").on("change", function(event) {
 	        var file = event.target.files[0];
@@ -31,6 +31,35 @@
 	        reader.readAsDataURL(file);
 	    });
     });  
+    
+    
+    function changeType(product_type) {
+		// 선택된 타입 값을 type 의 value 값으로 변경
+		document.productWriteForm.product_type.value = product_type;
+		
+		// 단, 선택된 타입이 "직접입력"이 아닐 경우 type 입력창 잠금(readOnly 속성 적용)
+		if(product_type == "") {
+			document.productWriteForm.product_type.readOnly = false;
+			document.productWriteForm.product_type.focus();
+		} else {
+			document.productWriteForm.product_type.readOnly = true;
+		}
+	}
+    
+    
+    function changeBrand(product_brand) {
+		// 선택된 브랜드 값을 brand 의 value 값으로 변경
+		document.productWriteForm.product_brand.value = product_brand;
+		
+		// 단, 선택된 브랜드가 "직접입력"이 아닐 경우 brand 입력창 잠금(readOnly 속성 적용)
+		if(product_brand == "") {
+			document.productWriteForm.product_brand.readOnly = false;
+			document.productWriteForm.product_brand.focus();
+		} else {
+			document.productWriteForm.product_brand.readOnly = true;
+		}
+	}
+    
 </script>
 <body>
 
@@ -111,7 +140,7 @@
                             <h2>Product Write Form</h2>
                             <br>
                             <div class="basic-form">
-                                <form>
+                                <form action="admin_productWritePro" method="post" name="productWriteForm" enctype="multipart/form-data">
                                 	<!-- Start Col -->
                                 	<div class="row">
 			                            <div class="col-md-6 col-lg-3">
@@ -125,7 +154,7 @@
 			                                    <div class="card-footer">
 		                                        
 			                                        <div class="input-group mb-3">
-					                                	<input type="file" class="form-control-file" id="imageFile">
+					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required>
 			                                        </div>
 		                                        
 			                                    </div>
@@ -133,52 +162,71 @@
 			                            </div>
 			                            <!-- End Col -->
 			                        </div>
-                                   	<div class="form-group">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control">
-                                   	</div>
                                     <div class="form-row">
-                                     	<div class="form-group col-md-6">
-                                            <label>Category</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected="selected">선택하세요</option>
-                                                <option>스마트폰</option>
-                                                <option>태블릿</option>
-                                                <option>기타</option>
-                                            </select>
+                                    	<div class="form-group col-md-3">
+                                     		<label>Type</label>
+                                            <input type="text" class="form-control" name="product_type" required>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>Brand</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected="selected">선택하세요</option>
-                                                <option>Apple</option>
-                                                <option>SAMSUNG</option>
-                                                <option>SONY</option>
+                                     	<div class="form-group col-md-3">
+                                     		<label>&nbsp;</label>
+                                            <select id="inputState" class="form-control" onchange="changeType(this.value)" required>
+                                                <option selected="selected" value="">직접입력</option>
+                                                <option value="노트북">노트북</option>
+                                                <option value="스마트워치">스마트워치</option>
+                                                <option value="스마트폰">스마트폰</option>
+                                                <option value="이어폰">이어폰</option>
+                                                <option value="태블릿">태블릿</option>
+                                                <option value="헤드폰">헤드폰</option>
                                             </select>
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-row">
+                                    	<div class="form-group col-md-3">
+                                     		<label>Brand</label>
+                                            <input type="text" class="form-control" name="product_brand" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>&nbsp;</label>
+                                            <select id="inputState" class="form-control" onchange="changeBrand(this.value)" required>
+                                                <option selected="selected" value="">직접입력</option>
+                                                <option value="APPLE">APPLE</option>
+                                                <option value="BOSE">BOSE</option>
+                                                <option value="LG">LG</option>
+                                                <option value="SAMSUNG">SAMSUNG</option>
+                                                <option value="SONY">SONY</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                   	<div class="form-row">
+                                   		<div class="form-group col-md-8">
+	                                        <label>Name</label>	
+	                                        <input type="text" class="form-control" name="product_name" required>
+										</div>
+                                   	</div>
                                     <div class="form-row">
                                    		<div class="form-group col-md-6">
                                             <label>Model Number</label>
-                                            <input type="text" class="form-control" >
+                                            <input type="text" class="form-control" name="product_model_num" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Color</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" name="product_color" required>
                                         </div>
                                     </div>
                                    	<div class="form-row">
                                    		<div class="form-group col-md-4">
-                                            <label>Price</label>
-                                            <input type="number" class="form-control" >
+                                            <label>Release Price</label>
+                                            <input type="number" class="form-control" name="product_release_price" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Buy Price</label>
-                                            <input type="number" class="form-control">
+                                            <input type="number" class="form-control" name="product_buy_price" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Sell Price</label>
-                                            <input type="number" class="form-control" >
+                                            <input type="number" class="form-control" name="product_sell_price" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-dark" style="float: right">Submit</button>
