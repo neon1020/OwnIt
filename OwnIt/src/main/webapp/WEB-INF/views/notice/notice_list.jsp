@@ -34,7 +34,7 @@
 
           <!-- content -->
           <article class="col-lg-9 pl-lg-5">
-<!--           	<h1 class="mb-0">Notice</h1> -->
+          	<h1 class="mb-0">Notice</h1>
 			<table class="table table-bordered" style="margin-top: 20px; text-align: center; border-left: none; border-right: none;">
                <thead>
                  <tr>
@@ -47,19 +47,19 @@
                <tbody>
                  <tr>
                    <th scope="row" style="border-left: none; border-right: none;">3</th>
-                   <td style="border-left: none; border-right: none; text-align: left;"><a href="noticeDetail" style="color: black;">[이벤트] 행운의 룰렛 돌리기 이벤트</a></td>
+                   <td style="border-left: none; border-right: none; text-align: left;"><a href="noticeDetail">[이벤트] 행운의 룰렛 돌리기 이벤트</a></td>
                    <td style="border-left: none; border-right: none;">2022-10-31</td>
                    <td style="border-left: none; border-right: none;">330</td>
                  </tr>
                  <tr>
                    <th scope="row" style="border-left: none; border-right: none;">2</th>
-                   <td style="border-left: none; border-right: none; text-align: left;"><a href="noticeDetail" style="color: black;">[이벤트] 주간 출석체크 이벤트 당첨자 발표</a></td>
+                   <td style="border-left: none; border-right: none;"><a href="noticeDetail">[이벤트] 주간 출석체크 이벤트 당첨자 발표</a></td>
                    <td style="border-left: none; border-right: none;">2022-10-31</td>
                    <td style="border-left: none; border-right: none;">250</td>
                  </tr>
                  <tr>
                    <th scope="row" style="border-left: none; border-right: none;">1</th>
-                   <td style="border-left: none; border-right: none; text-align: left;"><a href="noticeDetail" style="color: black;">[공지사항] 11월 홈페이지 운영 일정 안내</a></td>
+                   <td style="border-left: none; border-right: none;"><a href="noticeDetail">[공지사항] 11월 홈페이지 운영 일정 안내</a></td>
                    <td style="border-left: none; border-right: none;">2022-10-31</td>
                    <td style="border-left: none; border-right: none;">131</td>
                  </tr>

@@ -116,11 +116,8 @@ public class OrderService {
 		}
 
 
-
-
-
-
-	
+//	@Autowired
+//	private OrderMapper mapper;
 	
 	
 	
@@ -198,15 +195,3 @@ public class OrderService {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

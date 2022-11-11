@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,15 +8,10 @@
 <style type="text/css">
 	input[type=checkbox]{
 	float: right; 
-	width: 20px; 
-	height: 20px;
+	width: 15px; 
+	height: 15px;
 	}
 	#sell_span{
-		font-size: 18px; 
-		color: black; 
-		font-weight: 900;
-	}
-	#sell_span2{
 		font-size: 18px; 
 		color: black; 
 		font-weight: 900;
@@ -28,12 +21,6 @@
 		color: #6c757d;
 		padding: 5px 10px;
 		border-radius: 8px;
-	}
-	#sellFormImage{
-		width: 90px; 
-		height: 90px; 
-		float: left; 
-		border-radius: 15px;
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -105,18 +92,12 @@
           		<input type= "hidden" name="account_idx" value="${member.account_idx }">
           		
 	          	<table class="table">
+	          		
 	          		<tr>
-	          			<th style="font-size: 30px; font: bold; color: black;">
-		          			<span style="color: skyblue;">판매</span>
-		          			확인서
-	          			</th>
-	          		</tr>
-	          		<tr>
-	          			<th>
-	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage">
-		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br>
-		          			 ${product.product_name }<br>
-		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
+	          			<th><img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br>
+		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
+		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>
 	          			 </th>
 	          		</tr>
 	          		<tr>

@@ -125,27 +125,27 @@
                                         <tr>
                                             <td style="vertical-align: middle;">1</td>
                                             <td style="vertical-align: middle;">공지사항</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">11월 홈페이지 운영 일정 안내</a></td>
+                                            <td style="vertical-align: middle;"><a href="admin_noticeDetail">11월 홈페이지 운영 일정 안내</a></td>
                                             <td style="vertical-align: middle;">2022-10-31</td>
                                             <td style="vertical-align: middle;">131</td>
                                         </tr>
                                         <tr>
                                             <td style="vertical-align: middle;">2</td>
                                             <td style="vertical-align: middle;">이벤트</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">주간 출석체크 이벤트 당첨자 발표</a></td>
+                                            <td style="vertical-align: middle;"><a href="admin_noticeDetail">주간 출석체크 이벤트 당첨자 발표</a></td>
                                             <td style="vertical-align: middle;">2022-10-31</td>
                                             <td style="vertical-align: middle;">250</td>
                                         </tr>
                                         <tr>
                                             <td style="vertical-align: middle;">3</td>
                                             <td style="vertical-align: middle;">이벤트</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">행운의 룰렛 돌리기 이벤트</a></td>
+                                            <td style="vertical-align: middle;"><a href="admin_noticeDetail">행운의 룰렛 돌리기 이벤트</a></td>
                                             <td style="vertical-align: middle;">2022-10-31</td>
                                             <td style="vertical-align: middle;">330</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="admin_noticeWrite"><button type="button" class="btn btn-dark btn-primary" style="float: right;">글쓰기</button></a>
+	                            <hr>
 	                        </div>
 	                        
 							<!-- 페이징 태그 START -->

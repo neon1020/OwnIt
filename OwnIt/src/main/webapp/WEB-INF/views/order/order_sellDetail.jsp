@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,15 +19,6 @@
 	}
 	#barr{
 		width: 100%;
-	}
-	#sellFormImage{
-		width: 90px; 
-		height: 90px; 
-		float: left;
-		border-radius: 15px;
-	}
-	#margin-left{
-		margin-left: 120px;"
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -69,9 +58,9 @@
 	          				</span>
 	          				<div>
 		          				<progress id="barr" value="20" max="100"></progress>
-		          				<a id="margin-left">판매검수</a> 
-		          				<a id="margin-left">판매반려</a> 
-		          				<a id="margin-left">판매완료</a>
+		          				<a style="margin-left: 120px;">판매검수</a> 
+		          				<a style="margin-left: 120px;">판매반려</a> 
+		          				<a style="margin-left: 120px;">판매완료</a>
 	          				</div>
 	          			</th>
 	          		</tr>

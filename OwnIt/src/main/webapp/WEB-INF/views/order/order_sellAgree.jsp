@@ -8,20 +8,13 @@
 <style type="text/css">
 	input[type=checkbox]{
 	float: right; 
-	width: 20px; 
-	height: 20px;
+	width: 15px; 
+	height: 15px;
 	}
 	
 	span{
 	font: bold; 
 	color: black;
-	}
-	
-	#sellFormImage{
-		width: 90px; 
-		height: 90px; 
-		float: left; 
-		border-radius: 15px;
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">

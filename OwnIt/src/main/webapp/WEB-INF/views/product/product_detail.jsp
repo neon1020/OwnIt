@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,62 +8,19 @@
     <link rel="stylesheet" href="resources/css/style.css" />
     <title>Product</title>
     <style type="text/css">
-		.col-lg-4 { 
-			flex: 0 0 25%; 
-			max-width: 25%; 
-			padding: 10px; 
-		}
-		.card-post { 
-			height: 500px; 
-		}
-		.card-post .card-body { 
-			width: 260px; 
-		}
- 	    .equal { 
- 	    	height: 260px; width: 260px; border-radius: 0.5em; 
- 	    }
-	    .profile img { 
-	   	 	width: 30px; height: 30px; border-radius: 10em; margin: 5px 5px; 
-	    }
-	    .eyebrow { 
-	  	  	text-transform: none; margin-left: 10px;
-	    }
-	    .card-title img { 
-	   	 	width: 50px; height: 50px; border-radius: 1em; margin: 5px 5px; float: left; 
-	    }
-	    .card-title a { 
-	   	 	font-size: 13px; font-weight: 600; 
-	    }
-	    .card-post .card-title a:hover { 
-	   	 	color: #101010; 
-	    }
-	    .card-title .subject { 
-		    margin: 5px 5px; 
-		    width: 190px; 
-		    white-space: nowrap; 
-		    overflow:hidden; 
-		    text-overflow: ellipsis; 
-		    float: left; 
-	    }
-	    .card-content { 
-		    font-size: 14px; 
-		    width: 100%; 
-		    float: left; 
-		    margin: 5px; 
-		    text-overflow: ellipsis; 
-		    overflow: hidden; 
-		    display: -webkit-box; 
-		    -webkit-box-orient: vertical; 
-		    -webkit-line-clamp: 2;
-	    }
-	    .like { 
-		    width: 100%; 
-		    float: left; 
-		    margin: 10px 5px; 
-	    }
-	    .like img { 
-	   	 	margin: 0 5px 0 0; 
-	    }
+		.col-lg-4 { flex: 0 0 25%; max-width: 25%; padding: 10px; }
+		.card-post { height: 500px; }
+		.card-post .card-body { width: 260px; }
+ 	    .equal { height: 260px; width: 260px; border-radius: 0.5em; }
+	    .profile img { width: 30px; height: 30px; border-radius: 10em; margin: 5px 5px; }
+	    .eyebrow { text-transform: none; margin-left: 10px;}
+	    .card-title img { width: 50px; height: 50px; border-radius: 1em; margin: 5px 5px; float: left; }
+	    .card-title a { font-size: 13px; font-weight: 600; }
+	    .card-post .card-title a:hover { color: #101010; }
+	    .card-title .subject { margin: 5px 5px; width: 190px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; float: left; }
+	    .card-content { font-size: 14px; width: 100%; float: left; margin: 5px; text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;}
+	    .like { width: 100%; float: left; margin: 10px 5px; }
+	    .like img { margin: 0 5px 0 0; }
 	    /* 상단 정렬 메뉴 버튼 */
 	    label { 
 		     background-color: #FFF;
@@ -161,30 +116,28 @@
               <div class="col-lg-10 order-lg-2">
                 <div class="owl-carousel gallery" data-slider-id="1" data-thumbs="true" data-nav="true">
                   <figure class="equal" style="width:100%; height: 100%">
-                  <!-- 클릭시 보여지는 작은 이미지 -->
-                    <a class="image" href="resources/img/product/${image.image_original_file1 }" 
-                      style="background-image: url(resources/img/product/${image.image_original_file1 });">
+                    <a class="image" href="resources/img/product/productDetail1.png" 
+                      style="background-image: url(resources/img/product/productDetail1.png);">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/${image.image_original_file2 }" 
-                      style="background-image: url(resources/img/product/${image.image_original_file2 });">
+                    <a class="image" href="resources/img/product/productDetail2.png" 
+                      style="background-image: url(resources/img/product/productDetail2.png);">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/${image.image_original_file3 }" 
-                      style="background-image: url(resources/img/product/${image.image_original_file3 });">
+                    <a class="image" href="resources/img/product/productDetail3.png" 
+                      style="background-image: url(resources/img/product/productDetail3.png);">
                     </a>
                   </figure>
                 </div>
               </div>
               
-              <!--  상품 왼쪽 작은 이미지 3개 -->
               <div class="col-lg-2 text-center text-lg-left order-lg-1">
                 <div class="owl-thumbs" data-slider-id="1">
-                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file1 }" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file2 }" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file3 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail1.png" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail2.png" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail3.png" alt=""></span>
                 </div>
               </div>
             </div>
@@ -259,12 +212,12 @@
 			                <div class="card-header" id="heading-2-1">
 			                  <h2 class="mb-0">
 			                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="false" aria-controls="collapse-2-1">
-			                      <span id="title1">배송 기간 안내</span>
+			                      <span style="font-size: 12px;">배송 기간 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
 			                <div id="collapse-2-1" class="collapse" aria-labelledby="heading-2-1" data-parent="#accordion-2">
-			                  <div class="card-body"  id="title1" >
+			                  <div class="card-body" style="font-size: 12px;">
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
 							     <br>[빠른배송 구매]
@@ -293,12 +246,12 @@
 			                <div class="card-header" id="heading-2-3">
 			                  <h2 class="mb-0">
 			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-3" aria-expanded="false" aria-controls="collapse-2-3">
-			                      <span id="title1">구매 환불/취소/교환 안내</span>
+			                      <span style="font-size: 12px;">구매 환불/취소/교환 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
 			                <div id="collapse-2-3" class="collapse" aria-labelledby="heading-2-3" data-parent="#accordion-2">
-			                  <div class="card-body" id="title1">
+			                  <div class="card-body" style="font-size: 12px;">
 			                     OwnIt은 익명 거래를 기반으로 판매자가 판매하는 상품을 구매자가 실시간으로 구매하여 거래를 체결합니다.
 								<br>- 단순 변심이나 실수에 의한 취소/교환/반품이 불가능합니다. 
 								<br>- 상품을 원하지 않으시는 경우 언제든지 OwnIt에서 재판매를 하실 수 있습니다.

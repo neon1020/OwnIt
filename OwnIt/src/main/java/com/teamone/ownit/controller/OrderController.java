@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -162,16 +161,17 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping(value = "order_buyAgree")
-	public String order_buyAgree(@RequestParam int product_idx, Model model) {
-		ImageVO image = service.selectDetailImage(product_idx);
-		model.addAttribute("image", image);
-	
-		ProductVO product = service.productDetail(product_idx);
-		model.addAttribute("product", product);
+	@GetMapping(value = "member_buy_agree")
+	public String member_buy_agree() {
+		
 		return "order/order_buyAgree";
 	}
 	
+	@GetMapping(value = "member_buy_form")
+	public String member_buy_form() {
+		
+		return "order/order_buyForm";
+	}
 	
 	
 	
