@@ -45,7 +45,7 @@ public class ProductController {
 	@GetMapping(value = "listProductByCategory")
 	public String listProduct(String id, Model model) {
 		List<ProductVO> productList = service.getCategorisedProduct(id);
-		System.out.println(productList);
+//		System.out.println(productList);
 		int cnt = 0;
 		for(ProductVO product : productList) {
 			cnt++;
@@ -55,16 +55,16 @@ public class ProductController {
 		return "product/product_list";
 	}
 
+	@GetMapping(value = "arrayByCategory")
+	public String arrayByCategory(String id, Model model) {
+		System.out.println(id);
 
 
 
 
 
-
-
-
-
-
+		return "";
+	}
 
 
 

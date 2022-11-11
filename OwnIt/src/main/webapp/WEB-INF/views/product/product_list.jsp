@@ -63,11 +63,23 @@
   </style>
   <script src="resources/js/jquery-3.6.1.js"></script>
   <script type="text/javascript">
+  function arrayByCategory(id) {
+	  var id2 = '?id='+id;
+	  var id = '#'+id;
 	$(function() {
- 		$("#price_high").click(function() {
- 			alert("바뀜!");
+ 		$(id+' option:selected')(function() {
+ 			alert("이안까지옴");
+ 			$.ajax({
+ 				type: 'GET',
+ 				url: 'arrayByCategory'+id2,
+ 				dataType:'json',
+ 				success: function(result) {
+ 					
+ 				}
+ 			});
  		});
  	});
+  }
   </script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -121,19 +133,12 @@
             </div>
           </div>
          <div class="col-md-6 text-md-right" style="margin-top: 25px">
-           <div class="dropdown">
-             <a class="btn btn-outline-secondary btn-sm dropdown-toggle" href="#!" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <c:if test="">
-               인기순
-               </c:if>
-             </a>
-             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" id="like_high">인기순</a><br>
-               <a class="dropdown-item" id="price_high">가격높은순</a><br>
-               <a class="dropdown-item" id="price_row">가격낮은순</a><br>
-               <a class="dropdown-item" id="product_new">신제품</a>
-             </div>
-           </div>
+           <select onchange="arrayByCategory(this.value)">
+	           <option value="product_popular" id="product_popular">인기순</option>
+	           <option value="price_high" id="price_high">가격높은순</option>
+	           <option value="price_low" id="price_low">가격낮은순</option>
+	           <option value="product_new" id="product_new">신제품</option>
+           </select>
          </div>
        </div>
         <div class="row gutter-4">

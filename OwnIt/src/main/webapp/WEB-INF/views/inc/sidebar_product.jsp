@@ -17,22 +17,22 @@
            					<div>
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="phone">- 휴대폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=스마트폰" id="phone">- 휴대폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="tablet">- 태블릿</a>
+	         							<a class="nav-link" href="listProductByCategory?id=태블릿" id="tablet">- 태블릿</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="watch">- 스마트워치</a>
+	         							<a class="nav-link" href="listProductByCategory?id=스마트워치" id="watch">- 스마트워치</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="earphone">- 이어폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=이어폰" id="earphone">- 이어폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="headphone">- 헤드폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=헤드폰" id="headphone">- 헤드폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="laptop">- 노트북</a>
+	         							<a class="nav-link" href="listProductByCategory?id=노트북" id="laptop">- 노트북</a>
 	       							</li>
 	     						</ul>
            					</div>
