@@ -22,9 +22,54 @@
 	    .like { width: 100%; float: left; margin: 10px 5px; }
 	    .like img { margin: 0 5px 0 0; }
 	    /* 상단 정렬 메뉴 버튼 */
-	    label { background-color: #FFF; border-color: #FFF; color: #101010; border-radius: 1em; font-size: 20px; font-weight: 700; padding: 6px 14px; }
-	    .btn-check { opacity: 0; }
-	    input[type=radio]:checked + label { background-color: #101010; border-color: #101010; color: #FFF; }
+	    label { 
+		     background-color: #FFF;
+		     border-color: #FFF; 
+		     color: #101010; 
+		     border-radius: 1em; 
+		     font-size: 20px; 
+		     font-weight: 700; 
+		     padding: 6px 14px; 
+	     }
+	    .btn-check { 
+	    	opacity: 0; 
+	    }
+	    input[type=radio]:checked + label {
+		     background-color: #101010; 
+		     border-color: #101010; 
+		     color: #FFF; 
+	     }
+	    span{
+	    	font-size: 14px;
+	    }
+	    #title1{
+	    	font-size: 13px; font: bold;
+	    }
+	    #btn1{
+	   		background: #F06464; 
+	   		border-radius: 15px; 
+	   		color: white; 
+	   		width: 220px;
+	    }
+	    #btn2{
+	    	background: #46BD7B; 
+	    	border-radius: 15px; 
+	    	color: white; 
+	    	width: 220px;
+	    }
+	    #btn3{
+	    	background: white; 
+	    	border: 0.5px black solid;
+	    	border-radius: 15px; 
+	    	color: black;
+	    	width: 460px;
+	    	margin-top: 15px;
+	    	
+	    }
+	    #btn3:hover{
+	    	background: black;
+	    	color: white;
+	    }
     </style>
   </head>
   <body>
@@ -40,9 +85,19 @@
           <div class="col">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                <li class="breadcrumb-item"><a href="product_list">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Product</li>
+                <li class="breadcrumb-item">
+                	<a href="./"
+                		>Home
+                	</a>
+                </li>
+                <li class="breadcrumb-item">
+                	<a href="product_list">
+                		Shop
+                	</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                	Product
+                </li>
               </ol>
             </nav>
           </div>
@@ -51,7 +106,7 @@
     </section>
 
 
-   <!-- product -->
+   <!-- product  상품 메인이미지 -->
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
@@ -91,27 +146,58 @@
           <div class="col-lg-5 mb-5 mb-lg-0">
             <div class="row">
               <div class="col-12">
-                <h4 class="item-title">Apple</h4>
-                <p>Apple iPhone 14 Pro 256GB Deep Purple (Korean Ver.)</p>
+                <h4 class="item-title">${product.product_brand }</h4>
+             					    <p>${product.product_name }</p>
+                
                 <!-- 구매 판매 버튼 -->
-                <button type="button" class="btn"  onclick="location.href='member_buy_agree'" style="background: #F06464; border-radius: 15px; color: white; width: 220px;">
-                	<p>구매 | 1,755,000원</p>
+                <button id="btn1" type="button" class="btn"  onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
+                	<p>
+                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
+                	</p>
                 </button>
-				<button type="button" class="btn" onclick="location.href='member_sell_agree'" style="background: #46BD7B; border-radius: 15px; color: white; width: 220px;">
-					<p>판매 | 1,600,000원</p>
+				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
+					<p>
+						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+					</p>
 				</button>
-				<!-- 구매 판매 버튼 끝 -->
+				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
+					<p>
+						∑관심상품 | <fmt:formatNumber value="9641" pattern="#,###"/>
+					</p>
+				</button>
               </div>
             </div>
+				
             <div class="row">
               <div class="col-12">
               
               <!--  모델번호 가격 -->
                <table class="table">
 					<tr>
-						<td><span style="font-size: 12px;">모델번호</span><br><span>MQ1F3KH/A</span></td>
-						<td><span style="font-size: 12px;">컬러<br></span><span>DEEP PURPLE</span></td>
-						<td><span style="font-size: 12px;">발매가<br></span><span>1,700,000</span></td>
+						<td>
+							<span id="title1">
+								모델번호
+							</span><br>
+							<span>
+								${product.product_model_num }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								컬러<br>
+							</span>
+							<span>
+								${product.product_color }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								발매가<br>
+							</span>
+							<span>
+								<fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원
+							</span>
+						</td>
 					</tr>
 				</table>
 				
@@ -143,13 +229,13 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-2">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
-			                      <span style="font-size: 12px;">검수 안내</span>
+			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapse-2-2">
+			                      <span id="title1">검수 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
-			                  <div class="card-body" style="font-size: 12px;">
+			                <div id="collapse-2-2" class="collapse show" aria-labelledby="heading-2-2" data-parent="#accordion-2">
+			                  <div class="card-body" id="title1">
 			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
 			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.
 								<br>- 업계 전문가로 구성된 검수팀은 박스와 상품의 라벨에서 바느질, 접착, 소재 등 모든 것을 검수합니다.
@@ -186,18 +272,24 @@
             
             <div>
               <div class="col-lg-12">
-               <button type="button" class="btn"  onclick="location.href=''" style="background: black; color: white; width: 195px;">
-                	Add to Cart
-                </button>
-				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;">
-					Add to wishlist
-				</button>
+              		<!-- 카트 버튼 보류 -->
+<!--                 	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;"> -->
+<!--                 		Add to Cart -->
+<!--                 	</a> -->
+                	<!-- 관심상품 버튼 11월 11일 위쪽으로 수정  -->
+<!-- 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;"> -->
+<!-- 					Add to wishlist -->
+<!-- 				</button> -->
               </div>
               <img src="resources/img/product/productDetailNotice.png">
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Share this product</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    	<span style="color:black;">
+                    		상품 공유하기
+                    	</span>
+                    </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a class="dropdown-item" href="#">Facebook</a>

@@ -28,46 +28,46 @@
     <link rel="stylesheet" href="resources/css/style.css" />
 </head>
 <script type="text/javascript">
-//새 주소 추가
-function func1(){
-	var popupWidth = 600;
-	var popupHeight = 600;
-	var popupX = (window.screen.width / 2) - (popupWidth / 2);
-	var popupY= (window.screen.height / 2) - (popupHeight / 2);
-	
-	window.open('address', '새 주소', 
-				'status=no, height=' + popupHeight  + ', width=' + popupWidth  +
-				', left='+ popupX + ', top='+ popupY);
-}
-
-//주소 변경
-function func2(){
-	var popupWidth = 600;
-	var popupHeight = 600;
-	var popupX = (window.screen.width / 2) - (popupWidth / 2);
-	var popupY= (window.screen.height / 2) - (popupHeight / 2);
-	
-	window.open('address', '주소 변경', 
-				'status=no, height=' + popupHeight  + ', width=' + popupWidth  + 
-				', left='+ popupX + ', top='+ popupY);
-}
-
-
-function checkForm(){
-	var checked = false;
-		$("#disabled").attr("disabled",true); 
+	//새 주소 추가
+	function func1(){
+		var popupWidth = 600;
+		var popupHeight = 600;
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
 		
-		if($("#check1").is(":checked") && 
-			$("#check2").is(":checked") && 
-			$("#check3").is(":checked") && 
-			$("#check4").is(":checked") &&
-			$("#check5").is(":checked")){
-			$("#disabled").removeAttr("disabled"); 
-			checked = true;
+		window.open('address', '새 주소', 
+					'status=no, height=' + popupHeight  + ', width=' + popupWidth  +
+					', left='+ popupX + ', top='+ popupY);
+	}
+
+	//주소 변경
+	function func2(){
+		var popupWidth = 600;
+		var popupHeight = 600;
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+		
+		window.open('address', '주소 변경', 
+					'status=no, height=' + popupHeight  + ', width=' + popupWidth  + 
+					', left='+ popupX + ', top='+ popupY);
+	}
+
+	//체크박스
+	function checkForm(){
+		var checked = false;
+			$("#disabled").attr("disabled",true); 
+			
+			if($("#check1").is(":checked") && 
+				$("#check2").is(":checked") && 
+				$("#check3").is(":checked") && 
+				$("#check4").is(":checked") &&
+				$("#check5").is(":checked")){
+				$("#disabled").removeAttr("disabled"); 
+				checked = true;
+				return checked;
+			}
 			return checked;
-		}
-		return checked;
-		
+			
 	}
 </script>
 <body onload="checkForm()">
@@ -81,7 +81,16 @@ function checkForm(){
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
-          	<form action="member_sell_detail" method="get" >
+          	
+          	
+          	
+          	
+          	<form action="order_sellDetail" method="post" >
+          	
+          		<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		<input type= "hidden" name="member_idx" value="${member.member_idx }">
+          		<input type= "hidden" name="account_idx" value="${member.account_idx }">
+          		
 	          	<table class="table">
 	          		
 	          		<tr>
@@ -93,64 +102,115 @@ function checkForm(){
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
-	          			<span style="float: right; font-size: 12px;"><a href="#" style="background-color: black; color: white;'">계좌 추가</a></span>
-	          			계좌 : 1234-12-123456<br>
-	          			에금주 : 박주닮
+	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
+	          			은행 : ${member.account_bank}<br>
+	          			계좌 : ${member.account_num }<br>
+	          			예금주 : ${member.member_name }
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          			<span id="sell_span">반송 주소</span>
-	          			<span id="sell_span" style="float: right; font-size: 11px;">
-		          			<a href="javascript:func1()" style="border: none;">+ 새 주소 추가</a></span><br>
-		          			<span id="sell_span" style="float: right; font-size: 13px;"><a href="javascript:func2()">변경</a></span>
-		          			받는분 : <br>
-		          			연락처 : <br>
-		          			배송주소 : <br>
+		          			<span id="sell_span">
+		          				반송 주소
+		          			</span>
+		          			<span id="sell_span" style="float: right; font-size: 11px;">
+			          			<a href="javascript:func1()" style="border: none;">
+			          				+ 새 주소 추가
+			          			</a>
+			          		</span><br>
+			          		<span id="sell_span2" style="float: right; font-size: 13px;">
+			          			<a href="javascript:func2()">
+			          				변경
+			          			</a>
+			          		</span>
+		          			받는분 : ${member.member_name }	<br>
+		          			연락처 : ${member.member_phone }<br>
+		          			배송주소 : ${member.address1 } ${member.address2 }<br>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><span id="sell_span" style="font-size: 15px; ">즉시 판매가</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF;">280,000</span><br>
-		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
-		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
-		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">선불/판매자 부담</span>
+	          			<th>
+	          				<span id="sell_span" style="font-size: 15px; ">
+	          					즉시 판매가
+	          				</span><br>
+		          			정산금액
+		          			<span style="float: right; font-size: 15px; color: #00A5FF;">
+		          				<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+		          			</span><br>
+		          			검수비
+		          			<span style="float: right;font-size: 15px; color: #6c757d;">
+		          				무료
+		          			</span><br>
+		          			수수료
+		          			<span style="float: right;font-size: 15px; color: #6c757d;">
+		          				무료
+		          			</span><br>
+		          			배송비
+		          			<span style="float: right;font-size: 15px; color: #6c757d;">
+		          				선불/판매자 부담
+		          			</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><span id="sell_span">최종 판매 정보</span><br>
+	          			<th>
+	          				<span id="sell_span">
+	          					최종 판매 정보
+	          				</span><br>
 		          			거래금액<br>
-		          			<span id="sell_span" style="float: right;color: #00A5FF;">+280,000</span>
+		          			<span id="sell_span" style="float: right;color: #00A5FF;">
+		          				+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+		          			</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox" id="check1" onchange="checkForm()">
-	          			<span id="sell_span" style="font-size: 13px;">거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 KREAM으로 발송을 완료한 후<br>
-	          				발송 정보를 정확히 입력해야 합니다.</span>
+	          			<th>
+	          				<input type="checkbox" id="check1" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px;">
+		          				거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 KREAM으로 발송을 완료한 후<br>
+		          				발송 정보를 정확히 입력해야 합니다.
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox" id="check2" onchange="checkForm()">
-	          			<span id="sell_span" style="font-size: 13px;">송장 번호 미기재·오입력 시 입고가 진행되지 않으며, 발송 후 5일(일요일·공휴일 제외) 내 미도착은 허위 정보 입력으로 간주하여 미입고 페널티를 부과합니다.</span>
+	          			<th>
+	          				<input type="checkbox" id="check2" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px;">
+	          					송장 번호 미기재·오입력 시 입고가 진행되지 않으며, 발송 후 5일(일요일·공휴일 제외) 내 미도착은 허위 정보 입력으로 간주하여 미입고 페널티를 부과합니다.
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox" id="check3" onchange="checkForm()">
-	          			<span id="sell_span" style="font-size: 13px;">검수 기준과 페널티 및 이용 정책을 다시 한번 확인하였습니다.</span>
+	          			<th>
+	          				<input type="checkbox" id="check3" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px;">
+	          					검수 기준과 페널티 및 이용 정책을 다시 한번 확인하였습니다.
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox" id="check4" onchange="checkForm()">
-	          			<span id="sell_span" style="font-size: 13px;">‘바로 판매하기’ 를 선택하시면 즉시 거래가 체결되며, 단순 변심이나 실수에 의한 취소가 불가능합니다.</span>
+	          			<th>
+	          				<input type="checkbox" id="check4" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px;">
+	          					‘바로 판매하기’ 를 선택하시면 즉시 거래가 체결되며, 단순 변심이나 실수에 의한 취소가 불가능합니다.
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><input type="checkbox" id="check5" onchange="checkForm()">
-	          			<span id="sell_span" style="font-size: 13px;">판매 조건을 모두 확인하였으며, 거래 진행에 동의합니다.</span>
+	          			<th>
+	          				<input type="checkbox" id="check5" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px;">
+	          					판매 조건을 모두 확인하였으며, 거래 진행에 동의합니다.
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><span style="color: black; font-size: 15px;">정산금액</span><span style="float: right;color: #00A5FF;">280,000원</span>
+	          			<th>
+	          				<span style="color: black; font-size: 15px;">
+	          					정산금액
+	          				</span>
+	          				<span style="float: right;color: #00A5FF;">
+	          					<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+	          				</span>
 	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
 	          			</th>
 	          		</tr>

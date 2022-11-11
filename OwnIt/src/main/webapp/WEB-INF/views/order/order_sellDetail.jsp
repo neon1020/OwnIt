@@ -41,17 +41,21 @@
 	          	<table class="table">
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-		          			<span style="font: bold; color: black; font-size: 15px;">
-		          			MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)
+	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage" >
+		          			<span id="span3"style="font: bold; color: black; font-size: 15px;">
+		          				${product.product_brand }
 		          			</span><br>
-		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-		          			 <span style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>
+		          				${product.product_name }<br>
+		          			 <span style="font: bold; color: black; font-size: 15px;">
+		          			 	${product.product_model_num }
+		          			 </span>
 	          			 </th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>진행상황</span>
+	          				<span>
+	          					진행상황
+	          				</span>
 	          				<div>
 		          				<progress id="barr" value="20" max="100"></progress>
 		          				<a style="margin-left: 120px;">판매검수</a> 
@@ -61,50 +65,78 @@
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><span style="font-size: 15px; ">판매가</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF">280,000</span><br>
-		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
-		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
-		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">선불/판매자 부담</span>
+	          			<th>
+	          				<span style="font-size: 15px; ">
+	          					판매가
+	          				</span><br>
+		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF">
+		          						<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/>
+		          					</span><br>
+		          			검수비	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          						무료
+		          					</span><br>
+		          			수수료	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          						무료
+		          					</span><br>
+		          			배송비	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          						선불/판매자 부담
+		          					</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>정산 금액</span><br>
-	          				<span style="float: right;color: #00A5FF;">+280,000</span>
+	          				<span>
+	          					정산 금액
+	          				</span><br>
+	          				<span style="float: right;color: #00A5FF;">
+	          					+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/>
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>거래 일시</span><br>
-	          				<span style="float: right; font-size: 15px;">2022-10-31</span>
+	          				<span>
+	          					거래 일시
+	          				</span><br>
+	          				<span style="float: right; font-size: 15px;">
+	          					2022-10-31
+	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>보내실 곳</span><br>
-	          				<span style="font-size: 15px;">OwnIt 앞</span><br>
+	          				<span>
+	          					보내실 곳
+	          				</span><br>
+	          				<span style="font-size: 15px;">
+	          					OwnIt 앞
+	          				</span><br>
 	          				부산광역시 해운대구 서면<br>
 	          				1588-1588
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>정산일</span>
-	          				<span style="float: right; font-size: 15px;">2022/11/31</span>
+	          				<span>
+	          					정산일
+	          				</span>
+	          				<span style="float: right; font-size: 15px;">
+	          					2022/11/31
+	          				</span>
 	          			</th>
 	          		</tr>
 	          	</table>
 	          	<div>
 		          	<a href="product_list" class="btn btn-lg btn-primary btn-block mt-1" style="background-color: black; border:balck; color: white;">
-		          	SHOP 바로가기</a>
+		          		SHOP 바로가기
+		          	</a>
 		          	<a href="" class="btn btn-lg btn-primary btn-block mt-1" style="background-color: black; border:balck; color: white;">
-		          	판매 목록보기</a>
+		          		판매 목록보기
+		          	</a>
 	          	</div>
 	         </div>
           </div>
         </div>
-	
 	 </article>
     </section>
 	
