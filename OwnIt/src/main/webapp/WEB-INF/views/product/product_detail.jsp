@@ -258,12 +258,12 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-1">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="true" aria-controls="collapse-2-1">
+			                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="false" aria-controls="collapse-2-1">
 			                      <span id="title1">배송 기간 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-1" class="collapse show" aria-labelledby="heading-2-1" data-parent="#accordion-2">
+			                <div id="collapse-2-1" class="collapse" aria-labelledby="heading-2-1" data-parent="#accordion-2">
 			                  <div class="card-body"  id="title1" >
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
@@ -276,12 +276,12 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-2">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
+			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapse-2-2">
 			                      <span id="title1">검수 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
+			                <div id="collapse-2-2" class="collapse show" aria-labelledby="heading-2-2" data-parent="#accordion-2">
 			                  <div class="card-body" id="title1">
 			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
 			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.
@@ -332,7 +332,11 @@
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Share this product</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    	<span style="color:black;">
+                    		상품 공유하기
+                    	</span>
+                    </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a class="dropdown-item" href="#">Facebook</a>
