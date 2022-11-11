@@ -3,17 +3,17 @@
 <mapper namespace="com.teamone.ownit.mapper.AdminMapper">
 
 <!-- 김소희 -->
-	<select id="selectProductListCount" resultType="integer">
-		SELECT COUNT(*) FROM product
-	</select>
 
-	<select id="selectProductList" resultType="com.teamone.ownit.vo.ProductVO">
-		SELECT * 
-			FROM product p LEFT OUTER JOIN image i
-			ON p.product_idx = i.product_idx
-			ORDER BY p.product_idx;
-	</select>
-	
+
+
+
+
+
+
+
+
+
+
 
 
 

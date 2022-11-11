@@ -93,28 +93,28 @@
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 												<td>2022.10.04</td>
 												<td>647,000원</td>
 												<td>배송중</td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 												<td>2022.09.22</td>
 												<td>1,918,000원</td>
 												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#exampleModal-1"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
@@ -168,28 +168,28 @@
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 												<td>2022.10.04</td>
 												<td>647,000원</td>
 												<td>배송중</td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 												<td>2022.09.22</td>
 												<td>1,918,000원</td>
 												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
@@ -218,28 +218,28 @@
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 												<td>2022.10.04</td>
 												<td>647,000원</td>
 												<td>배송중</td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 												<td>2022.09.22</td>
 												<td>1,918,000원</td>
 												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
@@ -268,28 +268,28 @@
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 												<td>2022.10.04</td>
 												<td>647,000원</td>
 												<td>배송중</td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 												<td>2022.09.22</td>
 												<td>1,918,000원</td>
 												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
 											</tr>
 											<tr>
 												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td><a href="">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
+												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
 												<td>2022.08.19</td>
 												<td>250,000원</td>
 												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>

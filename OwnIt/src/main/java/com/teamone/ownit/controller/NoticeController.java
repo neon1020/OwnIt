@@ -14,18 +14,18 @@ public class NoticeController {
 	}
 	
 	//공지사항 writePro - admin_noticeWritePro
-	@PostMapping(value = "/admin_noticeWritePro")
-	public String writePro(@ModelAttribute NoticeVO board, Model model) {
-		int insertCount = service.registBoard(board);
-		
-		if(insertCount > 0) {
-			return "redirect:/noticeList";
-		} else {
-			model.addAttribute("msg", "글 쓰기 실패!");
-			return "notice/fail_back";
-		}
-		
-	}
+//	@PostMapping(value = "/admin_noticeWritePro")
+//	public String writePro(@ModelAttribute NoticeVO board, Model model) {
+//		int insertCount = service.registBoard(board);
+//		
+//		if(insertCount > 0) {
+//			return "redirect:/noticeList";
+//		} else {
+//			model.addAttribute("msg", "글 쓰기 실패!");
+//			return "notice/fail_back";
+//		}
+//		
+//	}
 	
 	
 	@GetMapping(value = "noticeList")

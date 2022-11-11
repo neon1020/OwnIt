@@ -31,6 +31,12 @@
 										<label for="exampleInputPassword1">Password</label>
 										<input type="password" class="form-control" id="exampleInputPassword1">
 									</div>
+									<div class="col-12" style="height: 25px; margin-top: 20px;">
+										<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
+											<input type="checkbox" class="custom-control-input" id="customCheck2" name="agree2">
+											<label class="custom-control-label" for="customCheck2">이메일 저장하기</label>
+										</div>
+									</div>
 									<div class="col-12 mt-2">
 										<button type="submit" class="btn btn-block btn-dark btn-rounded">Log In</button>
 									</div>
@@ -38,7 +44,7 @@
 							</div>
 						</div>
 						<div style="text-align: center;">
-							<a href="member_joinForm" >이메일 가입 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-1" style="cursor: pointer;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="cursor: pointer;">비밀번호 찾기</a>
+							<a href="member_joinForm" style="color: black;">이메일 가입 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-1" style="color: black;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black;">비밀번호 찾기</a>
 							
 							<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
