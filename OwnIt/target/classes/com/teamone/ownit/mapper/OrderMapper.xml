@@ -98,18 +98,41 @@
 
 
 
-<!-- 박주닮 -->
+<!-- 박주닮 101번 라인 -->
+	<!-- 상품 정보를 가져오는 구문 -->
 	<select id="productDetail" resultType="com.teamone.ownit.vo.ProductVO">
 		SELECT 
 			* FROM product
 			WHERE product_idx=#{product_idx}
 		
 	</select>
-
+	<!-- 상품에대한 이미지를 가져오는 구문 -->
 	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO">
 		SELECT * FROM image
-		WHERE image_idx=#{product_idx}
+			WHERE image_idx=#{product_idx}
 	</select>
+	<!-- 맴버의 정보, 주소, 계좌를 가져오는 구문 -->
+	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.MemberAddressAccountVO">
+		SELECT 
+			member_name, 
+		    member_phone, 
+		    account_bank, 
+		    account_num, 
+		    account_owner_name, 
+		    address1,
+		    address2
+				FROM 
+					member, 
+					account, 
+					address
+		WHERE member_id=#{sId}
+        AND address_gb = 0
+        AND account_gb = 0
+        AND member.member_idx = address.member_idx
+        AND member.member_idx = account.member_idx;
+	</select>
+	
+	
 
 
 
@@ -174,27 +197,4 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</mapper> 
+</mapper> <!-- 200번 라인 맞추기 -->

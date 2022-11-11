@@ -120,8 +120,9 @@
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
 	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
-	          			계좌 : 1234-12-123456<br>
-	          			예금주 : 박주닮
+	          			은행 : ${member.account_bank}<br>
+	          			계좌 : ${member.account_num }<br>
+	          			예금주 : ${member.member_name }
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -139,9 +140,9 @@
 			          				변경
 			          			</a>
 			          		</span>
-		          			받는분 : 		<br>
-		          			연락처 : 		<br>
-		          			배송주소 : 		<br>
+		          			받는분 : ${member.member_name }	<br>
+		          			연락처 : ${member.member_phone }<br>
+		          			배송주소 : ${member.address1 } ${member.address2 }<br>
 	          			</th>
 	          		</tr>
 	          		<tr>

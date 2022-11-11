@@ -1,5 +1,7 @@
 package com.teamone.ownit.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.OrderService;
+import com.teamone.ownit.vo.AccountVO;
+import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
+import com.teamone.ownit.vo.MemberAddressAccountVO;
+import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.ProductVO;
 
 @Controller
@@ -91,29 +97,7 @@ public class OrderController {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 // 박주닮 101번째라인
 	
 	
@@ -134,12 +118,19 @@ public class OrderController {
 	
 	// 상품판매폼
 	@GetMapping(value = "order_sellForm")
-	public String order_sellForm(@RequestParam int product_idx, Model model) {
+	public String order_sellForm(@RequestParam int product_idx, Model model, HttpSession session) {
+		//상품의 이미지를 불러오는 메서드
 		ImageVO image = service.selectDetailImage(product_idx);
 		model.addAttribute("image", image);
-	
+		//상품의 정보를 불러오는 메서드
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
+		//판매자의 정보를 불러오는 메서드
+		session.setAttribute("sId", "test2@naver.com"); //임시 테스트용 세션저장
+		String sId = (String)session.getAttribute("sId");
+		MemberAddressAccountVO member = service.selectMember(sId);
+		model.addAttribute("member",member);
+		
 		return "order/order_sellForm";
 	}
 	
@@ -205,55 +196,5 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }//200번라인
