@@ -98,9 +98,11 @@
           	
           	
           	
-          	<form action="order_sellDetail" method="get" >
+          	<form action="order_sellDetail" method="post" >
           	
           		<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		<input type= "hidden" name="member_idx" value="${member.member_idx }">
+          		<input type= "hidden" name="account_idx" value="${member.account_idx }">
           		
 	          	<table class="table">
 	          		<tr>

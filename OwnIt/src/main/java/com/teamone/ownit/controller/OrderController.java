@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.OrderService;
@@ -96,7 +97,6 @@ public class OrderController {
 	
 	
 	
-
 		
 // 박주닮 101번째라인
 	
@@ -137,14 +137,29 @@ public class OrderController {
 	
 	
 	// 상품 판매 정산 정보
-	@GetMapping(value = "order_sellDetail")
-	public String order_sellDetail(@RequestParam int product_idx, Model model) {
+	@PostMapping(value = "order_sellDetail")
+	public String order_sellDetail(@RequestParam int product_idx, 
+									@RequestParam int member_idx, 
+									@RequestParam int account_idx,  Model model) {
+		
 		ImageVO image = service.selectDetailImage(product_idx);
 		model.addAttribute("image", image);
-	
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
-		return "order/order_sellDetail";
+		
+		//판매성공시 판매자 정보 입력
+		int insertCount = service.insertOrderSell(product_idx,member_idx,account_idx);
+		
+		if(insertCount > 0) {
+			System.out.println("판매성공");
+			
+			return "order/order_sellDetail";
+		}else {
+			System.out.println("판매실패");
+			return null;
+		}
+		
+		
 	}
 	
 	@GetMapping(value = "order_buyAgree")
@@ -188,13 +203,5 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-		
+			
 }//200번라인

@@ -113,7 +113,9 @@
 	</select>
 	<!-- 맴버의 정보, 주소, 계좌를 가져오는 구문 -->
 	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.MemberAddressAccountVO">
-		SELECT 
+		SELECT
+			member.member_idx,
+			account_idx,
 			member_name, 
 		    member_phone, 
 		    account_bank, 
@@ -132,20 +134,18 @@
         AND member.member_idx = account.member_idx;
 	</select>
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- order_sell 테이블 insert작업 -->
+	<insert id="insertOrderSell">
+		INSERT INTO order_sell
+			VALUES(
+				null,
+				#{product_idx},
+				#{member_idx},
+				#{account_idx},
+				'0',
+				date_format(now(),"%y-%m-%d %H:%i:%S")
+			);
+	</insert>
 
 
 

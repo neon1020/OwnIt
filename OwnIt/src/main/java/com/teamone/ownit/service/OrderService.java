@@ -111,6 +111,9 @@ public class OrderService {
 		public MemberAddressAccountVO selectMember(String sId) {
 			return mapper.selectMemberDetail(sId);
 		}
+		public int insertOrderSell(int product_idx, int member_idx, int account_idx) {
+			return mapper.insertOrderSell(product_idx,member_idx,account_idx);
+		}
 
 
 
@@ -128,9 +131,6 @@ public class OrderService {
 	
 	
 
-	
-	
-	
 	
 	
 	
