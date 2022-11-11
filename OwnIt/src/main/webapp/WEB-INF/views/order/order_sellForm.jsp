@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +10,15 @@
 <style type="text/css">
 	input[type=checkbox]{
 	float: right; 
-	width: 15px; 
-	height: 15px;
+	width: 20px; 
+	height: 20px;
 	}
 	#sell_span{
+		font-size: 18px; 
+		color: black; 
+		font-weight: 900;
+	}
+	#sell_span2{
 		font-size: 18px; 
 		color: black; 
 		font-weight: 900;
@@ -21,6 +28,12 @@
 		color: #6c757d;
 		padding: 5px 10px;
 		border-radius: 8px;
+	}
+	#sellFormImage{
+		width: 90px; 
+		height: 90px; 
+		float: left; 
+		border-radius: 15px;
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -81,21 +94,34 @@ function checkForm(){
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
-          	<form action="member_sell_detail" method="get" >
+          	
+          	
+          	
+          	
+          	<form action="order_sellDetail" method="get" >
+          	
+          		<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		
 	          	<table class="table">
-	          		
 	          		<tr>
-	          			<th><img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)</span><br>
-		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>
+	          			<th style="font-size: 30px; font: bold; color: black;">
+		          			<span style="color: skyblue;">판매</span>
+		          			확인서
+	          			</th>
+	          		</tr>
+	          		<tr>
+	          			<th>
+	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage">
+		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br>
+		          			 ${product.product_name }<br>
+		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
 	          			 </th>
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
-	          			<span style="float: right; font-size: 12px;"><a href="#" style="background-color: black; color: white;'">계좌 추가</a></span>
+	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
 	          			계좌 : 1234-12-123456<br>
-	          			에금주 : 박주닮
+	          			예금주 : 박주닮
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -103,7 +129,7 @@ function checkForm(){
 	          			<span id="sell_span">반송 주소</span>
 	          			<span id="sell_span" style="float: right; font-size: 11px;">
 		          			<a href="javascript:func1()" style="border: none;">+ 새 주소 추가</a></span><br>
-		          			<span id="sell_span" style="float: right; font-size: 13px;"><a href="javascript:func2()">변경</a></span>
+		          			<span id="sell_span2" style="float: right; font-size: 13px;"><a href="javascript:func2()">변경</a></span>
 		          			받는분 : <br>
 		          			연락처 : <br>
 		          			배송주소 : <br>
@@ -111,7 +137,8 @@ function checkForm(){
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span" style="font-size: 15px; ">즉시 판매가</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF;">280,000</span><br>
+		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF;">
+		          				<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span><br>
 		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">선불/판매자 부담</span>
@@ -120,7 +147,8 @@ function checkForm(){
 	          		<tr>
 	          			<th><span id="sell_span">최종 판매 정보</span><br>
 		          			거래금액<br>
-		          			<span id="sell_span" style="float: right;color: #00A5FF;">+280,000</span>
+		          			<span id="sell_span" style="float: right;color: #00A5FF;">
+		          			+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -150,7 +178,7 @@ function checkForm(){
 	          			</th>
 	          		</tr>
 	          		<tr>
-	          			<th><span style="color: black; font-size: 15px;">정산금액</span><span style="float: right;color: #00A5FF;">280,000원</span>
+	          			<th><span style="color: black; font-size: 15px;">정산금액</span><span style="float: right;color: #00A5FF;"><fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</span>
 	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
 	          			</th>
 	          		</tr>

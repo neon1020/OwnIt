@@ -245,8 +245,8 @@
                           <input id="cardNumber3" type="text" class="form-control" placeholder="받으시는 분">
                         </div>
                       </div>
-                      <div class="col-12">
-                        <a href="#!" class="btn btn-primary">Add</a>
+                      <div class="col-12" style="text-align: center;">
+                        <input type="button" value="추가하기" class="btn btn-dark btn-rounded" onclick="#">
                       </div>
                     </div>
                   </div>

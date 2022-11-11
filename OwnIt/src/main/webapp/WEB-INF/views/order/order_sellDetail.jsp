@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,15 @@
 	}
 	#barr{
 		width: 100%;
+	}
+	#sellFormImage{
+		width: 90px; 
+		height: 90px; 
+		float: left;
+		border-radius: 15px;
+	}
+	#margin-left{
+		margin-left: 120px;"
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -41,12 +52,12 @@
 	          	<table class="table">
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/productDetail1.png" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-		          			<span style="font: bold; color: black; font-size: 15px;">
-		          			MQ103KH/A Apple iPhone 14 Pro 256GB Silver (Korean Ver.)
+	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage" >
+		          			<span id="span3"style="font: bold; color: black; font-size: 15px;">
+		          			${product.product_brand }
 		          			</span><br>
-		          			 애플 아이폰 14 프로 256기가 실버 (국내 정식 발매 제품)<br>
-		          			 <span style="font: bold; color: black; font-size: 15px;">ONE SIZE</span>
+		          			${product.product_name }<br>
+		          			 <span style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
 	          			 </th>
 	          		</tr>
 	          		<tr>
@@ -54,15 +65,15 @@
 	          				<span>진행상황</span>
 	          				<div>
 		          				<progress id="barr" value="20" max="100"></progress>
-		          				<a style="margin-left: 120px;">판매검수</a> 
-		          				<a style="margin-left: 120px;">판매반려</a> 
-		          				<a style="margin-left: 120px;">판매완료</a>
+		          				<a id="margin-left">판매검수</a> 
+		          				<a id="margin-left">판매반려</a> 
+		          				<a id="margin-left">판매완료</a>
 	          				</div>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th><span style="font-size: 15px; ">판매가</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF">280,000</span><br>
+		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF"><fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/></span><br>
 		          			검수비<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			수수료<span style="float: right;font-size: 15px; color: #6c757d;">무료</span><br>
 		          			배송비<span style="float: right;font-size: 15px; color: #6c757d;">선불/판매자 부담</span>
@@ -71,7 +82,7 @@
 	          		<tr>
 	          			<th>
 	          				<span>정산 금액</span><br>
-	          				<span style="float: right;color: #00A5FF;">+280,000</span>
+	          				<span style="float: right;color: #00A5FF;">+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/></span>
 	          			</th>
 	          		</tr>
 	          		<tr>
