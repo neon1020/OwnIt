@@ -154,7 +154,8 @@
 			                                    <div class="card-footer">
 		                                        
 			                                        <div class="input-group mb-3">
-					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required>
+<!-- 					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required> -->
+			                                        	<input type="file" name="file" class="form-control-file" id="imageFile" required>
 			                                        </div>
 		                                        
 			                                    </div>
@@ -169,7 +170,7 @@
                                         </div>
                                      	<div class="form-group col-md-3">
                                      		<label>&nbsp;</label>
-                                            <select id="inputState" class="form-control" onchange="changeType(this.value)" required>
+                                            <select id="inputState" class="form-control" onchange="changeType(this.value)">
                                                 <option selected="selected" value="">직접입력</option>
                                                 <option value="노트북">노트북</option>
                                                 <option value="스마트워치">스마트워치</option>
@@ -188,7 +189,7 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>&nbsp;</label>
-                                            <select id="inputState" class="form-control" onchange="changeBrand(this.value)" required>
+                                            <select id="inputState" class="form-control" onchange="changeBrand(this.value)">
                                                 <option selected="selected" value="">직접입력</option>
                                                 <option value="APPLE">APPLE</option>
                                                 <option value="BOSE">BOSE</option>

@@ -3,6 +3,7 @@
 <mapper namespace="com.teamone.ownit.mapper.AdminMapper">
 
 <!-- 김소희 -->
+
 	<select id="selectProductListCount" resultType="integer">
 		SELECT COUNT(*) FROM product
 	</select>
@@ -14,51 +15,50 @@
 			ORDER BY p.product_idx;
 	</select>
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<insert id="insertProduct">
+		<selectKey keyProperty="product_idx" resultType="integer" order="BEFORE">
+			SELECT MAX(product_idx) FROM product
+		</selectKey>
+		INSERT 
+			INTO product
+			VALUES (
+					#{product_idx} + 1, 
+					#{product_type}, 
+					#{product_brand}, 
+					#{product_name}, 
+					#{product_model_num}, 
+					#{product_color}, 
+					#{product_release_price}, 
+					#{product_buy_price}, 
+					#{product_sell_price}, 
+					0, 
+					0, 
+					DATE_FORMAT(now(), '%y-%m-%d')
+					)
+	</insert>
+	
+	
+	<insert id="insertProductImage">
+		<selectKey keyProperty="image_idx" resultType="integer" order="BEFORE">
+			SELECT MAX(image_idx) FROM image
+		</selectKey>
+		INSERT 
+			INTO image
+			VALUES (
+					#{image_idx} + 1, 
+					#{product_idx}, 
+					null, 
+					null, 
+					'product', 
+					#{image_real_file1}, 
+					#{image_original_file1}, 
+					null, 
+					null,
+					null, 
+					null
+					)
+	</insert>
+	
 
 
 

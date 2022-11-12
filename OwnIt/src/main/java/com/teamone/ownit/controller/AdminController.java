@@ -1,9 +1,11 @@
 package com.teamone.ownit.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.teamone.ownit.service.AdminService;
+import com.teamone.ownit.vo.AdminProductVO;
 import com.teamone.ownit.vo.PageInfo;
 import com.teamone.ownit.vo.ProductVO;
 
@@ -65,7 +68,7 @@ public class AdminController {
 		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
 		// 끝 페이지 번호를 최대 페이지 번호로 교체
 		if(endPage > maxPage) {	endPage = maxPage; }
-
+		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		
@@ -86,11 +89,14 @@ public class AdminController {
 	
 	// 관리자 - 글쓰기 작업을 수행할 admin_productWritePro()
 	@PostMapping (value = "admin_productWritePro")
-	public String admin_productWritePro(@ModelAttribute ProductVO product, Model model, HttpSession session) {
+	public String admin_productWritePro(@ModelAttribute AdminProductVO product, Model model, HttpSession session) {
+		
+		System.out.println(product.getFile());
 		
 		// 가상 업로드 경로에 대한 실제 업로드 경로 알아내기
 		String uploadDir = "/resources/img/product";
 		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		
 		System.out.println("실제 업로드 경로 : " + saveDir);
 		
 		File f = new File(saveDir); // 실제 경로를 갖는 File 객체 생성
@@ -100,10 +106,44 @@ public class AdminController {
 			f.mkdirs();
 		}
 		
-//		ProductVO 객체에 전달된 MultipartFile 객체 꺼내기
-//		MultipartFile[] mFiles = product.getFiles();
+		MultipartFile mFile = product.getFile();
 		
-		return "";
+		String originalFileName = mFile.getOriginalFilename();
+		long fileSize = mFile.getSize();
+		System.out.println("파일명 : " + originalFileName);
+		System.out.println("파일크기 : " + fileSize + " Byte");
+		
+		// 파일명 중복 방지를 위한 대책
+		// 랜덤ID 는 UUID 클래스 활용(UUID : 범용 고유 식별자)
+		String uuid = UUID.randomUUID().toString();
+		System.out.println("업로드 될 파일명 : " + uuid + "_" + originalFileName);
+		
+		product.setImage_original_file1(originalFileName); // 실제로는 불필요한 컬럼
+		product.setImage_real_file1(uuid + "_" + originalFileName);
+		
+		int insertCount = service.registProduct(product);
+		int insertCount2 = service.registProductImage(product);
+				
+		if(insertCount > 0 && insertCount2 > 0) {
+			// 파일 등록 작업 성공 시 실제 폴더 위치에 파일 업로드 수행
+			// => MultipartFile 객체의 transferTo() 메서드를 호출하여 파일 업로드 작업 수행
+			//    (파라미터 : new File(업로드 경로, 업로드 할 파일명))
+			try {
+				mFile.transferTo(new File(saveDir, product.getImage_real_file1()));
+			} catch (IllegalStateException e) {
+				System.out.println("IllegalStateException");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("IOException");
+				e.printStackTrace();
+			}
+			
+			return "redirect:/admin_productList";
+		} else {
+			return "";
+		}
+		
+	
 	}
 	
 	
@@ -250,50 +290,10 @@ public class AdminController {
 	
 	
 	
+
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
 	
 	
 	
