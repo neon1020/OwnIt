@@ -7,6 +7,7 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberAddressAccountVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.Member_sellVO;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface OrderMapper { 
@@ -113,6 +114,10 @@ public interface OrderMapper {
 	int insertOrderSell(@Param("product_idx") int product_idx,
 						@Param("member_idx") int member_idx,
 						@Param("account_idx") int account_idx);
+	// 상품 판매 성공시 판매자정보 추가 후 정보를 가져오는작업
+	String[] selectOrderSell(@Param("product_idx") int product_idx,
+								  @Param("member_idx") int member_idx,
+								  @Param("account_idx") int account_idx);
 	
 	
 	

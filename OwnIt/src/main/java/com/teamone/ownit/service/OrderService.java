@@ -111,8 +111,12 @@ public class OrderService {
 		public MemberAddressAccountVO selectMember(String sId) {
 			return mapper.selectMemberDetail(sId);
 		}
+		// 판매테이블 정보 입력
 		public int insertOrderSell(int product_idx, int member_idx, int account_idx) {
 			return mapper.insertOrderSell(product_idx,member_idx,account_idx);
+		}
+		public String[] selectOrderSell(int product_idx, int member_idx, int account_idx) {
+			return mapper.selectOrderSell(product_idx,member_idx,account_idx);
 		}
 
 

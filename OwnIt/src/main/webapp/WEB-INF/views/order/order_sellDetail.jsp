@@ -110,7 +110,7 @@
 	          					거래 일시
 	          				</span><br>
 	          				<span style="float: right; font-size: 15px;">
-	          					2022-10-31
+	          					${orderSellDate }
 	          				</span>
 	          			</th>
 	          		</tr>
@@ -129,10 +129,10 @@
 	          		<tr>
 	          			<th>
 	          				<span>
-	          					정산일
+	          					정산일<span style="font-size: 15px; color: silver;">(약1개월)</span>
 	          				</span>
 	          				<span style="float: right; font-size: 15px;">
-	          					2022/11/31
+	          					${addMonth }
 	          				</span>
 	          			</th>
 	          		</tr>
