@@ -91,19 +91,16 @@
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card-title" style="margin-left: 350px;">
-	                            <h2>Write Notice</h2>
-	                        </div>
 	                        <div class="form-validation">
-	                            <form class="form-valide" action="#" method="post">
+	                            <form class="form-valide" action="admin_noticeWritePro" method="post">
 	                                <div class="form-group row">
 	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Category <span class="text-danger">*</span>
 	                                    </label>
 	                                    <div class="form-group col-md-4">
-	                                        <select id="inputState" class="form-control">
-	                                            <option selected="selected">Choose</option>
-	                                            <option>공지사항</option>
-	                                            <option>이벤트</option>
+	                                        <select name="category" id="inputState" class="form-control" >
+	                                            <option selected="selected">카테고리</option>
+	                                            <option value="notice">공지사항</option>
+	                                            <option value="event">이벤트</option>
 	                                        </select>
 	                                    </div>
 	                                </div>

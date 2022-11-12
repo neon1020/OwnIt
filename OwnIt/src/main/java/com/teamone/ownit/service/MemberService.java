@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.MemberMapper;
+import com.teamone.ownit.vo.MemberVO;
 
 @Service
 public class MemberService {
 
-//	@Autowired
-//	private MemberMapper mapper;
+	@Autowired
+	private MemberMapper mapper;
 	
 	// 정채연
 	
@@ -296,7 +297,17 @@ public class MemberService {
 	
 	
 	
-	
 	// 류혜지 - 300
-	
+	// 아이디 찾기
+		public MemberVO findEmail(MemberVO member) {
+			return mapper.findEmail(member);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 }

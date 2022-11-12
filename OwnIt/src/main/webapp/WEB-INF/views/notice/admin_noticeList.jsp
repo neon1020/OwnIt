@@ -1,5 +1,7 @@
+<%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +13,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<%=request.getContextPath() %>/resources/admin/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="<%=request.getContextPath() %>/resources/admin/css/style.css" rel="stylesheet">
-
-</head>
+</head> 
 <body>
-
     <!--*******************
         Preloader start
     ********************-->
@@ -28,7 +28,6 @@
     <!--*******************
         Preloader end
     ********************-->
-
     
     <!--**********************************
         Main wrapper start
@@ -73,7 +72,6 @@
             Content body start
         ***********************************-->
         <div class="content-body" >
-
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
@@ -85,83 +83,76 @@
             <!-- row -->
 			<br>
             <div class="container-fluid">
-
 				<!-- Table start -->
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card-title">
-	                            <h2>Notice</h2>
-	                        </div>
-                            <!-- 검색기능 Start -->
-	                        <form>
-                                <div class="input-group mb-3" style="float: right; width: 250px;">
-                                    <input type="text" class="form-control">
+                            <!-- !!검색 Form 시작!! -->
+	                        <form action="admin_noticeList" method="get">
+                                <div class="input-group mb-3" style="float: right; width: 200px; height: 30px;">
+                                    <input type="text" name="keyword" class="form-control">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-dark" type="button">Search</button>
+                                        <button class="btn btn-dark btn-primary" type="submit">
+					                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+												<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+											</svg>
+                                        </button>
                                     </div>
                                 </div>
-                                <select class="form-control" style="float: right; width: 100px">
-                                    <option selected="selected">전체</option>
-                                    <option>고객명</option>
-                                    <option>상품명</option>
+                                <select class="form-control" name="searchType" style="float: right; width: 100px">
+                                    <option value="subject_content" selected="selected">전체</option>
+                                    <option value="subject">제목</option>
+                                    <option value="content">내용</option>
                                 </select>
 	                        </form>
-	                        <!-- 검색기능 End -->
+	                        <!-- !!검색 Form 끝!! -->
                             <div class="table-responsive">
-                            <br>
-                            <hr>
-                                <table class="table header-border" style="text-align: center;">
+                            	<!-- !!글목록 시작!! -->
+                                <table class="table table-hover" style="text-align: center;">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="vertical-align: middle;">No</th>
-                                            <th scope="col" style="vertical-align: middle;">Category</th>
+                                            <th scope="col" style="vertical-align: middle; width: 50px;">No</th>
+                                            <th scope="col" style="vertical-align: middle; width: 100px;">Category</th>
                                             <th scope="col" style="vertical-align: middle;">Subject</th>
-                                            <th scope="col" style="vertical-align: middle;">Date</th>
-                                            <th scope="col" style="vertical-align: middle;">Read</th>
+                                            <th scope="col" style="vertical-align: middle; width: 100px;">Date</th>
+                                            <th scope="col" style="vertical-align: middle; width: 50px;">Read</th>
                                         </tr>
                                     </thead>
+                                    <!-- JSTL 과 EL 활용하여 글목록 표시 -->
                                     <tbody>
+                                    <c:forEach var="notice" items="${noticeList }">
                                         <tr>
-                                            <td style="vertical-align: middle;">1</td>
-                                            <td style="vertical-align: middle;">공지사항</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">11월 홈페이지 운영 일정 안내</a></td>
-                                            <td style="vertical-align: middle;">2022-10-31</td>
-                                            <td style="vertical-align: middle;">131</td>
+                                            <td style="vertical-align: middle;">${notice.notice_idx }</td>
+                                            <td style="vertical-align: middle;">${notice.notice_category }</td>
+                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail?notice_idx=${notice.notice_idx }&pageNum=${pageInfo.pageNum}">${notice.notice_subject }</a></td>
+                                            <td style="vertical-align: middle;">${notice.notice_date }</td>
+                                            <td style="vertical-align: middle;">${notice.notice_readcount }</td>
                                         </tr>
-                                        <tr>
-                                            <td style="vertical-align: middle;">2</td>
-                                            <td style="vertical-align: middle;">이벤트</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">주간 출석체크 이벤트 당첨자 발표</a></td>
-                                            <td style="vertical-align: middle;">2022-10-31</td>
-                                            <td style="vertical-align: middle;">250</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align: middle;">3</td>
-                                            <td style="vertical-align: middle;">이벤트</td>
-                                            <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail">행운의 룰렛 돌리기 이벤트</a></td>
-                                            <td style="vertical-align: middle;">2022-10-31</td>
-                                            <td style="vertical-align: middle;">330</td>
-                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
+                                <!-- !!글목록 끝!! -->
                                 <a href="admin_noticeWrite"><button type="button" class="btn btn-dark btn-primary" style="float: right;">글쓰기</button></a>
 	                        </div>
-	                        
 							<!-- 페이징 태그 START -->
-							<div class="bootstrap-pagination">
-								<nav>
-									<ul class="pagination justify-content-center">
-	                                       <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">Next</a></li>
-									</ul>
-								</nav>
-							</div>
+							<div class="bootstrap-pagination" style="text-align: center;">
+									<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
+									<input type="button" class="btn btn-light btn-sm" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='admin_noticeListpageNum=${pageInfo.pageNum - 1}'"<%} %>>
+									<!-- 시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
+									&nbsp;
+									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<!-- 현재 페이지 번호와 i 값이 같을 경우 하이퍼링크 없이 페이지 번호 표시 -->
+										<!-- 아니면, pageNum 파라미터를 i 값으로 설정하여 BoardList.bo 서블릿 주소 링크 -->
+										<c:choose>
+											<c:when test="${i eq pageInfo.pageNum }">${i }</c:when>
+											<c:otherwise><a href="admin_noticeList?pageNum=${i }">${i }</a></c:otherwise>
+										</c:choose>
+										&nbsp;
+									</c:forEach>
+								<!-- 현재 페이지번호가 끝 페이지번호보다 작을 때 현재 페이지번호 + 1 값으로 페이지 이동 -->
+								<input type="button" class="btn btn-light btn-sm" value="&raquo;" <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>onclick="location.href='admin_noticeList?pageNum=${pageInfo.pageNum + 1}'"<%} %>>
+							</div>	
 							<!-- 페이징 태그 END -->
-							
 	                    </div>
 	                </div>
 	            </div>
