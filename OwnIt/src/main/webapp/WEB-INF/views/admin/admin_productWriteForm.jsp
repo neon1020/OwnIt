@@ -154,8 +154,8 @@
 			                                    <div class="card-footer">
 		                                        
 			                                        <div class="input-group mb-3">
-<!-- 					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required> -->
-			                                        	<input type="file" name="file" class="form-control-file" id="imageFile" required>
+					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required>
+<!-- 			                                        	<input type="file" name="file" class="form-control-file" id="imageFile" required> -->
 			                                        </div>
 		                                        
 			                                    </div>

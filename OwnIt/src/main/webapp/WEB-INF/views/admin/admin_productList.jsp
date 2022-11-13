@@ -94,7 +94,6 @@
             <!-- row -->
 			<br>
             <div class="container-fluid">
-
 				<!-- table start -->
 				<div class="col-lg-12">
 	                <div class="card">
@@ -102,6 +101,7 @@
 	                        <div class="card-title">
 	                            <h2>Product List</h2>
 	                        </div>
+<!-- 							전체 | 판매중 | 판매중단 -->
 	                        <!-- 검색기능 Start -->
 	                        <form action="admin_productList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
@@ -153,11 +153,19 @@
 		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${product.product_left_count }">
 		                                        </td>
 		                                        <td>
-													<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-		                                                   <option selected="selected">판매중</option>
-		                                                   <option value="1">판매중단</option>
+		                                        	<c:choose>
+		                                        		<c:when test="${product.product_left_count eq '0'}">
+		                                        			<i class="fa fa-close text-danger mr-2"></i>판매중단
+		                                        		</c:when>
+		                                        		<c:otherwise>
+		                                        			<i class="fa fa-circle-o text-info  mr-2"></i>판매중
+		                                        		</c:otherwise>
+		                                        	</c:choose>
+<!-- 													<select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
+<!-- 		                                                   <option selected="selected">판매중</option> -->
+<!-- 		                                                   <option value="1">판매중단</option> -->
 		<!--                                                     <option value="2">판매중단</option> -->
-		                                               </select>
+<!-- 		                                               </select> -->
 												</td>
 		                                        <td>
 		                                        	<button type="button" class="btn mb-1 btn-dark">Apply</button>

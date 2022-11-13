@@ -100,10 +100,10 @@
 					'product', 
 					#{image_real_file1}, 
 					#{image_original_file1}, 
-					null, 
-					null,
-					null, 
-					null
+					#{image_real_file2}, 
+					#{image_original_file2}, 
+					#{image_real_file3}, 
+					#{image_original_file3}
 					)
 	</insert>
 	

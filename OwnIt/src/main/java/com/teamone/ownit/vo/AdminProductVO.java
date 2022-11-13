@@ -1,6 +1,7 @@
 package com.teamone.ownit.vo;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,8 +31,8 @@ public class AdminProductVO {
 	private String image_real_file2;
 	private String image_real_file3;
 	
-//	private MultipartFile[] files;
-	private MultipartFile file;
+	private List<MultipartFile> files;
+//	private MultipartFile file;
 
 	public AdminProductVO() {
 		// TODO Auto-generated constructor stub
@@ -197,34 +198,38 @@ public class AdminProductVO {
 		this.image_real_file3 = image_real_file3;
 	}
 
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
-	
-	
-//	public MultipartFile[] getFiles() {
-//		return files;
+//	public MultipartFile getFile() {
+//		return file;
 //	}
-//
-//	public void setFiles(MultipartFile[] files) {
-//		this.files = files;
+//	public void setFile(MultipartFile file) {
+//		this.file = file;
 //	}
+	
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
 
-//	@Override
-//	public String toString() {
-//		return "AdminProductVO [product_idx=" + product_idx + ", product_type=" + product_type + ", product_brand="
-//				+ product_brand + ", product_name=" + product_name + ", product_model_num=" + product_model_num
-//				+ ", product_color=" + product_color + ", product_release_price=" + product_release_price
-//				+ ", product_sell_price=" + product_sell_price + ", product_buy_price=" + product_buy_price
-//				+ ", product_left_count=" + product_left_count + ", product_sell_count=" + product_sell_count
-//				+ ", product_date=" + product_date + ", image_original_file1=" + image_original_file1
-//				+ ", image_original_file2=" + image_original_file2 + ", image_original_file3=" + image_original_file3
-//				+ ", image_real_file1=" + image_real_file1 + ", image_real_file2=" + image_real_file2
-//				+ ", image_real_file3=" + image_real_file3 + ", files=" + Arrays.toString(files) + "]";
-//	}
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
+
+	@Override
+	public String toString() {
+		return "AdminProductVO [product_idx=" + product_idx + ", product_type=" + product_type + ", product_brand="
+				+ product_brand + ", product_name=" + product_name + ", product_model_num=" + product_model_num
+				+ ", product_color=" + product_color + ", product_release_price=" + product_release_price
+				+ ", product_sell_price=" + product_sell_price + ", product_buy_price=" + product_buy_price
+				+ ", product_left_count=" + product_left_count + ", product_sell_count=" + product_sell_count
+				+ ", product_date=" + product_date + ", image_idx=" + image_idx + ", image_board_type="
+				+ image_board_type + ", image_original_file1=" + image_original_file1 + ", image_original_file2="
+				+ image_original_file2 + ", image_original_file3=" + image_original_file3 + ", image_real_file1="
+				+ image_real_file1 + ", image_real_file2=" + image_real_file2 + ", image_real_file3=" + image_real_file3
+				+ ", files=" + files + "]";
+	}
+
+	
+	
+	
 	
 	
 }
