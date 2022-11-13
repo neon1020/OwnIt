@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
 import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.ImageVO;
-import com.teamone.ownit.vo.ProductVO;
 
 @Service
 public class AdminService {
@@ -19,13 +17,13 @@ public class AdminService {
 	// 김소희
 	
 	// 전체 상품 목록 갯수 조회
-	public int getProductListCount() {
-		return mapper.selectProductListCount();
+	public int getProductListCount(String searchType, String keyword) {
+		return mapper.selectProductListCount(searchType, keyword);
 	}
 	
 	// ProductList 조회
-	public List<ProductVO> getProductList(int startRow, int listLimit) {
-		return mapper.selectProductList(startRow, listLimit);
+	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectProductList(startRow, listLimit, searchType, keyword);
 	}
 	
 	// Product 등록 (글쓰기)
@@ -38,6 +36,8 @@ public class AdminService {
 	}
 
 
+	
+	
 	
 	
 	

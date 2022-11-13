@@ -2,10 +2,7 @@ package com.teamone.ownit.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.teamone.ownit.service.AdminService;
-import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.PageInfo;
-import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.*;
 
 @Controller
 public class AdminController {
@@ -36,8 +30,15 @@ public class AdminController {
 		return "admin/admin_main";
 	}
 	
+	// 관리자 - 상품 목록 조회
 	@GetMapping(value = "admin_productList")
-	public ModelAndView admin_productList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_productList(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
 		
 		// -------------------------------------------------------------------
 		// 페이징 처리를 위한 계산 작업
@@ -49,11 +50,11 @@ public class AdminController {
 //		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
-		List<ProductVO> productList = service.getProductList(startRow, listLimit);
+		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword);
 		
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
-		int listCount = service.getProductListCount();
+		int listCount = service.getProductListCount(searchType, keyword);
 		
 		// 페이지 계산 작업 수행
 		// 전체 페이지 수 계산
@@ -74,12 +75,12 @@ public class AdminController {
 		
 //		System.out.println(pageInfo);
 		// --------------------------------------------------------------------------------
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("productList", productList);
-		map.put("pageInfo", pageInfo);
+		model.addAttribute("productList", productList);
+		model.addAttribute("pageInfo", pageInfo);
 		
-		return new ModelAndView("admin/admin_productList", "map", map);
+		return "admin/admin_productList";
 	}
+	
 	
 	// 관리자 - Product 등록 폼 이동
 	@GetMapping(value = "admin_productWriteForm")
@@ -290,7 +291,6 @@ public class AdminController {
 	
 	
 	
-
 	
 	
 	

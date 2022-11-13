@@ -103,17 +103,18 @@
 	                            <h2>Product List</h2>
 	                        </div>
 	                        <!-- 검색기능 Start -->
-	                        <form>
+	                        <form action="admin_productList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="keyword" class="form-control">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-dark" type="button">Search</button>
+                                        <button class="btn btn-outline-dark" type="submit">Search</button>
                                     </div>
                                 </div>
-                                <select class="form-control" style="float: right; width: 100px">
-                                    <option selected="selected">전체</option>
-                                    <option>브랜드</option>
-                                    <option>상품명</option>
+                                <select class="form-control" name="searchType" style="float: right; width: 100px">
+                                    <option value="all" selected="selected">전체</option>
+                                    <option value="brand">Brand</option>
+                                    <option value="type">Type</option>
+                                    <option value="name">제품명</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -125,9 +126,9 @@
 	                                    	<th width="20px"></th>
 	                                        <th style="width: 80px"></th>
 	                                    	<th>모델번호</th>
-	                                    	<th>브랜드</th>
-	                                    	<th>카테고리</th>
-	                                        <th>Name</th>
+	                                    	<th>Brand</th>
+	                                    	<th>Type</th>
+	                                        <th>제품명</th>
 	                                        <th>재고수량</th>
 	                                        <th>판매상태</th>
 	                                        <th width="100px">#</th>
@@ -136,7 +137,7 @@
 	                                </thead>
 	                                <tbody>
 	                                
-	                                	<c:forEach var="product" items="${map.productList }">
+	                                	<c:forEach var="product" items="${productList }">
 		                                    <tr>
 		                                    	<td>
 		                                    		<input type="checkbox" style="outline: 1px solid #000000">
@@ -176,56 +177,55 @@
 	                        </div>
 	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
 	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="func1()">선택 삭제</button>
-<!-- 							<div class="bootstrap-pagination"> -->
-<!-- 								<nav> -->
-<!-- 									<ul class="pagination justify-content-center"> -->
-<%-- 										<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %> --%>
-<!-- 										<li class="page-item disabled"> -->
-<%-- 											<a class="page-link" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum - 1}<%} %>" tabindex="-1">Previous</a> --%>
-<!-- 										</li> -->
-<!-- 										시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
-<%-- 										<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }"> --%>
-<!-- 										현재 페이지 번호와 i 값이 같을 경우 하이퍼링크 없이 페이지 번호 표시 -->
-<!-- 										아니면, pageNum 파라미터를 i 값으로 설정하여 서블릿 주소 링크 -->
-<%-- 											<c:choose> --%>
-<%-- 												<c:when test="${i eq pageInfo.pageNum }"> --%>
-<!-- 													<li class="page-item"> -->
-<%-- 														<a class="page-link" href="#">${i }</a> --%>
-<!-- 													</li> -->
-<%-- 												</c:when> --%>
-<%-- 												<c:otherwise> --%>
-<!-- 													<li class="page-item"> -->
-<%-- 														<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a> --%>
-<!-- 													</li> -->
-<%-- 												</c:otherwise> --%>
-<%-- 											</c:choose> --%>
-<%-- 										</c:forEach> --%>
-											
-<!-- <!-- 										<li class="page-item"> --> -->
-<!-- <!-- 											<a class="page-link" href="#">1</a> --> -->
-<!-- <!-- 										</li> --> -->
-<!-- <!-- 										<li class="page-item"> --> -->
-<!-- <!-- 											<a class="page-link" href="#">2</a> --> -->
-<!-- <!-- 										</li> --> -->
-<!-- <!-- 										<li class="page-item"> --> -->
-<!-- <!-- 											<a class="page-link" href="#">3</a> --> -->
-<!-- <!-- 										</li> --> -->
-
-<!-- 										현재 페이지번호가 끝 페이지번호보다 작을 때 현재 페이지번호 + 1 값으로 페이지 이동 -->
-<!-- 										<li class="page-item"> -->
-<%-- 											<a class="page-link"  <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>href="admin_productList?pageNum=${pageInfo.pageNum + 1}"<%} %>>Next</a> --%>
-<!-- 										</li> -->
-										
-										
-<!-- 									</ul> -->
-<!-- 								</nav> -->
-<!-- 							</div> -->
 							
+							<!-- 페이징 처리 Start -->
+							<div class="bootstrap-pagination">
+							<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
+								<nav>
+									<ul class="pagination justify-content-center">
+										
+									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Previous</a>
+										</li>
+									<%} %>
+									
+									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<c:choose>
+											<c:when test="${i eq pageInfo.pageNum }">
+												<li class="page-item active">
+													<a class="page-link" href="javascript:void(0)">${i } <span class="sr-only">(current)</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item">
+													<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									
+									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Next</a>
+										</li>
+									<%} %>
+									</ul>
+								</nav>
+							</div>
+							<!-- 페이징 처리 End -->
 	                    </div>
 	                </div>
 	            </div>
 				<!-- table end -->
-				
             </div>
             <!-- #/ container -->
         </div>

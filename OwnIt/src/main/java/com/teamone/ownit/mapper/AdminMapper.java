@@ -2,18 +2,22 @@ package com.teamone.ownit.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.ProductVO;
 
 public interface AdminMapper {
 
 	// 김소희
 	
 	// 전체 상품 목록 갯수 조회
-	int selectProductListCount();
+	int selectProductListCount(
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
 
 	// ProductList 조회
-	List<ProductVO> selectProductList(int startRow, int listLimit);
+	List<AdminProductVO> selectProductList(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
 	// Product 등록 (글쓰기)
 	int insertProduct(AdminProductVO product);
@@ -282,11 +286,7 @@ public interface AdminMapper {
 	
 	
 	
-	
-	
-	
-	
-	
+		
 	
 	
 	
