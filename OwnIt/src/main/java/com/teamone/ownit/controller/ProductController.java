@@ -21,8 +21,11 @@ public class ProductController {
 	private ProductService service;
 
 	@GetMapping(value = "product_list")
-	public String product_list(Model model) {
-		List<ProductVO> productList = service.getProductList();
+	public String product_list(Model model, HttpSession session) {
+//		String sId = (String)session.getAttribute("sId");
+		String sId = "test1@naver.com";
+		List<ProductVO> productList = service.getProductList(sId);
+		System.out.println(productList);
 		int cnt = 0;
 		for(ProductVO product : productList) cnt++;
 		model.addAttribute("productList", productList);
@@ -62,25 +65,24 @@ public class ProductController {
 		return "product/product_list";
 	}
 
+	@GetMapping(value = "arrayByBrand")
+	public String arrayByBrand(String chArr) {
+		System.out.println(chArr);
+		return "";
+	}
+
+	@GetMapping(value = "addLikeList")
+	public String addLikeList(HttpSession session, int product_idx) {
+//		String sId = (String)session.getAttribute("sId");
+		System.out.println(product_idx);
+		String sId = "test1@naver.com";
+		int ischecked = service.checkLike(sId, product_idx);
+		if(ischecked > 0) System.out.println("존재하는 wishlist");	
+		// TODO wishlist 존재여부 판별했으므로 있으면 삭제작업, 없으면 추가작업
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		return "";
+	}
 
 
 
@@ -96,9 +98,7 @@ public class ProductController {
 
 	
 	
-	
-	
-// 박주닮
+	// 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {
 		

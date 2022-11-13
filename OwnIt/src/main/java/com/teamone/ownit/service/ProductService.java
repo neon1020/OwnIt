@@ -2,21 +2,22 @@ package com.teamone.ownit.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ProductMapper;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.WishlistVO;
 
 @Service
 public class ProductService {
 	@Autowired
 	private ProductMapper mapper;
 	// 상품목록 조회
-	public List<ProductVO> getProductList() {
+	public List<ProductVO> getProductList(String sId) {
 		System.out.println("ProductService - getProductList()");
-		return mapper.getProductList();
+		return mapper.getProductList(sId);
 	}
 
 	public List<ProductVO> getCategorisedProduct(String id) {
@@ -29,13 +30,12 @@ public class ProductService {
 		return mapper.arrayByCategory(id);
 	}
 
+	public int checkLike(String sId, int product_idx) {
+		System.out.println("checkLike()");
+		return mapper.checkLike(sId, product_idx);
+	}
 
-
-
-
-
-
-
+	
 
 
 
@@ -110,11 +110,9 @@ public class ProductService {
 
 	
 
+	
 
-
-
-
-
+	
 
 
 

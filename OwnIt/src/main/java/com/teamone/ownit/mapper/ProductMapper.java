@@ -6,10 +6,11 @@ import org.apache.ibatis.annotations.Param;
 
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.WishlistVO;
 
 public interface ProductMapper {
 	// 상품목록 조회
-	List<ProductVO> getProductList(); 
+	List<ProductVO> getProductList(String sId); 
 
 	// 이미지 조회
 	List<ImageVO> selectImage(List<ProductVO> productList); 
@@ -20,9 +21,8 @@ public interface ProductMapper {
 	// 상품 카테고리에 따른 상품목록 조회(인기순, 가격순...)
 	List<ProductVO> arrayByCategory(String id);
 
-
-
-
+	// 위시리스트 추가 여부 확인
+	int checkLike(@Param("sId")String sId, @Param("product_idx")int product_idx);
 
 
 
@@ -106,6 +106,12 @@ public interface ProductMapper {
 	ImageVO selectDetailImage(@Param("product_idx") int product_idx);
 
 	
+
+	
+
+	
+
+	
 	
 
 
@@ -113,14 +119,6 @@ public interface ProductMapper {
 
 
 	
-
-
-
-
-
-
-
-
 
 
 

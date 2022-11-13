@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<head></head>
+<script src="resources/js/jquery-3.6.1.js"></script>
+<script>
+// var chArr = [];
+// $('input:checkbox[name=brand]:checked').each(function() {
+// 	var ch = $(this).val();
+// 	chArr.push(ch+" ");
+// 	$.ajax({
+// 		type:"GET",
+// 		url:"arrayByBrand",
+// 		data:chArr,
+// 		success: function(result){
+// 			console.log(result);
+// 		}
+// 	});
+// })
+
+$('input:checkbox[name=brand]').each(function() {
+	if($(this).is(":checked")){
+		alert("체크됨");
+	}
+
+}
+
+</script>
 
  <!-- sidebar -->
 <aside class="col-lg-3 sidebar">
@@ -49,30 +74,30 @@
 		</span>
 		<div class="d-lg-block collapse" id="collapse-2">
 			<span class="widget-title">Brands</span>
-			<div class="widget-content">
+			<div class="widget-content" >
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Apple">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Apple"  value="Apple">
 					<label class="custom-control-label" for="Apple">Apple</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Samsung">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Samsung" value="Samsung">
 					<label class="custom-control-label" for="Samsung">Samsung</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Sony">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Sony" value="Sony">
 					<label class="custom-control-label" for="Sony">Sony</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="LG">
+					<input type="checkbox" class="custom-control-input" name="brand" id="LG" value="LG">
 					<label class="custom-control-label" for="LG">LG</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Bose">
-					<label class="custom-control-label" for="LG">BOSE</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="Bose" value="Bose">
+					<label class="custom-control-label" for="Bose">BOSE</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="etc">
-					<label class="custom-control-label" for="LG">ETC</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="etc" value="etc">
+					<label class="custom-control-label" for="etc">ETC</label>
 				</div>
 			</div>		
 		</div>

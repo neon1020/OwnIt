@@ -56,23 +56,55 @@
   text-align: right;
   color: #6c757d; }
   
-  .product-like::after{
-  	color: red;
-  }
+  .product-like-full {
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  transition-delay: 0s;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 1.875rem;
+  height: 1.875rem;
+  text-align: right;
+  color: red; }
+  .product-like-full::before {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    transition-delay: 0s;
+    content: "\ebde";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-family: 'icomoon';
+    font-size: 0.875rem;
+    color: red; }
   
   </style>
   <script src="resources/js/jquery-3.6.1.js"></script>
   <script type="text/javascript">
-  function arrayByCategory(id) {
-	$.ajax({
-		type: 'GET',
-		url: 'arrayByCategory?id='+id,
-		dataType:'text',
-		success: function(productList, cnt) {
-			
-		}
-	});
-  }
+//   function arrayByCategory(id) {
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: 'arrayByCategory?id='+id,
+// 		dataType:'text',
+// 		success: function(productList, cnt) {
+// 			$.each(productList, function(i, product){
+				
+// 			});
+// 		}
+// 	});
+// 	$(this).unbind();
+//   }
   </script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -159,7 +191,14 @@
                         <a href="#!" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
-                    <a href="#!" class="product-like"></a>
+                    <c:choose>
+                    	<c:when test="${product.myWish ne 0}">
+                   			<a href="addLikeList?product_idx=${product.product_idx }" class="product-like-full"></a>
+                   		</c:when>
+                   		<c:otherwise>
+                   			<a href="addLikeList?product_idx=${product.product_idx }" class="product-like"></a>
+                   		</c:otherwise>
+                   	</c:choose>
                     <a href="#!" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
                   </div>
                 </div>
