@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <title>주문/정산</title>
 <style type="text/css">
+	#disabled{
+		background: black; 
+		color: white;
+		border: black;
+		border-radius: 15px;
+	}
 	input[type=checkbox]{
 	float: right; 
 	width: 20px; 
@@ -19,9 +25,8 @@
 		font-weight: 900;
 	}
 	#sell_span2{
-		font-size: 18px; 
-		color: black; 
-		font-weight: 900;
+		font-size: 15px;
+		color : skyblue; 
 	}
 	span > a[href]{
 		border: 1px solid #6c757d;
@@ -82,6 +87,20 @@
 			return checked;
 			
 	}
+	
+	function checkAll(){
+		if($(".checkAccount").text().length == 0){
+		  alert("계좌를 추가해주세요!");
+		  $("#account").focus();
+		  return false;
+		}
+		if($(".checkAddress").text().length == 0){
+		  alert("주소를 입력해주세요!");
+		  $("#address").focus();
+		  return false;
+		}
+		return true;
+	}
 </script>
 <body onload="checkForm()">
 
@@ -98,7 +117,7 @@
           	
           	
           	
-          	<form action="order_sellDetail" method="post" >
+          	<form action="order_sellDetail" method="post" onsubmit="return checkAll()">
           	
           		<input type="hidden" name="product_idx" value="${product.product_idx }">
           		<input type= "hidden" name="member_idx" value="${member.member_idx }">
@@ -121,10 +140,10 @@
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
-	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
-	          			은행 : ${member.account_bank}<br>
-	          			계좌 : ${member.account_num }<br>
-	          			예금주 : ${member.member_name }
+	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a id="account" href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
+	          			은행 : <span id="sell_span2" class="checkAccount">${member.account_bank}</span><br>
+	          			계좌 : <span id="sell_span2">${member.account_num }</span><br>
+	          			예금주 : <span id="sell_span2">${member.member_name }</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -133,7 +152,7 @@
 		          				반송 주소
 		          			</span>
 		          			<span id="sell_span" style="float: right; font-size: 11px;">
-			          			<a href="javascript:func1()" style="border: none;">
+			          			<a id="address" href="javascript:func1()" style="border: none;">
 			          				+ 새 주소 추가
 			          			</a>
 			          		</span><br>
@@ -142,9 +161,10 @@
 			          				변경
 			          			</a>
 			          		</span>
-		          			받는분 : ${member.member_name }	<br>
-		          			연락처 : ${member.member_phone }<br>
-		          			배송주소 : ${member.address1 } ${member.address2 }<br>
+		          			받는분 : <span id="sell_span2">${member.member_name }</span>	<br>
+		          			연락처 : <span id="sell_span2">${member.member_phone }</span><br>
+		          			배송주소 : <span id="sell_span2" class="checkAddress">${member.address1 } ${member.address2 }</span><br>
+		          			
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -230,7 +250,7 @@
 	          				<span style="float: right;color: #00A5FF;">
 	          					<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
 	          				</span>
-	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
+	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 	          			</th>
 	          		</tr>
 	          	</table>

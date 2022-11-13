@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>판매 동의</title>
 <style type="text/css">
+	#disabled{
+		background: black; 
+		color: white;
+		border: black;
+		border-radius: 15px;
+	}
 	input[type=checkbox]{
 	float: right; 
 	width: 20px; 

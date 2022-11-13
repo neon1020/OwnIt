@@ -9,7 +9,7 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberAddressAccountVO;
 import com.teamone.ownit.vo.MemberVO;
-import com.teamone.ownit.vo.Member_sellVO;
+import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
 
 @Service
@@ -112,11 +112,11 @@ public class OrderService {
 			return mapper.selectMemberDetail(sId);
 		}
 		// 판매테이블 정보 입력
-		public int insertOrderSell(int product_idx, int member_idx, int account_idx) {
-			return mapper.insertOrderSell(product_idx,member_idx,account_idx);
+		public int insertOrderSell(Order_sellVO order_sell) {
+			return mapper.insertOrderSell(order_sell);
 		}
-		public String[] selectOrderSell(int product_idx, int member_idx, int account_idx) {
-			return mapper.selectOrderSell(product_idx,member_idx,account_idx);
+		public Order_sellVO selectOrderSell(Order_sellVO order_sell) {
+			return mapper.selectOrderSell(order_sell);
 		}
 
 
@@ -196,11 +196,7 @@ public class OrderService {
 	
 	
 	
-	
-	
-	
-	
-	
+		
 }
 
 

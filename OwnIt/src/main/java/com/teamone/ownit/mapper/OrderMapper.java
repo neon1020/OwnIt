@@ -7,7 +7,7 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberAddressAccountVO;
 import com.teamone.ownit.vo.MemberVO;
-import com.teamone.ownit.vo.Member_sellVO;
+import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface OrderMapper { 
@@ -97,8 +97,7 @@ public interface OrderMapper {
 	
 	
 	
-	
-		
+			
 //박주닮 101번째 라인맞추기
 	
 	// 한 상품에 대한 상세정보
@@ -111,13 +110,13 @@ public interface OrderMapper {
 	MemberAddressAccountVO selectMemberDetail(@Param("sId") String sId);
 	
 	// 상품 판매 성공시 판매자정보 추가
-	int insertOrderSell(@Param("product_idx") int product_idx,
-						@Param("member_idx") int member_idx,
-						@Param("account_idx") int account_idx);
+	int insertOrderSell(Order_sellVO order_Sell);
 	// 상품 판매 성공시 판매자정보 추가 후 정보를 가져오는작업
-	String[] selectOrderSell(@Param("product_idx") int product_idx,
-								  @Param("member_idx") int member_idx,
-								  @Param("account_idx") int account_idx);
+	Order_sellVO selectOrderSell(Order_sellVO order_sell);
+
+
+
+
 	
 	
 	
@@ -197,9 +196,5 @@ public interface OrderMapper {
 	
 	
 	
-	
-	
-	
-	
-	
+		
 }//200번째라인맞추기

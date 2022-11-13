@@ -143,29 +143,22 @@
 				#{member_idx},
 				#{account_idx},
 				'0',
-				date_format(now(),"%y-%m-%d %H:%i:%S")
+				date_format(now(),"%y-%m-%d")
 			);
 	</insert>
 
-
-	<select id="selectOrderSell" resultType="String">
-		SELECT order_sell_date
+	<!-- order_sell 테이블 정보 조회, 한 맴버가 같은 상품을 여러번 판매했을경우에는 가장 최근 판매 정보 조회 -->
+	<select id="selectOrderSell" resultType="com.teamone.ownit.vo.Order_sellVO">
+		SELECT *
 			FROM order_sell
 			WHERE product_idx=#{product_idx}
 			  AND member_idx=#{member_idx}
-		      AND account_idx=#{account_idx}
-		      ORDER BY order_sell_idx desc;
+			  <if test="order_sell_date!=null and !order_sell_date.equals('')">
+			  AND order_sell_date=#{order_sell_date}
+			  </if>
+		      ORDER BY order_sell_idx desc
+		      LIMIT 1;
 	</select>
-
-
-
-
-
-
-
-
-
-
 
 
 
