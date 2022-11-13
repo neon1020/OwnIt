@@ -22,7 +22,7 @@
 					#{notice_subject}, 
 					#{notice_content}, 
 					#{notice_readcount}, 
-					#{notice_date}
+					date_format(now(),'%y-%m-%d'))
 	</insert>
 	
 	<!-- 전체 게시물 목록 갯수 조회(검색 기능 추가) -->

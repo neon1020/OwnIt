@@ -30,6 +30,7 @@ public class NoticeController {
 	@PostMapping(value = "admin_noticeWritePro")
 	public String writePro(@ModelAttribute NoticeVO notice, Model model) {
 		int insertCount = service.registNotice(notice);
+		System.out.println(notice);
 		if(insertCount > 0) {
 			return "redirect:/admin_noticeList";
 		} else {

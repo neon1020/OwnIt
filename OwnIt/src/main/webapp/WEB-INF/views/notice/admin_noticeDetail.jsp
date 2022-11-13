@@ -101,7 +101,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td colspan="2" style="font-size: 20px;">[${notice.notice_category }]&nbsp;&nbsp;${notice.notice_subject }</td>
+                                                <td colspan="2" style="font-size: 20px;">${notice.notice_category }&nbsp;&nbsp;${notice.notice_subject }</td>
                                                 <td width="200px"><b>Date</b>&nbsp;&nbsp;&nbsp;${notice.notice_date }</td>
                                                 <td width="200px"><b>Read</b>&nbsp;&nbsp;&nbsp;${notice.notice_readcount }</td>
                                             </tr>

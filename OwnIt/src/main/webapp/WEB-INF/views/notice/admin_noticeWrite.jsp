@@ -97,10 +97,10 @@
 	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Category <span class="text-danger">*</span>
 	                                    </label>
 	                                    <div class="form-group col-md-4">
-	                                        <select name="category" id="inputState" class="form-control" >
-	                                            <option selected="selected">카테고리</option>
-	                                            <option value="notice">공지사항</option>
-	                                            <option value="event">이벤트</option>
+	                                        <select name="notice_category" id="inputState" class="form-control" >
+	                                            <option value="">카테고리</option>
+	                                            <option value="[공지]">공지사항</option>
+	                                            <option value="[이벤트]">이벤트</option>
 	                                        </select>
 	                                    </div>
 	                                </div>
@@ -108,14 +108,14 @@
 	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Subject <span class="text-danger">*</span>
 	                                    </label>
 	                                    <div class="col-lg-6">
-	                                        <input type="text" class="form-control" id="val-username" name="val-username" placeholder="제목을 입력하세요.">
+	                                        <input type="text" class="form-control" id="val-username" name="notice_subject" placeholder="제목을 입력하세요.">
 	                                    </div>
 	                                </div>
 	                                <div class="form-group row">
 	                                    <label class="col-lg-4 col-form-label" for="val-suggestions" style="text-align: right;">Content <span class="text-danger">*</span>
 	                                    </label>
 	                                    <div class="col-lg-6">
-	                                        <textarea class="form-control" id="val-suggestions" name="val-suggestions" rows="5" placeholder="내용을 입력하세요." style="height: 450px"></textarea>
+	                                        <textarea class="form-control" id="val-suggestions" name="notice_content" rows="5" placeholder="내용을 입력하세요." style="height: 450px"></textarea>
 	                                    </div>
 	                                </div>
 	                                <div class="form-group row">
