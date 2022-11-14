@@ -142,7 +142,7 @@
                                     <option value="all" selected="selected">전체</option>
                                     <option value="brand">Brand</option>
                                     <option value="type">Type</option>
-                                    <option value="name">제품명</option>
+                                    <option value="name">상품명</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -158,7 +158,7 @@
 	                                    	<th>모델번호</th>
 	                                    	<th>Brand</th>
 	                                    	<th>Type</th>
-	                                        <th>제품명</th>
+	                                        <th>상품명</th>
 	                                        <th>재고수량</th>
 	                                        <th>판매상태</th>
 	                                        <th width="100px">#</th>

@@ -122,7 +122,7 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">고객</th>
-                                            <th scope="col">Product</th>
+                                            <th scope="col">상품명</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">정산계좌</th>
                                             <th scope="col">Date</th>

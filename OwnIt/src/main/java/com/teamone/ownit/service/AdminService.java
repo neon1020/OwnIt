@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
+import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
 
 @Service
@@ -34,6 +35,17 @@ public class AdminService {
 	public int registProductImage(AdminProductVO product) {
 		return mapper.insertProductImage(product);
 	}
+	
+	// Order - BuyList 리스트 갯수 조회
+	public int getbuyListCount(String searchType, String keyword) {
+		return mapper.selectBuyListCount(searchType, keyword);
+	}
+	
+	// Order - BuyList(구매목록) 조회
+	public List<AdminOrderVO> getbuyList(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectBuyList(startRow, listLimit, searchType, keyword);
+	}
+
 
 
 	

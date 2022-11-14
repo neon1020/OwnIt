@@ -107,9 +107,74 @@
 					)
 	</insert>
 	
+	<!-- Order - Buy List 갯수 조회 -->
+	<select id="selectBuyListCount" resultType="integer">
+		SELECT COUNT(*)
+		FROM order_buy ob
+			LEFT JOIN address a
+				ON ob.address_idx = a.address_idx
+			LEFT JOIN member m
+				ON ob.member_idx = m.member_idx
+			LEFT JOIN product p
+				ON ob.product_idx = p.product_idx
+			<if test="!keyword.equals('')">
+				<!-- 2. 검색타입(search)에 따른 WHERE 변경 -->
+				<choose>
+					<when test="searchType.equals('all')">
+						WHERE m.member_name LIKE '%${keyword}%'
+							OR p.product_name LIKE '%${keyword}%' 
+							OR m.member_phone LIKE '%${keyword}%'
+					</when>
+					<when test="searchType.equals('member_name')">
+						WHERE m.member_name LIKE '%${keyword}%' 
+					</when>
+					<when test="searchType.equals('product_name')">
+						WHERE p.product_name LIKE '%${keyword}%'
+					</when>
+					<when test="searchType.equals('member_phone')">
+						WHERE m.member_phone LIKE '%${keyword}%'
+					</when>
+				</choose>
+			</if>
+	</select>
 
-
-
+	
+	<select id="selectBuyList" resultType="com.teamone.ownit.vo.AdminOrderVO">
+		SELECT
+			ob.order_buy_idx, ob.order_buy_date, ob.order_buy_gb,  
+			a.address_zipcode, a.address1, a.address2,
+	        m.member_name, 
+	        p.product_name, p.product_buy_price
+		FROM order_buy ob
+			LEFT JOIN address a
+				ON ob.address_idx = a.address_idx
+			LEFT JOIN member m
+				ON ob.member_idx = m.member_idx
+			LEFT JOIN product p
+				ON ob.product_idx = p.product_idx
+			<if test="!keyword.equals('')">
+				<!-- 2. 검색타입(search)에 따른 WHERE 변경 -->
+				<choose>
+					<when test="searchType.equals('all')">
+						WHERE m.member_name LIKE '%${keyword}%'
+							OR p.product_name LIKE '%${keyword}%' 
+							OR m.member_phone LIKE '%${keyword}%'
+					</when>
+					<when test="searchType.equals('member_name')">
+						WHERE m.member_name LIKE '%${keyword}%' 
+					</when>
+					<when test="searchType.equals('product_name')">
+						WHERE p.product_name LIKE '%${keyword}%'
+					</when>
+					<when test="searchType.equals('member_phone')">
+						WHERE m.member_phone LIKE '%${keyword}%'
+					</when>
+				</choose>
+			</if>
+			ORDER BY 
+				order_buy_idx DESC
+			LIMIT #{startRow}, #{listLimit}
+	</select>
 
 
 

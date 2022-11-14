@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
 
 public interface AdminMapper {
@@ -24,6 +25,16 @@ public interface AdminMapper {
 
 	// Product 등록 (글쓰기) + 이미지
 	int insertProductImage(AdminProductVO product);
+
+	// Order - BuyList 갯수 조회
+	int selectBuyListCount(
+			@Param("searchType")String searchType, @Param("keyword") String keyword);
+
+	// Order- BuyList(구매 목록) 조회
+	List<AdminOrderVO> selectBuyList(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
+
 
 	
 	
