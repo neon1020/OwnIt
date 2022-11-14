@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -70,18 +72,18 @@
 	    <article class="card card-post">
 	      <div>
 		      <div style="float: left; width: 300px; display: inline-block;">
-		        <a class="profile" href="review_mystyle"><img src="resources/img/review/max4pf.jpg"><span class="eyebrow text-muted">min.nicha</span></a>
+		        <a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
 		      </div>
 		      <div style="float: right; width: 450px; display: inline-block;">
-		        <h4 class="card-title" style="float: right;"><a href="post.html"><img src="resources/img/review/iphone1dt.jpg"><div class="subject">Apple iPhone 13 128GB Starlight (Korean Ver.)<br>934,000원</div></a></h4>
+		        <h4 class="card-title" style="float: right;"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
 		      </div>
 		     </div>
 	      <figure class="equal equal-50">
-	        <img class="image-detail" style="background-image: url(resources/img/review/iphone3.jpg)">
+	        <img class="image-detail" src="resources/img/review/${review.review_image }">
 	      </figure>
 	      <div class="card-body">
-	        <div class="like"><img src="resources/img/review/like_none_b.jpg" id="like_none" onclick="changeLike()">128&nbsp;&nbsp;<img src="resources/img/review/reply_b.jpg">3</div>
-	        <h3 class="card-content">오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~</h3>
+	        <div class="like"><img src="resources/img/review/like_none_b.jpg" id="like_none" onclick="changeLike()">128&nbsp;&nbsp;<img src="resources/img/review/reply_b.jpg">${review.review_reply_count }</div>
+	        <h3 class="card-content">${review.review_content }</h3>
 	      </div>
 	    </article>
     </section>
@@ -91,26 +93,18 @@
       <div class="component">
         <table style="width: 780px;">
         <!-- ********************************* 필요한 부분 ********************************* -->
+        <c:forEach var="re" items="${reply }">
           <tr>
-            <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/max1pf.jpg"><span class="eyebrow text-muted">xxxjini</span></a></td>
-            <td style="width: 470px;">너무 예뻐요ㅠㅠㅠ</td>
+            <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }"><span class="eyebrow text-muted">${re.member_nickname }</span></a></td>
+            <td style="width: 470px;">${re.reply_content }</td>
             <td> <!-- ************* 댓글쓴이에게만 보이는 버튼 ************* -->
             	<button type="button" class="btn btn-primary btn-rounded btn-reply">수정</button>
             	<button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2">삭제</button>
             </td>
           </tr>
+        </c:forEach>
         <!-- ********************************* 필요한 부분 ********************************* -->
         
-        <!-- ********************************* 버릴 부분 시작 ********************************* -->
-          <tr>
-            <td><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/zflip1pf.jpg"><span class="eyebrow text-muted">jaebum_555</span></a></td>
-            <td>인스타 아이디 알려주세요!!</td>
-          </tr>
-          <tr>
-            <td><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/max3pf.jpg"><span class="eyebrow text-muted">cool_mj01</span></a></td>
-            <td>케이스 정보 알 수 있을까요?</td>
-          </tr>
-        <!-- ********************************* 버릴 부분 끝 ********************************* -->
         </table>
         <div class="form-group">
           <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
