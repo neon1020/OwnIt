@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <title>구매 동의</title>
 <style type="text/css">
+	#disabled{
+		background: black; 
+		color: white;
+		border: black;
+		border-radius: 15px;
+	}
 	input[type=checkbox]{
 	float: right; 
 	width: 20px; 
@@ -80,7 +86,7 @@ var checked = false;
 	          		
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/${image.image_original_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
+	          				<img src="resources/img/product/${product.image_original_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 	          				<span >${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
 	          				<span>${product.product_model_num }</span>

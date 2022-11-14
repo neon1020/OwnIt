@@ -26,7 +26,7 @@
 	}
 	#sell_span2{
 		font-size: 15px;
-		color : skyblue; 
+		color : black; 
 	}
 	span > a[href]{
 		border: 1px solid #6c757d;
@@ -40,23 +40,26 @@
 		float: left; 
 		border-radius: 15px;
 	}
+	.modal-content{
+		height: 700px;
+	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
 </head>
 <script type="text/javascript">
-	//새 주소 추가
-	function func1(){
-		var popupWidth = 600;
-		var popupHeight = 600;
-		var popupX = (window.screen.width / 2) - (popupWidth / 2);
-		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+// 	//새 주소 추가
+// 	function func1(){
+// 		var popupWidth = 600;
+// 		var popupHeight = 600;
+// 		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+// 		var popupY= (window.screen.height / 2) - (popupHeight / 2);
 		
-		window.open('address', '새 주소', 
-					'status=no, height=' + popupHeight  + ', width=' + popupWidth  +
-					', left='+ popupX + ', top='+ popupY);
-	}
+// 		window.open('address', '새 주소', 
+// 					'status=no, height=' + popupHeight  + ', width=' + popupWidth  +
+// 					', left='+ popupX + ', top='+ popupY);
+// 	}
 
 	//주소 변경
 	function func2(){
@@ -96,7 +99,7 @@
 		}
 		if($(".checkAddress").text().length == 0){
 		  alert("주소를 입력해주세요!");
-		  $("#address").focus();
+		  $("#address2").focus();
 		  return false;
 		}
 		return true;
@@ -117,7 +120,7 @@
           	
           	
           	
-          	<form action="order_sellDetail" method="post" onsubmit="return checkAll()">
+          	<form action="order_sellDetail" method="get" onsubmit="return checkAll()">
           	
           		<input type="hidden" name="product_idx" value="${product.product_idx }">
           		<input type= "hidden" name="member_idx" value="${member.member_idx }">
@@ -132,7 +135,7 @@
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage">
+	          				<img src="resources/img/product/${product.image_original_file1 }" id="sellFormImage">
 		          			<span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br>
 		          			 ${product.product_name }<br>
 		          			 <span id="sell_span" style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
@@ -140,7 +143,7 @@
 	          		</tr>
 	          		<tr>
 	          			<th><span id="sell_span">판매 정산계좌</span><br>
-	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a id="account" href="account" style="background-color: black; color: white;'">계좌 추가</a></span>
+	          			<span id="sell_span2" style="float: right; font-size: 12px;"><a id="account" href="account" style="color: black; border: dashed 1px;">계좌 추가</a></span>
 	          			은행 : <span id="sell_span2" class="checkAccount">${member.account_bank}</span><br>
 	          			계좌 : <span id="sell_span2">${member.account_num }</span><br>
 	          			예금주 : <span id="sell_span2">${member.member_name }</span>
@@ -152,18 +155,19 @@
 		          				반송 주소
 		          			</span>
 		          			<span id="sell_span" style="float: right; font-size: 11px;">
-			          			<a id="address" href="javascript:func1()" style="border: none;">
-			          				+ 새 주소 추가
-			          			</a>
+			          			<a id="address2" href="#" data-toggle="modal" data-target="#exampleModal-1" style="color: black; border: 0px;">
+									+ 새 주소 추가
+								</a>
 			          		</span><br>
 			          		<span id="sell_span2" style="float: right; font-size: 13px;">
-			          			<a href="javascript:func2()">
+			          			<a href="javascript:func2()"  style="color: black; border: 1px dashed;">
 			          				변경
 			          			</a>
 			          		</span>
+			          		주소별칭 : <span id="sell_span2">${member.address_nickname }</span><br>
+		          			배송주소 : <span id="sell_span2" class="checkAddress">${member.address1 } ${member.address2 }</span><br>
 		          			받는분 : <span id="sell_span2">${member.member_name }</span>	<br>
 		          			연락처 : <span id="sell_span2">${member.member_phone }</span><br>
-		          			배송주소 : <span id="sell_span2" class="checkAddress">${member.address1 } ${member.address2 }</span><br>
 		          			
 	          			</th>
 	          		</tr>
@@ -258,6 +262,73 @@
 	         </div>
           </div>
         </div>
+		<!-- 다음 주소 api 사용을 위한 코드 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                document.getElementById("address_zipcode").value = data.zonecode;
+                document.getElementById("address1").value = roadAddr;
+                document.getElementById("address2").focus();
+                
+            }
+        }).open();
+    }
+</script>
+							<form action="order_sellForm" method="post">
+								<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel">새 주소 추가</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">×</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								      	<input type="hidden" name="member_idx" value="${member.member_idx }">
+								      	<input type="hidden" name="product_idx" value="${product.product_idx }">
+								        <a>주소별칭</a>
+								        <input id="address_nickname" name="address_nickname" type="text" class="form-control" placeholder="주소의 별칭"><br>
+								        
+								        <a>우편번호<input type="button" class="btn" onclick="execDaumPostcode()"value="우편번호" style="color:black; float: right; border: solid 1px black; padding: 3px; border-radius: 10px;"></a>
+								        <input id="address_zipcode" name="address_zipcode" type="text" class="form-control" placeholder="우편번호를 검색하세요"><br>
+								        
+								        <a>주소</a>
+								        <input id="address1" name="address1" type="text" class="form-control" placeholder="우편번호 검색후 자동입력됩니다" ><br>
+								        <a>상세주소</a>
+								        <input id="address2" name="address2" type="text" class="form-control" placeholder="건물,아파트,동/호수 입력" ><br>
+								      </div>
+								      <div class="modal-footer">
+								        <div class="container-fluid">
+								          <div class="row gutter-0">
+								            <div class="col">
+								              <input type="submit" class="btn btn-block btn-dark btn-rounded" value="저장하기">
+								            </div>
+								          </div>
+								        </div>
+								      </div>
+								    </div>
+								  </div>
+								</div>							
+							</form>
+							
+							
 	
 	 </article>
     </section>
