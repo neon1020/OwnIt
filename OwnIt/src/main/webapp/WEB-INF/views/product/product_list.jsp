@@ -4,94 +4,93 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
-    <link rel="stylesheet" href="resources/css/vendor.css" />
-    <link rel="stylesheet" href="resources/css/style.css" />
-
-    <title>Listing</title>
-  </head>
-  <style>
-  .items {
-  	 display: block;
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+	<link rel="stylesheet" href="resources/css/vendor.css" />
+	<link rel="stylesheet" href="resources/css/style.css" />
+	<title>Listing</title>
+</head>
+<style>
+.items {
+	display: block;
+	width: 867px;
+	padding-right: 15px;
+	padding-left: 5px;
+	height: 60px;
+}
+.items > a {
+	margin-right: 41px;
+	color: black;
+	font-size: 0.8em;
+}
+.items > a#laptop {
+	margin-right: 0px;
+	color: black;
+	font-size: 0.8em;
+}
+.items > a > img {
+	width: 60px;
+	height: 60px;
+}
+.btn btn-outline-secondary btn-sm dropdown-toggle {
 	 width: 867px;
-	 padding-right: 15px;
-	 padding-left: 5px;
-	 height: 60px;
-	 
-  }
-  .items > a {
-  	margin-right: 41px;
-  	color: black;
-  	font-size: 0.8em;
-  	
-  }
-  .items > a#laptop {
-  	margin-right: 0px;
-  	color: black;
-  	font-size: 0.8em;
-  	
-  }
-  .items > a > img {
-  	width: 60px;
-  	height: 60px;
-  }
-  .btn btn-outline-secondary btn-sm dropdown-toggle {
-  	 width: 867px;
-  }
-  .style_icon {
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  transition: all 0.2s;
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  transition-delay: 0s;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 1.875rem;
-  height: 1.875rem;
-  text-align: right;
-  color: #6c757d; }
-  
-  .product-like-full {
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  transition: all 0.2s;
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  transition-delay: 0s;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 1.875rem;
-  height: 1.875rem;
-  text-align: right;
-  color: red; }
-  .product-like-full::before {
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    transition: all 0.2s;
-    -webkit-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    transition-delay: 0s;
-    content: "\ebde";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    font-family: 'icomoon';
-    font-size: 0.875rem;
-    color: red; }
-  
-  </style>
-  <script src="resources/js/jquery-3.6.1.js"></script>
-  <script type="text/javascript">
+}
+.style_icon {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 1.875rem;
+	height: 1.875rem;
+	text-align: right;
+	color: #6c757d; }
+
+.product-like-full {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 1.875rem;
+	height: 1.875rem;
+	text-align: right;
+	color: red; }
+.product-like-full::before {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	content: "\ebde";
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	font-family: 'icomoon';
+	font-size: 0.875rem;
+	color: red; }
+.product-like:hover::before {
+	content: "\ebde";
+	color: red;; }
+
+</style>
+<script src="resources/js/jquery-3.6.1.js"></script>
+<script type="text/javascript">
 //   function arrayByCategory(id) {
 // 	$.ajax({
 // 		type: 'GET',
@@ -105,7 +104,38 @@
 // 	});
 // 	$(this).unbind();
 //   }
-  </script>
+$(function() {
+	$('.product-like').click(function() {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addLikeList',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			success:function(result){
+				$('.product').load(location.href + " .product");
+			}
+		});
+	});
+});
+
+$(function() {
+	$('.product-like-full').click(function() {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'deleteLikeList',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			success:function(result){
+				alert("삭제됨!");
+			}
+		});
+	});
+});
+</script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
 	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
@@ -193,10 +223,10 @@
                     </div>
                     <c:choose>
                     	<c:when test="${product.myWish ne 0}">
-                   			<a href="addLikeList?product_idx=${product.product_idx }" class="product-like-full"></a>
+                   			<a href="edeleteLikeList?product_idx=${product.product_idx }" class="product-like-full" id="${product.product_idx }"></a>
                    		</c:when>
                    		<c:otherwise>
-                   			<a href="addLikeList?product_idx=${product.product_idx }" class="product-like"></a>
+                   			<a href="#!" class="product-like" id="${product.product_idx }"></a>
                    		</c:otherwise>
                    	</c:choose>
                     <a href="#!" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
