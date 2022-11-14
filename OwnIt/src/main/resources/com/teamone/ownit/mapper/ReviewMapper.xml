@@ -2,4 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.ReviewMapper">
 
+    <select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
+        SELECT *
+            FROM reviewList
+    </select>
+    
+    <select id="selectReview" resultType="com.teamone.ownit.vo.ReviewListVO">
+        SELECT *
+            FROM reviewList
+            WHERE
+              review_idx = #{review_idx}
+    </select>
+
 </mapper> 
