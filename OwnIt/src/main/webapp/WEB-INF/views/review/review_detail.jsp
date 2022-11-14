@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -91,27 +92,17 @@
     <section id="component-1">
       <div class="component">
         <table style="width: 780px;">
-        <!-- ********************************* 필요한 부분 ********************************* -->
+        <c:forEach var="re" items="${reply }">
           <tr>
-            <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/max1pf.jpg"><span class="eyebrow text-muted">xxxjini</span></a></td>
-            <td style="width: 470px;">너무 예뻐요ㅠㅠㅠ</td>
+            <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }"><span class="eyebrow text-muted">${re.member_nickname }</span></a></td>
+            <td style="width: 470px;">${re.reply_content }</td>
             <td> <!-- ************* 댓글쓴이에게만 보이는 버튼 ************* -->
             	<button type="button" class="btn btn-primary btn-rounded btn-reply">수정</button>
             	<button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2">삭제</button>
             </td>
           </tr>
-        <!-- ********************************* 필요한 부분 ********************************* -->
+        </c:forEach>
         
-        <!-- ********************************* 버릴 부분 시작 ********************************* -->
-          <tr>
-            <td><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/zflip1pf.jpg"><span class="eyebrow text-muted">jaebum_555</span></a></td>
-            <td>인스타 아이디 알려주세요!!</td>
-          </tr>
-          <tr>
-            <td><a class="profile_reply" href="review_mystyle"><img src="resources/img/review/max3pf.jpg"><span class="eyebrow text-muted">cool_mj01</span></a></td>
-            <td>케이스 정보 알 수 있을까요?</td>
-          </tr>
-        <!-- ********************************* 버릴 부분 끝 ********************************* -->
         </table>
         <div class="form-group">
           <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">

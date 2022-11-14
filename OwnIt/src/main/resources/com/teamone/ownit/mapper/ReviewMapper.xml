@@ -13,5 +13,14 @@
             WHERE
               review_idx = #{review_idx}
     </select>
+    
+    <select id="selectReply" resultType="com.teamone.ownit.vo.ReplyVO">
+        SELECT * FROM reply r
+						LEFT JOIN image i
+						ON r.member_idx = i.member_idx
+						LEFT JOIN member m
+            ON r.member_idx = m.member_idx
+            WHERE r.review_idx = #{review_idx};
+    </select>
 
 </mapper> 
