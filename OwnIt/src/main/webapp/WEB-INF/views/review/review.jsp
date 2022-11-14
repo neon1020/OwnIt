@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,6 +17,7 @@
 			.card-post { height: 500px; }
 			.card-post .card-body { width: 260px; }
 	    .equal { height: 260px; width: 260px; border-radius: 0.5em; }
+	    .equal img { width: 100%; height: 100%; object-fit: cover; }
 	    .profile img { width: 30px; height: 30px; border-radius: 10em; margin: 5px 5px; }
 	    .eyebrow { text-transform: none; margin-left: 10px;}
 	    .card-title img { width: 50px; height: 50px; border-radius: 1em; margin: 5px 5px; float: left; }
@@ -62,13 +64,13 @@
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
               <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-size: cover;"><img src="resources/img/review/${review.review_image }"></a>
+                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image }"></a>
               </figure>
               <div class="card-body">
               	<a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
                 <h3 class="card-content">${review.review_content }</h3>
                 <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br>${review.product_buy_price }</div></a></h4>
+                <h4 class="card-title"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
           </div>

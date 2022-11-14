@@ -18,5 +18,9 @@ public class ReviewService {
 		return mapper.selectReviewList();
 	}
 
+	public ReviewListVO getReview(int review_idx) {
+		return mapper.selectReview(review_idx);
+	}
+
 	
 }

@@ -2,6 +2,7 @@ package com.teamone.ownit.vo;
 
 public class ReviewListVO {
 
+	private int review_idx;
 	private String review_image;
 	private String member_image;
 	private String product_image;
@@ -14,10 +15,11 @@ public class ReviewListVO {
 	
 	public ReviewListVO() {}
 
-	public ReviewListVO(String review_image, String member_image, String product_image, String member_nickname,
-			String product_name, String product_buy_price, String review_content, String review_date,
-			int review_reply_count) {
+	public ReviewListVO(int review_idx, String review_image, String member_image, String product_image,
+			String member_nickname, String product_name, String product_buy_price, String review_content,
+			String review_date, int review_reply_count) {
 		super();
+		this.review_idx = review_idx;
 		this.review_image = review_image;
 		this.member_image = member_image;
 		this.product_image = product_image;
@@ -27,6 +29,14 @@ public class ReviewListVO {
 		this.review_content = review_content;
 		this.review_date = review_date;
 		this.review_reply_count = review_reply_count;
+	}
+
+	public int getReview_idx() {
+		return review_idx;
+	}
+
+	public void setReview_idx(int review_idx) {
+		this.review_idx = review_idx;
 	}
 
 	public String getReview_image() {
@@ -103,11 +113,13 @@ public class ReviewListVO {
 
 	@Override
 	public String toString() {
-		return "ReviewListVO [review_image=" + review_image + ", member_image=" + member_image + ", product_image="
-				+ product_image + ", member_nickname=" + member_nickname + ", product_name=" + product_name
-				+ ", product_buy_price=" + product_buy_price + ", review_content=" + review_content + ", review_date="
-				+ review_date + ", review_reply_count=" + review_reply_count + "]";
+		return "ReviewListVO [review_idx=" + review_idx + ", review_image=" + review_image + ", member_image="
+				+ member_image + ", product_image=" + product_image + ", member_nickname=" + member_nickname
+				+ ", product_name=" + product_name + ", product_buy_price=" + product_buy_price + ", review_content="
+				+ review_content + ", review_date=" + review_date + ", review_reply_count=" + review_reply_count + "]";
 	}
+
+	
 	
 	
 }

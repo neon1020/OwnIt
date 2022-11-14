@@ -6,6 +6,8 @@ import com.teamone.ownit.vo.ReviewListVO;
 
 public interface ReviewMapper {
 
-	List<ReviewListVO> selectReviewList(); 
+	List<ReviewListVO> selectReviewList();
+
+	ReviewListVO selectReview(int review_idx); 
 	
 }

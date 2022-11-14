@@ -6,5 +6,12 @@
         SELECT *
             FROM reviewList
     </select>
+    
+    <select id="selectReview" resultType="com.teamone.ownit.vo.ReviewListVO">
+        SELECT *
+            FROM reviewList
+            WHERE
+              review_idx = #{review_idx}
+    </select>
 
 </mapper> 
