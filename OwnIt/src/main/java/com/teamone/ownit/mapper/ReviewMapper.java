@@ -15,5 +15,5 @@ public interface ReviewMapper {
 	List<ReplyVO> selectReply(int review_idx);
 
 	ProductVO selectProduct(int product_idx); 
-	
+  
 }

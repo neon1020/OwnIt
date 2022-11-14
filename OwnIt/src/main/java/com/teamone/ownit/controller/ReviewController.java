@@ -30,8 +30,8 @@ public class ReviewController {
 	public String reviewDetail(@RequestParam int review_idx, Model model) {
 		ReviewListVO review = service.getReview(review_idx);
 		model.addAttribute("review", review);
-        List<ReplyVO> reply = service.getReply(review_idx);
-        model.addAttribute("reply", reply);
+		List<ReplyVO> reply = service.getReply(review_idx);
+		model.addAttribute("reply", reply);
 		return "review/review_detail";
 	}
 	

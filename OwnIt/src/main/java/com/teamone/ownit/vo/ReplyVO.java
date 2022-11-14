@@ -8,8 +8,8 @@ public class ReplyVO {
 	private int reply_re_lev;
 	private int reply_re_seq;
 	private String reply_date;
-    private String image_real_file1;
-    private String member_nickname;
+	private String image_real_file1;
+	private String member_nickname;
 	
 	// 기본 생성자
 	public ReplyVO() {}
@@ -34,7 +34,7 @@ public class ReplyVO {
 	public int getReview_idx() {
 		return review_idx;
 	}
-
+  
 	public void setReview_idx(int review_idx) {
 		this.review_idx = review_idx;
 	}
@@ -94,7 +94,7 @@ public class ReplyVO {
 	public void setImage_real_file1(String image_real_file1) {
 		this.image_real_file1 = image_real_file1;
 	}
-
+  
 	public String getMember_nickname() {
 		return member_nickname;
 	}
