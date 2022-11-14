@@ -4,63 +4,63 @@
 
 <!-- 정채연 -->
 
+<!-- 회원가입 : 이메일 중복 체크 -->
+<select id="selectEmail" parameterType="String" resultType="Integer">
+	SELECT COUNT(*) FROM member WHERE member_id = #{email}
+</select>
 
+<!-- 회원가입 : 닉네임 중복 체크 -->
+<select id="selectNickname" parameterType="String" resultType="Integer">
+	SELECT COUNT(*) FROM member WHERE member_nickname = #{nickname}
+</select>
 
+<!-- 회원가입 : 회원가입 작업 수행 (member 테이블) -->
+<insert id="insertMember">
+	INSERT INTO member
+	VALUES (
+		null,
+		#{member_id},
+		#{member_passwd},
+		#{member_name},
+		#{member_nickname},
+		#{member_phone},
+		'profile_default.png',
+		DATE_FORMAT(NOW(), '%y-%m-%d'),
+		'0',
+		#{member_agree}
+	)
+</insert>
 
+<!-- 회원가입 : 회원가입 작업 수행 (address 테이블) -->
+<insert id="insertAddress">
+	<selectKey keyProperty="se_member_idx" resultType="Integer" order="BEFORE">
+		SELECT MAX(member_idx) FROM member
+	</selectKey>
+	INSERT INTO address
+	VALUES (
+		null,
+		#{se_member_idx},
+		#{address.address_zipcode},
+		#{address.address1},
+		#{address.address2},
+		'0',
+		'주소'
+	)
+</insert>
 
+<!-- member_idx 값 얻어오기 -->
+<select id="selectMember_idx" parameterType="String" resultType="Integer">
+	SELECT member_idx FROM member WHERE member_id = #{id}
+</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 회원가입 : 회원 인증 정보 저장(auth_info 테이블) -->
+<insert id="insertAuthCode">
+	INSERT INTO auth_info
+	VALUES (
+		#{member_idx},
+		#{auth_code}
+	)
+</insert>
 
 
 
