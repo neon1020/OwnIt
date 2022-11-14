@@ -8,13 +8,15 @@ public class ReplyVO {
 	private int reply_re_lev;
 	private int reply_re_seq;
 	private String reply_date;
+    private String image_real_file1;
+    private String member_nickname;
 	
 	// 기본 생성자
 	public ReplyVO() {}
 
 	// 파라미터 생성자
 	public ReplyVO(int review_idx, int member_idx, String reply_content, int reply_re_ref, int reply_re_lev,
-			int reply_re_seq, String reply_date) {
+			int reply_re_seq, String reply_date, String image_real_file1, String member_nickname) {
 		super();
 		this.review_idx = review_idx;
 		this.member_idx = member_idx;
@@ -23,7 +25,10 @@ public class ReplyVO {
 		this.reply_re_lev = reply_re_lev;
 		this.reply_re_seq = reply_re_seq;
 		this.reply_date = reply_date;
+		this.image_real_file1 = image_real_file1;
+		this.member_nickname = member_nickname;
 	}
+
 
 	// Getter & Setter
 	public int getReview_idx() {
@@ -81,12 +86,28 @@ public class ReplyVO {
 	public void setReply_date(String reply_date) {
 		this.reply_date = reply_date;
 	}
+	
+	public String getImage_real_file1() {
+		return image_real_file1;
+	}
 
-	// toString 오버라이딩
+	public void setImage_real_file1(String image_real_file1) {
+		this.image_real_file1 = image_real_file1;
+	}
+
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+
 	@Override
 	public String toString() {
 		return "ReplyVO [review_idx=" + review_idx + ", member_idx=" + member_idx + ", reply_content=" + reply_content
 				+ ", reply_re_ref=" + reply_re_ref + ", reply_re_lev=" + reply_re_lev + ", reply_re_seq=" + reply_re_seq
-				+ ", reply_date=" + reply_date + "]";
+				+ ", reply_date=" + reply_date + ", image_real_file1=" + image_real_file1 + ", member_nickname="
+				+ member_nickname + "]";
 	}
 }
