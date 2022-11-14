@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.ReviewService;
+import com.teamone.ownit.vo.ProductVO;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 
@@ -40,7 +41,9 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_writeForm")
-	public String reviewWrite() {
+	public String reviewWrite(@RequestParam int product_idx, Model model) {
+		ProductVO product = service.getProduct(product_idx);
+		model.addAttribute("product", product);
 		return "review/review_writeForm";
 	}
 	

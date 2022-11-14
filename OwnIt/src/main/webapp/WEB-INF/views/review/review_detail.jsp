@@ -92,6 +92,7 @@
     <section id="component-1">
       <div class="component">
         <table style="width: 780px;">
+        <!-- ********************************* 필요한 부분 ********************************* -->
         <c:forEach var="re" items="${reply }">
           <tr>
             <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }"><span class="eyebrow text-muted">${re.member_nickname }</span></a></td>
@@ -102,6 +103,7 @@
             </td>
           </tr>
         </c:forEach>
+        <!-- ********************************* 필요한 부분 ********************************* -->
         
         </table>
         <div class="form-group">

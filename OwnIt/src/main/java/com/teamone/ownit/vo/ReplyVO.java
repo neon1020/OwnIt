@@ -15,13 +15,6 @@ public class ReplyVO {
 	public ReplyVO() {}
 
 	// 파라미터 생성자
-	
-
-	// Getter & Setter
-	public int getReview_idx() {
-		return review_idx;
-	}
-
 	public ReplyVO(int review_idx, int member_idx, String reply_content, int reply_re_ref, int reply_re_lev,
 			int reply_re_seq, String reply_date, String image_real_file1, String member_nickname) {
 		super();
@@ -36,6 +29,12 @@ public class ReplyVO {
 		this.member_nickname = member_nickname;
 	}
 
+
+	// Getter & Setter
+	public int getReview_idx() {
+		return review_idx;
+	}
+  
 	public void setReview_idx(int review_idx) {
 		this.review_idx = review_idx;
 	}
@@ -95,7 +94,7 @@ public class ReplyVO {
 	public void setImage_real_file1(String image_real_file1) {
 		this.image_real_file1 = image_real_file1;
 	}
-	
+  
 	public String getMember_nickname() {
 		return member_nickname;
 	}
@@ -111,7 +110,4 @@ public class ReplyVO {
 				+ ", reply_date=" + reply_date + ", image_real_file1=" + image_real_file1 + ", member_nickname="
 				+ member_nickname + "]";
 	}
-
-
-
 }
