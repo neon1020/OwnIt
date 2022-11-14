@@ -85,8 +85,8 @@
                 </li>
                 
                 
-                <li class="nav-item cart">
-                  <a data-toggle="modal" data-target="#cart" class="nav-link"><span>Cart</span><span>2</span></a>
+                <li class="nav-item cart" onclick="location.href='checkCart'">
+                  <a data-toggle="modal" data-target="#cart" class="nav-link" ><span>Cart</span><span>2</span></a>
                 </li>
                 
               </ul>

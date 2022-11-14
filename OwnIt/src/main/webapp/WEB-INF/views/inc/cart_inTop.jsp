@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,63 +31,27 @@
           <div class="modal-body">
 
             <div class="row gutter-3">
+            <c:forEach var="cart" items="${cart }">
               <div class="col-12">
                 <div class="cart-item cart-item-sm">
                   <div class="row align-items-center">
                     <div class="col-lg-9">
                       <div class="media media-product">
-                        <a href="#!"><img src="resources/img/demo/product-3.jpg" alt="Image"></a>
+                        <a href="#!"><img src="resources/img/product/${cart.image_original_file1 }" alt="Image" style="width: 70px; height: 70px;"></a>
                         <div class="media-body">
-                          <h5 class="media-title">Black IC Pendant Light</h5>
-                          <span class="media-subtitle">Black, Steel</span>
+                          <h5 class="media-title">${cart.product_name }</h5>
+                          <span class="media-subtitle">${cart.product_color }</span>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-3 text-center text-lg-right">
-                      <span class="cart-item-price">$90</span>
+                      <span class="cart-item-price">${cart.product_buy_price }</span>
                     </div>
                     <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <div class="cart-item cart-item-sm">
-                  <div class="row align-items-center">
-                    <div class="col-lg-9">
-                      <div class="media media-product">
-                        <a href="#!"><img src="resources/img/demo/product-4.jpg" alt="Image"></a>
-                        <div class="media-body">
-                          <h5 class="media-title">Red Analog Magazine Rack</h5>
-                          <span class="media-subtitle">Red</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 text-center text-lg-right">
-                      <span class="cart-item-price">$120</span>
-                    </div>
-                    <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="cart-item cart-item-sm">
-                  <div class="row align-items-center">
-                    <div class="col-lg-9">
-                      <div class="media media-product">
-                        <a href="#!"><img src="resources/img/demo/product-24.jpg" alt="Image"></a>
-                        <div class="media-body">
-                          <h5 class="media-title">Closca Helmet</h5>
-                          <span class="media-subtitle">Black</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 text-center text-lg-right">
-                      <span class="cart-item-price">$132</span>
-                    </div>
-                    <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
-                  </div>
-                </div>
-              </div>
+            </c:forEach>
             </div>
             
           </div>

@@ -87,6 +87,9 @@
 .product-like:hover::before {
 	content: "\ebde";
 	color: red;; }
+.product-action > a:hover {
+	cursor: pointer;
+}
 
 </style>
 <script src="resources/js/jquery-3.6.1.js"></script>
@@ -131,6 +134,27 @@ $(function() {
 			},
 			success:function(result){
 				alert("삭제됨!");
+			}
+		});
+	});
+});
+
+$(function() {
+	$('.product-action').click(function() {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addCart',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success:function(result){
+				if(result == 'Added') {
+					$('#'+index+' > a').html(result).css('color', 'blue');
+				} else {
+					$('#'+index+' > a').html(result).css('color', 'red');
+				}
 			}
 		});
 	});
@@ -217,8 +241,8 @@ $(function() {
                     <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
-                      <span class="product-action">
-                        <a href="#!" style="color: #101010;">장바구니에 추가</a>
+                      <span class="product-action" id="${product.product_idx }">
+                        <a data-toggle="modal" data-target="#cart" class="nav-link" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
                     <c:choose>
