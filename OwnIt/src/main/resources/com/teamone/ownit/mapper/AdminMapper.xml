@@ -94,7 +94,7 @@
 			INTO image
 			VALUES (
 					#{image_idx} + 1, 
-					#{product_idx}, 
+					#{product_idx} + 1, 
 					null, 
 					null, 
 					'product', 

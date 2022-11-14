@@ -17,9 +17,37 @@
 </head>
 <script type="text/javascript">
 	
-	function func1() {
-		confirm('삭제하시겠습니까?');
+	<!-- 체크박스 전체선택, 전체해제 -->
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
 	}
+
+	
+	<!-- 삭제(체크박스된 것 전부) -->
+	function deleteAction(){
+		  var checkRow = "";
+		  $( "input[name='checkRow']:checked" ).each (function (){
+		    checkRow = checkRow + $(this).val()+"," ;
+		  });
+		  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+		 
+		  if(checkRow == ''){
+		    alert("삭제할 상품을 선택하세요.");
+		    return false;
+		  }
+		  console.log("### checkRow => {}"+checkRow);
+		 
+		  if(confirm("상품을 삭제 하시겠습니까?")){
+			  out.println(checkRow);
+		      location.href="admin_productList";      
+		  }
+		}
+	
+
 
 </script>
 <body>
@@ -123,7 +151,9 @@
 	                            <table class="table">
 	                                <thead>
 	                                    <tr>
-	                                    	<th width="20px"></th>
+	                                    	<th width="20px">
+	                                    		<input id="th_checkAll" type="checkbox" name="checkAll" onclick="checkAll();" style="outline: 1px solid #000000">
+	                                    	</th>
 	                                        <th style="width: 80px"></th>
 	                                    	<th>모델번호</th>
 	                                    	<th>Brand</th>
@@ -140,7 +170,7 @@
 	                                	<c:forEach var="product" items="${productList }">
 		                                    <tr>
 		                                    	<td>
-		                                    		<input type="checkbox" style="outline: 1px solid #000000">
+		                                    		<input type="checkbox" name="checkRow" value="${product.product_idx}" style="outline: 1px solid #000000">
 		                                    	</td>
 	                                        	<td>
 	                                        		<img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${product.image_original_file1}" width="80" height="80">
@@ -161,11 +191,6 @@
 		                                        			<i class="fa fa-circle-o text-info  mr-2"></i>판매중
 		                                        		</c:otherwise>
 		                                        	</c:choose>
-<!-- 													<select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
-<!-- 		                                                   <option selected="selected">판매중</option> -->
-<!-- 		                                                   <option value="1">판매중단</option> -->
-		<!--                                                     <option value="2">판매중단</option> -->
-<!-- 		                                               </select> -->
 												</td>
 		                                        <td>
 		                                        	<button type="button" class="btn mb-1 btn-dark">Apply</button>
@@ -184,7 +209,7 @@
 	                            <hr>
 	                        </div>
 	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
-	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="func1()">선택 삭제</button>
+	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction();">선택 삭제</button>
 							
 							<!-- 페이징 처리 Start -->
 							<div class="bootstrap-pagination">
