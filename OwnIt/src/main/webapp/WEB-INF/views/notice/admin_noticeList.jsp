@@ -137,7 +137,7 @@
 							<!-- 페이징 태그 START -->
 							<div class="bootstrap-pagination" style="text-align: center;">
 									<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
-									<input type="button" class="btn btn-light btn-sm" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='admin_noticeListpageNum=${pageInfo.pageNum - 1}'"<%} %>>
+									<input type="button" class="btn btn-light btn-sm" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='admin_noticeList?pageNum=${pageInfo.pageNum - 1}'"<%} %>>
 									<!-- 시작페이지(startPage) 부터 끝페이지(endPage) 까지 페이지 번호 표시 -->
 									&nbsp;
 									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">

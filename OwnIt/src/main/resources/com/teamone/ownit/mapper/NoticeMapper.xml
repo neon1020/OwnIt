@@ -110,6 +110,16 @@
 				notice_idx = #{notice_idx}
 	</delete>
 	
+	<!-- 게시물 수정 -->
+	<update id="updateNotice">
+		UPDATE notice
+			SET
+				notice_category = #{notice_category},
+				notice_subject = #{notice_subject},
+				notice_content = #{notice_content}
+			WHERE
+				notice_idx = #{notice_idx}
+	</update>
 	
 
 </mapper> 
