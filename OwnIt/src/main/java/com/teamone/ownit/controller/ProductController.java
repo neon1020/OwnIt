@@ -499,13 +499,16 @@ public class ProductController {
 	
 	
 // 박주닮 501번
+	//상품 상세목록
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {
-		
-		
-		
 		ProductVO product = service.productDetail(product_idx);
-			model.addAttribute("product", product);
+		model.addAttribute("product", product);
+		
+		List<ReviewListVO> reviewList = service.getReviewList();
+		model.addAttribute("reviewList", reviewList);
+		
+		
 			return "product/product_detail";
 		
 	}

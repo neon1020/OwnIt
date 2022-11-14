@@ -509,7 +509,11 @@
 
 
 
-
+	<select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
+        SELECT *
+            FROM review
+            join image on image_board_type='review';
+    </select>
 
 
 

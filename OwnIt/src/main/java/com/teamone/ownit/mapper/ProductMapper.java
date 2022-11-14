@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.ReviewListVO;
 
 public interface ProductMapper {
 	// 상품목록 조회
@@ -504,6 +505,8 @@ public interface ProductMapper {
 	ProductVO productDetail(@Param("product_idx") int product_idx);
 	// 한 상품에 대한 이미지정보
 	ImageVO selectDetailImage(@Param("product_idx") int product_idx);
+	// 상품 상세정보 리뷰리스트
+	List<ReviewListVO> selectReviewList();
 	
 
 
