@@ -50,6 +50,11 @@ public class NoticeService {
 		mapper.deleteNotice(notice_idx);
 	}
 	
+	// 게시물 수정
+	public int modifyNotice(NoticeVO notice) {
+		return mapper.updateNotice(notice);
+	}
+	
 	
 	
 	

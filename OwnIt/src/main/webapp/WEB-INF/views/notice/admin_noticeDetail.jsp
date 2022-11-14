@@ -108,7 +108,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td colspan="4" style="font-size: 16px; line-height: 30px;">
+                                                <td colspan="4" style="font-size: 16px; line-height: 30px; height: 600px;">
                                                 ${notice.notice_content }
                                                 </td>
                                             </tr>

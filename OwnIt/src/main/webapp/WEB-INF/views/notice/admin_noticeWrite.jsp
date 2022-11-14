@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<%=request.getContextPath() %>/resources/admin/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="<%=request.getContextPath() %>/resources/admin/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote.css" rel="stylesheet">
 	<style>
 	</style>
 </head>
@@ -91,38 +92,27 @@
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-	                        <div class="form-validation">
-	                            <form class="form-valide" action="admin_noticeWritePro" method="post">
-	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Category <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="form-group col-md-4">
+	                        <div class="container-sm" style="width: 800px; margin: auto;">
+	                            <form class="form-valide" action="admin_noticeWritePro" method="post" style="text-align: center;">
+	                                <div class="row">
+	                                    <div class="col-sm-2" style="margin-right: 0px; padding-right: 0px;">
 	                                        <select name="notice_category" id="inputState" class="form-control" >
 	                                            <option value="">카테고리</option>
 	                                            <option value="[공지]">공지사항</option>
 	                                            <option value="[이벤트]">이벤트</option>
 	                                        </select>
 	                                    </div>
-	                                </div>
-	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Subject <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="col-lg-6">
+	                                    <div class="col-sm-10" style="margin-left: 0px; padding-left: 0px;">
 	                                        <input type="text" class="form-control" id="val-username" name="notice_subject" placeholder="제목을 입력하세요.">
 	                                    </div>
 	                                </div>
 	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-suggestions" style="text-align: right;">Content <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="col-lg-6">
-	                                        <textarea class="form-control" id="val-suggestions" name="notice_content" rows="5" placeholder="내용을 입력하세요." style="height: 450px"></textarea>
+	                                    <div class="col-lg-12" style="margin-top: 30px;">
+	                                        <textarea class="summernote" id="val-suggestions" name="notice_content" rows="5" style="height: 450px">
+	                                        </textarea>
 	                                    </div>
 	                                </div>
-	                                <div class="form-group row">
-	                                    <div class="col-lg-8 ml-auto">
-	                                        <button type="submit" class="btn btn-primary" style="width: 200px;">Write</button>
-	                                    </div>
-	                                </div>
+	                                <button type="submit" class="btn btn-dark btn-primary" style="float: right;">등록</button>
 	                            </form>
 	                        </div>
 				<!-- table end -->
@@ -166,6 +156,8 @@
     
     <script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
     <script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote.min.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote-init.js"></script>
 
 </body>
 
