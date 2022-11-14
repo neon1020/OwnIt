@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -70,18 +71,18 @@
 	    <article class="card card-post">
 	      <div>
 		      <div style="float: left; width: 300px; display: inline-block;">
-		        <a class="profile" href="review_mystyle"><img src="resources/img/review/max4pf.jpg"><span class="eyebrow text-muted">min.nicha</span></a>
+		        <a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
 		      </div>
 		      <div style="float: right; width: 450px; display: inline-block;">
-		        <h4 class="card-title" style="float: right;"><a href="post.html"><img src="resources/img/review/iphone1dt.jpg"><div class="subject">Apple iPhone 13 128GB Starlight (Korean Ver.)<br>934,000원</div></a></h4>
+		        <h4 class="card-title" style="float: right;"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
 		      </div>
 		     </div>
 	      <figure class="equal equal-50">
-	        <img class="image-detail" style="background-image: url(resources/img/review/iphone3.jpg)">
+	        <img class="image-detail" src="resources/img/review/${review.review_image }">
 	      </figure>
 	      <div class="card-body">
-	        <div class="like"><img src="resources/img/review/like_none_b.jpg" id="like_none" onclick="changeLike()">128&nbsp;&nbsp;<img src="resources/img/review/reply_b.jpg">3</div>
-	        <h3 class="card-content">오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~</h3>
+	        <div class="like"><img src="resources/img/review/like_none_b.jpg" id="like_none" onclick="changeLike()">128&nbsp;&nbsp;<img src="resources/img/review/reply_b.jpg">${review.review_reply_count }</div>
+	        <h3 class="card-content">${review.review_content }</h3>
 	      </div>
 	    </article>
     </section>
