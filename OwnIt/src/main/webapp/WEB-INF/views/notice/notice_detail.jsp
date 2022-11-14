@@ -34,38 +34,24 @@
 
           <!-- content -->
           <article class="col-lg-9 pl-lg-5">
-          	<h1 class="mb-0">Notice</h1>
+<!--           	<h1 class="mb-0">Notice</h1> -->
 			<table class="table table-bordered" style="margin-top: 20px; text-align: center; border-left: none; border-right: none;">
                <tbody>
                  <tr>
-                   <th colspan="4" style="border-left: none; border-right: none;">[공지사항] 11월 홈페이지 운영 일정 안내</th>
+                   <td style="border-left: none; border-right: none; font-weight:bolder; text-align: left;">${notice.notice_category }&nbsp;&nbsp;&nbsp;${notice.notice_subject }</td>
+                   <th width="200px" style="border-left: none; border-right: none;">Date&nbsp;&nbsp;&nbsp;${notice.notice_date }</th>
+                   <th width="100px" style="border-left: none; border-right: none;">Read&nbsp;&nbsp;&nbsp;${notice.notice_readcount }</th>
                  </tr>
                  <tr>
-                   <td style="border-left: none; border-right: none;"> </td>
-                   <td style="border-left: none; border-right: none;"> </td>
-                   <th width="200px" style="border-left: none; border-right: none;">Date&nbsp;&nbsp;&nbsp;2022-10-31</th>
-                   <th width="100px" style="border-left: none; border-right: none;">Read&nbsp;&nbsp;&nbsp;131</th>
-                 </tr>
-                 <tr>
-                   <td colspan="4" style="border-left: none; border-right: none;">
-                   	안녕하세요. Own It 입니다.<br>
-                   	11월 운영 일정 안내드립니다.<br><br>
-                   	◎ 거래 일정<br>
-                   	- 발송 마감기한 : 체결 일시로부터 48시간<br>
-                   	- 입고 마감기한 : 발송 일시로부터 5일<br><br>
-                   	◎ 출고 일정<br>
-                   	- 일반 구매 : 11월 1일, 11월 4일 출고 불가<br>
-                   	* 공휴일 전후 택배사 물량 집중으로 인하여 배송이 지연될 수 있습니다.<br><br>
-                   	◎ 오프라인 접수<br>
-                   	- 쇼룸 휴무 일정 : 11월 6일 (기존 휴무와 동일)<br>
-                   	- 커먼그라운드 휴무 일정 : 정상 운영<br><br>
-                   	◎ 고객센터<br>
-                   	- 휴무 일정 : 11월 6일<br><br>
-                   	감사합니다.
+                   <td colspan="4" style="border-left: none; border-right: none; text-align: left; height: 500px;">
+					${notice.notice_content }
                    </td>
                  </tr>
                </tbody>
              </table>
+				<div style="text-align: center;">
+					<input type="button" value="목록" class="btn btn-dark" onclick="location.href='noticeList?pageNum=${param.pageNum}'">
+				</div>
           </article>
 
         </div>

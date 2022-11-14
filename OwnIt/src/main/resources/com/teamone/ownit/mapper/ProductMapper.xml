@@ -2,46 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.ProductMapper">
 	<select id="getProductList" resultType="com.teamone.ownit.vo.ProductVO">
-      SELECT * FROM product
-      ORDER BY
-         product_idx ASC
+      SELECT p.product_idx, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2
+		  FROM product p 
+		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
+		    ON p.product_idx = w.product_idx
+		  INNER JOIN (SELECT product_idx, image_original_file1, image_original_file2 FROM image) i
+		    ON p.product_idx = i.product_idx
+		  ORDER BY wish DESC;
    </select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<select id="getCategorisedProduct" resultType="com.teamone.ownit.vo.ProductVO">
+      SELECT p.product_idx, product_type, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2
+		  FROM product p 
+		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
+		    ON p.product_idx = w.product_idx
+		  INNER JOIN (SELECT product_idx, image_original_file1, image_original_file2 FROM image) i
+		    ON p.product_idx = i.product_idx
+		  <if test="!id.equals('')">
+		  	<choose>
+		  		<when test="id.equals('스마트폰')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		  		<when test="id.equals('태블릿')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		  		<when test="id.equals('스마트워치')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		  		<when test="id.equals('이어폰')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		  		<when test="id.equals('헤드폰')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		  		<when test="id.equals('노트북')">
+		  			WHERE product_type = #{id}
+		  		</when>
+		 	</choose>
+		  </if> 
+		  ORDER BY wish DESC;
+   </select>
 
 
 
@@ -106,10 +106,10 @@
 		
 	</select>
 
-
-
-
-
+	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO">
+		SELECT * FROM image
+		WHERE image_idx=#{product_idx}
+	</select>
 
 
 

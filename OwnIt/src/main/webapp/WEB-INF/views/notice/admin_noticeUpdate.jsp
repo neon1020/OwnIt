@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<%=request.getContextPath() %>/resources/admin/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="<%=request.getContextPath() %>/resources/admin/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote.css" rel="stylesheet">    
 	<style>
 	</style>
 </head>
@@ -91,57 +92,31 @@
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card-title" style="margin-left: 350px;">
-	                            <h2>Update Notice</h2>
-	                        </div>
-	                        <div class="form-validation">
-	                            <form class="form-valide" action="#" method="post">
-	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Category <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="form-group col-md-4">
-	                                        <select id="inputState" class="form-control">
-	                                            <option>Choose</option>
-	                                            <option selected="selected">공지사항</option>
-	                                            <option>이벤트</option>
+	                        <div class="container-sm" style="width: 800px; margin: auto;">
+	                            <form class="form-valide" action="admin_noticeUpdatePro" method="post" style="text-align: center;">
+	                            		<input type="hidden" name="notice_idx" value="${param.notice_idx }" />
+										<input type="hidden" name="pageNum" value="${param.pageNum }" />		
+	                                <div class="row">
+	                                    <div class="col-sm-2" style="margin-right: 0px; padding-right: 0px;">
+	                                        <select name="notice_category" id="inputState" class="form-control" >
+	                                            <option value="">카테고리</option>
+	                                            <option value="[공지]">공지사항</option>
+	                                            <option value="[이벤트]">이벤트</option>
 	                                        </select>
 	                                    </div>
-	                                </div>
-	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-username" style="text-align: right;">Subject <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="col-lg-6">
-	                                        <input type="text" class="form-control" id="val-username" name="val-username" value="11월 홈페이지 운영 일정 안내">
+	                                    <div class="col-sm-10" style="margin-left: 0px; padding-left: 0px;">
+	                                        <input type="text" class="form-control" id="val-username" name="notice_subject" value="${notice.notice_subject }">
 	                                    </div>
 	                                </div>
 	                                <div class="form-group row">
-	                                    <label class="col-lg-4 col-form-label" for="val-suggestions" style="text-align: right;">Content <span class="text-danger">*</span>
-	                                    </label>
-	                                    <div class="col-lg-6">
-	                                        <!-- 하드코딩이라서 줄바꿈이나 내용은 무시해주세요...!! -->
-	                                        <textarea class="form-control" id="val-suggestions" name="val-suggestions" rows="5" style="height: 450px">
-	                                        	안녕하세요. Own It 입니다.
-	                                        	11월 운영 일정 안내드립니다.
-                                               	◎ 거래 일정
-                                               	- 발송 마감기한 : 체결 일시로부터 48시간
-                                               	- 입고 마감기한 : 발송 일시로부터 5일
-                                               	◎ 출고 일정
-                                               	- 일반 구매 : 11월 1일, 11월 4일 출고 불가
-                                               	* 공휴일 전후 택배사 물량 집중으로 인하여 배송이 지연될 수 있습니다.
-                                               	◎ 오프라인 접수
-                                               	- 쇼룸 휴무 일정 : 11월 6일 (기존 휴무와 동일)
-                                               	- 커먼그라운드 휴무 일정 : 정상 운영
-                                               	◎ 고객센터
-                                               	- 휴무 일정 : 11월 6일
-                                               	감사합니다.
+	                                    <div class="col-lg-12" style="margin-top: 30px;">
+	                                        <textarea class="summernote" id="val-suggestions" name="notice_content" rows="5" style="height: 450px">
+	                                     	   ${notice.notice_content }
 	                                        </textarea>
+	                                        
 	                                    </div>
 	                                </div>
-	                                <div class="form-group row">
-	                                    <div class="col-lg-8 ml-auto">
-	                                        <button type="submit" class="btn btn-primary" style="width: 200px;">Write</button>
-	                                    </div>
-	                                </div>
+	                                <button type="submit" class="btn btn-dark btn-primary" style="float: right;">등록</button>
 	                            </form>
 	                        </div>
 				<!-- table end -->
@@ -185,6 +160,8 @@
     
     <script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
     <script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote.min.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/admin/plugins/summernote/dist/summernote-init.js"></script>    
 
 </body>
 

@@ -12,10 +12,14 @@
     <!-- Custom Stylesheet -->
     <link href="<%=request.getContextPath() %>/resources/admin/css/style.css" rel="stylesheet">
 	<script type="text/javascript">
-		function isDelete() {
-			confirm("해당 게시물을 삭제하시겠습니까?");
-		}
-	</script>
+	
+	function isDelete() {
+		confirm('삭제 하시겠습니까?');
+	}
+
+</script>
+	
+	
 </head>
 <body>
 
@@ -94,47 +98,29 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table" style="text-align: center; width: 1200px; margin-left: auto; margin-right: auto;">
+                                    <table class="table">
                                         <thead>
                                             <tr>
-                                                <th colspan="4"><span class="badge badge-primary px-2">공지사항</span>&nbsp;&nbsp;&nbsp;<span style="font-size: 20px;">11월 홈페이지 운영 일정 안내</span></th>
+                                                <td colspan="2" style="font-size: 20px;">${notice.notice_category }&nbsp;&nbsp;${notice.notice_subject }</td>
+                                                <td width="200px"><b>Date</b>&nbsp;&nbsp;&nbsp;${notice.notice_date }</td>
+                                                <td width="200px"><b>Read</b>&nbsp;&nbsp;&nbsp;${notice.notice_readcount }</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td width="200px"><b>Date</b>&nbsp;&nbsp;&nbsp;2022-10-31</td>
-                                                <td width="200px"><b>Read</b>&nbsp;&nbsp;&nbsp;220</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4" style="font-size: 16px; line-height: 30px;">
-                                                	안녕하세요. Own It 입니다.<br>
-                                                	11월 운영 일정 안내드립니다.<br><br>
-                                                	◎ 거래 일정<br>
-                                                	- 발송 마감기한 : 체결 일시로부터 48시간<br>
-                                                	- 입고 마감기한 : 발송 일시로부터 5일<br><br>
-                                                	◎ 출고 일정<br>
-                                                	- 일반 구매 : 11월 1일, 11월 4일 출고 불가<br>
-                                                	* 공휴일 전후 택배사 물량 집중으로 인하여 배송이 지연될 수 있습니다.<br><br>
-                                                	◎ 오프라인 접수<br>
-                                                	- 쇼룸 휴무 일정 : 11월 6일 (기존 휴무와 동일)<br>
-                                                	- 커먼그라운드 휴무 일정 : 정상 운영<br><br>
-                                                	◎ 고객센터<br>
-                                                	- 휴무 일정 : 11월 6일<br><br>
-                                                	감사합니다.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td colspan="2">
-                                                	<a href="admin_noticeUpdate"><button type="button" class="btn mb-1 btn-secondary">UPDATE</button></a>
-                                                	<button type="button" class="btn mb-1 btn-outline-secondary" onclick="isDelete()">DELETE</button>
+                                                <td colspan="4" style="font-size: 16px; line-height: 30px; height: 600px;">
+                                                ${notice.notice_content }
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+<!--                                <button type="button" class="btn mb-1 btn-outline-secondary" onclick="isDelete()">삭제</button> -->
+                                     <!-- 하이퍼링크에 사용할 글번호와 페이지번호는 URL 에 있는 파라미터 사용 -->
+									<div style="text-align: center;">
+                                     	<input type="button" value="수정" class="btn btn-dark" onclick="location.href='admin_noticeUpdate?notice_idx=${param.notice_idx }&pageNum=${param.pageNum}'">
+                                     	<input type="button" value="삭제" class="btn btn-dark" onclick="location.href='admin_noticeDelete?notice_idx=${param.notice_idx }&pageNum=${param.pageNum}'">
+                                     	<input type="button" value="목록" class="btn btn-dark" onclick="location.href='admin_noticeList?pageNum=${param.pageNum}'">
+                                     </div>
                                 </div>
                             </div>
                         </div>

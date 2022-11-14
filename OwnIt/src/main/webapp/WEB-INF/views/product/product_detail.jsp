@@ -85,7 +85,7 @@
 		     color: #FFF; 
 	     }
 	    span{
-	    	font-size: 15px;
+	    	font-size: 14px;
 	    }
 	    #title1{
 	    	font-size: 13px; font: bold;
@@ -102,6 +102,19 @@
 	    	color: white; 
 	    	width: 220px;
 	    }
+	    #btn3{
+	    	background: white; 
+	    	border: 0.5px black solid;
+	    	border-radius: 15px; 
+	    	color: black;
+	    	width: 460px;
+	    	margin-top: 15px;
+	    	
+	    }
+	    #btn3:hover{
+	    	background: black;
+	    	color: white;
+	    }
     </style>
   </head>
   <body>
@@ -117,9 +130,19 @@
           <div class="col">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                <li class="breadcrumb-item"><a href="product_list">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Product</li>
+                <li class="breadcrumb-item">
+                	<a href="./"
+                		>Home
+                	</a>
+                </li>
+                <li class="breadcrumb-item">
+                	<a href="product_list">
+                		Shop
+                	</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                	Product
+                </li>
               </ol>
             </nav>
           </div>
@@ -128,7 +151,7 @@
     </section>
 
 
-   <!-- product -->
+   <!-- product  상품 메인이미지 -->
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
@@ -138,28 +161,30 @@
               <div class="col-lg-10 order-lg-2">
                 <div class="owl-carousel gallery" data-slider-id="1" data-thumbs="true" data-nav="true">
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail1.png" 
-                      style="background-image: url(resources/img/product/productDetail1.png);">
+                  <!-- 클릭시 보여지는 작은 이미지 -->
+                    <a class="image" href="resources/img/product/${image.image_original_file1 }" 
+                      style="background-image: url(resources/img/product/${image.image_original_file1 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail2.png" 
-                      style="background-image: url(resources/img/product/productDetail2.png);">
+                    <a class="image" href="resources/img/product/${image.image_original_file2 }" 
+                      style="background-image: url(resources/img/product/${image.image_original_file2 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail3.png" 
-                      style="background-image: url(resources/img/product/productDetail3.png);">
+                    <a class="image" href="resources/img/product/${image.image_original_file3 }" 
+                      style="background-image: url(resources/img/product/${image.image_original_file3 });">
                     </a>
                   </figure>
                 </div>
               </div>
               
+              <!--  상품 왼쪽 작은 이미지 3개 -->
               <div class="col-lg-2 text-center text-lg-left order-lg-1">
                 <div class="owl-thumbs" data-slider-id="1">
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail1.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail2.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail3.png" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file1 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file2 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${image.image_original_file3 }" alt=""></span>
                 </div>
               </div>
             </div>
@@ -169,26 +194,57 @@
             <div class="row">
               <div class="col-12">
                 <h4 class="item-title">${product.product_brand }</h4>
-                <p>${product.product_name }</p>
+             					    <p>${product.product_name }</p>
+                
                 <!-- 구매 판매 버튼 -->
-                <button id="btn1" type="button" class="btn"  onclick="location.href='member_buy_agree'" >
-                	<p>구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</p>
+                <button id="btn1" type="button" class="btn"  onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
+                	<p>
+                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
+                	</p>
                 </button>
-				<button id="btn2" type="button" class="btn" onclick="location.href='member_sell_agree'" >
-					<p>판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</p>
+				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
+					<p>
+						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+					</p>
 				</button>
-				<!-- 구매 판매 버튼 끝 -->
+				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
+					<p>
+						∑관심상품 | <fmt:formatNumber value="9641" pattern="#,###"/>
+					</p>
+				</button>
               </div>
             </div>
+				
             <div class="row">
               <div class="col-12">
               
               <!--  모델번호 가격 -->
                <table class="table">
 					<tr>
-						<td><span id="title1">모델번호</span><br><span>${product.product_model_num }</span></td>
-						<td><span id="title1">컬러<br></span><span>${product.product_color }</span></td>
-						<td><span id="title1">발매가<br></span><span><fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원</span></td>
+						<td>
+							<span id="title1">
+								모델번호
+							</span><br>
+							<span>
+								${product.product_model_num }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								컬러<br>
+							</span>
+							<span>
+								${product.product_color }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								발매가<br>
+							</span>
+							<span>
+								<fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원
+							</span>
+						</td>
 					</tr>
 				</table>
 				
@@ -220,12 +276,12 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-2">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
+			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapse-2-2">
 			                      <span id="title1">검수 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
+			                <div id="collapse-2-2" class="collapse show" aria-labelledby="heading-2-2" data-parent="#accordion-2">
 			                  <div class="card-body" id="title1">
 			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
 			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.
@@ -263,18 +319,24 @@
             
             <div>
               <div class="col-lg-12">
-                	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;">
-                	Add to Cart
-                	</a>
-				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;">
-					Add to wishlist
-				</button>
+              		<!-- 카트 버튼 보류 -->
+<!--                 	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;"> -->
+<!--                 		Add to Cart -->
+<!--                 	</a> -->
+                	<!-- 관심상품 버튼 11월 11일 위쪽으로 수정  -->
+<!-- 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;"> -->
+<!-- 					Add to wishlist -->
+<!-- 				</button> -->
               </div>
               <img src="resources/img/product/productDetailNotice.png">
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Share this product</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    	<span style="color:black;">
+                    		상품 공유하기
+                    	</span>
+                    </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a class="dropdown-item" href="#">Facebook</a>

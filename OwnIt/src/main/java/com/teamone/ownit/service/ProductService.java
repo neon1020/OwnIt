@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ProductMapper;
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
 
 @Service
@@ -18,11 +19,10 @@ public class ProductService {
 		return mapper.getProductList();
 	}
 
-	
-
-
-
-
+	public List<ProductVO> getCategorisedProduct(String id) {
+		System.out.println("getCategorisedProduct()");
+		return mapper.getCategorisedProduct(id);
+	}
 
 
 
@@ -104,9 +104,9 @@ public class ProductService {
 	}
 
 
-
-
-
+	public ImageVO selectDetailImage(int product_idx) {
+		return mapper.selectDetailImage(product_idx);
+	}
 
 
 
