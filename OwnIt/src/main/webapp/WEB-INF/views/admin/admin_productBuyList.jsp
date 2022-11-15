@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,9 +114,9 @@
                                 </div>
                                 <select class="form-control" name="searchType" style="float: right; width: 100px">
                                     <option value="all" selected="selected">전체</option>
+                                    <option value="order_buy_idx">주문번호</option>
                                     <option value="member_name">고객명</option>
                                     <option value="product_name">상품명</option>
-                                    <option value="member_phone">전화번호</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -123,12 +125,11 @@
                                 <table class="table header-border">
                                     <thead>
                                         <tr>
-                                            <th scope="col"></th>
+                                            <th scope="col">No.</th>
                                             <th scope="col">고객명</th>
-                                            <th scope="col">상품명</th>
+                                            <th scope="col" width="450px">상품명</th>
                                             <th scope="col">Price</th>
                                             <th scope="col" width="250px">배송지</th>
-                                            <th scope="col">Phone</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Status</th>
                                             <th scope="col"></th>
@@ -139,16 +140,22 @@
 	                                        <tr>
 	                                            <td>${buyList.order_buy_idx }</td>
 	                                            <td>${buyList.member_name }</td>
-	                                            <td>${buyList.product_name }</td>
-	                                            <td>${buyList.product_buy_price }</td>
-	                                            <td>${buyList.address_zipcode }<br>${buyList.address1 }&nbsp;${buyList.address2 }</td>
-	                                            <td>${buyList.member_phone }</td>
-	                                            <td>${buyList.order_buy_date }</td>
+	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${buyList.product_name }">
+	                                            	${buyList.product_name }
+	                                            </td>
 	                                            <td>
-	                                            	<select class="custom-select col-10" id="inlineFormCustomSelect">
-	                                                    <option selected="selected">주문접수</option>
-	                                                    <option value="1">배송중</option>
-	                                                    <option value="2">배송완료</option>
+<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
+	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원
+	                                            </td>
+	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
+	                                            <c:set var="date" value="${buyList.order_buy_date }" />
+	                                            <td>${fn:substring(date, 0, 8 ) }</td>
+	                                            <td>
+	                                            	<select class="custom-select col-9" id="inlineFormCustomSelect">
+	                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>
+	                                                    <option value="1" ${buyList.order_buy_gb == '1' ? 'selected="selected"' : ''}>배송중</option>
+	                                                    <option value="2" ${buyList.order_buy_gb == '2' ? 'selected="selected"' : ''}>배송완료</option>
+	                                                    <option value="3" ${buyList.order_buy_gb == '3' ? 'selected="selected"' : ''}>구매확정</option>
 	                                                </select>
 	                                            </td>
 	                                            <td>

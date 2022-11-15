@@ -22,7 +22,7 @@ public class AdminService {
 		return mapper.selectProductListCount(searchType, keyword);
 	}
 	
-	// ProductList 조회
+	// 상품 목록 조회 productList (검색, 페이징 추가)
 	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword) {
 		return mapper.selectProductList(startRow, listLimit, searchType, keyword);
 	}
@@ -31,46 +31,34 @@ public class AdminService {
 	public int registProduct(AdminProductVO product) {
 		return mapper.insertProduct(product);
 	}
-	// Product 등록 (글쓰기) + 이미지
+	
+	// Product 등록 (글쓰기) + 다중 파일 업로드
 	public int registProductImage(AdminProductVO product) {
 		return mapper.insertProductImage(product);
 	}
 	
-	// Order - BuyList 리스트 갯수 조회
-	public int getbuyListCount(String searchType, String keyword) {
+	// Order - BuyList 갯수 조회
+	public int getBuyListCount(String searchType, String keyword) {
 		return mapper.selectBuyListCount(searchType, keyword);
 	}
 	
 	// Order - BuyList(구매목록) 조회
-	public List<AdminOrderVO> getbuyList(int startRow, int listLimit, String searchType, String keyword) {
+	public List<AdminOrderVO> getBuyList(int startRow, int listLimit, String searchType, String keyword) {
 		return mapper.selectBuyList(startRow, listLimit, searchType, keyword);
+	}
+
+	// Order - SellList 갯수 조회
+	public int getSellListCount(String searchType, String keyword) {
+		return mapper.selectSellListCount(searchType, keyword);
+	}
+
+	// Order - SellList(판매목록) 조회
+	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
 	}
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
