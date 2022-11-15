@@ -98,40 +98,442 @@
 
 
 
-<!-- 박주닮 101번 라인 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 박주닮 501번 라인 -->
 	<!-- 상품 정보를 가져오는 구문 -->
 	<select id="productDetail" resultType="com.teamone.ownit.vo.ProductVO">
-		SELECT 
-			* FROM product
-			WHERE product_idx=#{product_idx}
+		select *
+        	from product
+				,image
+        	where product.product_idx=#{product_idx} and image.product_idx=#{product_idx};
 		
 	</select>
-	<!-- 상품에대한 이미지를 가져오는 구문 -->
-	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO">
-		SELECT * FROM image
-			WHERE image_idx=#{product_idx}
-	</select>
-	<!-- 맴버의 정보, 주소, 계좌를 가져오는 구문 -->
-	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.MemberAddressAccountVO">
-		SELECT
-			member.member_idx,
-			account_idx,
-			member_name, 
-		    member_phone, 
-		    account_bank, 
-		    account_num, 
-		    account_owner_name, 
-		    address1,
-		    address2
-				FROM 
-					member, 
-					account, 
-					address
-		WHERE member_id=#{sId}
-        AND address_gb = 0
-        AND account_gb = 0
-        AND member.member_idx = address.member_idx
-        AND member.member_idx = account.member_idx;
+	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		SELECT * 
+			FROM member
+        	LEFT JOIN address 
+        	ON member.member_idx=2 
+        	AND address.member_idx=2
+        	AND address_gb = ( 
+        				SELECT address_gb
+					        	FROM member, 
+					        		 address
+					       			 WHERE member_id=#{sId} 
+									 AND member.member_idx = address.member_idx
+				       				 ORDER BY address_gb *1 asc
+				        			 limit 1
+        			 		 )
+	        LEFT JOIN account 
+	        ON member.member_idx=2 
+	        AND account.member_idx=2
+	        AND account_gb=(
+	        				SELECT account_gb
+	        				FROM member, account
+	        				WHERE member_id=#{sId} AND member.member_idx = account.member_idx
+	        				ORDER BY account_gb *1 asc
+	       				    limit 1
+	       				    )
+	       				    WHERE member_id =#{sId}
+	       				    limit 1;
 	</select>
 	
 	<!-- order_sell 테이블 insert작업 -->
@@ -143,7 +545,36 @@
 				#{member_idx},
 				#{account_idx},
 				'0',
-				date_format(now(),"%y-%m-%d %H:%i:%S")
+				date_format(now(),"%y-%m-%d")
+			);
+	</insert>
+
+	<!-- order_sell 테이블 정보 조회, 한 맴버가 같은 상품을 여러번 판매했을경우에는 가장 최근 판매 정보 조회 -->
+	<select id="selectOrderSell" resultType="com.teamone.ownit.vo.Order_sellVO">
+		SELECT *
+			FROM order_sell
+			WHERE product_idx=#{product_idx}
+			  AND member_idx=#{member_idx}
+			  <if test="order_sell_date!=null and !order_sell_date.equals('')">
+			  AND order_sell_date=#{order_sell_date}
+			  </if>
+		      ORDER BY order_sell_idx desc
+		      LIMIT 1;
+	</select>
+
+
+
+	 <!--  주소 추가 -->
+	<insert id="insertAddress">
+		insert into address
+			values(
+				null,
+				#{member_idx},
+				#{address_zipcode},
+				#{address1},
+				#{address2},
+				'0',
+				#{address_nickname}
 			);
 	</insert>
 
@@ -197,4 +628,267 @@
 
 
 
-</mapper> <!-- 200번 라인 맞추기 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper> <!-- 900번 라인 맞추기 -->

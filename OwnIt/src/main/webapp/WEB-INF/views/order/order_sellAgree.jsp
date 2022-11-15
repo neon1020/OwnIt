@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>판매 동의</title>
 <style type="text/css">
+	#disabled{
+		background: black; 
+		color: white;
+		border: black;
+		border-radius: 15px;
+	}
 	input[type=checkbox]{
 	float: right; 
 	width: 20px; 
@@ -83,7 +89,7 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage">
+		          				<img src="resources/img/product/${product.image_original_file1 }" id="sellFormImage">
 		          				<span>
 		          					${product.product_brand }
 		          				</span><br>

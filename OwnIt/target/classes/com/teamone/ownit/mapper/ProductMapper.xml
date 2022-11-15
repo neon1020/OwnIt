@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.ProductMapper">
 	<select id="getProductList" resultType="com.teamone.ownit.vo.ProductVO">
-      SELECT p.product_idx, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2
+      SELECT p.product_idx, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2,
+      		(SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS myWish
 		  FROM product p 
-		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
+		  LEFT OUTER JOIN (SELECT product_idx,COUNT(*) wish FROM wishlist group by product_idx) w
 		    ON p.product_idx = w.product_idx
 		  INNER JOIN (SELECT product_idx, image_original_file1, image_original_file2 FROM image) i
 		    ON p.product_idx = i.product_idx
@@ -12,7 +13,8 @@
    </select>
 
 	<select id="getCategorisedProduct" resultType="com.teamone.ownit.vo.ProductVO">
-      SELECT p.product_idx, product_type, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2
+      SELECT p.product_idx, product_type, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2,
+      (SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS myWish
 		  FROM product p 
 		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
 		    ON p.product_idx = w.product_idx
@@ -42,6 +44,404 @@
 		  </if> 
 		  ORDER BY wish DESC;
    </select>
+
+	<select id="arrayByCategory" resultType="com.teamone.ownit.vo.ProductVO">
+      SELECT p.product_idx, product_type, product_brand, product_name, product_buy_price, wish, i.image_original_file1, i.image_original_file2,
+      	(SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS myWish
+		  FROM product p 
+		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
+		    ON p.product_idx = w.product_idx
+		  INNER JOIN (SELECT product_idx, image_original_file1, image_original_file2 FROM image) i
+		    ON p.product_idx = i.product_idx
+		  <if test="!id.equals('')">
+		  	<choose>
+		  		<when test="id.equals('product_popular')">
+		  			ORDER BY wish DESC
+		  		</when>
+		  		<when test="id.equals('price_high')">
+		  			ORDER BY ABS(product_buy_price) DESC
+		  		</when>
+		  		<when test="id.equals('price_low')">
+		  			ORDER BY ABS(product_buy_price)
+		  		</when>
+		  		<when test="id.equals('product_new')">
+		  			ORDER BY product_date DESC
+		  		</when>
+		 	</choose>
+		  </if> 
+   </select>
+
+	<select id="checkLike" resultType="int">
+		SELECT COUNT(*) FROM wishlist
+		WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
+		AND	  product_idx = #{product_idx}
+	</select>
+
+	<insert id="addLike">
+		INSERT INTO wishlist
+		VALUES ((SELECT member_idx FROM member WHERE member_id = #{sId}), #{product_idx})
+	</insert>
+
+	<delete id="deleteLike">
+		DELETE FROM wishlist
+		WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId}) AND product_idx = #{product_idx}
+	</delete>
+
+	<select id="isContainedInCart" resultType="int">
+		SELECT COUNT(*)
+		FROM cart 
+		WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId}) AND product_idx = #{product_idx}
+	</select>
+
+	<insert id="addToCart">
+		INSERT INTO cart
+		VALUES ((SELECT member_idx FROM member WHERE member_id = #{sId}), #{product_idx}, 1, sysdate())
+	</insert>
+
+	<select id="checkCart" resultType="com.teamone.ownit.vo.CartVO">
+		SELECT c.member_idx, c.product_idx, cart_count, cart_date, i.image_original_file1, product_name, product_color, product_buy_price
+		FROM cart c
+		JOIN image i
+		ON c.product_idx = i.product_idx
+		JOIN product p
+		ON c.product_idx = p.product_idx
+		WHERE c.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
+		ORDER BY cart_date DESC
+	</select>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -100,15 +500,54 @@
 
 <!-- 박주닮 -->
 	<select id="productDetail" resultType="com.teamone.ownit.vo.ProductVO">
-		SELECT 
-			* FROM product
-			WHERE product_idx=#{product_idx}
+		SELECT *
+        	FROM product
+				,image
+        	WHERE product.product_idx=#{product_idx} 
+        	  AND image.product_idx=#{product_idx};
 		
 	</select>
 
-	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO">
-		SELECT * FROM image
-		WHERE image_idx=#{product_idx}
+
+
+	<!--  상품 상세정보 하단 리뷰 리스트 목록 -->
+	<select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
+		 SELECT r.review_idx AS review_idx, 
+		 		i.image_real_file1 AS review_image, 
+		 		i2.image_real_file1 AS product_image, 
+		 		i3.image_real_file1 AS member_image, 
+		 		m.member_nickname AS member_nickname, 
+		 		p.product_name AS product_name, 
+		 		p.product_buy_price AS product_buy_price, 
+		 		r.review_content AS review_content, 
+		 		r.review_date AS review_date, 
+		 		r.review_reply_count AS review_reply_count 
+		 		
+			       FROM (((((
+			       			 review r LEFT JOIN image i ON((r.review_idx = i.review_idx))) 
+			       					  LEFT JOIN image i2 ON((r.product_idx = i2.product_idx))) 
+			       					  LEFT JOIN image i3 ON((r.member_idx = i3.member_idx))) 
+			       					  LEFT JOIN product p ON((r.product_idx = p.product_idx))) 
+			       					  LEFT JOIN member m ON((r.member_idx = m.member_idx))) 
+			       WHERE r.product_idx = #{product_idx}
+		       ORDER BY review_reply_count DESC
+		       LIMIT #{startRow} , #{listLimit};
+	</select>
+	<!--  상품 상세정보 하단 상품에 대한 리뷰 리스트 갯수 -->
+	<select id="selectReviewListCount" resultType="integer">
+		SELECT COUNT(*)
+				   FROM ((((review r 
+				   LEFT JOIN image i 
+                   ON((r.review_idx = i.review_idx))) 
+                   LEFT JOIN image i2 
+                   ON((r.product_idx = i2.product_idx))) 
+                   LEFT JOIN image i3 
+                   ON((r.member_idx = i3.member_idx))) 
+                   LEFT JOIN product p 
+                   ON((r.product_idx = p.product_idx))) 
+                   LEFT JOIN member m 
+                   ON((r.member_idx = m.member_idx))
+                   WHERE r.product_idx = #{product_idx};
 	</select>
 
 
@@ -197,4 +636,265 @@
 
 
 
-</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
