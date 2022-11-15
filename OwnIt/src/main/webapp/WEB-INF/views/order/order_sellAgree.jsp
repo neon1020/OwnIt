@@ -76,7 +76,7 @@
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
-          		<form action="order_sellForm" name="sellForm" method="post">
+          		<form action="order_sellForm" name="sellForm" method="get">
           			<input type="hidden" name="product_idx" value="${product.product_idx }">
 		          	<table class="table">
 		          		<tr>

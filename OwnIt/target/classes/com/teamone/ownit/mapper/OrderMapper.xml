@@ -507,12 +507,6 @@
         	where product.product_idx=#{product_idx} and image.product_idx=#{product_idx};
 		
 	</select>
-	<!-- 상품에대한 이미지를 가져오는 구문 -->
-<!-- 	<select id="selectDetailImage" resultType="com.teamone.ownit.vo.ImageVO"> -->
-<!-- 		SELECT * FROM image -->
-<!-- 			WHERE image_idx=#{product_idx} -->
-<!-- 	</select> -->
-	<!-- 맴버의 정보, 주소, 계좌를 가져오는 구문 -->
 	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
 		SELECT * 
 			FROM member

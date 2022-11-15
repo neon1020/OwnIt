@@ -142,7 +142,7 @@
                                     <option value="all" selected="selected">전체</option>
                                     <option value="brand">Brand</option>
                                     <option value="type">Type</option>
-                                    <option value="name">제품명</option>
+                                    <option value="name">상품명</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -158,10 +158,10 @@
 	                                    	<th>모델번호</th>
 	                                    	<th>Brand</th>
 	                                    	<th>Type</th>
-	                                        <th>제품명</th>
+	                                        <th>상품명</th>
 	                                        <th>재고수량</th>
 	                                        <th>판매상태</th>
-	                                        <th width="100px">#</th>
+	                                        <th width="100px"></th>
 	                                        <th width="10px"></th>
 	                                    </tr>
 	                                </thead>
@@ -173,7 +173,7 @@
 		                                    		<input type="checkbox" name="checkRow" value="${product.product_idx}" style="outline: 1px solid #000000">
 		                                    	</td>
 	                                        	<td>
-	                                        		<img class="mr-3" src="<%=request.getContextPath() %>/resources/img/product/${product.image_original_file1}" width="80" height="80">
+	                                        		<img class="mr-3" src="resources/img/product/${product.image_real_file1}" width="80" height="80">
 	                                        	</td>
 		                                        <td>${product.product_model_num }</td>
 		                                        <td>${product.product_brand }</td>
