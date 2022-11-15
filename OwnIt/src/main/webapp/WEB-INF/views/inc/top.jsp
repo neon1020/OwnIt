@@ -26,7 +26,9 @@ $(function() {
 			success:function(result) {
 				debugger;
 				$.each(result, function() {
-					$('#cartItems').append('됐다');
+					alert("들어옴");
+					var html = "";
+					$('#cartItems').append(html);
 				});
 			}
 		});

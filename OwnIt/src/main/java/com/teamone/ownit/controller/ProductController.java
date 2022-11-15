@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -145,24 +146,20 @@ public class ProductController {
 
 	@GetMapping(value = "checkCart", produces = "application/text; charset=UTF-8")
 	@ResponseBody
-	public String checkCart(HttpSession session) {
+	public Map<String, Object> checkCart(HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
+		Map<String, Object> result = null;
 		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			cart = service.checkCart(sId);
-			JsonArray cart = JsonArra
-			System.out.println(cart);
+			result.put("cart", cart);
+//			System.out.println(cart);
 			int cnt = 0;
 			for(CartVO c : cart) cnt++;
 		}
-		return cart.toString();
+		return result;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
