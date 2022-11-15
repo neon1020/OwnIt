@@ -504,15 +504,20 @@ public class ProductController {
 	public String product_detail(@RequestParam int product_idx, Model model) {
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
-		
-		List<ReviewListVO> reviewList = service.getReviewList();
+		// 상품에 대한 리뷰 목록
+		List<ReviewListVO> reviewList = service.getReviewList(product_idx);
 		model.addAttribute("reviewList", reviewList);
-		
 		
 			return "product/product_detail";
 		
 	}
-
+	
+	@GetMapping(value = "reviewProduct")
+	public String reviewProduct(@RequestParam int product_idx, Model model) {
+		
+		
+		return product_detail(product_idx,model);
+	}
 
 
 

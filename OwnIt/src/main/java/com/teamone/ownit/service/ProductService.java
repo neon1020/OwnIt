@@ -503,11 +503,10 @@ public class ProductService {
 	public ProductVO productDetail(int product_idx) {
 		return mapper.productDetail(product_idx);
 	}
-
-	public List<ReviewListVO> getReviewList() {
-		return mapper.selectReviewList();
+	//리뷰 목록
+	public List<ReviewListVO> getReviewList(int product_idx) {
+		return mapper.selectReviewList(product_idx);
 	}
-
 
 
 
