@@ -6,9 +6,7 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.Auth_infoVO;
 import com.teamone.ownit.vo.MemberVO;
 
-public interface MemberMapper {
 
-import com.teamone.ownit.vo.MemberVO;
 
 public interface MemberMapper { 
 	
