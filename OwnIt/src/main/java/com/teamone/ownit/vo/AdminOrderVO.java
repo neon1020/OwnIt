@@ -11,6 +11,7 @@ public class AdminOrderVO {
 
 	private int member_idx;
 	private String member_name;
+	private String member_phone;
 	
 	private int account_idx;
 	private String account_bank;
@@ -78,6 +79,14 @@ public class AdminOrderVO {
 	public void setMember_name(String member_name) {
 		this.member_name = member_name;
 	}
+	public String getMember_phone() {
+		return member_phone;
+	}
+
+	public void setMember_phone(String member_phone) {
+		this.member_phone = member_phone;
+	}
+
 	public int getAccount_idx() {
 		return account_idx;
 	}
@@ -150,17 +159,20 @@ public class AdminOrderVO {
 	public void setOrder_sell_date(String order_sell_date) {
 		this.order_sell_date = order_sell_date;
 	}
+
 	@Override
 	public String toString() {
 		return "AdminOrderVO [order_buy_idx=" + order_buy_idx + ", order_sell_idx=" + order_sell_idx + ", product_idx="
 				+ product_idx + ", product_name=" + product_name + ", product_sell_price=" + product_sell_price
 				+ ", product_buy_price=" + product_buy_price + ", member_idx=" + member_idx + ", member_name="
-				+ member_name + ", account_idx=" + account_idx + ", account_bank=" + account_bank + ", account_num="
-				+ account_num + ", account_owner_name=" + account_owner_name + ", address_idx=" + address_idx
-				+ ", address_zipcode=" + address_zipcode + ", address1=" + address1 + ", address2=" + address2
-				+ ", order_buy_gb=" + order_buy_gb + ", order_buy_date=" + order_buy_date + ", order_sell_gb="
-				+ order_sell_gb + ", order_sell_date=" + order_sell_date + "]";
+				+ member_name + ", member_phone=" + member_phone + ", account_idx=" + account_idx + ", account_bank="
+				+ account_bank + ", account_num=" + account_num + ", account_owner_name=" + account_owner_name
+				+ ", address_idx=" + address_idx + ", address_zipcode=" + address_zipcode + ", address1=" + address1
+				+ ", address2=" + address2 + ", order_buy_gb=" + order_buy_gb + ", order_buy_date=" + order_buy_date
+				+ ", order_sell_gb=" + order_sell_gb + ", order_sell_date=" + order_sell_date + "]";
 	}
+	
+	
 	
 	
 	

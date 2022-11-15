@@ -24,13 +24,13 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
-	// 김소희
+	// 관리자 메인으로 이동
 	@GetMapping(value = "admin")
 	public String admin() {
 		return "admin/admin_main";
 	}
 	
-	// 관리자 - 상품 목록 조회
+	// 상품 목록 조회 productList (검색, 페이징 추가)
 	@GetMapping(value = "admin_productList")
 	public String admin_productList(
 			@RequestParam(defaultValue = "") String searchType,
@@ -53,7 +53,7 @@ public class AdminController {
 		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword);
 		
 		// -------------------------------------------
-		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 상품 목록 갯수 조회
 		int listCount = service.getProductListCount(searchType, keyword);
 		
 		// 페이지 계산 작업 수행
@@ -73,7 +73,7 @@ public class AdminController {
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		
-//		System.out.println(pageInfo);
+		System.out.println(pageInfo);
 		// --------------------------------------------------------------------------------
 		model.addAttribute("productList", productList);
 		model.addAttribute("pageInfo", pageInfo);
@@ -82,13 +82,13 @@ public class AdminController {
 	}
 	
 	
-	// 관리자 - Product 등록 폼 이동
+	// Product 등록 폼 이동
 	@GetMapping(value = "admin_productWriteForm")
 	public String admin_productWriteForm() {
 		return "admin/admin_productWriteForm";
 	}
 	
-	// 관리자 - Product 등록 (+다중 파일 업로드 추가)
+	// Product 등록 (다중 파일 업로드 추가)
 	@PostMapping (value = "admin_productWritePro")
 	public String admin_productWritePro(@ModelAttribute AdminProductVO product, Model model, HttpSession session) {
 		
@@ -166,6 +166,108 @@ public class AdminController {
 	
 	}
 	
+	// Order - BuyList(구매목록) 조회
+	@GetMapping(value = "admin_productBuyList")
+	public String admin_productBuyList(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
+		// -------------------------------------------------------------------
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+//		int startRow = 1;
+
+		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
+		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword);
+		
+		// -------------------------------------------
+		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		int listCount = service.getBuyListCount(searchType, keyword);
+		
+		// 페이지 계산 작업 수행
+		// 전체 페이지 수 계산
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		
+		// 시작 페이지 번호 계산
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		
+		// 끝 페이지 번호 계산
+		int endPage = startPage + pageListLimit - 1;
+		
+		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
+		// 끝 페이지 번호를 최대 페이지 번호로 교체
+		if(endPage > maxPage) {	endPage = maxPage; }
+		
+		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		System.out.println(pageInfo);
+		// --------------------------------------------------------------------------------
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_productBuyList";
+	}
+
+	// Order - SellList(판매목록) 조회
+	@GetMapping(value = "admin_productSellList")
+	public String admin_productSellList(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
+		// -------------------------------------------------------------------
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+//		int startRow = 1;
+
+		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
+		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword);
+		
+		// -------------------------------------------
+		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		int listCount = service.getSellListCount(searchType, keyword);
+		
+		// 페이지 계산 작업 수행
+		// 전체 페이지 수 계산
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		
+		// 시작 페이지 번호 계산
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		
+		// 끝 페이지 번호 계산
+		int endPage = startPage + pageListLimit - 1;
+		
+		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
+		// 끝 페이지 번호를 최대 페이지 번호로 교체
+		if(endPage > maxPage) {	endPage = maxPage; }
+		
+		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		System.out.println(pageInfo);
+		// --------------------------------------------------------------------------------
+		model.addAttribute("sellList", sellList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_productSellList";
+	}	
+	
 	
 	@GetMapping(value = "admin_productUpdate")
 	public String admin3() {
@@ -174,83 +276,6 @@ public class AdminController {
 	}
 	
 	
-	@GetMapping(value = "admin_productBuy")
-	public String admin5() {
-		
-		return "admin/admin_productBuy";
-	}
-	
-	@GetMapping(value = "admin_productSell")
-	public String admin6() {
-		
-		return "admin/admin_productSell";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	
@@ -259,39 +284,14 @@ public class AdminController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 
+
+	
+	
+	
 	
 	
 	
