@@ -1,3 +1,7 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.teamone.ownit.vo.Order_sellVO"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,6 +12,13 @@
 <meta charset="UTF-8">
 <title>정산 정보</title>
 <style type="text/css">
+	#disabled{
+		background: black; 
+		color: white;
+		border: black;
+		border-radius: 15px;
+	}
+
 	span{
 		font-size: 22px; 
 		color: black; 
@@ -29,7 +40,7 @@
 		border-radius: 15px;
 	}
 	#margin-left{
-		margin-left: 120px;"
+		margin-left: 240px;"
 	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -37,6 +48,7 @@
     <link rel="stylesheet" href="resources/css/style.css" />
 </head>
 <body>
+<% Order_sellVO orderSell = (Order_sellVO)request.getAttribute("orderSell"); %>
 
   <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -52,7 +64,7 @@
 	          	<table class="table">
 	          		<tr>
 	          			<th>
-	          				<img src="resources/img/product/${image.image_original_file1 }" id="sellFormImage" >
+	          				<img src="resources/img/product/${product.image_original_file1 }" id="sellFormImage" >
 		          			<span id="span3"style="font: bold; color: black; font-size: 15px;">
 		          				${product.product_brand }
 		          			</span><br>
@@ -68,8 +80,13 @@
 	          					진행상황
 	          				</span>
 	          				<div>
-		          				<progress id="barr" value="20" max="100"></progress>
-		          				<a id="margin-left">판매검수</a> 
+	          					<%	
+	          						String gb = orderSell.getOrder_sell_gb(); 
+	          						int progressVal = gb.equals("1") ? 50 :
+	          									 	  gb.equals("2") ? 100 : 20;
+	          						%>
+		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
+		          				<a>판매검수</a> 
 		          				<a id="margin-left">판매반려</a> 
 		          				<a id="margin-left">판매완료</a>
 	          				</div>
@@ -110,7 +127,7 @@
 	          					거래 일시
 	          				</span><br>
 	          				<span style="float: right; font-size: 15px;">
-	          					2022-10-31
+	          					${orderSell.order_sell_date }
 	          				</span>
 	          			</th>
 	          		</tr>
@@ -129,19 +146,26 @@
 	          		<tr>
 	          			<th>
 	          				<span>
-	          					정산일
+	          					정산일<span style="font-size: 15px; color: silver;">(약1개월)</span>
 	          				</span>
 	          				<span style="float: right; font-size: 15px;">
-	          					2022/11/31
+	          					<%
+	          					   SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+	          					   Date date = sdf.parse(orderSell.getOrder_sell_date());
+		          				   Calendar cal = Calendar.getInstance();
+		         				   cal.setTime(date);
+		         				   cal.add(Calendar.MONTH, 1);
+	          					%>
+	          					<%=sdf.format(cal.getTime()) %>
 	          				</span>
 	          			</th>
 	          		</tr>
 	          	</table>
 	          	<div>
-		          	<a href="product_list" class="btn btn-lg btn-primary btn-block mt-1" style="background-color: black; border:balck; color: white;">
+		          	<a href="product_list" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		SHOP 바로가기
 		          	</a>
-		          	<a href="" class="btn btn-lg btn-primary btn-block mt-1" style="background-color: black; border:balck; color: white;">
+		          	<a href="" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		판매 목록보기
 		          	</a>
 	          	</div>
