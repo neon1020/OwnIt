@@ -109,7 +109,8 @@
 //   }
 $(function() {
 	$('.product-like').click(function() {
-		var index = $(this).attr('id');
+		var heart = $(this);
+		var index = $(this).attr('id').split('_')[1];
 		$.ajax({
 			url:'addLikeList',
 			type:'GET',
@@ -117,7 +118,11 @@ $(function() {
 				product_idx:index
 			},
 			success:function(result){
-				$('.product').load(location.href + " .product");
+				var a = $('#heart_' + result);
+				a.removeClass('product-like');
+				a.addClass('product-like-full');
+				// heart 의 클래스를 .product-like-full로 변경
+				//$('.product').load(location.href + " .product");
 			}
 		});
 	});
@@ -125,7 +130,8 @@ $(function() {
 
 $(function() {
 	$('.product-like-full').click(function() {
-		var index = $(this).attr('id');
+		var heartFull = $(this);
+		var index = $(this).attr('id').split('_')[1];
 		$.ajax({
 			url:'deleteLikeList',
 			type:'GET',
@@ -133,7 +139,9 @@ $(function() {
 				product_idx:index
 			},
 			success:function(result){
-				alert("삭제됨!");
+				var b = $('#heartFull_' + result);
+				b.removeClass('product-like-full');
+				b.addClass('product-like');
 			}
 		});
 	});
@@ -162,7 +170,6 @@ $(function() {
 </script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
-	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
     <!-- 페이지 레벨 / breadcrumbs -->
     <section class="breadcrumbs separator-bottom">
       <div class="container">
@@ -242,18 +249,18 @@ $(function() {
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action" id="${product.product_idx }">
-                        <a data-toggle="modal" data-target="#cart" class="nav-link" style="color: #101010;">장바구니에 추가</a>
+                        <a href="#!" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
                     <c:choose>
                     	<c:when test="${product.myWish ne 0}">
-                   			<a href="edeleteLikeList?product_idx=${product.product_idx }" class="product-like-full" id="${product.product_idx }"></a>
+                   			<a href="#!" class="product-like-full" id="heartFull_${product.product_idx }"></a>
                    		</c:when>
                    		<c:otherwise>
-                   			<a href="#!" class="product-like" id="${product.product_idx }"></a>
+                   			<a href="#!" class="product-like" id="heart_${product.product_idx }"></a>
                    		</c:otherwise>
                    	</c:choose>
-                    <a href="#!" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
+                    <a href="product_detail?product_idx=${product.product_idx }#review" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
                   </div>
                 </div>
               </div>

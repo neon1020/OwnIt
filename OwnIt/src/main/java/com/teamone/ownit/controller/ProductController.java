@@ -25,12 +25,14 @@ public class ProductController {
 	public String product_list(Model model, HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
-		List<ProductVO> productList = service.getProductList(sId);
-//		System.out.println(productList);
-		int cnt = 0;
-		for(ProductVO product : productList) cnt++;
-		model.addAttribute("productList", productList);
-		model.addAttribute("cnt", cnt);
+		if(sId.length() != 0) {
+			List<ProductVO> productList = service.getProductList(sId);
+	//		System.out.println(productList);
+			int cnt = 0;
+			for(ProductVO product : productList) cnt++;
+			model.addAttribute("productList", productList);
+			model.addAttribute("cnt", cnt);
+		}
 		return "product/product_list";
 	}
 	
@@ -48,13 +50,15 @@ public class ProductController {
 	public String listProduct(String id, Model model, HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
-		List<ProductVO> productList = service.getCategorisedProduct(id, sId);
-//		System.out.println(productList);
-		int cnt = 0;
-		System.out.println(productList);
-		for(ProductVO product : productList) cnt++;
-		model.addAttribute("productList", productList);
-		model.addAttribute("cnt", cnt);
+		if(sId.length() != 0) {
+			List<ProductVO> productList = service.getCategorisedProduct(id, sId);
+	//		System.out.println(productList);
+			int cnt = 0;
+			System.out.println(productList);
+			for(ProductVO product : productList) cnt++;
+			model.addAttribute("productList", productList);
+			model.addAttribute("cnt", cnt);
+		}
 		return "product/product_list";
 	}
 
@@ -62,12 +66,14 @@ public class ProductController {
 	public String arrayByCategory(String id, Model model, HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
-		List<ProductVO> productList = service.arrayByCategory(id, sId);
-//		System.out.println(productList);
-		int cnt = 0;
-		for(ProductVO product : productList) cnt++;
-		model.addAttribute("productList", productList);
-		model.addAttribute("cnt", cnt);
+		if(sId.length() != 0) {
+			List<ProductVO> productList = service.arrayByCategory(id, sId);
+	//		System.out.println(productList);
+			int cnt = 0;
+			for(ProductVO product : productList) cnt++;
+			model.addAttribute("productList", productList);
+			model.addAttribute("cnt", cnt);
+		}
 		return "product/product_list";
 	}
 
@@ -79,33 +85,39 @@ public class ProductController {
 
 	@GetMapping(value = "addLikeList")
 	@ResponseBody
-	public void addLikeList(HttpSession session, int product_idx) {
+	public String addLikeList(HttpSession session, int product_idx) {
 //		String sId = (String)session.getAttribute("sId");
 		System.out.println(product_idx);
 		String sId = "test1@naver.com";
-		int ischecked = service.checkLike(sId, product_idx);
-		if(ischecked == 0) {
-			int insertCount = service.addLike(sId, product_idx);
-			if(insertCount == 0) {
-				System.out.println("위시리스트 추가 실패 : " + sId + " , " + product_idx);
+		if(sId.length() != 0) {
+			int ischecked = service.checkLike(sId, product_idx);
+			if(ischecked == 0) {
+				int insertCount = service.addLike(sId, product_idx);
+				if(insertCount == 0) {
+					System.out.println("위시리스트 추가 실패 : " + sId + " , " + product_idx);
+				}
 			}
-		} 
+		}
+		return product_idx + "";
 	}
 
 	@GetMapping(value = "deleteLikeList")
 	@ResponseBody
-	public void deleteLikeList(HttpSession session, int product_idx) {
+	public String deleteLikeList(HttpSession session, int product_idx) {
 //		String sId = (String)session.getAttribute("sId");
 		System.out.println(product_idx);
 		String sId = "test1@naver.com";
-		int ischecked = service.checkLike(sId, product_idx);
-		if(ischecked != 0) {
-			System.out.println("삭제할 번호 : " + product_idx);
-			int deleteCount = service.deleteLike(sId, product_idx);
-			if(deleteCount == 0) {
-				System.out.println("위시리스트 삭제 실패 : " + sId + " , " + product_idx);
+		if(sId.length() != 0) {
+			int ischecked = service.checkLike(sId, product_idx);
+			if(ischecked != 0) {
+				System.out.println("삭제할 번호 : " + product_idx);
+				int deleteCount = service.deleteLike(sId, product_idx);
+				if(deleteCount == 0) {
+					System.out.println("위시리스트 삭제 실패 : " + sId + " , " + product_idx);
+				}
 			}
-		} 
+		}
+		return product_idx + "";
 	}
 
 	@GetMapping(value = "addCart", produces = "application/text; charset=UTF-8")
@@ -114,28 +126,34 @@ public class ProductController {
 //		String sId = (String)session.getAttribute("sId");
 		System.out.println(product_idx);
 		String sId = "test1@naver.com";
-		int isContained = service.isContainedInCart(sId, product_idx);
-		if(isContained > 0) {
-			return "Check Cart";
-		} else {
-			int insertCount = service.addToCart(sId, product_idx);
-			if(insertCount > 0) {
-				System.out.println("장바구니에 추가됨");
-				
+		if(sId.length() != 0) {
+			int isContained = service.isContainedInCart(sId, product_idx);
+			if(isContained > 0) {
+				return "Check Cart";
+			} else {
+				int insertCount = service.addToCart(sId, product_idx);
+				if(insertCount > 0) {
+					System.out.println("장바구니에 추가됨");
+				}
+				return "Added";
 			}
-			return "Added";
 		}
-		
+		return null;
 	}
 
-	@GetMapping(value = "checkCart")
-	public String checkCart(HttpSession session, Model model) {
+	@GetMapping(value = "checkCart", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String checkCart(HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
-		List<CartVO> cart = service.checkCart(sId);
-		System.out.println(cart);
-		model.addAttribute("cart", cart);
-		return "inc/cart_inTop";
+		if(sId.length() != 0) {
+			cart = service.checkCart(sId);
+			System.out.println(cart);
+			int cnt = 0;
+			for(CartVO c : cart) cnt++;
+		}
+		return cart.toString();
 	}
 	
 	
@@ -480,24 +498,6 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam int product_idx, Model model) {

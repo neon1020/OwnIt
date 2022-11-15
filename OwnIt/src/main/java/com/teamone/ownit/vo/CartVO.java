@@ -97,9 +97,9 @@ public class CartVO {
 	// toString 오버라이딩
 	@Override
 	public String toString() {
-		return "CartVO [member_idx=" + member_idx + ", product_idx=" + product_idx + ", cart_count=" + cart_count
-				+ ", cart_date=" + cart_date + ", image_original_file1=" + image_original_file1 + ", product_name=" + product_name
-				+ ", product_color=" + product_color + ", product_buy_price=" + product_buy_price + "]";
+		return "'{member_idx:" + member_idx + ", product_idx:" + product_idx + ", cart_count:" + cart_count
+				+ ", cart_date:" + cart_date + ", image_original_file1:" + image_original_file1 + ", product_name:" + product_name
+				+ ", product_color:" + product_color + ", product_buy_price:" + product_buy_price + "}'";
 	}
 	
 }
