@@ -20,7 +20,6 @@ import com.teamone.ownit.auth.SendMail;
 import com.teamone.ownit.service.MemberService;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.Auth_infoVO;
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -299,8 +298,6 @@ public class MemberController {
 	
 	
 	// 류혜지 - 300
-	@Autowired
-	private MemberService service;
 	
 	//이메일 찾기 페이지 이동 
 	@GetMapping(value = "member_findEmailForm")
