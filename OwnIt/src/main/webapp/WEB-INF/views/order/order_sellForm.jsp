@@ -120,7 +120,7 @@
           	
           	
           	
-          	<form action="order_sellDetail" method="get" onsubmit="return checkAll()">
+          	<form action="order_sellDetail" method="post" onsubmit="return checkAll()">
           	
           		<input type="hidden" name="product_idx" value="${product.product_idx }">
           		<input type= "hidden" name="member_idx" value="${member.member_idx }">

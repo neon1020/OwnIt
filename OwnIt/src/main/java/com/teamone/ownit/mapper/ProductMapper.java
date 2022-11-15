@@ -498,7 +498,6 @@ public interface ProductMapper {
 	
 	
 	
-	
 // 박주닮 501
 
 	// 한 상품에 대한 상세정보
@@ -506,8 +505,12 @@ public interface ProductMapper {
 	// 한 상품에 대한 이미지정보
 	ImageVO selectDetailImage(@Param("product_idx") int product_idx);
 	// 상품 상세정보 리뷰리스트
-	List<ReviewListVO> selectReviewList(@Param("product_idx") int product_idx);
-	
+	List<ReviewListVO> selectReviewList(@Param("product_idx") int product_idx, 
+										@Param("startRow") int startRow,
+										@Param("listLimit") int listLimit);
+
+	int selectReviewListCount(@Param("product_idx") int product_idx);
+								
 
 
 
@@ -600,13 +603,6 @@ public interface ProductMapper {
 
 
 
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -900,4 +896,5 @@ public interface ProductMapper {
 	
 	
 	
+		
 }

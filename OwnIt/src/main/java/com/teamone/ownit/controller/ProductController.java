@@ -501,23 +501,33 @@ public class ProductController {
 // 박주닮 501번
 	//상품 상세목록
 	@GetMapping(value = "product_detail")
-	public String product_detail(@RequestParam int product_idx, Model model) {
+	public String product_detail(@RequestParam int product_idx, Model model,
+								 @RequestParam(defaultValue = "1") int pageNum,
+								 @RequestParam(defaultValue = "1") int pageNum2) {
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
+		// 페이징
+		int listLimit = 10; 
+		int pageListLimit = 10; 
+		int startRow = (pageNum2 - 1) * listLimit;
 		// 상품에 대한 리뷰 목록
-		List<ReviewListVO> reviewList = service.getReviewList(product_idx);
+		List<ReviewListVO> reviewList = service.getReviewList(product_idx,startRow,listLimit);
+		int listCount = service.getReviewListCount(product_idx);
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		int startPage = (pageNum2 - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		Product_DetailPageInfoVO pageInfo = new Product_DetailPageInfoVO(
+				pageNum2, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("pageInfo", pageInfo);
 		
 			return "product/product_detail";
 		
 	}
 	
-	@GetMapping(value = "reviewProduct")
-	public String reviewProduct(@RequestParam int product_idx, Model model) {
-		
-		
-		return product_detail(product_idx,model);
-	}
 
 
 
@@ -603,25 +613,6 @@ public class ProductController {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

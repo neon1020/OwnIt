@@ -39,20 +39,20 @@
 		float: left;
 		border-radius: 15px;
 	}
-	#margin-left{
-		margin-left: 240px;"
-	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
 </head>
+
+
+
+<body oncontextmenu="return false">
 <body>
-<% Order_sellVO orderSell = (Order_sellVO)request.getAttribute("orderSell"); %>
+
 
   <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
-	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 	
 	 <section class="pt-5">
       <article class="container">
@@ -80,15 +80,19 @@
 	          					진행상황
 	          				</span>
 	          				<div>
+	          				<% Order_sellVO orderSell = (Order_sellVO)request.getAttribute("orderSell"); %>
 	          					<%	
+	          						int progressVal = 20;
 	          						String gb = orderSell.getOrder_sell_gb(); 
-	          						int progressVal = gb.equals("1") ? 50 :
-	          									 	  gb.equals("2") ? 100 : 20;
+	          						if(gb.equals("1")) progressVal = 50;
+	          						if(gb.equals("2")) progressVal = 100;
 	          						%>
 		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
-		          				<a>판매검수</a> 
-		          				<a id="margin-left">판매반려</a> 
-		          				<a id="margin-left">판매완료</a>
+		          				<div>
+			          					   <a style="float: left;">판매검수</a> 
+			          				<a style="margin-left: 240px;">판매반려</a> 
+			          					   <a style="float: right">판매완료</a>
+			          			</div>
 	          				</div>
 	          			</th>
 	          		</tr>
@@ -146,7 +150,7 @@
 	          		<tr>
 	          			<th>
 	          				<span>
-	          					정산일<span style="font-size: 15px; color: silver;">(약1개월)</span>
+	          					정산일<span style="font-size: 15px; color: silver;">(약1개월 소요)</span>
 	          				</span>
 	          				<span style="float: right; font-size: 15px;">
 	          					<%
