@@ -4,74 +4,172 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
-    <link rel="stylesheet" href="resources/css/vendor.css" />
-    <link rel="stylesheet" href="resources/css/style.css" />
-
-    <title>Listing</title>
-  </head>
-  <style>
-  .items {
-  	 display: block;
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+	<link rel="stylesheet" href="resources/css/vendor.css" />
+	<link rel="stylesheet" href="resources/css/style.css" />
+	<title>Listing</title>
+</head>
+<style>
+.items {
+	display: block;
+	width: 867px;
+	padding-right: 15px;
+	padding-left: 5px;
+	height: 60px;
+}
+.items > a {
+	margin-right: 41px;
+	color: black;
+	font-size: 0.8em;
+}
+.items > a#laptop {
+	margin-right: 0px;
+	color: black;
+	font-size: 0.8em;
+}
+.items > a > img {
+	width: 60px;
+	height: 60px;
+}
+.btn btn-outline-secondary btn-sm dropdown-toggle {
 	 width: 867px;
-	 padding-right: 15px;
-	 padding-left: 5px;
-	 height: 60px;
-	 
-  }
-  .items > a {
-  	margin-right: 41px;
-  	color: black;
-  	font-size: 0.8em;
-  	
-  }
-  .items > a#laptop {
-  	margin-right: 0px;
-  	color: black;
-  	font-size: 0.8em;
-  	
-  }
-  .items > a > img {
-  	width: 60px;
-  	height: 60px;
-  }
-  .btn btn-outline-secondary btn-sm dropdown-toggle {
-  	 width: 867px;
-  }
-  .style_icon {
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  transition: all 0.2s;
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  transition-delay: 0s;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 1.875rem;
-  height: 1.875rem;
-  text-align: right;
-  color: #6c757d; }
-  
-  .product-like::after{
-  	color: red;
-  }
-  
-  </style>
-  <script src="resources/js/jquery-3.6.1.js"></script>
-  <script type="text/javascript">
-	$(function() {
- 		$(".dropdown-menu show").change(function() {
- 			alert("바뀜!" + this.value);
- 		});
- 	});
-  </script>
+}
+.style_icon {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 1.875rem;
+	height: 1.875rem;
+	text-align: right;
+	color: #6c757d; }
+
+.product-like-full {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 1.875rem;
+	height: 1.875rem;
+	text-align: right;
+	color: red; }
+.product-like-full::before {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	content: "\ebde";
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	font-family: 'icomoon';
+	font-size: 0.875rem;
+	color: red; }
+.product-like:hover::before {
+	content: "\ebde";
+	color: red;; }
+.product-action > a:hover {
+	cursor: pointer;
+}
+
+</style>
+<script src="resources/js/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+//   function arrayByCategory(id) {
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: 'arrayByCategory?id='+id,
+// 		dataType:'text',
+// 		success: function(productList, cnt) {
+// 			$.each(productList, function(i, product){
+				
+// 			});
+// 		}
+// 	});
+// 	$(this).unbind();
+//   }
+$(function() {
+	$('.product-like').click(function() {
+		var heart = $(this);
+		var index = $(this).attr('id').split('_')[1];
+		$.ajax({
+			url:'addLikeList',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			success:function(result){
+				var a = $('#heart_' + result);
+				a.removeClass('product-like');
+				a.addClass('product-like-full');
+				// heart 의 클래스를 .product-like-full로 변경
+				//$('.product').load(location.href + " .product");
+			}
+		});
+	});
+});
+
+$(function() {
+	$('.product-like-full').click(function() {
+		var heartFull = $(this);
+		var index = $(this).attr('id').split('_')[1];
+		$.ajax({
+			url:'deleteLikeList',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			success:function(result){
+				var b = $('#heartFull_' + result);
+				b.removeClass('product-like-full');
+				b.addClass('product-like');
+			}
+		});
+	});
+});
+
+$(function() {
+	$('.product-action').click(function() {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addCart',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success:function(result){
+				if(result == 'Added') {
+					$('#'+index+' > a').html(result).css('color', 'blue');
+				} else {
+					$('#'+index+' > a').html(result).css('color', 'red');
+				}
+			}
+		});
+	});
+});
+</script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
-	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
     <!-- 페이지 레벨 / breadcrumbs -->
     <section class="breadcrumbs separator-bottom">
       <div class="container">
@@ -121,19 +219,12 @@
             </div>
           </div>
          <div class="col-md-6 text-md-right" style="margin-top: 25px">
-           <div class="dropdown">
-             <a class="btn btn-outline-secondary btn-sm dropdown-toggle" href="#!" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <c:if test="">
-               인기순
-               </c:if>
-             </a>
-             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" >인기순</a><br>
-               <a class="dropdown-item"  id="price_high">가격높은순</a><br>
-               <a class="dropdown-item"  id="price_row">가격낮은순</a><br>
-               <a class="dropdown-item"  id="product_new">신제품</a>
-             </div>
-           </div>
+           <select onchange="arrayByCategory(this.value)">
+	          <option value="product_popular" id="product_popular" selected="selected">인기순</option>
+	          <option value="price_high" id="price_high">가격높은순</option>
+	          <option value="price_low" id="price_low">가격낮은순</option>
+	          <option value="product_new" id="product_new">신제품</option>
+           </select>
          </div>
        </div>
         <div class="row gutter-4">
@@ -157,12 +248,19 @@
                     <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
-                      <span class="product-action">
+                      <span class="product-action" id="${product.product_idx }">
                         <a href="#!" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
-                    <a href="#!" class="product-like"></a>
-                    <a href="#!" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
+                    <c:choose>
+                    	<c:when test="${product.myWish ne 0}">
+                   			<a href="#!" class="product-like-full" id="heartFull_${product.product_idx }"></a>
+                   		</c:when>
+                   		<c:otherwise>
+                   			<a href="#!" class="product-like" id="heart_${product.product_idx }"></a>
+                   		</c:otherwise>
+                   	</c:choose>
+                    <a href="product_detail?product_idx=${product.product_idx }#review" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
                   </div>
                 </div>
               </div>
