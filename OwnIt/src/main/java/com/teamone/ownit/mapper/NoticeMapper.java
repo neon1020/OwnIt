@@ -29,6 +29,9 @@ public interface NoticeMapper {
 	// 게시물 삭제
 	void deleteNotice(int notice_idx);
 	
+	// 게시물 수정
+	int updateNotice(NoticeVO notice);
+	
 	
 
 
