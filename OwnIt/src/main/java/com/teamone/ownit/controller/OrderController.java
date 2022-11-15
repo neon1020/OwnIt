@@ -533,61 +533,55 @@ public class OrderController {
 				if(insertCount > 0) {
 					System.out.println("주소추가 성공");
 					model.addAttribute("product_idx", product_idx);
-					
 			}
 			
 		}
-		
-		
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		//판매자의 정보를 불러오는 메서드
 		String sId = (String)session.getAttribute("sId");
 		Order_SellFormMbAddAccVO member = service.selectMember(sId);
 		model.addAttribute("member",member);
-		
-		
 		return "order/order_sellForm";
 	}
 	
-	
 	// 상품 판매 (맵핑호출 시 account_idx 를 주면 insert작업수행, account_idx를 주지않으면 insert작업 수행)
 	@PostMapping(value = "/order_sellDetail")
-	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell,RedirectAttributes rttr ) {
-		ProductVO product = service.productDetail(order_sell.getProduct_idx());
-		rttr.addFlashAttribute("product", product);
-//		model.addAttribute("product", product);
-		
+	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell,RedirectAttributes rttr,Model model) {
+		int product_idx = order_sell.getProduct_idx();
+		int member_idx = order_sell.getMember_idx();
 		
 		//판매성공시 판매자 정보 입력
 		if(order_sell.getAccount_idx() != 0) { // 계좌정보를 입력 받았을때만 insert작업 수행
 			int insertCount = service.insertOrderSell(order_sell);
 			if(insertCount > 0) {
-				Order_sellVO orderSell = service.selectOrderSell(order_sell);
-				rttr.addFlashAttribute("orderSell", orderSell);
-//				model.addAttribute("orderSell",orderSell);
 				System.out.println("판매자 정보 등록 성공");
 				
-				return "redirect:/order_sellDetail";
+				return "redirect:/order_sellcomplete?product_idx="+product_idx+"&member_idx="+member_idx;
 			}else {
 				System.out.println("판매실패");
-				return "redirect:/order_sellForm";
+				return "order/order_sellForm";
 			}
 		} else {
-			Order_sellVO orderSell = service.selectOrderSell(order_sell);
-			rttr.addFlashAttribute("orderSell", orderSell);
-//			model.addAttribute("orderSell", orderSell);
-			System.out.println("insert 작업 없이 그냥 정보만 조회");
-			return "redirect:/order_sellDetail";
+			return "redirect:/order_sellcomplete?product_idx="+product_idx+"&member_idx="+member_idx;
 		}
 		
 	}
 	
-	@GetMapping(value = "/order_sellDetail")
-	public String order_sellDetail(Model model, Order_sellVO orderSell, ProductVO product) {
-		model.addAttribute("product", product);
-		model.addAttribute("orderSell",orderSell);
+	
+	@GetMapping(value = "/order_sellcomplete")
+	public String order_sellDetail(Model model,@RequestParam int product_idx, @RequestParam int member_idx) {
+		System.out.println(product_idx);
+		System.out.println(member_idx);
 		System.out.println("get방식 호출됨");
+		ProductVO product = service.productDetail(product_idx);
+		model.addAttribute("product", product);
+		
+		Order_sellVO orderSell = new Order_sellVO();
+		orderSell.setMember_idx(member_idx);
+		orderSell.setProduct_idx(product_idx);
+		orderSell = service.selectOrderSell(orderSell);
+		model.addAttribute("orderSell",orderSell);
 		
 		return "order/order_sellDetail";
 	}
