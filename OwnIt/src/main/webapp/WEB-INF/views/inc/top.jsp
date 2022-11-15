@@ -22,13 +22,12 @@ $(function() {
 		$.ajax({
 			url:'checkCart',
 			type:'GET',
+			dataType:'json',
 			success:function(result) {
 				debugger;
-				
-				
-// 				$(result).each(function(){
-					
-				
+				$.each(result, function() {
+					$('#cartItems').append('됐다');
+				});
 			}
 		});
 	});
@@ -139,8 +138,7 @@ $(function() {
           <div class="modal-body">
 
             <div class="row gutter-3">
-            <c:forEach var="cart" items="${cart }">
-              <div class="col-12">
+              <div class="col-12" id="cartItems">
                 <div class="cart-item cart-item-sm">
                   <div class="row align-items-center">
                     <div class="col-lg-9">
@@ -159,7 +157,6 @@ $(function() {
                   </div>
                 </div>
               </div>
-            </c:forEach>
             </div>
             
           </div>

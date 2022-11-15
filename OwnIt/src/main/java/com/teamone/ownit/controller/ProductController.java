@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.teamone.ownit.service.ProductService;
 import com.teamone.ownit.vo.*;
 
@@ -149,6 +151,7 @@ public class ProductController {
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			cart = service.checkCart(sId);
+			JsonArray cart = JsonArra
 			System.out.println(cart);
 			int cnt = 0;
 			for(CartVO c : cart) cnt++;
