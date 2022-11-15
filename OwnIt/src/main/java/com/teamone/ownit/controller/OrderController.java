@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.teamone.ownit.service.OrderService;
 import com.teamone.ownit.vo.AccountVO;
@@ -524,7 +525,7 @@ public class OrderController {
 	}
 	
 	// 상품판매폼
-	@PostMapping(value = "order_sellForm")
+	@GetMapping(value = "order_sellForm")
 	public String order_sellForm(@RequestParam int product_idx, Model model, HttpSession session, @ModelAttribute AddressVO address) {
 		
 		if(address.getAddress1() != null && !address.getAddress1().equals("")) {
@@ -551,34 +552,44 @@ public class OrderController {
 	
 	
 	// 상품 판매 (맵핑호출 시 account_idx 를 주면 insert작업수행, account_idx를 주지않으면 insert작업 수행)
-	@GetMapping(value = "order_sellDetail")
-	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell, Model model) {
-//		ImageVO image = service.selectDetailImage(order_sell.getProduct_idx());
-//		model.addAttribute("image", image);
+	@PostMapping(value = "/order_sellDetail")
+	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell,RedirectAttributes rttr ) {
 		ProductVO product = service.productDetail(order_sell.getProduct_idx());
-		model.addAttribute("product", product);
+		rttr.addFlashAttribute("product", product);
+//		model.addAttribute("product", product);
+		
 		
 		//판매성공시 판매자 정보 입력
 		if(order_sell.getAccount_idx() != 0) { // 계좌정보를 입력 받았을때만 insert작업 수행
 			int insertCount = service.insertOrderSell(order_sell);
-			
 			if(insertCount > 0) {
 				Order_sellVO orderSell = service.selectOrderSell(order_sell);
-				model.addAttribute("orderSell",orderSell);
-				
+				rttr.addFlashAttribute("orderSell", orderSell);
+//				model.addAttribute("orderSell",orderSell);
 				System.out.println("판매자 정보 등록 성공");
-				return "order/order_sellDetail";
+				
+				return "redirect:/order_sellDetail";
 			}else {
 				System.out.println("판매실패");
-				return "order/order_sellForm";
+				return "redirect:/order_sellForm";
 			}
 		} else {
 			Order_sellVO orderSell = service.selectOrderSell(order_sell);
-			model.addAttribute("orderSell", orderSell);
+			rttr.addFlashAttribute("orderSell", orderSell);
+//			model.addAttribute("orderSell", orderSell);
 			System.out.println("insert 작업 없이 그냥 정보만 조회");
-			return "order/order_sellDetail";
+			return "redirect:/order_sellDetail";
 		}
 		
+	}
+	
+	@GetMapping(value = "/order_sellDetail")
+	public String order_sellDetail(Model model, Order_sellVO orderSell, ProductVO product) {
+		model.addAttribute("product", product);
+		model.addAttribute("orderSell",orderSell);
+		System.out.println("get방식 호출됨");
+		
+		return "order/order_sellDetail";
 	}
 	
 	//상품 구매 동의
@@ -885,16 +896,5 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }//900번라인

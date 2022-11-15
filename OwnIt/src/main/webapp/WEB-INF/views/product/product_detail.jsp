@@ -1,3 +1,4 @@
+<%@page import="com.teamone.ownit.vo.Product_DetailPageInfoVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -121,7 +122,6 @@
 
     <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
-	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 
     <!-- breadcrumbs -->
     <section class="breadcrumbs">
@@ -268,7 +268,7 @@
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
 							     <br>[빠른배송 구매]
-								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 KREAM의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.
+								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 Ownit의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.
 								 <br>- 오늘(오후 11:59까지) 결제하면 내일 바로 출고되어 빠른 배송이 가능합니다. (연휴 및 공휴일, 천재지변, 택배사 사유 등 예외적으로 출고일이 변경될 수 있습니다. 빠른배송 안내
 			                  </div>
 			                </div>
@@ -374,7 +374,9 @@
         </div>
       </div>
     </section>
-	 <!-- *************************** 상단 정렬 메뉴 *************************** -->
+    
+    
+    <!-- 인기 최신 -->
     <section class="hero hero-small">
       <div class="container">
         <div class="row">
@@ -387,13 +389,13 @@
         </div>
       </div>
     </section>
-    <!-- *************************** 상단 정렬 메뉴 *************************** -->
+    <!--  인기 최신 끝 -->
     
-    <!-- *************************** 리뷰 목록 *************************** -->
-    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;">
+    
+    
+    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
       <div class="container">
         <div class="row masonry gutter-3">
-        <!-- *************************** 데이터 넣을 부분 *************************** -->
           <c:forEach var="review" items="${reviewList }">
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
@@ -404,21 +406,31 @@
               	<a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
                 <h3 class="card-content">${review.review_content }</h3>
                 <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
+                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
           </div>
         </c:forEach>
           
+          
+<!--           			<li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li> -->
+<!--                     <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li> -->
+<!--                     <li class="page-item"><a class="page-link" href="#!">3</a></li> -->
+<!--                     <li class="page-item"><a class="page-link" href="#!">4</a></li> -->
         </div>
         <div class="row">
           <div class="col">
             <nav class="d-inline-block">
               <ul class="pagination">
-                <li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li>
-                <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li>
-                <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                <li class="page-item"><a class="page-link" href="#!">4</a></li>
+              	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
+              	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 - 1}'"<%} %>></li>
+				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+					<c:choose>
+						<c:when test="${i eq pageInfo.pageNum2 }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
+						<c:otherwise><li class="page-item active"><a class="page-link" href="product_detail?pageNum2=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<li class="page-item active"><input class="page-link" type="button" value="다음" <%if(pageInfo.getPageNum2() < pageInfo.getMaxPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 + 1}'"<%} %>></li>
               </ul>
             </nav>
           </div>
