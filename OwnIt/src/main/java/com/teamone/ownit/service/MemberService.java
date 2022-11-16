@@ -9,7 +9,7 @@ import com.teamone.ownit.vo.Auth_infoVO;
 import com.teamone.ownit.vo.MemberVO;
 
 @Service
-public class MemberService {
+public class MemberService { 
 
 	@Autowired
 	private MemberMapper mapper;
@@ -44,30 +44,31 @@ public class MemberService {
 		System.out.println("MemberService - joinAuthCode()");
 		return mapper.insertAuthCode(authInfo);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public int getAuthCode(Auth_infoVO authInfo) {
+		System.out.println("MemberService - getAuthcode()");
+		return mapper.selectAuthCode(authInfo);
+	}
+
+	public int modifyAuthCode(Auth_infoVO authInfo) {
+		System.out.println("MemberService - modifyAuthCode()");
+		return mapper.updateAuthCode(authInfo);
+	}
+
+	public int getAuthInfo(Auth_infoVO authInfo) {
+		System.out.println("MemberService - getAuthInfo()");
+		return mapper.selectAuthInfo(authInfo);
+	}
+
+	public int modifyAuthInfo(Auth_infoVO authInfo) {
+		System.out.println("MemberService - modifyAuthInfo()");
+		return mapper.updateAuthInfo(authInfo);
+	}
+
+	public int removeAuthInfo(Auth_infoVO authInfo) {
+		System.out.println("MemberService - removeAuthInfo()");
+		return mapper.deleteAuthInfo(authInfo);
+	}
 	
 	
 	

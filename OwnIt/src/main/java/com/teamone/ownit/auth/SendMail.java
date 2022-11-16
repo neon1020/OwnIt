@@ -16,25 +16,25 @@ public class SendMail {
 	
 	public boolean sendMail(String receiver, String title, String content) {
 		
-		boolean isSendSuccess = false;
+		boolean isSendSuccess = false; 
 		
-		String sender = "admin@itwillbs.co.kr";
+		String sender = "admin@ownit.co.kr";
 
 		try {
 			// 메일 전송에 필요한 설정 작업
 			Properties properties = System.getProperties();
 
-			// 메일 전송에 필요한 정보를 Properties 객체(서버 속성 정보)에 추가 => put() 메소드 활용
+			// 메일 전송에 필요한 정보를 Properties 객체(서버 속성 정보)에 추가
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
-			// 메일 전송에 사용할 메일 서버 지정 (gmail, 네이버, 다음 등)
+			// 메일 전송에 사용할 메일 서버 지정
 			properties.put("mail.smtp.host", "smtp.gmail.com");
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.port", "587");
 
 			// 메일 서버에 대한 인증 정보를 관리하는 사용자 정의 클래스(GoogleSMTPAuthenticator)의 인스턴스 생성
-			Authenticator authenticator = new GoogleSMTPAuthenticator(); // 업캐스팅
+			Authenticator authenticator = new GoogleSMTPAuthenticator();
 
 			// 자바 메일의 기본 전송 단위를 javax.mail.Session 객체 단위로 관리
 			Session mailSession = Session.getDefaultInstance(properties, authenticator);
@@ -46,7 +46,7 @@ public class SendMail {
 
 			// 전송할 메일에 대한 발송 정보 설정
 			// 1. 발신자 정보 설정 (발신자 정보를 주소 형태로 관리하는 InternetAddress 객체 생성)
-			Address sender_address = new InternetAddress(sender, "아이티윌");
+			Address sender_address = new InternetAddress(sender, "OwnIt");
 
 			// 2. 수신자 정보 설정 (InternetAddress 객체 사용하여 수신자 주소 설정)
 			Address receiver_address = new InternetAddress(receiver);
