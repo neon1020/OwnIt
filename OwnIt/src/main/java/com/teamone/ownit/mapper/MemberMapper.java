@@ -6,8 +6,10 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.Auth_infoVO;
 import com.teamone.ownit.vo.MemberVO;
 
-public interface MemberMapper {
 
+
+public interface MemberMapper { 
+	
 	// 정채연
 	int selectEmail(String email);
 
@@ -295,7 +297,15 @@ public interface MemberMapper {
 	
 	
 	
-	
-	
 	// 류혜지 - 300
+	// 이메일 찾기에 필요한 findEmail() 메서드 정의
+	public MemberVO findEmail(MemberVO member);
+	
+	
+	
+	
+	
+	
+	
+	
 }

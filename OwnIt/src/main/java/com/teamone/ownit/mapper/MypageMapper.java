@@ -1,8 +1,15 @@
 package com.teamone.ownit.mapper;
 
-public interface MypageMapper { 
-	
+import com.teamone.ownit.vo.MypageSellListVO;
+import com.teamone.ownit.vo.MypageVO;
+
+public interface MypageMapper {
+
 	// 류혜지
+	// 회원 정보 조회에 필요한 selectMemberInfo() 메서드 정의
+	MypageVO selectMemberInfo(String id);
+
+	MypageSellListVO selectMySell(String id); 
 	
 	
 	

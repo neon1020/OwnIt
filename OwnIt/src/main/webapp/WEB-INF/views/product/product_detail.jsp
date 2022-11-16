@@ -1,3 +1,4 @@
+<%@page import="com.teamone.ownit.vo.Product_DetailPageInfoVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -85,7 +86,7 @@
 		     color: #FFF; 
 	     }
 	    span{
-	    	font-size: 15px;
+	    	font-size: 14px;
 	    }
 	    #title1{
 	    	font-size: 13px; font: bold;
@@ -102,13 +103,25 @@
 	    	color: white; 
 	    	width: 220px;
 	    }
+	    #btn3{
+	    	background: white; 
+	    	border: 0.5px black solid;
+	    	border-radius: 15px; 
+	    	color: black;
+	    	width: 460px;
+	    	margin-top: 15px;
+	    	
+	    }
+	    #btn3:hover{
+	    	background: black;
+	    	color: white;
+	    }
     </style>
   </head>
   <body>
 
     <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
-	<jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 
     <!-- breadcrumbs -->
     <section class="breadcrumbs">
@@ -117,9 +130,19 @@
           <div class="col">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./">Home</a></li>
-                <li class="breadcrumb-item"><a href="product_list">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Product</li>
+                <li class="breadcrumb-item">
+                	<a href="./"
+                		>Home
+                	</a>
+                </li>
+                <li class="breadcrumb-item">
+                	<a href="product_list">
+                		Shop
+                	</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                	Product
+                </li>
               </ol>
             </nav>
           </div>
@@ -128,7 +151,7 @@
     </section>
 
 
-   <!-- product -->
+   <!-- product  상품 메인이미지 -->
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
@@ -138,28 +161,30 @@
               <div class="col-lg-10 order-lg-2">
                 <div class="owl-carousel gallery" data-slider-id="1" data-thumbs="true" data-nav="true">
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail1.png" 
-                      style="background-image: url(resources/img/product/productDetail1.png);">
+                  <!-- 클릭시 보여지는 작은 이미지 -->
+                    <a class="image" href="resources/img/product/${product.image_original_file1 }" 
+                      style="background-image: url(resources/img/product/${product.image_original_file1 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail2.png" 
-                      style="background-image: url(resources/img/product/productDetail2.png);">
+                    <a class="image" href="resources/img/product/${product.image_original_file2 }" 
+                      style="background-image: url(resources/img/product/${product.image_original_file2 });">
                     </a>
                   </figure>
                   <figure class="equal" style="width:100%; height: 100%">
-                    <a class="image" href="resources/img/product/productDetail3.png" 
-                      style="background-image: url(resources/img/product/productDetail3.png);">
+                    <a class="image" href="resources/img/product/${product.image_original_file3 }" 
+                      style="background-image: url(resources/img/product/${product.image_original_file3 });">
                     </a>
                   </figure>
                 </div>
               </div>
               
+              <!--  상품 왼쪽 작은 이미지 3개 -->
               <div class="col-lg-2 text-center text-lg-left order-lg-1">
                 <div class="owl-thumbs" data-slider-id="1">
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail1.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail2.png" alt=""></span>
-                    <span class="owl-thumb-item"><img src="resources/img/product/productDetail3.png" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${product.image_original_file1 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${product.image_original_file2 }" alt=""></span>
+                    <span class="owl-thumb-item"><img src="resources/img/product/${product.image_original_file3 }" alt=""></span>
                 </div>
               </div>
             </div>
@@ -169,26 +194,57 @@
             <div class="row">
               <div class="col-12">
                 <h4 class="item-title">${product.product_brand }</h4>
-                <p>${product.product_name }</p>
+             					    <p>${product.product_name }</p>
+                
                 <!-- 구매 판매 버튼 -->
-                <button id="btn1" type="button" class="btn"  onclick="location.href='member_buy_agree'" >
-                	<p>구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</p>
+                <button id="btn1" type="button" class="btn"  onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
+                	<p>
+                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
+                	</p>
                 </button>
-				<button id="btn2" type="button" class="btn" onclick="location.href='member_sell_agree'" >
-					<p>판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원</p>
+				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
+					<p>
+						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+					</p>
 				</button>
-				<!-- 구매 판매 버튼 끝 -->
+				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
+					<p>
+						∑관심상품 | <fmt:formatNumber value="9641" pattern="#,###"/>
+					</p>
+				</button>
               </div>
             </div>
+				
             <div class="row">
               <div class="col-12">
               
               <!--  모델번호 가격 -->
                <table class="table">
 					<tr>
-						<td><span id="title1">모델번호</span><br><span>${product.product_model_num }</span></td>
-						<td><span id="title1">컬러<br></span><span>${product.product_color }</span></td>
-						<td><span id="title1">발매가<br></span><span><fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원</span></td>
+						<td>
+							<span id="title1">
+								모델번호
+							</span><br>
+							<span>
+								${product.product_model_num }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								컬러<br>
+							</span>
+							<span>
+								${product.product_color }
+							</span>
+						</td>
+						<td>
+							<span id="title1">
+								발매가<br>
+							</span>
+							<span>
+								<fmt:formatNumber value="${product.product_release_price }" pattern="#,###"/> 원
+							</span>
+						</td>
 					</tr>
 				</table>
 				
@@ -212,7 +268,7 @@
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
 							     <br>[빠른배송 구매]
-								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 KREAM의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.
+								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 Ownit의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.
 								 <br>- 오늘(오후 11:59까지) 결제하면 내일 바로 출고되어 빠른 배송이 가능합니다. (연휴 및 공휴일, 천재지변, 택배사 사유 등 예외적으로 출고일이 변경될 수 있습니다. 빠른배송 안내
 			                  </div>
 			                </div>
@@ -220,12 +276,12 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-2">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
+			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapse-2-2">
 			                      <span id="title1">검수 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
+			                <div id="collapse-2-2" class="collapse show" aria-labelledby="heading-2-2" data-parent="#accordion-2">
 			                  <div class="card-body" id="title1">
 			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
 			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.
@@ -263,18 +319,24 @@
             
             <div>
               <div class="col-lg-12">
-                	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;">
-                	Add to Cart
-                	</a>
-				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;">
-					Add to wishlist
-				</button>
+              		<!-- 카트 버튼 보류 -->
+<!--                 	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;"> -->
+<!--                 		Add to Cart -->
+<!--                 	</a> -->
+                	<!-- 관심상품 버튼 11월 11일 위쪽으로 수정  -->
+<!-- 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;"> -->
+<!-- 					Add to wishlist -->
+<!-- 				</button> -->
               </div>
               <img src="resources/img/product/productDetailNotice.png">
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Share this product</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    	<span style="color:black;">
+                    		상품 공유하기
+                    	</span>
+                    </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a class="dropdown-item" href="#">Facebook</a>
@@ -312,7 +374,9 @@
         </div>
       </div>
     </section>
-	 <!-- *************************** 상단 정렬 메뉴 *************************** -->
+    
+    
+    <!-- 인기 최신 -->
     <section class="hero hero-small">
       <div class="container">
         <div class="row">
@@ -325,129 +389,48 @@
         </div>
       </div>
     </section>
-    <!-- *************************** 상단 정렬 메뉴 *************************** -->
+    <!--  인기 최신 끝 -->
     
-    <!-- *************************** 리뷰 목록 *************************** -->
-    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;">
+    
+    
+    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
       <div class="container">
         <div class="row masonry gutter-3">
-        <!-- *************************** 데이터 넣을 부분 *************************** -->
+          <c:forEach var="review" items="${reviewList }">
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
               <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/iphone3.jpg)"></a>
+                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image }"></a>
               </figure>
               <div class="card-body">
-              	<a class="profile" href="review_mystyle"><img src="resources/img/review/max4pf.jpg"><span class="eyebrow text-muted">min.nicha</span></a>
-                <h3 class="card-content">오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/iphone1dt.jpg"><div class="subject">Apple iPhone 13 128GB Starlight (Korean Ver.)<br>934,000원</div></a></h4>
+              	<a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+                <h3 class="card-content">${review.review_content }</h3>
+                <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
+                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
           </div>
-          <!-- *************************** 데이터 넣을 부분 *************************** -->
-          <!-- *************************** 버릴 부분 시작 *************************** -->
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max2pf.jpg"><span class="eyebrow text-muted">noodle.zip</span></a>
-                <h3 class="card-content">기분 좋아♬</h3>
-                <div class="like"><img src="resources/img/review/like.jpg">268&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">5</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max2dt.jpg"><div class="subject">Samsung Galaxy Z Flip4 512GB Purple<br>1,110,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/zflip1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/zflip1pf.jpg"><span class="eyebrow text-muted">hoseok123</span></a>
-                <h3 class="card-content">맘에듭니다! 많이 파세요</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">38&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">2</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/zflip1dt.jpg"><div class="subject">Apple iPhone 14 Pro 256GB Silver (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/sony1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/sony1pf.jpg"><span class="eyebrow text-muted">kkk_86</span></a>
-                <h3 class="card-content">물건 상태 좋고 음질도 기대한만큼 좋네요. 믿고 구매하는 온잇! 이번에도 실망시키지 않네요!! 감사합니다</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">36&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">8</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/sony1dt.jpg"><div class="subject">Sony WH-1000XM4 Black (Korean Ver.)<br>354,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max3.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max3pf.jpg"><span class="eyebrow text-muted">hojiiin</span></a>
-                <h3 class="card-content">보스 음질 좋은거야 당연하고 색상도 맘에 듭니다♥</h3>
-                <div class="like"><img src="resources/img/review/like.jpg">67&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">1</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max3dt.jpg"><div class="subject">Bose QC45 White Smoke (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/zflip2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/zflip2pf.jpg"><span class="eyebrow text-muted">realsaaamk</span></a>
-                <h3 class="card-content">굳굳굳</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">143&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">8</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/zflip2dt.jpg"><div class="subject">Samsung Galaxy Z Flip4 512GB Graphite<br>1,029,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max1pf.jpg"><span class="eyebrow text-muted">karikarina</span></a>
-                <h3 class="card-content">음질도 만족스럽고 일단 어디에나 잘 어울리는 컬러라 맘에 듭니다!!!</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">50&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max1dt.jpg"><div class="subject">Apple AirPods Max Silver (Korean Ver.)<br>639,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/iphone2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/iphone2pf.jpg"><span class="eyebrow text-muted">hiiiiiii</span></a>
-                <h3 class="card-content">영롱한 실버...ㅠㅠ</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">50&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/iphone2dt.jpg"><div class="subject">Apple iPhone 14 Pro 256GB Silver (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <!-- *************************** 버릴 부분 끝 *************************** -->
+        </c:forEach>
+          
+          
+<!--           			<li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li> -->
+<!--                     <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li> -->
+<!--                     <li class="page-item"><a class="page-link" href="#!">3</a></li> -->
+<!--                     <li class="page-item"><a class="page-link" href="#!">4</a></li> -->
         </div>
         <div class="row">
           <div class="col">
             <nav class="d-inline-block">
               <ul class="pagination">
-                <li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li>
-                <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li>
-                <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                <li class="page-item"><a class="page-link" href="#!">4</a></li>
+              	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
+              	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 - 1}'"<%} %>></li>
+				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+					<c:choose>
+						<c:when test="${i eq pageInfo.pageNum2 }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
+						<c:otherwise><li class="page-item active"><a class="page-link" href="product_detail?pageNum2=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<li class="page-item active"><input class="page-link" type="button" value="다음" <%if(pageInfo.getPageNum2() < pageInfo.getMaxPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 + 1}'"<%} %>></li>
               </ul>
             </nav>
           </div>

@@ -44,22 +44,24 @@
       <h1 class="mb-0">Review</h1>
 
       <!-- ********************************* 리뷰 작성 부분 ********************************* -->
-      <section id="component-1">
-        <div class="component">
-          <div class="form-group">
-          	<img src="resources/img/review/iphone1dt.jpg" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Apple iPhone 13 128GB Starlight (Korean Ver.)" readonly="readonly">
-            <textarea rows="10" cols="30" class="form-control" placeholder="내용을 입력하세요"></textarea>
-          </div>
-          <div class="filebox clearfix">
-		    <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; background-size: cover;">
-			<input type="file" id="imageFile">
-		  </div>
-        </div>
-      </section>
-      	<div style="float: right;">
-      	  <input type="submit" class="submit" value="리뷰등록">
-      	</div>
+      <form action="reviewWritePro" method="post" enctype="multipart/form-data">
+	      <section id="component-1">
+	        <div class="component">
+	          <div class="form-group">
+	          	<img src="resources/img/product/${product.image_original_file1 }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
+	            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="${product.product_name }" readonly="readonly">
+	            <textarea rows="10" cols="30" class="form-control" placeholder="내용을 입력하세요"></textarea>
+	          </div>
+	          <div class="filebox clearfix">
+			    <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; background-size: cover;">
+				<input type="file" id="imageFile">
+			  </div>
+	        </div>
+	      </section>
+	      	<div style="float: right;">
+	      	  <input type="submit" class="submit" value="리뷰등록">
+	      	</div>
+	    </form>
 	</article>
 	
     <!-- footer -->

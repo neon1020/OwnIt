@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,10 +13,11 @@
     <title>review</title>
     
     <style type="text/css">
-		.col-lg-4 { flex: 0 0 25%; max-width: 25%; padding: 10px; }
-		.card-post { height: 500px; }
-		.card-post .card-body { width: 260px; }
+			.col-lg-4 { flex: 0 0 25%; max-width: 25%; padding: 10px; }
+			.card-post { height: 500px; }
+			.card-post .card-body { width: 260px; }
 	    .equal { height: 260px; width: 260px; border-radius: 0.5em; }
+	    .equal img { width: 100%; height: 100%; object-fit: cover; }
 	    .profile img { width: 30px; height: 30px; border-radius: 10em; margin: 5px 5px; }
 	    .eyebrow { text-transform: none; margin-left: 10px;}
 	    .card-title img { width: 50px; height: 50px; border-radius: 1em; margin: 5px 5px; float: left; }
@@ -57,113 +60,22 @@
       <div class="container">
         <div class="row masonry gutter-3">
         <!-- *************************** 데이터 넣을 부분 *************************** -->
+        <c:forEach var="review" items="${reviewList }">
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
               <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/iphone3.jpg)"></a>
+                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image }"></a>
               </figure>
               <div class="card-body">
-              	<a class="profile" href="review_mystyle"><img src="resources/img/review/max4pf.jpg"><span class="eyebrow text-muted">min.nicha</span></a>
-                <h3 class="card-content">오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/iphone1dt.jpg"><div class="subject">Apple iPhone 13 128GB Starlight (Korean Ver.)<br>934,000원</div></a></h4>
+              	<a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+                <h3 class="card-content">${review.review_content }</h3>
+                <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
+                <h4 class="card-title"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
           </div>
+        </c:forEach>
           <!-- *************************** 데이터 넣을 부분 *************************** -->
-          <!-- *************************** 버릴 부분 시작 *************************** -->
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max2pf.jpg"><span class="eyebrow text-muted">noodle.zip</span></a>
-                <h3 class="card-content">기분 좋아♬</h3>
-                <div class="like"><img src="resources/img/review/like.jpg">268&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">5</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max2dt.jpg"><div class="subject">Samsung Galaxy Z Flip4 512GB Purple<br>1,110,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/zflip1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/zflip1pf.jpg"><span class="eyebrow text-muted">hoseok123</span></a>
-                <h3 class="card-content">맘에듭니다! 많이 파세요</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">38&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">2</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/zflip1dt.jpg"><div class="subject">Apple iPhone 14 Pro 256GB Silver (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/sony1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/sony1pf.jpg"><span class="eyebrow text-muted">kkk_86</span></a>
-                <h3 class="card-content">물건 상태 좋고 음질도 기대한만큼 좋네요. 믿고 구매하는 온잇! 이번에도 실망시키지 않네요!! 감사합니다</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">36&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">8</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/sony1dt.jpg"><div class="subject">Sony WH-1000XM4 Black (Korean Ver.)<br>354,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max3.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max3pf.jpg"><span class="eyebrow text-muted">hojiiin</span></a>
-                <h3 class="card-content">보스 음질 좋은거야 당연하고 색상도 맘에 듭니다♥</h3>
-                <div class="like"><img src="resources/img/review/like.jpg">67&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">1</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max3dt.jpg"><div class="subject">Bose QC45 White Smoke (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/zflip2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/zflip2pf.jpg"><span class="eyebrow text-muted">realsaaamk</span></a>
-                <h3 class="card-content">굳굳굳</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">143&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">8</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/zflip2dt.jpg"><div class="subject">Samsung Galaxy Z Flip4 512GB Graphite<br>1,029,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/max1.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/max1pf.jpg"><span class="eyebrow text-muted">karikarina</span></a>
-                <h3 class="card-content">음질도 만족스럽고 일단 어디에나 잘 어울리는 컬러라 맘에 듭니다!!!</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">50&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/max1dt.jpg"><div class="subject">Apple AirPods Max Silver (Korean Ver.)<br>639,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail" style="background-image: url(resources/img/review/iphone2.jpg)"></a>
-              </figure>
-              <div class="card-body">
-                <a class="profile" href="post.html"><img src="resources/img/review/iphone2pf.jpg"><span class="eyebrow text-muted">hiiiiiii</span></a>
-                <h3 class="card-content">영롱한 실버...ㅠㅠ</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">50&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">3</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/review/iphone2dt.jpg"><div class="subject">Apple iPhone 14 Pro 256GB Silver (Korean Ver.)<br>1,445,000원</div></a></h4>
-              </div>
-            </article>
-          </div>
-          <!-- *************************** 버릴 부분 끝 *************************** -->
         </div>
         <div class="row">
           <div class="col">

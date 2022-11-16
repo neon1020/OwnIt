@@ -90,28 +90,28 @@
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
-											<td>2022.10.04</td>
-											<td>647,000원</td>
-											<td>발송완료</td>
+											<td style="text-align: left;"><a href="" style="color: black;">${mysell.product_name }</a></td>
+											<td>${mysell.order_sell_date }</td>
+											<td>${mysell.product_sell_price }</td>
+											<td>${mysell.order_sell_gb }</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>입고완료</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>검수합격</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>정산완료 <input type="button" value="정산정보" class="btn btn-outline-dark btn-sm"></td>
@@ -140,21 +140,21 @@
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 											<td>2022.10.04</td>
 											<td>647,000원</td>
 											<td>(크림으로)배송중</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>검수중</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>매입완료 <input type="button" value="정산정보" class="btn btn-outline-dark btn-sm"></td>
@@ -183,21 +183,21 @@
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple AirPods Max Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
 											<td>2022.10.04</td>
 											<td>647,000원</td>
 											<td>발송완료</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>검수중</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td><a href="">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
+											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
 											<td>2022.09.22</td>
 											<td>1,918,000원</td>
 											<td>매입완료 <input type="button" value="정산정보" class="btn btn-outline-dark btn-sm"></td>

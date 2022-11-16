@@ -1,17 +1,29 @@
 package com.teamone.ownit.service;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.MypageMapper;
+import com.teamone.ownit.vo.MypageSellListVO;
+import com.teamone.ownit.vo.MypageVO;
 
 @Service
 public class MypageService {
 
-//	@Autowired
-//	private MypageMapper mapper;
-	
+	@Autowired
+	private MypageMapper mapper;
+
 	// 류혜지
+
+	// 회원 정보 조회 수행 getMemberInfo()
+	public MypageVO getMemberInfo(String id) {
+		return mapper.selectMemberInfo(id);
+	}
+
+	public MypageSellListVO getMySell(String id) {
+		return mapper.selectMySell(id);
+	}
+	
 	
 	
 	

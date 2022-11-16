@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<head></head>
+<script src="resources/js/jquery-3.6.1.js"></script>
+<script>
+// var chArr = [];
+// $('input:checkbox[name=brand]:checked').each(function() {
+// 	var ch = $(this).val();
+// 	chArr.push(ch+" ");
+// 	$.ajax({
+// 		type:"GET",
+// 		url:"arrayByBrand",
+// 		data:chArr,
+// 		success: function(result){
+// 			console.log(result);
+// 		}
+// 	});
+// })
+
+$('input:checkbox[name=brand]').each(function() {
+	if($(this).is(":checked")){
+		alert("체크됨");
+	}
+
+}
+
+</script>
 
  <!-- sidebar -->
 <aside class="col-lg-3 sidebar">
@@ -17,22 +42,22 @@
            					<div>
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="phone">- 휴대폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=스마트폰" id="phone">- 휴대폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="tablet">- 태블릿</a>
+	         							<a class="nav-link" href="listProductByCategory?id=태블릿" id="tablet">- 태블릿</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="watch">- 스마트워치</a>
+	         							<a class="nav-link" href="listProductByCategory?id=스마트워치" id="watch">- 스마트워치</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="earphone">- 이어폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=이어폰" id="earphone">- 이어폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="headphone">- 헤드폰</a>
+	         							<a class="nav-link" href="listProductByCategory?id=헤드폰" id="headphone">- 헤드폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	         							<a class="nav-link" href="#!" id="laptop">- 노트북</a>
+	         							<a class="nav-link" href="listProductByCategory?id=노트북" id="laptop">- 노트북</a>
 	       							</li>
 	     						</ul>
            					</div>
@@ -49,30 +74,30 @@
 		</span>
 		<div class="d-lg-block collapse" id="collapse-2">
 			<span class="widget-title">Brands</span>
-			<div class="widget-content">
+			<div class="widget-content" >
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Apple">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Apple"  value="Apple">
 					<label class="custom-control-label" for="Apple">Apple</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Samsung">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Samsung" value="Samsung">
 					<label class="custom-control-label" for="Samsung">Samsung</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Sony">
+					<input type="checkbox" class="custom-control-input" name="brand" id="Sony" value="Sony">
 					<label class="custom-control-label" for="Sony">Sony</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="LG">
+					<input type="checkbox" class="custom-control-input" name="brand" id="LG" value="LG">
 					<label class="custom-control-label" for="LG">LG</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="Bose">
-					<label class="custom-control-label" for="LG">BOSE</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="Bose" value="Bose">
+					<label class="custom-control-label" for="Bose">BOSE</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="etc">
-					<label class="custom-control-label" for="LG">ETC</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="etc" value="etc">
+					<label class="custom-control-label" for="etc">ETC</label>
 				</div>
 			</div>		
 		</div>

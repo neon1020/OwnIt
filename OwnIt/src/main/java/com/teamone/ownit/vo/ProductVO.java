@@ -13,6 +13,10 @@ public class ProductVO {
 	private int product_left_count;
 	private int product_sell_count;
 	private String product_date;
+	private String image_original_file1;
+	private String image_original_file2;
+	private String image_original_file3;
+	private int myWish;
 	
 	// 기본 생성자
 	public ProductVO() {}
@@ -20,7 +24,8 @@ public class ProductVO {
 	// 파라미터 생성자
 	public ProductVO(int product_idx, String product_type, String product_brand, String product_name,
 			String product_model_num, String product_color, String product_release_price, String product_sell_price,
-			String product_buy_price, int product_left_count, int product_sell_count, String product_date) {
+			String product_buy_price, int product_left_count, int product_sell_count, String product_date,
+			String image_original_file1, String image_original_file2, String image_original_file3, int myWish) {
 		super();
 		this.product_idx = product_idx;
 		this.product_type = product_type;
@@ -34,6 +39,10 @@ public class ProductVO {
 		this.product_left_count = product_left_count;
 		this.product_sell_count = product_sell_count;
 		this.product_date = product_date;
+		this.image_original_file1 = image_original_file1;
+		this.image_original_file2 = image_original_file2;
+		this.image_original_file3 = image_original_file3;
+		this.myWish = myWish;
 	}
 
 	// Getter & Setter
@@ -133,6 +142,38 @@ public class ProductVO {
 		this.product_date = product_date;
 	}
 
+	public String getImage_original_file1() {
+		return image_original_file1;
+	}
+
+	public void setImage_original_file1(String image_original_file1) {
+		this.image_original_file1 = image_original_file1;
+	}
+
+	public String getImage_original_file2() {
+		return image_original_file2;
+	}
+
+	public void setImage_original_file2(String image_original_file2) {
+		this.image_original_file2 = image_original_file2;
+	}
+
+	public String getImage_original_file3() {
+		return image_original_file3;
+	}
+
+	public void setImage_original_file3(String image_original_file3) {
+		this.image_original_file3 = image_original_file3;
+	}
+
+	public int getmyWish() {
+		return myWish;
+	}
+
+	public void setmyWish(int myWish) {
+		this.myWish = myWish;
+	}
+
 	// toString 오버라이딩
 	@Override
 	public String toString() {
@@ -141,6 +182,10 @@ public class ProductVO {
 				+ ", product_color=" + product_color + ", product_release_price=" + product_release_price
 				+ ", product_sell_price=" + product_sell_price + ", product_buy_price=" + product_buy_price
 				+ ", product_left_count=" + product_left_count + ", product_sell_count=" + product_sell_count
-				+ ", product_date=" + product_date + "]";
+				+ ", product_date=" + product_date + ", image_original_file1=" + image_original_file1
+				+ ", image_original_file2=" + image_original_file2 + ", image_original_file3=" + image_original_file3
+				+ ", myWish=" + myWish + "]";
 	}
+	
+	
 }
