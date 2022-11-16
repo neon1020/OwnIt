@@ -26,6 +26,9 @@ public interface AdminMapper {
 	// Product 등록 (글쓰기) + 다중 파일 업로드
 	int insertProductImage(AdminProductVO product);
 
+	// Product 수정을 위해 글 가져오기
+	AdminProductVO selectProduct(int product_idx);
+
 	// Order - BuyList 갯수 조회
 	int selectBuyListCount(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
@@ -43,6 +46,7 @@ public interface AdminMapper {
 	List<AdminOrderVO> selectSellList(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
+
 
 
 	

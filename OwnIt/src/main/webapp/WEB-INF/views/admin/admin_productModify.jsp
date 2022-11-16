@@ -35,28 +35,28 @@
     
     function changeType(product_type) {
 		// 선택된 타입 값을 type 의 value 값으로 변경
-		document.productWriteForm.product_type.value = product_type;
+		document.productModifyForm.product_type.value = product_type;
 		
 		// 단, 선택된 타입이 "직접입력"이 아닐 경우 type 입력창 잠금(readOnly 속성 적용)
 		if(product_type == "") {
-			document.productWriteForm.product_type.readOnly = false;
-			document.productWriteForm.product_type.focus();
+			document.productModifyForm.product_type.readOnly = false;
+			document.productModifyForm.product_type.focus();
 		} else {
-			document.productWriteForm.product_type.readOnly = true;
+			document.productModifyForm.product_type.readOnly = true;
 		}
 	}
     
     
     function changeBrand(product_brand) {
 		// 선택된 브랜드 값을 brand 의 value 값으로 변경
-		document.productWriteForm.product_brand.value = product_brand;
+		document.productModifyForm.product_brand.value = product_brand;
 		
 		// 단, 선택된 브랜드가 "직접입력"이 아닐 경우 brand 입력창 잠금(readOnly 속성 적용)
 		if(product_brand == "") {
-			document.productWriteForm.product_brand.readOnly = false;
-			document.productWriteForm.product_brand.focus();
+			document.productModifyForm.product_brand.readOnly = false;
+			document.productModifyForm.product_brand.focus();
 		} else {
-			document.productWriteForm.product_brand.readOnly = true;
+			document.productModifyForm.product_brand.readOnly = true;
 		}
 	}
     
@@ -137,36 +137,69 @@
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2>Product Write Form</h2>
+                            <h2>Product Modify Form</h2>
                             <br>
                             <div class="basic-form">
-                                <form action="admin_productWritePro" method="post" name="productWriteForm" enctype="multipart/form-data">
+                                <form action="admin_productModify" method="post" name="productModifyForm" enctype="multipart/form-data">
                                 	<!-- Start Col -->
                                 	<div class="row">
+			                            
 			                            <div class="col-md-6 col-lg-3">
 			                                <div class="card">
 			                                    <div class="card-body">
 			                                    	<label>Image<span class="text-danger"> *</span></label>
 			                                    	<div class="filebox clearfix">
-														<img src="resources/img/review/blank.jpg" class="mr-3" id="preview" style="background-size: cover; width: 300px; height: 300px">		                                    	
+														<img src="resources/img/product/${product.image_real_file1 }" class="mr-3" id="preview" style="background-size: cover; width: 300px; height: 300px">		                                    	
 			                                    	</div>
-			                                    </div>
-			                                    <div class="card-footer">
-		                                        
-			                                        <div class="input-group mb-3">
-					                                	<input type="file" name="files" class="form-control-file" id="imageFile" multiple="multiple" required>
-<!-- 			                                        	<input type="file" name="file" class="form-control-file" id="imageFile" required> -->
-			                                        </div>
-		                                        
 			                                    </div>
 			                                </div>
 			                            </div>
 			                            <!-- End Col -->
+			                            
+			                        <!-- 이미지 수정 Start -->   
+			                        <div class="basic-form" style="margin: auto 0; width: 400px">
+                                        <label><span class="text-danger"> *</span> 이미지 수정 시 선택하세요</label>
+                                        
+                                        <div class="form-group">
+                                        	<label>&nbsp;File - 1</label>
+											<div class="fallback">
+												<input class="l-border-1" name="file1" type="file" id="imageFile">
+												${product.image_original_file1 }
+											</div>
+										</div>
+                                        
+<!--                                         <div class="input-group mb-3"> -->
+<!--                                             <div class="input-group-prepend"><span class="input-group-text">File 1</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="custom-file"> -->
+<!--                                                 <input type="file" name="file1" id="imageFile" class="custom-file-input"> -->
+<%--                                                 <label class="custom-file-label">${product.image_original_file1 }</label> --%>
+<!--                                             </div> -->
+<!--                                         </div> -->
+                                        
+                                        <div class="form-group">
+                                        	<label>&nbsp;File - 2</label>
+											<div class="fallback">
+												<input class="l-border-1" name="file2" type="file">
+												${product.image_original_file2 }
+											</div>
+										</div>
+                                    
+                                        <div class="form-group">
+                                        	<label>&nbsp;File - 3</label>
+											<div class="fallback">
+												<input class="l-border-1" name="file3" type="file">
+												${product.image_original_file3 }
+											</div>
+										</div>
+                                	</div>
+                                	<!-- 이미지 수정 End -->
 			                        </div>
+									
                                     <div class="form-row">
                                     	<div class="form-group col-md-3">
                                      		<label>Type<span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="product_type" required>
+                                            <input type="text" class="form-control" name="product_type" value="${product.product_type }" required>
                                         </div>
                                      	<div class="form-group col-md-3">
                                      		<label>&nbsp;</label>
@@ -185,7 +218,7 @@
                                     <div class="form-row">
                                     	<div class="form-group col-md-3">
                                      		<label>Brand<span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="product_brand" required>
+                                            <input type="text" class="form-control" name="product_brand" value="${product.product_brand }" required>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>&nbsp;</label>
@@ -203,37 +236,38 @@
                                    	<div class="form-row">
                                    		<div class="form-group col-md-8">
 	                                        <label>Name<span class="text-danger"> *</span></label>	
-	                                        <input type="text" class="form-control" name="product_name" required>
+	                                        <input type="text" class="form-control" name="product_name" value="${product.product_name }" required>
 										</div>
                                    	</div>
                                     <div class="form-row">
                                    		<div class="form-group col-md-6">
                                             <label>Model Number<span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="product_model_num" required>
+                                            <input type="text" class="form-control" name="product_model_num" value="${product.product_model_num }" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Color<span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="product_color" required>
+                                            <input type="text" class="form-control" name="product_color" value="${product.product_color }" required>
                                         </div>
                                     </div>
                                    	<div class="form-row">
                                    		<div class="form-group col-md-4">
                                             <label>Release Price<span class="text-danger"> *</span></label>
                                             <div class="input-group-prepend"><span class="input-group-text">￦</span>
-                                            <input type="number" min="0" class="form-control" name="product_release_price" required></div>
+                                            <input type="number" min="0" class="form-control" name="product_release_price" value="${product.product_release_price }" required></div>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Buy Price<span class="text-danger"> *</span></label>
                                             <div class="input-group-prepend"><span class="input-group-text">￦</span>
-                                            <input type="number" min="0" id="number" class="form-control" name="product_buy_price" required></div>
+                                            <input type="number" min="0" id="number" class="form-control" name="product_buy_price" value="${product.product_buy_price }" required></div>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Sell Price<span class="text-danger"> *</span></label>
                                             <div class="input-group-prepend"><span class="input-group-text">￦</span>
-                                            <input type="number" min="0" id="number" class="form-control" name="product_sell_price" required></div>
+                                            <input type="number" min="0" id="number" class="form-control" name="product_sell_price" value="${product.product_sell_price }" required></div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-dark" style="float: right">Submit</button>
+                                    <button type="submit" class="btn btn-dark" style="float: right; margin-left: 5px">Submit</button>
+                                    <button type="reset" class="btn btn-dark" style="float: right">Reset</button>
                                 </form>
                             </div>
                         </div>

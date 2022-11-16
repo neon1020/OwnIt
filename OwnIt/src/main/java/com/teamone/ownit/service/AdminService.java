@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.teamone.ownit.mapper.AdminMapper;
 import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
+import com.teamone.ownit.vo.ProductVO;
 
 @Service
 public class AdminService {
@@ -37,6 +38,11 @@ public class AdminService {
 		return mapper.insertProductImage(product);
 	}
 	
+	// Product 수정을 위해 글 가져오기
+	public AdminProductVO getProduct(int product_idx) {
+		return mapper.selectProduct(product_idx);
+	}
+	
 	// Order - BuyList 갯수 조회
 	public int getBuyListCount(String searchType, String keyword) {
 		return mapper.selectBuyListCount(searchType, keyword);
@@ -56,6 +62,7 @@ public class AdminService {
 	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword) {
 		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
 	}
+
 
 
 

@@ -163,8 +163,21 @@ public class AdminController {
 		} else {
 			return "";
 		}
-	
 	}
+	
+	
+	// Product 수정 폼으로 이동
+	@GetMapping(value = "admin_productModifyForm")
+	public String modify(@RequestParam int product_idx, Model model) {
+		AdminProductVO product = service.getProduct(product_idx);
+		
+		model.addAttribute("product", product);
+		
+		return "admin/admin_productModify";
+	}
+	
+	
+	
 	
 	// Order - BuyList(구매목록) 조회
 	@GetMapping(value = "admin_productBuyList")
@@ -269,12 +282,7 @@ public class AdminController {
 	}	
 	
 	
-	@GetMapping(value = "admin_productUpdate")
-	public String admin3() {
-		
-		return "admin/admin_productUpdate";
-	}
-	
+
 	
 	
 
