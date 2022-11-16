@@ -297,15 +297,5 @@ public interface MemberMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 류혜지 - 300
 }
