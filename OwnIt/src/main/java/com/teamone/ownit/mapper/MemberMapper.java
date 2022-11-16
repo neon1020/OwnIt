@@ -20,6 +20,16 @@ public interface MemberMapper {
 	int selectMember_idx(String id);
 
 	int insertAuthCode(Auth_infoVO authInfo);
+
+	int selectAuthCode(Auth_infoVO authInfo);
+
+	int updateAuthCode(Auth_infoVO authInfo);
+
+	int selectAuthInfo(Auth_infoVO authInfo);
+
+	int updateAuthInfo(Auth_infoVO authInfo);
+
+	int deleteAuthInfo(Auth_infoVO authInfo);
 	
 	
 	
