@@ -525,29 +525,43 @@ public class OrderController {
 	}
 	
 	// 상품판매폼
-	@GetMapping(value = "order_sellForm")
-	public String order_sellForm(@RequestParam int product_idx, Model model, HttpSession session, @ModelAttribute AddressVO address) {
+	@PostMapping(value = "/order_sellForm")
+	public String order_sellForm(@RequestParam int product_idx,@ModelAttribute AddressVO address,Model model, HttpSession session) {
 		
+		// 주소를 입력 받았을시에만 실행
 		if(address.getAddress1() != null && !address.getAddress1().equals("")) {
 				int insertCount = service.insertAddress(address);
 				if(insertCount > 0) {
+					//주소추가시 가장 최근에 등록된 주소 외에 원래 있던 주소의 gb를 1로 바꿔준다.
 					System.out.println("주소추가 성공");
-					model.addAttribute("product_idx", product_idx);
+					int updateCount = service.updateAddress(address);
+					if(updateCount > 0) {
+						System.out.println("업데이트 성공");
+					}
 			}
-			
 		}
+		return "redirect:/order_sellForm?product_idx="+product_idx;
+	}
+	
+	// 상품판매폼(PRG 패턴)
+	@GetMapping(value = "/order_sellForm")
+	public String order_sellForm(@RequestParam int product_idx,Model model, HttpSession session) {
+		
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
-		//판매자의 정보를 불러오는 메서드
 		String sId = (String)session.getAttribute("sId");
 		Order_SellFormMbAddAccVO member = service.selectMember(sId);
 		model.addAttribute("member",member);
 		return "order/order_sellForm";
 	}
 	
-	// 상품 판매 (맵핑호출 시 account_idx 를 주면 insert작업수행, account_idx를 주지않으면 insert작업 수행)
+	
+	
+	
+	// 상품 판매 (맵핑호출 시 account_idx 를 주면 insert작업수행, account_idx를 주지않으면 insert작업 수행안함)
 	@PostMapping(value = "/order_sellDetail")
-	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell,RedirectAttributes rttr,Model model) {
+	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell) {
+		System.out.println("post방식 호출됨");
 		int product_idx = order_sell.getProduct_idx();
 		int member_idx = order_sell.getMember_idx();
 		
@@ -557,22 +571,20 @@ public class OrderController {
 			if(insertCount > 0) {
 				System.out.println("판매자 정보 등록 성공");
 				
-				return "redirect:/order_sellcomplete?product_idx="+product_idx+"&member_idx="+member_idx;
+				return "redirect:/order_sellDetail?product_idx="+product_idx+"&member_idx="+member_idx;
 			}else {
 				System.out.println("판매실패");
 				return "order/order_sellForm";
 			}
 		} else {
-			return "redirect:/order_sellcomplete?product_idx="+product_idx+"&member_idx="+member_idx;
+			return "redirect:/order_sellDetail?product_idx="+product_idx+"&member_idx="+member_idx;
 		}
 		
 	}
 	
-	
-	@GetMapping(value = "/order_sellcomplete")
+	//상품 판매 성공시 redirect방식 호출(새로고침 중복 INSERT 방지)
+	@GetMapping(value = "/order_sellDetail")
 	public String order_sellDetail(Model model,@RequestParam int product_idx, @RequestParam int member_idx) {
-		System.out.println(product_idx);
-		System.out.println(member_idx);
 		System.out.println("get방식 호출됨");
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);

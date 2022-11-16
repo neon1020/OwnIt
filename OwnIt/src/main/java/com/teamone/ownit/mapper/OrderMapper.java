@@ -516,6 +516,8 @@ public interface OrderMapper {
 
 	int insertAddress(AddressVO address);
 
+	int updateAddress(AddressVO address);
+
 
 
 

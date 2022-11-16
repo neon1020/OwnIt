@@ -579,7 +579,14 @@
 	</insert>
 
 
-
+	<update id="updateAddress">
+	<selectKey keyProperty="address_idx" order="BEFORE" resultType="integer">
+		select max(address_idx) from address where member_idx=#{member_idx};
+	</selectKey>
+		UPDATE address 
+				   SET address_gb='1'
+				   WHERE member_idx=#{member_idx} AND address_idx !=#{address_idx};
+	</update>
 
 
 

@@ -88,10 +88,10 @@
 	          						if(gb.equals("2")) progressVal = 100;
 	          						%>
 		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
-		          				<div>
-			          					   <a style="float: left;">판매검수</a> 
-			          				<a style="margin-left: 240px;">판매반려</a> 
-			          					   <a style="float: right">판매완료</a>
+		          				<div style="text-align: center;">
+			          					   <a style="float: left;">① 판매검수</a> 
+			          					   <a>② 판매반려</a> 
+			          					   <a style="float: right">③ 판매완료</a>
 			          			</div>
 	          				</div>
 	          			</th>

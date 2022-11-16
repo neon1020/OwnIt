@@ -523,6 +523,9 @@ public class OrderService {
 		public int insertAddress(AddressVO address) {
 			return mapper.insertAddress(address);
 		}
+		public int updateAddress(AddressVO address) {
+			return mapper.updateAddress(address);
+		}
 
 
 
