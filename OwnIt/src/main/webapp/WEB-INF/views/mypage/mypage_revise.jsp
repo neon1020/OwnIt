@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,22 +16,22 @@
 	<!-- /header -->   
 
     <!-- hero -->
-	<section class="hero hero-small bg-purple text-white">
-		<div class="container">
-			<div class="row gutter-2 gutter-md-4 align-items-end">
-				<div class="col-md-6 text-center text-md-left">
-					<h1 class="mb-0">김뽀얌이</h1>
-					<span class="text-muted">부산광역시, 대한민국</span>
-				</div>
-				<div class="col-md-6 text-center text-md-right">
-					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a>
-				</div>
-			</div>
-		</div>
-	</section>
+<!-- 	<section class="hero hero-small bg-purple text-white"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<div class="row gutter-2 gutter-md-4 align-items-end"> -->
+<!-- 				<div class="col-md-6 text-center text-md-left"> -->
+<%-- 					<h1 class="mb-0">${member.member_nickname }</h1> --%>
+<!-- 					<span class="text-muted">부산광역시, 대한민국</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-md-6 text-center text-md-right"> -->
+<!-- 					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</section> -->
 
     <!-- listing -->
-	<section class="pt-5">
+	<section class="pt-5" style="margin-top: 100px;">
 		<div class="container">
 			<div class="row gutter-4 justify-content-between">
 
@@ -45,13 +46,13 @@
 						<div class="tab-content" id="myTabContent">
 
 							<!-- mypage_revise -->
-                 			<form action="#" method="post" id="join">
+                 			<form action="mypage_revisePro" method="post" id="join">
 								<div class="tab-pane fade show active" id="sidebar-1-1" role="tabpanel" aria-labelledby="sidebar-1-1">
 									<div class="row mb-2">
 									</div>
 									<div class="row gutter-1">
 										<div class="col-md-12">
-											<img src="resources/img/member/ppoyam.jpg" width="100" height="100" style="border-radius: 10em">
+											<img src="resources/img/member/${mypage.image_original_file1 }" width="100" height="100" style="border-radius: 10em">
 											<input type="button" value="이미지 변경" class="btn btn-outline-dark btn-rounded btn-sm">
 											<input type="button" value="삭제" class="btn btn-outline-dark btn-rounded btn-sm">
 											<hr>
@@ -59,43 +60,43 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput1">이메일 주소</label>
-												<input id="exampleInput1" type="text" class="form-control" placeholder="예) ownit@ownit.com">
+												<input id="exampleInput1" type="text" class="form-control" value="${mypage.member_id }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput2">닉네임</label>
-												<input id="exampleInput2" type="text" class="form-control" placeholder="2~6글자">
+												<input id="exampleInput2" type="text" class="form-control" value="${mypage.member_nickname }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput6">이름</label>
-												<input id="exampleInput6" type="text" class="form-control" placeholder="이름">
+												<input id="exampleInput6" type="text" class="form-control" value="${mypage.member_name }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput7">휴대전화</label>
-												<input id="exampleInput7" type="text" class="form-control" placeholder="전화번호 입력">
+												<input id="exampleInput7" type="text" class="form-control" value="${mypage.member_phone }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="exampleInput5">우편번호</label>
-												<input id="exampleInput5" type="text" class="form-control" placeholder="Zip">
+												<input id="exampleInput5" type="text" class="form-control" value="${mypage.address_zipcode }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="exampleInput4">도로명주소</label>
-												<input id="exampleInput4" type="text" class="form-control" placeholder="Street">
+												<input id="exampleInput4" type="text" class="form-control" value="${mypage.address1 }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput3">상세주소</label>
-												<input id="exampleInput3" type="text" class="form-control" placeholder="Company">
+												<input id="exampleInput3" type="text" class="form-control" value="${mypage.address2 }" readonly="readonly">
 											</div>
 										</div>
 									</div>
