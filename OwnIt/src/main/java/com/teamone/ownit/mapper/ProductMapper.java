@@ -1,6 +1,7 @@
 package com.teamone.ownit.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -42,7 +43,7 @@ public interface ProductMapper {
 	List<CartVO> checkCart(@Param("sId")String sId);
 
 
-
+	List<CartVO> checkCart2(@Param("sId")String sId);
 
 
 
@@ -510,6 +511,8 @@ public interface ProductMapper {
 										@Param("listLimit") int listLimit);
 
 	int selectReviewListCount(@Param("product_idx") int product_idx);
+
+	
 								
 
 	

@@ -19,17 +19,34 @@
 <script type="text/javascript">
 $(function() {
 	$('.cartInTop').click(function() {
+		debugger;
 		$.ajax({
 			url:'checkCart',
-			type:'GET',
+			type:'POST',
 			dataType:'json',
-			success:function(result) {
-				debugger;
-				$.each(result, function() {
-					alert("들어옴");
+			success:function(cart) {
+// 				alert(JSON.stringify(cart));
 					var html = "";
-					$('#cartItems').append(html);
+				$.each(cart, function(index) {
+// 					alert(JSON.stringify(cart[index]));
+					
+					html += "<div class='row gutter-3'>";
+					html += "<div class='col-12' id='cartItems'>";
+					html += "<div class='cart-item cart-item-sm'>";
+					html += "<div class='row align-items-center'>";
+					html += "<div class='col-lg-9'>"
+					html += "<div class='media media-product'>";
+					html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_original_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
+					html += "<div class='media-body'>";
+					html += "<h5 class='media-title'>" + cart[index].product_name + "</h5>";
+					html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
+					html += "</div></div></div>";
+					html += "<div class='col-lg-3 text-center text-lg-right'>";
+					html += "<span class='cart-item-price'>"+ cart[index].product_buy_price +"원</span>";
+					html += "</div><a href='#!' class='cart-item-close'><i class='icon-x'></i></a></div></div></div></div>";
 				});
+				
+				$('.myCartItems').html(html);
 			}
 		});
 	});
@@ -68,7 +85,7 @@ $(function() {
                         <li><span class="megamenu-title">Product</span></li>
                         <li><a class="dropdown-item" href="product_detail">Product</a></li>
                         <li><span class="megamenu-title">Order</span></li>
-                        <li><a class="dropdown-item" href="cart">Cart</a></li>
+                        <li><a class="dropdown-item" href="viewMyCart">Cart</a></li>
                       </ul>
                       <ul class="col-6 col-md-3 col-lg-2">
                         <li><span class="megamenu-title">MyPage</span></li>
@@ -138,7 +155,8 @@ $(function() {
             </button>
           </div>
           <div class="modal-body">
-
+			<div class="myCartItems">
+			<!-- 여기부터 데이터 쌓기 -->
             <div class="row gutter-3">
               <div class="col-12" id="cartItems">
                 <div class="cart-item cart-item-sm">
@@ -146,7 +164,7 @@ $(function() {
                     <div class="col-lg-9">
                       <div class="media media-product">
                         <a href="#!"><img src="resources/img/product/${cart.image_original_file1 }" alt="Image" style="width: 70px; height: 70px;"></a>
-                        <div class="media-body">
+                        <div class="media-body"	>
                           <h5 class="media-title">${cart.product_name }</h5>
                           <span class="media-subtitle">${cart.product_color }</span>
                         </div>
@@ -160,7 +178,7 @@ $(function() {
                 </div>
               </div>
             </div>
-            
+           </div> <!-- 여기까지 -->
           </div>
           <div class="modal-footer">
             <div class="container-fluid">
@@ -169,7 +187,7 @@ $(function() {
               
               <!-- 장바구니 누르면 나오는 버튼 경로 -->
                 <div class="col d-none d-md-block">
-                  <a href="cart" class="btn btn-lg btn-block btn-secondary">장바구니 이동</a>
+                  <a href="viewMyCart" class="btn btn-lg btn-block btn-secondary">장바구니 이동</a>
                 </div>
                 
                 <div class="col">

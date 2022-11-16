@@ -1,6 +1,7 @@
 package com.teamone.ownit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,9 @@ public class ProductService {
 		return mapper.checkCart(sId);
 	}
 
-
+	public List<CartVO> checkCart2(String sId) {
+		return mapper.checkCart2(sId);
+	}
 
 
 
@@ -510,6 +513,8 @@ public class ProductService {
 	public int getReviewListCount(int product_idx) {
 		return mapper.selectReviewListCount(product_idx);
 	}
+
+	
 
 	
 
