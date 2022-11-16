@@ -62,8 +62,8 @@
                 </span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="admin_productBuy">Buy</a></li>
-                    <li><a href="admin_productSell">Sell</a></li>
+                    <li><a href="admin_productBuyList">Buy</a></li>
+                    <li><a href="admin_productSellList">Sell</a></li>
                 </ul>
             </li>
             <li>

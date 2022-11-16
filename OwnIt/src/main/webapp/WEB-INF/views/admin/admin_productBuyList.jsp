@@ -1,5 +1,9 @@
+<%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +67,7 @@
         <!--**********************************
             Header start
         ***********************************-->
-        <jsp:include page="../inc/top.jsp"></jsp:include>
+		<jsp:include page="../inc/top.jsp"></jsp:include>
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -97,21 +101,22 @@
 				<div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card-title">
+                        	<div class="card-title">
 	                            <h2>Buying Product</h2>
 	                        </div>
                             <!-- 검색기능 Start -->
-	                        <form>
+	                        <form action="admin_productBuyList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="keyword" class="form-control">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-dark" type="button">Search</button>
+                                        <button class="btn btn-outline-dark" type="submit">Search</button>
                                     </div>
                                 </div>
-                                <select class="form-control" style="float: right; width: 100px">
-                                    <option selected="selected">전체</option>
-                                    <option>고객명</option>
-                                    <option>상품명</option>
+                                <select class="form-control" name="searchType" style="float: right; width: 100px">
+                                    <option value="all" selected="selected">전체</option>
+                                    <option value="order_buy_idx">주문번호</option>
+                                    <option value="member_name">고객명</option>
+                                    <option value="product_name">상품명</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -120,72 +125,93 @@
                                 <table class="table header-border">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">고객</th>
-                                            <th scope="col">Product</th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">고객명</th>
+                                            <th scope="col" width="450px">상품명</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">정산계좌</th>
+                                            <th scope="col" width="250px">배송지</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Status</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>정채연</td>
-                                            <td><a href="">Apple AirPods Max Silver</a></td>
-                                            <td>633,000원</td>
-                                            <td>카카오뱅크<br>1111-03-3333333</td>
-                                            <td>22-11-01</td>
-                                            <td>
-                                            	<select class="custom-select col-6" id="inlineFormCustomSelect">
-                                                    <option selected="selected">검수대기중</option>
-                                                    <option value="1">판매반려</option>
-                                                    <option value="2">판매승인</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Apply</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Nancy</td>
-                                            <td>J. Daniels</td>
-                                            <td>@daniels</td>
-                                            <td>하나은행<br>906-010000-23333</td>
-                                            <td>22-10-30</td>
-                                            <td>
-                                            	<select class="custom-select col-6" id="inlineFormCustomSelect">
-                                                    <option selected="selected">검수대기중</option>
-                                                    <option value="1">판매반려</option>
-                                                    <option value="2">판매승인</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Apply</button>
-                                            </td>
-                                        </tr>
+                                    	<c:forEach var="buyList" items="${buyList }">
+	                                        <tr>
+	                                            <td>${buyList.order_buy_idx }</td>
+	                                            <td>${buyList.member_name }</td>
+	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${buyList.product_name }">
+	                                            	${buyList.product_name }
+	                                            </td>
+	                                            <td>
+<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
+	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원
+	                                            </td>
+	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
+	                                            <c:set var="date" value="${buyList.order_buy_date }" />
+	                                            <td>${fn:substring(date, 0, 8 ) }</td>
+	                                            <td>
+	                                            	<select class="custom-select col-9" id="inlineFormCustomSelect">
+	                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>
+	                                                    <option value="1" ${buyList.order_buy_gb == '1' ? 'selected="selected"' : ''}>배송중</option>
+	                                                    <option value="2" ${buyList.order_buy_gb == '2' ? 'selected="selected"' : ''}>배송완료</option>
+	                                                    <option value="3" ${buyList.order_buy_gb == '3' ? 'selected="selected"' : ''}>구매확정</option>
+	                                                </select>
+	                                            </td>
+	                                            <td>
+	                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Apply</button>
+	                                            </td>
+	                                        </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
 	                            <hr>
 	                        </div>
 	                        
-							<!-- 페이징 태그 START -->
+							<!-- 페이징 처리 Start -->
 							<div class="bootstrap-pagination">
+							<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
 								<nav>
 									<ul class="pagination justify-content-center">
-	                                       <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">Next</a></li>
+										
+									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_productBuyList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Previous</a>
+										</li>
+									<%} %>
+									
+									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<c:choose>
+											<c:when test="${i eq pageInfo.pageNum }">
+												<li class="page-item active">
+													<a class="page-link" href="javascript:void(0)">${i } <span class="sr-only">(current)</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item">
+													<a class="page-link" href="admin_productBuyList?pageNum=${i }">${i }</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									
+									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_productBuyList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Next</a>
+										</li>
+									<%} %>
 									</ul>
 								</nav>
 							</div>
-							<!-- 페이징 태그 END -->
-							
+							<!-- 페이징 처리 End -->
 	                    </div>
 	                </div>
 	            </div>
