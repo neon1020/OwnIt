@@ -23,17 +23,20 @@
 	
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
         SELECT 
-        	i.image_original_file1,
+        	m.member_id,
+        	i.image_real_file1,
         	p.product_name, 
 			p.product_sell_price,
  			o.order_sell_date,
 			o.order_sell_gb
-				FROM product p
+				FROM member m
 				LEFT JOIN image i
-				ON i.member_idx = p.product_idx
+				ON m.member_idx = i.product_idx
 				LEFT JOIN order_sell o
-				ON p.product_idx = o.order_sell_idx
-				WHERE member_id=#{member_id}
+				ON m.member_idx = o.order_sell_idx
+				LEFT JOIN product p
+				ON m.member_idx = p.product_idx				
+				WHERE member_id=#{id}
     </select>		
 	
 	
