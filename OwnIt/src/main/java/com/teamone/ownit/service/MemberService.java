@@ -9,7 +9,7 @@ import com.teamone.ownit.vo.Auth_infoVO;
 import com.teamone.ownit.vo.MemberVO;
 
 @Service
-public class MemberService {
+public class MemberService { 
 
 	@Autowired
 	private MemberMapper mapper;
@@ -69,6 +69,7 @@ public class MemberService {
 		System.out.println("MemberService - removeAuthInfo()");
 		return mapper.deleteAuthInfo(authInfo);
 	}
+	
 	
 	
 	

@@ -158,7 +158,7 @@ public class MemberController {
 			}
 		} else {
 			model.addAttribute("msg", "인증 실패! 인증 정보를 확인해주세요.");
-			return "notice/fail_back";
+			return "notice/fail_back"; 
 		}
 	}
 	

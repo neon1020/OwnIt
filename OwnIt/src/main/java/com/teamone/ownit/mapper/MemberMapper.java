@@ -8,7 +8,7 @@ import com.teamone.ownit.vo.MemberVO;
 
 
 
-public interface MemberMapper { 
+public interface MemberMapper {  
 	
 	// 정채연
 	int selectEmail(String email);

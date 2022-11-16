@@ -16,7 +16,7 @@ public class SendMail {
 	
 	public boolean sendMail(String receiver, String title, String content) {
 		
-		boolean isSendSuccess = false;
+		boolean isSendSuccess = false; 
 		
 		String sender = "admin@ownit.co.kr";
 
