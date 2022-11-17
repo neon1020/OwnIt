@@ -108,6 +108,54 @@
 					)
 	</insert>
 	
+	<!-- Product 수정을 위해 글 + 이미지 SELECT -->
+	<select id="selectProduct" resultType="com.teamone.ownit.vo.AdminProductVO">
+		SELECT 
+				p.product_idx, p.product_type, p.product_brand, p.product_name, p.product_model_num, 
+    			p.product_color, p.product_release_price, p.product_buy_price, p.product_sell_price,
+			    i.image_original_file1, i.image_original_file2, i.image_original_file3,
+			    i.image_real_file1, i.image_real_file2, i.image_real_file3
+			    
+			FROM 
+				product p LEFT OUTER JOIN image i
+			ON 
+				p.product_idx = i.product_idx
+			WHERE
+				p.product_idx = #{product_idx}
+		
+	</select>
+	
+	<!-- Product 수정 작업 수행 -->
+	<update id="updateProduct">
+		UPDATE 
+				product p LEFT OUTER JOIN image i
+			ON 
+				p.product_idx = i.product_idx
+			SET 
+				p.product_type = #{product_type}
+				, p.product_brand = #{product_brand}
+				, p.product_name = #{product_name}
+				, p.product_model_num = #{product_model_num}
+				, p.product_color = #{product_color}
+				, p.product_release_price = #{product_release_price}
+				, p.product_buy_price = #{product_buy_price}
+				, p.product_sell_price = #{product_sell_price}
+				<if test="!image_original_file1.equals('')">
+					, i.image_original_file1 = #{image_original_file1}
+					, i.image_real_file1 = #{image_real_file1}
+				</if>
+				<if test="!image_original_file2.equals('')">
+					, i.image_original_file2 = #{image_original_file2}
+					, i.image_real_file2 = #{image_real_file2}
+				</if>
+				<if test="!image_original_file3.equals('')">
+					, i.image_original_file3 = #{image_original_file3}
+					, i.image_real_file3 = #{image_real_file3}
+				</if>
+			WHERE
+				p.product_idx = #{product_idx}
+	</update>
+	
 	<!-- Order - Buy List 갯수 조회 -->
 	<select id="selectBuyListCount" resultType="integer">
 		SELECT COUNT(*)
@@ -297,6 +345,158 @@
 
 
 
-<!-- 정채연 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 정채연 500 -->
 
 </mapper> 
