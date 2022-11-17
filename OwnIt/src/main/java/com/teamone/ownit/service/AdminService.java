@@ -43,6 +43,11 @@ public class AdminService {
 		return mapper.selectProduct(product_idx);
 	}
 	
+	// Product Modify 수정 작업 수행
+	public int modifyProduct(AdminProductVO product) {
+		return mapper.updateProduct(product);
+	}
+	
 	// Order - BuyList 갯수 조회
 	public int getBuyListCount(String searchType, String keyword) {
 		return mapper.selectBuyListCount(searchType, keyword);
@@ -66,6 +71,7 @@ public class AdminService {
 
 
 
+
 	
 	
 	
@@ -304,6 +310,193 @@ public class AdminService {
 	
 	
 	
-	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 500
 	
 }

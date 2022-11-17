@@ -141,6 +141,17 @@
                             <br>
                             <div class="basic-form">
                                 <form action="admin_productModify" method="post" name="productModifyForm" enctype="multipart/form-data">
+                                	<input type="hidden" name="product_idx" value="${product.product_idx }" />
+									<input type="hidden" name="pageNum" value="${param.pageNum }" />
+									<!-- 기존 파일명도 함께 전달 -->
+									<input type="hidden" name="image_real_file1" value="${product.image_real_file1 }" />
+									<input type="hidden" name="image_real_file2" value="${product.image_real_file2 }" />
+									<input type="hidden" name="image_real_file3" value="${product.image_real_file3 }" />
+									<input type="hidden" name="image_original_file1" value="${product.image_original_file1 }" />
+									<input type="hidden" name="image_original_file2" value="${product.image_original_file2 }" />
+									<input type="hidden" name="image_original_file3" value="${product.image_original_file3 }" />	
+                                	
+                                	
                                 	<!-- Start Col -->
                                 	<div class="row">
 			                            
@@ -157,14 +168,14 @@
 			                            <!-- End Col -->
 			                            
 			                        <!-- 이미지 수정 Start -->   
-			                        <div class="basic-form" style="margin: auto 0; width: 400px">
+			                        <div class="basic-form" style="margin: auto 0; width: 500px">
                                         <label><span class="text-danger"> *</span> 이미지 수정 시 선택하세요</label>
                                         
                                         <div class="form-group">
                                         	<label>&nbsp;File - 1</label>
 											<div class="fallback">
 												<input class="l-border-1" name="file1" type="file" id="imageFile">
-												${product.image_original_file1 }
+												현재파일 : ${product.image_original_file1 }
 											</div>
 										</div>
                                         
@@ -181,7 +192,7 @@
                                         	<label>&nbsp;File - 2</label>
 											<div class="fallback">
 												<input class="l-border-1" name="file2" type="file">
-												${product.image_original_file2 }
+												현재파일 : ${product.image_original_file2 }
 											</div>
 										</div>
                                     
@@ -189,7 +200,7 @@
                                         	<label>&nbsp;File - 3</label>
 											<div class="fallback">
 												<input class="l-border-1" name="file3" type="file">
-												${product.image_original_file3 }
+												현재파일 : ${product.image_original_file3 }
 											</div>
 										</div>
                                 	</div>
@@ -266,8 +277,9 @@
                                             <input type="number" min="0" id="number" class="form-control" name="product_sell_price" value="${product.product_sell_price }" required></div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-dark" style="float: right; margin-left: 5px">Submit</button>
-                                    <button type="reset" class="btn btn-dark" style="float: right">Reset</button>
+                                    <button type="submit" class="btn btn-dark" style="float: right;">Submit</button>
+                                    <button type="reset" class="btn btn-dark" style="float: right; margin: 0 5px;">Reset</button>
+                               		<button type="button" class="btn btn-dark" style="float: right" onclick="history.back()">Cancel</button>
                                 </form>
                             </div>
                         </div>

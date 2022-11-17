@@ -9,10 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
@@ -168,15 +165,126 @@ public class AdminController {
 	
 	// Product 수정 폼으로 이동
 	@GetMapping(value = "admin_productModifyForm")
-	public String modify(@RequestParam int product_idx, Model model) {
+	public String admin_productModifyForm(@RequestParam int product_idx, Model model) {
 		AdminProductVO product = service.getProduct(product_idx);
-		
 		model.addAttribute("product", product);
 		
 		return "admin/admin_productModify";
 	}
 	
 	
+	// Product Modify 수정 작업 수행
+	@PostMapping(value = "admin_productModify")
+	public String admin_productModify(@ModelAttribute AdminProductVO product, @RequestParam int pageNum, Model model, HttpSession session) {
+		// 선택된 수정 업로드 파일명과 기존 파일명 출력
+		System.out.println("기존 파일명 : " + product.getImage_original_file1());
+		System.out.println("기존 실제 파일명 : " + product.getImage_real_file1());
+		System.out.println("새 파일 객체1 : " + product.getFile1());
+		System.out.println("새 파일 객체2 : " + product.getFile2());
+		System.out.println("새 파일 객체3 : " + product.getFile3());
+		System.out.println("새 파일명1 : " + product.getFile1().getOriginalFilename());
+		System.out.println("새 파일명2 : " + product.getFile2().getOriginalFilename());
+		System.out.println("새 파일명3 : " + product.getFile3().getOriginalFilename());
+		
+		// 기존 실제 파일명을 변수에 저장(= 새 파일 업로드 시 삭제하기 위함)
+		String oldRealFile1 = product.getImage_real_file1();
+		String oldRealFile2 = product.getImage_real_file2();
+		String oldRealFile3 = product.getImage_real_file3();
+		
+		String uploadDir = "/resources/img/product";
+		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		
+		System.out.println("실제 업로드 경로 : " + saveDir);
+		
+		File f = new File(saveDir); 
+		
+		if(!f.exists()) { // 해당 경로가 존재하지 않을 경우
+			// 경로 상의 존재하지 않는 모든 경로 생성
+			f.mkdirs();
+		}
+		
+		// BoardVO 객체에 전달된 MultipartFile 객체 꺼내기
+		MultipartFile mFile1 = product.getFile1();
+		MultipartFile mFile2 = product.getFile2();
+		MultipartFile mFile3 = product.getFile3();
+		
+		// 새 파일 업로드 여부와 관계없이 무조건 파일명을 가져와서 객체에 저장
+		String originalFileName1 = mFile1.getOriginalFilename();
+		String originalFileName2 = mFile2.getOriginalFilename();
+		String originalFileName3 = mFile3.getOriginalFilename();
+		
+		String uuid = UUID.randomUUID().toString();
+		
+		product.setImage_original_file1(originalFileName1);
+		product.setImage_original_file2(originalFileName2);
+		product.setImage_original_file3(originalFileName3);
+		product.setImage_real_file1(uuid + "_" + originalFileName1);
+		product.setImage_real_file1(uuid + "_" + originalFileName2);
+		product.setImage_real_file1(uuid + "_" + originalFileName3);
+		
+		int updateCount = service.modifyProduct(product);
+		
+		if(updateCount > 0) {
+			if(!originalFileName1.equals("")) {
+				try {
+					mFile1.transferTo(new File(saveDir, product.getImage_real_file1()));
+					
+					// 기존 업로드 된 실제 파일 삭제
+					File f2 = new File(saveDir, oldRealFile1);
+					if(f2.exists()) {
+						f2.delete();
+					}
+				} catch (IllegalStateException e) {
+					System.out.println("IllegalStateException");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("IOException");
+					e.printStackTrace();
+				}
+			}
+			
+			
+			if(!originalFileName2.equals("")) {
+				try {
+					mFile2.transferTo(new File(saveDir, product.getImage_real_file2()));
+					
+					// 기존 업로드 된 실제 파일 삭제
+					File f2 = new File(saveDir, oldRealFile2);
+					if(f2.exists()) {
+						f2.delete();
+					}
+				} catch (IllegalStateException e) {
+					System.out.println("IllegalStateException");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("IOException");
+					e.printStackTrace();
+				}
+			}
+			
+			
+			if(!originalFileName3.equals("")) {
+				try {
+					mFile3.transferTo(new File(saveDir, product.getImage_real_file3()));
+					
+					// 기존 업로드 된 실제 파일 삭제
+					File f2 = new File(saveDir, oldRealFile3);
+					if(f2.exists()) {
+						f2.delete();
+					}
+				} catch (IllegalStateException e) {
+					System.out.println("IllegalStateException");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("IOException");
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return "redirect:/admin_productList?pageNum=" + pageNum;
+	}
 	
 	
 	// Order - BuyList(구매목록) 조회
@@ -205,19 +313,12 @@ public class AdminController {
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 		int listCount = service.getBuyListCount(searchType, keyword);
 		
-		// 페이지 계산 작업 수행
-		// 전체 페이지 수 계산
+		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
-		
-		// 시작 페이지 번호 계산
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
-		
-		// 끝 페이지 번호 계산
 		int endPage = startPage + pageListLimit - 1;
-		
-		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
-		// 끝 페이지 번호를 최대 페이지 번호로 교체
 		if(endPage > maxPage) {	endPage = maxPage; }
+		// --------------------------------------------------------------------------------
 		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
@@ -247,28 +348,20 @@ public class AdminController {
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
-//		int startRow = 1;
 
-		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
+		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
 		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword);
 		
 		// -------------------------------------------
-		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 		int listCount = service.getSellListCount(searchType, keyword);
 		
-		// 페이지 계산 작업 수행
-		// 전체 페이지 수 계산
+		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
-		
-		// 시작 페이지 번호 계산
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
-		
-		// 끝 페이지 번호 계산
 		int endPage = startPage + pageListLimit - 1;
-		
-		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
-		// 끝 페이지 번호를 최대 페이지 번호로 교체
 		if(endPage > maxPage) {	endPage = maxPage; }
+		// --------------------------------------------------------------------------------
 		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
@@ -305,7 +398,106 @@ public class AdminController {
 	
 	
 	
-	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 500
 	@GetMapping(value = "admin_memberList")
 	public String admin7() {
 		
