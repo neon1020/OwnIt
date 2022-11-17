@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.teamone.ownit.service.OrderService;
@@ -493,12 +497,7 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-			
+				
 // 박주닮 501번째라인
 	
 	
@@ -546,12 +545,17 @@ public class OrderController {
 	// 상품판매폼(PRG 패턴)
 	@GetMapping(value = "/order_sellForm")
 	public String order_sellForm(@RequestParam int product_idx,Model model, HttpSession session) {
-		
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		String sId = (String)session.getAttribute("sId");
-		Order_SellFormMbAddAccVO member = service.selectMember(sId);
+		MemberVO memberIdx = service.selectMemberIdx(sId);
+		int member_idx = memberIdx.getMember_idx();
+		
+		Order_SellFormMbAddAccVO member = service.selectMember(member_idx);
 		model.addAttribute("member",member);
+		List<Order_SellFormMbAddAccVO> addressList = service.selectAddressList(member_idx);
+		model.addAttribute("addressList", addressList);
+		
 		return "order/order_sellForm";
 	}
 	
@@ -615,7 +619,21 @@ public class OrderController {
 	}
 	
 	
-
+	// orderSellForm에서 주소록 주소 변경시 
+	@ResponseBody
+	@PostMapping(value = "OrderFormChangeAddress")
+	public void OrderFormChangeAddress(@RequestParam int address_idx,HttpSession session) {
+		System.out.println(address_idx);
+		int updateCount = service.updateAddressForm(address_idx);
+		if(updateCount > 0) {
+			System.out.println("업데이트 성공");
+			String sId = (String)session.getAttribute("sId");
+			MemberVO memberIdx = service.selectMemberIdx(sId);
+			int member_idx = memberIdx.getMember_idx();
+			// 지정한 address_idx 빼고 gb를 모두 1로바꾸는 구문 재사용
+			service.updateAddressSelect(address_idx,member_idx);
+		}
+	}
 		
 	
 	
@@ -625,30 +643,6 @@ public class OrderController {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
