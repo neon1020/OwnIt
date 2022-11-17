@@ -26,6 +26,11 @@
 	 		let data = $("#receive_email").val();
 	 		location.href = "member_findPasswd?member_id=" + data;
 	 	}
+	 	function modalData2() {
+	 		let data = $("#member_phone").val();
+	 		location.href = "member_findEmail?member_phone=" + data;
+	 	}	 	
+	 	
     </script>
 </head>
 <body>
@@ -77,33 +82,33 @@
 							</div>
 						</div>
 						<div style="text-align: center;">
-							<a href="member_joinForm" style="color: black;">이메일 가입 |</a> <a href="member_findEmailForm" style="color: black;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black;">비밀번호 찾기</a>
-							
-<!-- 							<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 							  <div class="modal-dialog" role="document"> -->
-<!-- 							    <div class="modal-content"> -->
-<!-- 							      <div class="modal-header"> -->
-<!-- 							        <h5 class="modal-title" id="exampleModalLabel">이메일 아이디 찾기</h5> -->
-<!-- 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 							          <span aria-hidden="true">×</span> -->
-<!-- 							        </button> -->
-<!-- 							      </div> -->
-<!-- 							      <div class="modal-body"> -->
-<!-- 							        <p>가입 시 등록한 휴대폰 번호를 입력하면 <br>이메일 주소의 일부를 알려드립니다.</p> -->
-<!-- 							        <input id="exampleInput7" type="text" class="form-control" placeholder="전화번호 입력"> -->
-<!-- 							      </div> -->
-<!-- 							      <div class="modal-footer"> -->
-<!-- 							        <div class="container-fluid"> -->
-<!-- 							          <div class="row gutter-0"> -->
-<!-- 							            <div class="col"> -->
-<!-- 							              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location='member_findEmail'">이메일 아이디 찾기</button> -->
-<!-- 							            </div> -->
-<!-- 							          </div> -->
-<!-- 							        </div> -->
-<!-- 							      </div> -->
-<!-- 							    </div> -->
-<!-- 							  </div> -->
-<!-- 							</div>							 -->
+							<a href="member_joinForm" style="color: black;">이메일 가입 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-1" style="color: black;">이메일 찾기 |</a> <a href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black;">비밀번호 찾기</a>
+								
+								<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel">이메일 아이디 찾기</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">×</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								        <p>가입 시 등록한 휴대폰 번호를 입력 해주세요.</p>
+										<input type="text" class="form-control" name="member_phone" id="member_phone" placeholder="Phone Number">
+								      </div>
+								      <div class="modal-footer">
+								        <div class="container-fluid">
+								          <div class="row gutter-0">
+								            <div class="col">
+								              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="modalData2()">이메일 아이디 찾기</button>
+								            </div>
+								          </div>
+								        </div>
+								      </div>
+								    </div>
+								  </div>
+								</div>								
 							
 							<div class="modal fade" id="exampleModal-2" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
@@ -141,6 +146,7 @@
 		</form>	
 	</section>
 	<!-- /member_login -->
+	
 
     <!-- footer -->
     <jsp:include page="../inc/footer.jsp"></jsp:include>
