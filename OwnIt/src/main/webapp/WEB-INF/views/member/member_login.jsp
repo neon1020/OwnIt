@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +8,33 @@
 <title>Insert title here</title>
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+    <script type="text/javascript">
+    
+	 	// 이메일 저장 체크 여부
+		document.addEventListener('DOMContentLoaded', () => {
+	        const checkbox = document.querySelector('input[name="save_email"]');
+		      checkbox.addEventListener('change', () => {
+		        if (checkbox.checked){
+		        	$('#save_email').val('Y');
+		        } else {
+		        	$('#save_email').val('N');
+		        }
+		    });
+		});
+    </script>
 </head>
 <body>
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 	<!-- /header -->  
+	
+	<c:if test="${not empty sessionScope.sId }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
 	
 	<!-- member_login -->
 	<section class="py-md-0">
@@ -25,7 +47,7 @@
 								<div class="row mt-2">
 									<div class="form-group col-12">
 										<label for="exampleInputEmail1">Email</label>
-										<input type="email" class="form-control" name="member_id" id="exampleInputEmail1">
+										<input type="email" class="form-control" name="member_id" id="exampleInputEmail1" value="${cookie.cookieId.value}">
 									</div>
 									<div class="form-group col-12 mt-1">
 										<label for="exampleInputPassword1">Password</label>
@@ -33,7 +55,14 @@
 									</div>
 									<div class="col-12" style="height: 25px; margin-top: 20px;">
 										<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
-											<input type="checkbox" id="agree2" name="save_email" value=""> 이메일 저장하기
+											<c:choose>
+												<c:when test="${not empty cookie.cookieId.value }">
+													<input type="checkbox" id="save_email" name="save_email" checked="checked"> 이메일 저장하기
+												</c:when>
+												<c:otherwise>
+													<input type="checkbox" id="save_email" name="save_email"> 이메일 저장하기
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 									<div class="col-12 mt-2">
