@@ -21,6 +21,11 @@
 		        }
 		    });
 		});
+	 	
+	 	function modalData() {
+	 		let data = $("#receive_email").val();
+	 		location.href = "member_findPasswd?member_id=" + data;
+	 	}
     </script>
 </head>
 <body>
@@ -111,13 +116,13 @@
 							      </div>
 							      <div class="modal-body">
 							        <p>가입 시 등록하신 이메일을 입력하시면,<br>이메일로 임시 비밀번호를 전송해 드립니다.</p>
-							        <input id="exampleInput1" type="text" class="form-control" placeholder="예) ownit@ownit.com">
+							        <input type="text" id="receive_email" name="receive_email" class="form-control" placeholder="예) ownit@ownit.com">
 							      </div>
 							      <div class="modal-footer">
 							        <div class="container-fluid">
 							          <div class="row gutter-0">
 							            <div class="col">
-							              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location='member_findPasswd'">메일 발송하기</button>
+							              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="modalData()">메일 발송하기</button>
 							            </div>
 							          </div>
 							        </div>

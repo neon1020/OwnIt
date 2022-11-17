@@ -37,13 +37,13 @@ public interface MemberMapper {
 	
 	MemberVO selectMember(MemberVO member);
 	
+	int selectMember2(String member_id);
 	
+	int selectAuthStatus(MemberVO member);
 	
+	int deleteMember(String member_id);
 	
-	
-	
-	
-	
+	int updatePasswd(@Param("member_id") String member_id, @Param("secureNewPassword") String secureNewPassword);
 	
 	
 	
@@ -300,6 +300,14 @@ public interface MemberMapper {
 	// 류혜지 - 300
 	// 이메일 찾기에 필요한 findEmail() 메서드 정의
 	public MemberVO findEmail(MemberVO member);
+
+	
+
+	
+
+	
+
+	
 
 	
 

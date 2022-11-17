@@ -107,39 +107,39 @@
 	SELECT member_passwd FROM member WHERE member_id = #{member_id}
 </select>
 
-<!-- 멤버 1명의 정보 가져오기 -->
+<!-- 멤버 1명의 정보 가져오기 (리턴타입 : MemberVO) -->
 <select id="selectMember" resultType="com.teamone.ownit.vo.MemberVO">
 	SELECT * FROM member WHERE member_id = #{member_id}
 </select>
 
+<!-- 멤버 1명의 정보 가져오기 (리턴타입 : Int) -->
+<select id="selectMember2" parameterType="String" resultType="Integer">
+	SELECT COUNT(*) FROM member WHERE member_id = #{member_id}
+</select>
 
+<!-- 멤버 1명의 메일 인증 유무 검사 -->
+<select id="selectAuthStatus" resultType="Integer">
+	SELECT COUNT(*)
+		FROM member
+		WHERE
+			member_id = #{member_id}
+			AND
+		 	member_auth_gb = '1'
+</select>
 
+<!-- 회원 탈퇴 -->
+<delete id="deleteMember">
+	DELETE FROM member WHERE member_id=#{member_id}
+</delete>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 비밀번호 찾기 시 member 테이블에 새로운 비밀번호 등록 -->
+<update id="updatePasswd">
+	UPDATE member
+		SET
+			member_passwd = #{secureNewPassword}
+		WHERE
+			member_id = #{member_id}
+</update>
 
 
 
