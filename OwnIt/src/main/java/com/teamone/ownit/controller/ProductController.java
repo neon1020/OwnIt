@@ -506,7 +506,7 @@ public class ProductController {
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		// 페이징
-		int listLimit = 10; 
+		int listLimit = 8; 
 		int pageListLimit = 10; 
 		int startRow = (pageNum2 - 1) * listLimit;
 		// 상품에 대한 리뷰 목록

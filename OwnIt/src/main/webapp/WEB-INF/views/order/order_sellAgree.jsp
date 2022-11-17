@@ -33,6 +33,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+<script src="resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
 	//윈도우오픈
@@ -62,6 +63,23 @@
 			return checked;
 			
 		}
+	
+	
+	// 전체동의	
+	$(document).ready(function() {
+		$("#checkAll").click(function() {
+			if($("#checkAll").is(":checked")) $("input[name=check-box]").prop("checked", true);
+			else $("input[name=check-box]").prop("checked", false);
+		});
+
+		$("input[name=check-box]").click(function() {
+			var total = $("input[name=check-box]").length;
+			var checked = $("input[name=check-box]:checked").length;
+
+			if(total != checked) $("#checkAll").prop("checked", false);
+			else $("#checkAll").prop("checked", true); 
+		});
+	});
 </script>
 </head>
 <body onload="checkForm()">
@@ -99,9 +117,10 @@
 		          				 </span>
 		          			</th>
 		          		</tr>
+		          		
 		          		<tr>
 		          			<th>
-			          			<input type="checkbox" id="check1" onchange="checkForm()">
+			          			<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
 			          			<span>
 			          				판매하려는 상품이 맞습니다.
 			          			</span><br>
@@ -113,7 +132,7 @@
 		          				<span>
 		          					국내에서 발매한 정품 · 새상품입니다.
 		          				</span><br>
-		          				<input type="checkbox" id="check2" onchange="checkForm()">
+		          				<input type="checkbox" id="check2" name="check-box" onchange="checkForm()">
 		          				모든 구성품이 그대로이며, 한 번도 착용하지 않은 정품・새상품입니다.<br>
 		          				 중고품 판매는 불가능합니다.
 		          			</th>
@@ -123,7 +142,7 @@
 		          				<span>
 		          					박스/패키지의 상태를 확인합니다.
 		          				</span><br>
-		          				<input type="checkbox" id="check3" onchange="checkForm()">
+		          				<input type="checkbox" id="check3" name="check-box" onchange="checkForm()">
 		          				박스/패키지 상태에 따른 검수 기준을 확인했습니다.<br>
 		          				<a href="javascript:func1()">
 		          					<span style="color: skyblue;">
@@ -137,7 +156,7 @@
 		          				<span>
 		          					이중 포장하여 선불 발송합니다.
 		          				</span><br>
-		          				<input type="checkbox" id="check4" onchange="checkForm()">
+		          				<input type="checkbox" id="check4" name="check-box" onchange="checkForm()">
 		          				반드시 이중 포장하여 택배 상자에 담아 선불 발송합니다. 합배송은 권장하지 않으며 이로 인한 박스/패키지 훼손은 판매자의 책임입니다.
 		          			</th>
 		          		</tr>
@@ -146,8 +165,12 @@
 		          				<span>
 		          					OwnIt의 최신 이용정책을 모두 확인하였으며, 판매를 계속합니다.
 		          				</span><br>
-		          				<input type="checkbox" id="check5" onchange="checkForm()">
-		          				건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을 확인했습니다.<br>
+		          				<input type="checkbox" id="check5" name="check-box" onchange="checkForm()">
+		          				건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을 확인했습니다.<hr>
+		          				<input type="checkbox" id="checkAll" onchange="checkForm()">
+			          			<span id="sell_span" style="font-size: 13px; color: gray;">
+			          				전체동의
+			          			</span>
 		          				<input type="submit" value="판매 계속" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
 		          			</th>
 		          		</tr>

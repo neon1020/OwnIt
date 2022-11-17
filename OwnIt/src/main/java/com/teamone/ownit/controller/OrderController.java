@@ -28,6 +28,7 @@ import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.Order_SellFormInsertAccount;
 import com.teamone.ownit.vo.Order_SellFormMbAddAccVO;
 import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
@@ -513,9 +514,6 @@ public class OrderController {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
 			System.out.println(sId);
-//			ImageVO image = service.selectDetailImage(product_idx);
-//			model.addAttribute("image", image);
-			
 			ProductVO product = service.productDetail(product_idx);
 			model.addAttribute("product", product);
 			return "order/order_sellAgree";
@@ -523,38 +521,91 @@ public class OrderController {
 		return "member/member_login";
 	}
 	
-	// 상품판매폼
+	// 상품판매폼 주소 추가
 	@PostMapping(value = "/order_sellForm")
-	public String order_sellForm(@RequestParam int product_idx,@ModelAttribute AddressVO address,Model model, HttpSession session) {
-		
+	public String order_sellForm(@RequestParam int product_idx,
+								 @ModelAttribute Order_SellFormMbAddAccVO address,
+								 Model model, HttpSession session) {
+		int address_idx = 0;
+		int addressCount = 0;
+		int account_idx = 0;
+		String sId = (String)session.getAttribute("sId");
+		MemberVO memberIdx = service.selectMemberIdx(sId);
+		int member_idx = memberIdx.getMember_idx();
+		address.setMember_idx(member_idx);
 		// 주소를 입력 받았을시에만 실행
 		if(address.getAddress1() != null && !address.getAddress1().equals("")) {
-				int insertCount = service.insertAddress(address);
-				if(insertCount > 0) {
-					//주소추가시 가장 최근에 등록된 주소 외에 원래 있던 주소의 gb를 1로 바꿔준다.
-					System.out.println("주소추가 성공");
-					int updateCount = service.updateAddress(address);
-					if(updateCount > 0) {
-						System.out.println("업데이트 성공");
-					}
+			addressCount = service.insertAddress(address);
+				if(addressCount > 0) {
+					System.out.println("주소 추가 성공");
+					address_idx = service.selectAddressIdx(member_idx);
+					account_idx = address.getAccount_idx();
 			}
 		}
-		return "redirect:/order_sellForm?product_idx="+product_idx;
+		return "redirect:/order_sellForm?product_idx="+product_idx
+									   +"&address_idx=" +address_idx
+									   +"&account_idx="+account_idx;
 	}
 	
+
+	//상품 판매시 계좌추가 
+	@PostMapping(value = "/insertAccount")
+	public String insertAccount(@ModelAttribute Order_SellFormInsertAccount account,@RequestParam int address_idx) {
+		int product_idx = account.getProduct_idx();
+		int member_idx = account.getMember_idx();
+		System.out.println(member_idx + "member_idx");
+		int account_idx = 0;
+		int insertCount = service.insertAccountSell(account);
+		if(insertCount > 0) {
+			System.out.println("계좌 추가 성공");
+			AccountVO accountVO = service.selectAccountSell(member_idx);
+			account_idx = accountVO.getAccount_idx();
+			System.out.println("account_idx : " + account_idx);
+		}
+		return "redirect:/order_sellForm?product_idx="+product_idx
+				   +"&address_idx=" +address_idx
+				   +"&account_idx="+account_idx;
+	}
+		
 	// 상품판매폼(PRG 패턴)
 	@GetMapping(value = "/order_sellForm")
-	public String order_sellForm(@RequestParam int product_idx,Model model, HttpSession session) {
+	public String order_sellForm(@RequestParam int product_idx,
+								 @RequestParam(defaultValue = "0") int address_idx ,
+								 @RequestParam(defaultValue = "0") int account_idx, Model model, HttpSession session) {
+		System.out.println("Get방식 호출");
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		String sId = (String)session.getAttribute("sId");
 		MemberVO memberIdx = service.selectMemberIdx(sId);
 		int member_idx = memberIdx.getMember_idx();
-		
-		Order_SellFormMbAddAccVO member = service.selectMember(member_idx);
-		model.addAttribute("member",member);
 		List<Order_SellFormMbAddAccVO> addressList = service.selectAddressList(member_idx);
 		model.addAttribute("addressList", addressList);
+		
+		System.out.println("account_idx"+account_idx);
+		System.out.println("member_idx"+member_idx);
+		System.out.println("address_idx"+address_idx);
+		
+		if(account_idx > 0 && address_idx > 0) {
+			Order_SellFormMbAddAccVO memeber = service.newAccountAddressForm(member_idx,account_idx,address_idx);
+			model.addAttribute("member", memeber);
+			System.out.println("계좌 추가 후 주소 변경");
+			return "order/order_sellForm";
+		}
+		if(account_idx > 0) { // 계좌 추가시에 추가된 계좌로 보이게 하는 구문
+			Order_SellFormMbAddAccVO member = service.newAccountSellForm(member_idx,account_idx);
+			model.addAttribute("member", member);
+			System.out.println("계좌만 추가");
+			return "order/order_sellForm";
+		}
+		if(address_idx > 0) { // 주소 변경시에 변경된 주소로 보이게 하는 구문
+			Order_SellFormMbAddAccVO member = service.clickAddress(member_idx,address_idx);
+			model.addAttribute("member", member);
+			System.out.println("주소만 변경");
+			return "order/order_sellForm";
+		} else {
+			Order_SellFormMbAddAccVO member = service.selectMember(member_idx);
+			model.addAttribute("member",member);
+		}
 		
 		return "order/order_sellForm";
 	}
@@ -580,12 +631,11 @@ public class OrderController {
 				System.out.println("판매실패");
 				return "order/order_sellForm";
 			}
+			
 		} else {
 			return "redirect:/order_sellDetail?product_idx="+product_idx+"&member_idx="+member_idx;
 		}
-		
 	}
-	
 	//상품 판매 성공시 redirect방식 호출(새로고침 중복 INSERT 방지)
 	@GetMapping(value = "/order_sellDetail")
 	public String order_sellDetail(Model model,@RequestParam int product_idx, @RequestParam int member_idx) {
@@ -602,14 +652,18 @@ public class OrderController {
 		return "order/order_sellDetail";
 	}
 	
+
+	
+	
+	
+	
+	
 	//상품 구매 동의
 	@GetMapping(value = "order_buyAgree")
 	public String order_buyAgree(@RequestParam int product_idx, Model model,HttpSession session) {
-//		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
+		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
-//			ImageVO image = service.selectDetailImage(product_idx);
-//			model.addAttribute("image", image);
 		
 			ProductVO product = service.productDetail(product_idx);
 			model.addAttribute("product", product);
@@ -617,29 +671,6 @@ public class OrderController {
 		}
 		return "member/member_login";
 	}
-	
-	
-	// orderSellForm에서 주소록 주소 변경시 
-	@ResponseBody
-	@PostMapping(value = "OrderFormChangeAddress")
-	public void OrderFormChangeAddress(@RequestParam int address_idx,HttpSession session) {
-		System.out.println(address_idx);
-		int updateCount = service.updateAddressForm(address_idx);
-		if(updateCount > 0) {
-			System.out.println("업데이트 성공");
-			String sId = (String)session.getAttribute("sId");
-			MemberVO memberIdx = service.selectMemberIdx(sId);
-			int member_idx = memberIdx.getMember_idx();
-			// 지정한 address_idx 빼고 gb를 모두 1로바꾸는 구문 재사용
-			service.updateAddressSelect(address_idx,member_idx);
-		}
-	}
-		
-	
-	
-	
-	
-	
 	
 	
 

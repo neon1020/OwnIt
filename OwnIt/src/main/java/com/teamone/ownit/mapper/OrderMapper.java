@@ -9,6 +9,7 @@ import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.Order_SellFormInsertAccount;
 import com.teamone.ownit.vo.Order_SellFormMbAddAccVO;
 import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
@@ -514,17 +515,26 @@ public interface OrderMapper {
 	// 상품 판매 성공시 판매자정보 추가 후 정보를 가져오는작업
 	Order_sellVO selectOrderSell(Order_sellVO order_sell);
 
-	int insertAddress(AddressVO address);
-
-	int updateAddress(AddressVO address);
+	int insertAddress(Order_SellFormMbAddAccVO address);
 
 	List<Order_SellFormMbAddAccVO> selectAddressList(int member_idx);
 
 	MemberVO selectMemberIdx(@Param("sId") String sId);
 
-	int updateAddressForm(@Param("address_idx")int address_idx);
+	Order_SellFormMbAddAccVO clickChangeAddress(@Param("member_idx")int member_idx,@Param("address_idx") int address_idx);
 
-	void updateAddressSelect(@Param("address_idx")int address_idx,@Param("member_idx") int member_idx);
+	int insertAccountSell(Order_SellFormInsertAccount account);
+
+	AccountVO selectAccountSell(@Param("member_idx") int member_idx);
+
+	Order_SellFormMbAddAccVO newAccountSellForm(@Param("member_idx")int member_idx,@Param("account_idx") int account_idx);
+
+	Order_SellFormMbAddAccVO selectAccountAddressSellForm(@Param("member_idx") int member_idx,
+														  @Param("account_idx") int account_idx,
+														  @Param("address_idx")int address_idx);
+
+	int selectAddressIdx(int member_idx);
+
 
 
 

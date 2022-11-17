@@ -201,7 +201,7 @@
                 	<c:when test="${product.product_left_count == 0 or product.product_left_count.equals('') }">
                		   <button id="btn1" type="button" disabled="disabled" class="btn" onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
 		                	<p>
-		                		구매불가 | 재고없음
+		                		구매불가 | 품절
 		                	</p>
 		                </button>
                 	</c:when>
@@ -434,14 +434,14 @@
             <nav class="d-inline-block">
               <ul class="pagination">
               	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
-              	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 - 1}'"<%} %>></li>
+              	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="location.href='product_detail?product_idx=${product.product_idx }&pageNum2=${pageInfo.pageNum2 - 1}#review'"<%} %>></li>
 				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
 					<c:choose>
 						<c:when test="${i eq pageInfo.pageNum2 }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
-						<c:otherwise><li class="page-item active"><a class="page-link" href="product_detail?pageNum2=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
+						<c:otherwise><li class="page-item active"><a class="page-link" href="product_detail?product_idx=${product.product_idx }&pageNum2=${i }#review">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
 					</c:choose>
 				</c:forEach>
-				<li class="page-item active"><input class="page-link" type="button" value="다음" <%if(pageInfo.getPageNum2() < pageInfo.getMaxPage()) {%>onclick="location.href='product_detail?pageNum2=${pageInfo.pageNum2 + 1}'"<%} %>></li>
+				<li class="page-item active"><input class="page-link" type="button" value="다음" <%if(pageInfo.getPageNum2() < pageInfo.getMaxPage()) {%>onclick="location.href='product_detail?product_idx=${product.product_idx }&pageNum2=${pageInfo.pageNum2 + 1}#review'"<%} %>></li>
               </ul>
             </nav>
           </div>
