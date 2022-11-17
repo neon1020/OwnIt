@@ -75,30 +75,30 @@ public class MemberService {
 		return mapper.selectPasswd(member);
 	}
 	
+	public MemberVO getMember(MemberVO member) {
+		System.out.println("MemberService - getMember()");
+		return mapper.selectMember(member);
+	}
 	
+	public int getMember2(String member_id) {
+		System.out.println("MemberService - getMember()");
+		return mapper.selectMember2(member_id);
+	}
 	
+	public int getAuthStatus(MemberVO member) {
+		System.out.println("MemberService - getAuthStatus()");
+		return mapper.selectAuthStatus(member);
+	}
 	
+	public int removeMember(String member_id) {
+		System.out.println("MemberService - removeMember()");
+		return mapper.deleteMember(member_id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public int modifyPasswd(String member_id, String secureNewPassword) {
+		System.out.println("MemberService - modifyPasswd()");
+		return mapper.updatePasswd(member_id, secureNewPassword);
+	}
 	
 	
 	
@@ -302,6 +302,17 @@ public class MemberService {
 		public MemberVO findEmail(MemberVO member) {
 			return mapper.findEmail(member);
 		}
+
+		
+
+
+		
+
+		
+
+		
+
+		
 
 		
 		

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -315,6 +316,13 @@
     <jsp:include page="../inc/top.jsp"></jsp:include>
     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 	<!-- /header -->  
+	
+	<c:if test="${not empty sessionScope.sId }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
 
 	<!-- member_joinForm -->
 	<section class="py-md-0">
@@ -401,7 +409,7 @@
 						
 						<div class="col-12" style="height: 25px; margin-top: 10px;">
 							<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
-								<input type="checkbox" id="agree2" name="member_agree" value=""> [선택] 광고성 정보 수신 동의
+								<input type="checkbox" id="agree2" name="member_agree" value="0"> [선택] 광고성 정보 수신 동의
 							</div>
 						</div>
 

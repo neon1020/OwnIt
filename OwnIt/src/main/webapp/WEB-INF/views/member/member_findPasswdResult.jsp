@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,13 @@
     <jsp:include page="../inc/top.jsp"></jsp:include>
     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
 	<!-- /header -->  
+	
+	<c:if test="${not empty sessionScope.sId }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
 
 	<!-- member_findPasswd -->
 	<section id="component-1">
@@ -21,7 +29,7 @@
 			<br>
 			<br>
 			<div style="text-align: center;">
-				<h5>임시 비밀번호를 전송하였습니다. 전송 받은 임시 비밀번호로 로그인해주세요.</h5>
+				<h5>임시 비밀번호를 전송하였습니다. 전송 받은 임시 비밀번호로 로그인해주세요.</h5> 
 				<br>
 				<br>
 				<div class="container-fluid">
