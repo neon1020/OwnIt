@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,65 @@
     <link rel="stylesheet" href="resources/css/style.css" />
 
     <title>Cart</title>
+ <script src="resources/js/jquery-3.6.1.js"></script> 
+ <script type="text/javascript">
+ 
+ 	function numberWithCommas(n) {
+	    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+ 	$(function() {
+ 		$('#cbAll').click(function() {
+ 			if($("#cbAll").is(":checked")) {
+ 				$("input[type=checkbox]").prop("checked", true);
+ 			} else {
+ 				$("input[type=checkbox]").prop("checked", false);
+ 			}
+ 		});
+ 	});
+ 	
+ 	function delFromCartInOrder(item) {
+ 		var delIdx = item.id.split('_')[1];
+ 		$.ajax({
+ 			url:'delAndReloadCart',
+ 			type:'POST',
+ 			data: {
+ 				product_idx:delIdx
+ 			},
+ 			dataType:'json',
+ 			success:function(result) {
+ 				var html = "";
+//  				location.reload();
+ 				$.each(cart, function(index) {
+// 						alert(JSON.stringify(result[index]));
+ 					var buyPrice = numberWithCommas(result[index].product_buy_price);
+ 					html += "<div class='cart-item'>";
+ 					html += "<div class='row align-items-center'>";
+ 					html += "<div class='col-12 col-lg-6'>";
+ 					html += "<div class='media media-product'>";
+ 					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+ 					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
+ 					html += "<div class='media-body'>";
+ 					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
+ 					html += "<span class='small'>" + result[index].product_color  + "</span>";
+ 					html += "<span class='media-subtitle'>" + result[index].product_color + "</span>";
+ 					html += "</div></div></div>";
+ 					html += "<div class='col-4 col-lg-2 text-center'>";
+ 					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
+ 					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
+ 					html += "<span class='counter-minus icon-minus' field='qty-"+ result[index].product_idx  +"'></span>";
+ 					html += "<input type='text' name='qty-"+ result[index].product_idx +"' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
+ 					html += "<span class='counter-plus icon-plus' field='qty-"+ result[index].product_idx +"'></span>";
+ 					html += "</div></div>";
+ 					html += "<div class='col-4 col-lg-2 text-center'>";
+ 					html += "<span class='cart-item-price'>"+ result[index].countTimesPrice +"원</span>";
+ 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCart(this)''><i class='icon-x'></i></a></div></div>";
+ 				});
+ 				
+ 				$('#myCartItemsInOrder').html(html);
+ 			}
+ 		});
+ 	}
+ </script>
   </head>
   <body>
    <jsp:include page="../inc/top.jsp"></jsp:include>
@@ -41,7 +101,7 @@
         <div class="row mb-1 d-none d-lg-flex">
           <div class="col-lg-8">
             <div class="row pr-6">
-              <div class="col-lg-6"><input type="checkbox" id="cb1" style="margin-right: 20px;"><span class="eyebrow">상품</span></div>
+              <div class="col-lg-6"><input type="checkbox" id="cbAll" style="margin-right: 20px;"><span class="eyebrow">상품</span></div>
               <div class="col-lg-2 text-center"><span class="eyebrow">가격</span></div>
               <div class="col-lg-2 text-center"><span class="eyebrow">수량</span></div>
               <div class="col-lg-2 text-center"><span class="eyebrow">총 금액</span></div>
@@ -50,96 +110,41 @@
         </div>
         <div class="row gutter-2 gutter-lg-4 justify-content-end">
 
-          <div class="col-lg-8 cart-item-list">
+          <div class="col-lg-8 cart-item-list" id="myCartItemsInOrder">
 
             <!-- cart item -->
+            <c:forEach var="cart" items="${cart }">
+            <!-- 여기부터 -->
             <div class="cart-item">
               <div class="row align-items-center">
                 <div class="col-12 col-lg-6">
                   <div class="media media-product">
-                  <input type="checkbox" id="cb1" style="margin-right: 20px;">
-                    <a href="#!"><img src="resources/img/demo/product-4.jpg" alt="Image"></a>
+                  <input type="checkbox" id="cb${cart.product_idx }" style="margin-right: 20px;">
+                    <a href="#!"><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
                     <div class="media-body">
-                      <h5 class="media-title">Analog Magazine Rack</h5>
-                      <span class="small">Red</span>
+                      <h5 class="media-title">${cart.product_name }</h5>
+                      <span class="small">${cart.product_color }</span>
                     </div>
                   </div>
                 </div>
                 <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$120</span>
+                  <span class="cart-item-price"><fmt:formatNumber value="${cart.product_buy_price }" pattern="#,###"/>원</span>
                 </div>
                 <div class="col-4 col-lg-2 text-center">
                   <div class="counter">
-                    <span class="counter-minus icon-minus" field='qty-1'></span>
-                    <input type='text' name='qty-1' class="counter-value" value="2" min="1" max="10">
-                    <span class="counter-plus icon-plus" field='qty-1'></span>
+                    <span class="counter-minus icon-minus" field='qty-${cart.product_idx }'></span>
+                    <input type='text' name='qty-${cart.product_idx }' class="counter-value" value="${cart.cart_count }" min="1" max="5">
+                    <span class="counter-plus icon-plus" field='qty-${cart.product_idx }'></span>	
                   </div>
                 </div>
                 <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$240</span>
+                  <span class="cart-item-price"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
                 </div>
-                <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
+                <a class="cart-item-close" id="delCart_${cart.product_idx }" onclick="delFromCartInOrder(this)"><i class="icon-x"></i></a>
               </div>
             </div>
-
-            <!-- cart item -->
-            <div class="cart-item">
-              <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                  <div class="media media-product">
-                    <a href="#!"><img src="resources/img/demo/product-24.jpg" alt="Image"></a>
-                    <div class="media-body">
-                      <h5 class="media-title">Closca helmet</h5>
-                      <span class="small">Black</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$132</span>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <div class="counter">
-                    <span class="counter-minus icon-minus" field='qty-2'></span>
-                    <input type='text' name='qty-2' class="counter-value" value="1" min="1" max="10">
-                    <span class="counter-plus icon-plus" field='qty-2'></span>
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$132</span>
-                </div>
-                <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
-              </div>
-            </div>
-
-            <!-- cart item -->
-            <div class="cart-item">
-              <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                  <div class="media media-product">
-                    <a href="#!"><img src="resources/img/demo/product-25.jpg" alt="Image"></a>
-                    <div class="media-body">
-                      <h5 class="media-title">Sigg Water Bottle</h5>
-                      <span class="small">Gravel Black</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$23</span>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <div class="counter">
-                    <span class="counter-minus icon-minus" field='qty-3'></span>
-                    <input type='text' name='qty-3' class="counter-value" value="2" min="1" max="10">
-                    <span class="counter-plus icon-plus" field='qty-3'></span>
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price">$46</span>
-                </div>
-                <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
-              </div>
-            </div>
-
+            <!-- 여기까지 -->
+		   </c:forEach>
           </div>
 
           <div class="col-lg-4">
@@ -155,7 +160,7 @@
                 <ul class="list-group list-group-minimal">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     상품 금액
-                    <span>$418</span>
+                    <span></span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     배송비

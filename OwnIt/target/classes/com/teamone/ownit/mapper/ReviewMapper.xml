@@ -13,6 +13,23 @@
             WHERE
               review_idx = #{review_idx}
     </select>
+    
+    <select id="selectReviewImage" resultType="com.teamone.ownit.vo.ReviewListVO">
+        SELECT review_idx, image_real_file1 as review_image1
+            FROM image
+            WHERE image_board_type = 'review'
+              AND review_idx = #{review_idx}
+            UNION ALL 
+        SELECT review_idx, image_real_file2 as review_image1
+            FROM image
+            WHERE image_board_type = 'review'
+              AND review_idx = #{review_idx}
+            UNION ALL
+        SELECT review_idx, image_real_file3 as review_image1
+            FROM image
+            WHERE image_board_type = 'review'
+              AND review_idx = #{review_idx}
+    </select>
         
     <select id="selectReply" resultType="com.teamone.ownit.vo.ReplyVO">
         SELECT * FROM reply r
@@ -24,13 +41,50 @@
     </select>
     
     <select id="selectProduct" resultType="com.teamone.ownit.vo.ProductVO">
-        SELECT p.product_name, i.image_original_file1 
-						FROM product p
-						LEFT JOIN order_buy o
-						ON o.product_idx = p.product_idx
-						LEFT JOIN image i
-						ON o.product_idx = i.product_idx
-						WHERE order_buy_idx = 1;
+        SELECT p.product_name, p.product_idx, i.image_original_file1 
+            FROM product p
+            LEFT JOIN order_buy o
+            ON o.product_idx = p.product_idx
+            LEFT JOIN image i
+            ON o.product_idx = i.product_idx
+            WHERE order_buy_idx = #{order_buy_idx};
     </select>
+    
+    <insert id="insertReview">
+      <selectKey keyProperty="review_idx" resultType="integer" order="BEFORE">
+        SELECT MAX(review_idx) FROM review
+      </selectKey>
+         INSERT 
+           INTO review
+           VALUES (
+             #{review_idx} + 1,
+             #{product_idx},
+             8,
+             #{review_content},
+             0,
+             DATE_FORMAT(now(), '%y-%m-%d %H:%i')
+           )
+    </insert>
+    
+    <insert id="insertReviewImage">
+      <selectKey keyProperty="image_idx" resultType="integer" order="BEFORE">
+        SELECT MAX(image_idx) FROM image
+      </selectKey>
+        INSERT 
+          INTO image
+          VALUES (
+              #{image_idx} + 1, 
+              null, 
+              #{review_idx} + 1, 
+              null, 
+              'review', 
+              #{image_real_file1}, 
+              #{image_original_file1}, 
+              #{image_real_file2}, 
+              #{image_original_file2}, 
+              #{image_real_file3}, 
+              #{image_original_file3}
+              )
+    </insert>
 
 </mapper> 

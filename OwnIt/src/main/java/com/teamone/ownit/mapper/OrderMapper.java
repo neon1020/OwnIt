@@ -1,6 +1,7 @@
 package com.teamone.ownit.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -497,7 +498,6 @@ public interface OrderMapper {
 	
 	
 	
-
 //박주닮 101번째 라인맞추기
 	
 	// 한 상품에 대한 상세정보
@@ -507,7 +507,7 @@ public interface OrderMapper {
 //	ImageVO selectDetailImage(@Param("product_idx") int product_idx);
 	
 	// 상품 판매시 맴버 정보 조회
-	Order_SellFormMbAddAccVO selectMemberDetail(@Param("sId") String sId);
+	Order_SellFormMbAddAccVO selectMemberDetail(@Param("member_idx") int member_idx);
 	
 	// 상품 판매 성공시 판매자정보 추가
 	int insertOrderSell(Order_sellVO order_Sell);
@@ -515,6 +515,16 @@ public interface OrderMapper {
 	Order_sellVO selectOrderSell(Order_sellVO order_sell);
 
 	int insertAddress(AddressVO address);
+
+	int updateAddress(AddressVO address);
+
+	List<Order_SellFormMbAddAccVO> selectAddressList(int member_idx);
+
+	MemberVO selectMemberIdx(@Param("sId") String sId);
+
+	int updateAddressForm(@Param("address_idx")int address_idx);
+
+	void updateAddressSelect(@Param("address_idx")int address_idx,@Param("member_idx") int member_idx);
 
 
 
@@ -885,16 +895,5 @@ public interface OrderMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }//200번째라인맞추기

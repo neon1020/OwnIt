@@ -507,32 +507,41 @@
         	where product.product_idx=#{product_idx} and image.product_idx=#{product_idx};
 		
 	</select>
+	
+	<!--  세션아이디로 맴버고유키를 가져오는 구문 -->
+	<select id="selectMemberIdx" resultType="com.teamone.ownit.vo.MemberVO">
+		SELECT member_idx
+		FROM member
+		WHERE member_id=#{sId};
+	</select>
+	
+	<!--  상품 판매폼의 Account,address가 gb이 0인걸 우선으로 호출 -->
 	<select id="selectMemberDetail" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
 		SELECT * 
 			FROM member
         	LEFT JOIN address 
-        	ON member.member_idx=2 
-        	AND address.member_idx=2
+        	ON member.member_idx=#{member_idx} 
+        	AND address.member_idx=#{member_idx}
         	AND address_gb = ( 
         				SELECT address_gb
 					        	FROM member, 
 					        		 address
-					       			 WHERE member_id=#{sId} 
+					       			 WHERE member.member_idx=#{member_idx}
 									 AND member.member_idx = address.member_idx
 				       				 ORDER BY address_gb *1 asc
 				        			 limit 1
         			 		 )
 	        LEFT JOIN account 
-	        ON member.member_idx=2 
-	        AND account.member_idx=2
+	        ON member.member_idx=#{member_idx} 
+	        AND account.member_idx=#{member_idx}
 	        AND account_gb=(
 	        				SELECT account_gb
 	        				FROM member, account
-	        				WHERE member_id=#{sId} AND member.member_idx = account.member_idx
+	        				WHERE member.member_idx=#{member_idx} AND member.member_idx = account.member_idx
 	        				ORDER BY account_gb *1 asc
 	       				    limit 1
 	       				    )
-	       				    WHERE member_id =#{sId}
+	       				    WHERE member.member_idx =#{member_idx}
 	       				    limit 1;
 	</select>
 	
@@ -578,40 +587,37 @@
 			);
 	</insert>
 
+	<!--  주소 업데이트 -->
+	<update id="updateAddress">
+	<selectKey keyProperty="address_idx" order="BEFORE" resultType="integer">
+		select max(address_idx) from address where member_idx=#{member_idx};
+	</selectKey>
+		UPDATE address 
+				   SET address_gb='1'
+				   WHERE member_idx=#{member_idx} AND address_idx !=#{address_idx};
+	</update>
 
 
+	<!--  주소록 가져오는 구문 -->
+	<select id="selectAddressList" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		SELECT * FROM address,member
+				WHERE address.member_idx=#{member_idx}
+				AND member.member_idx=#{member_idx}
+				ORDER BY address_gb *1 asc;
+	</select>
 
 
+	<update id="updateAddressForm">
+		UPDATE address
+				SET address_gb='0'
+				WHERE address_idx=#{address_idx}
+	</update>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<update id="updateAddressSelect">
+		UPDATE address 
+				   SET address_gb='1'
+				   WHERE member_idx=#{member_idx} AND address_idx !=#{address_idx};
+	</update>
 
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.teamone.ownit.mapper.AdminMapper;
 import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
+import com.teamone.ownit.vo.ProductVO;
 
 @Service
 public class AdminService {
@@ -37,6 +38,16 @@ public class AdminService {
 		return mapper.insertProductImage(product);
 	}
 	
+	// Product 수정을 위해 글 가져오기
+	public AdminProductVO getProduct(int product_idx) {
+		return mapper.selectProduct(product_idx);
+	}
+	
+	// Product Modify 수정 작업 수행
+	public int modifyProduct(AdminProductVO product) {
+		return mapper.updateProduct(product);
+	}
+	
 	// Order - BuyList 갯수 조회
 	public int getBuyListCount(String searchType, String keyword) {
 		return mapper.selectBuyListCount(searchType, keyword);
@@ -59,6 +70,8 @@ public class AdminService {
 
 
 
+
+
 	
 	
 	
@@ -297,6 +310,193 @@ public class AdminService {
 	
 	
 	
-	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 500
 	
 }
