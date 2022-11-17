@@ -52,6 +52,22 @@ public class ReviewService {
 		return mapper.insertReviewImage(review);
 	}
 
+	// 리뷰 삭제
+	public int removeReview(ReviewVO review) {
+		return mapper.deleteReview(review);
+	}
+
+	// 마이스타일 목록
+	public List<ReviewListVO> getMystyleList(int member_idx) {
+		return mapper.selectMystyleList(member_idx);
+	}
+
+	// 작성 리뷰 수
+	public int getReviewCount(int member_idx) {
+		return mapper.selectReviewCount(member_idx);
+	}
+
+
 
 
 	
