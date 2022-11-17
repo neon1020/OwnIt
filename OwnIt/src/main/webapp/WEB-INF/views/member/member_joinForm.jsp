@@ -409,7 +409,7 @@
 						
 						<div class="col-12" style="height: 25px; margin-top: 10px;">
 							<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
-								<input type="checkbox" id="agree2" name="member_agree" value=""> [선택] 광고성 정보 수신 동의
+								<input type="checkbox" id="agree2" name="member_agree" value="0"> [선택] 광고성 정보 수신 동의
 							</div>
 						</div>
 
