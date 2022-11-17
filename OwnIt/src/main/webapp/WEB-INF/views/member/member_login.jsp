@@ -16,7 +16,7 @@
 	
 	<!-- member_login -->
 	<section class="py-md-0">
-		<form action="#" method="post" id="login">
+		<form action="member_loginPro" method="post" id="login">
 			<div class="container">
 				<div class="row justify-content-center align-items-center vh-md-100">
 					<div class="col-md-10 col-lg-5">
@@ -24,17 +24,16 @@
 							<div class="card-body">
 								<div class="row mt-2">
 									<div class="form-group col-12">
-										<label for="exampleInputEmail1">Email address</label>
-										<input type="email" class="form-control" id="exampleInputEmail1">
+										<label for="exampleInputEmail1">Email</label>
+										<input type="email" class="form-control" name="member_id" id="exampleInputEmail1">
 									</div>
 									<div class="form-group col-12 mt-1">
 										<label for="exampleInputPassword1">Password</label>
-										<input type="password" class="form-control" id="exampleInputPassword1">
+										<input type="password" class="form-control" name="member_passwd" id="exampleInputPassword1">
 									</div>
 									<div class="col-12" style="height: 25px; margin-top: 20px;">
 										<div class="custom-control custom-checkbox mb-2" style="text-align: center;">
-											<input type="checkbox" class="custom-control-input" id="customCheck2" name="agree2">
-											<label class="custom-control-label" for="customCheck2">이메일 저장하기</label>
+											<input type="checkbox" id="agree2" name="save_email" value=""> 이메일 저장하기
 										</div>
 									</div>
 									<div class="col-12 mt-2">
