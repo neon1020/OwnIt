@@ -300,11 +300,11 @@
 	<!-- 류혜지 -->
 	<!-- 이메일찾기 -->
 	<select id="findEmail" resultType="com.teamone.ownit.vo.MemberVO">
-		SELECT member_id FROM member 
+		SELECT * FROM member
 			WHERE 
-				member_name=#{member_name} 
-				AND 
 				member_phone=#{member_phone}
 	</select>
+
+
 
 </mapper> 

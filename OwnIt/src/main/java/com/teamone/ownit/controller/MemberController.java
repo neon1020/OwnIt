@@ -497,29 +497,27 @@ public class MemberController {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 류혜지 - 500
 	
-	//이메일 찾기 페이지 이동 
-	@GetMapping(value = "member_findEmailForm")
-	public String findEmailForm() {
-		return "member/member_findEmailForm";
-	}
 	
     // 아이디 찾기 실행
-	@PostMapping(value="member_findEmailResult")
-	public String findEmailPro(MemberVO member, Model model) {
-		member = service.findEmail(member);
+	@GetMapping(value="member_findEmail")
+	public String findEmailPro(@RequestParam String member_phone, Model model) {
+		System.out.println(member_phone + ", " + member_phone);
+		MemberVO member = service.findEmail(member_phone);
+		System.out.println(member);
+		model.addAttribute("member", member);
 		
-		if(member == null) { 
-			model.addAttribute("check", 1);
-		} else { 
-			model.addAttribute("check", 0);
-			model.addAttribute("member_id", member.getMember_id());
-		}
-		return "member/member_findEmailForm";
+		return "member/member_findEmail";
 	}
-	
-	
 	
 	
 	
