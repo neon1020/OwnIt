@@ -23,5 +23,12 @@ public interface ReviewMapper {
 
 	int insertReviewImage(ReviewVO review);
 
+	int deleteReview(ReviewVO review);
+
+	List<ReviewListVO> selectMystyleList(int member_idx);
+
+	int selectReviewCount(int member_idx);
+
+
 	
 }

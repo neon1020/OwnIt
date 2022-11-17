@@ -3,6 +3,8 @@ package com.teamone.ownit.vo;
 public class ReviewListVO {
 
 	private int review_idx;
+	private int member_idx;
+	private int product_idx;
 	private String review_image1;
 	private String review_image2;
 	private String review_image3;
@@ -17,11 +19,14 @@ public class ReviewListVO {
 	
 	public ReviewListVO() {}
 
-	public ReviewListVO(int review_idx, String review_image1, String review_image2, String review_image3,
-			String member_image, String product_image, String member_nickname, String product_name,
-			String product_buy_price, String review_content, String review_date, int review_reply_count) {
+	public ReviewListVO(int review_idx, int member_idx, int product_idx, String review_image1, String review_image2,
+			String review_image3, String member_image, String product_image, String member_nickname,
+			String product_name, String product_buy_price, String review_content, String review_date,
+			int review_reply_count) {
 		super();
 		this.review_idx = review_idx;
+		this.member_idx = member_idx;
+		this.product_idx = product_idx;
 		this.review_image1 = review_image1;
 		this.review_image2 = review_image2;
 		this.review_image3 = review_image3;
@@ -41,6 +46,22 @@ public class ReviewListVO {
 
 	public void setReview_idx(int review_idx) {
 		this.review_idx = review_idx;
+	}
+	
+	public int getMember_idx() {
+		return member_idx;
+	}
+
+	public void setMember_idx(int member_idx) {
+		this.member_idx = member_idx;
+	}
+
+	public int getProduct_idx() {
+		return product_idx;
+	}
+
+	public void setProduct_idx(int product_idx) {
+		this.product_idx = product_idx;
 	}
 
 	public String getReview_image1() {
@@ -133,12 +154,12 @@ public class ReviewListVO {
 
 	@Override
 	public String toString() {
-		return "ReviewListVO [review_idx=" + review_idx + ", review_image1=" + review_image1 + ", review_image2="
-				+ review_image2 + ", review_image3=" + review_image3 + ", member_image=" + member_image
-				+ ", product_image=" + product_image + ", member_nickname=" + member_nickname + ", product_name="
-				+ product_name + ", product_buy_price=" + product_buy_price + ", review_content=" + review_content
-				+ ", review_date=" + review_date + ", review_reply_count=" + review_reply_count + "]";
+		return "ReviewListVO [review_idx=" + review_idx + ", member_idx=" + member_idx + ", product_idx=" + product_idx
+				+ ", review_image1=" + review_image1 + ", review_image2=" + review_image2 + ", review_image3="
+				+ review_image3 + ", member_image=" + member_image + ", product_image=" + product_image
+				+ ", member_nickname=" + member_nickname + ", product_name=" + product_name + ", product_buy_price="
+				+ product_buy_price + ", review_content=" + review_content + ", review_date=" + review_date
+				+ ", review_reply_count=" + review_reply_count + "]";
 	}
 
-	
 }
