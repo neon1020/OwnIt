@@ -1,6 +1,7 @@
 package com.teamone.ownit.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
@@ -497,7 +498,6 @@ public class OrderService {
 	
 	
 	
-	
 // 박주닮 101번라인
 		//상품의 정보를 불러오는 메서드
 		public ProductVO productDetail(int product_idx) {
@@ -508,8 +508,8 @@ public class OrderService {
 //			return mapper.selectDetailImage(product_idx);
 //		}
 		// 상품 판매시 맴버 정보 조회
-		public Order_SellFormMbAddAccVO selectMember(String sId) {
-			return mapper.selectMemberDetail(sId);
+		public Order_SellFormMbAddAccVO selectMember(int member_idx) {
+			return mapper.selectMemberDetail(member_idx);
 		}
 		// 판매테이블 정보 입력
 		public int insertOrderSell(Order_sellVO order_sell) {
@@ -523,6 +523,21 @@ public class OrderService {
 		public int insertAddress(AddressVO address) {
 			return mapper.insertAddress(address);
 		}
+		public int updateAddress(AddressVO address) {
+			return mapper.updateAddress(address);
+		}
+		public List<Order_SellFormMbAddAccVO> selectAddressList(int member_idx) {
+			return mapper.selectAddressList(member_idx);
+		}
+		public MemberVO selectMemberIdx(String sId) {
+			return mapper.selectMemberIdx(sId);
+		}
+		public int updateAddressForm(int address_idx) {
+			return mapper.updateAddressForm(address_idx);
+		}
+		public void updateAddressSelect(int address_idx, int member_idx) {
+			mapper.updateAddressSelect(address_idx,member_idx);
+		}
 
 
 
@@ -880,23 +895,7 @@ public class OrderService {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 }//900
 
 

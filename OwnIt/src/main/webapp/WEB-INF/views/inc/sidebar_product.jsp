@@ -18,12 +18,12 @@
 // 	});
 // })
 
-$('input:checkbox[name=brand]').each(function() {
-	if($(this).is(":checked")){
-		alert("체크됨");
-	}
+// $('input:checkbox[name=brand]').each(function() {
+// 	if($(this).is(":checked")){
+// 		alert("체크됨");
+// 	}
 
-}
+// }
 
 </script>
 

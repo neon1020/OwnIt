@@ -1,6 +1,7 @@
 package com.teamone.ownit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,9 @@ public class ProductService {
 		return mapper.checkCart(sId);
 	}
 
+	public int deleteCart(String sId, int product_idx) {
+		return mapper.deleteCart(sId, product_idx);
+	}
 
 
 
@@ -109,9 +113,6 @@ public class ProductService {
 
 
 
-
-
-
 	
 	
 	
@@ -496,8 +497,7 @@ public class ProductService {
 	
 	
 	
-
-
+	
 // 박주닮 501번
 	public ProductVO productDetail(int product_idx) {
 		return mapper.productDetail(product_idx);
@@ -527,9 +527,9 @@ public class ProductService {
 
 	
 
+	
 
-
-
+	
 
 
 

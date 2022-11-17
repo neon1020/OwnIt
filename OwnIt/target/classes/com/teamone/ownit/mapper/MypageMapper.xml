@@ -2,8 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.MypageMapper">
 
-<!-- 류혜지 -->
-
+	<!-- 류혜지 -->
+	<select id="selectMemberInfo" resultType="com.teamone.ownit.vo.MypageVO">
+        SELECT 
+        	i.image_original_file1,
+        	m.member_id, 
+ 			m.member_nickname,
+			m.member_name,
+			m.member_phone,
+			a.address_zipcode,
+			a.address1,
+			a.address2   	 
+				FROM member m
+				LEFT JOIN address a
+				ON a.address_idx = m.member_idx
+				LEFT JOIN image i
+				ON m.member_idx = i.member_idx
+				WHERE member_id=#{member_id}
+    </select>	
+	
+	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
+        SELECT 
+        	m.member_id,
+        	i.image_real_file1,
+        	p.product_name, 
+			p.product_sell_price,
+ 			o.order_sell_date,
+			o.order_sell_gb
+				FROM member m
+				LEFT JOIN image i
+				ON m.member_idx = i.product_idx
+				LEFT JOIN order_sell o
+				ON m.member_idx = o.order_sell_idx
+				LEFT JOIN product p
+				ON m.member_idx = p.product_idx				
+				WHERE member_id=#{id}
+    </select>		
+	
+	
+	
 
 
 
