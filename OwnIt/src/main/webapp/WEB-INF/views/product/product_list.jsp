@@ -240,8 +240,8 @@ $(function() {
                 <div class="product">
                   <figure class="product-image">
                     <a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">
-                      <img src="resources/img/product/${product.image_original_file1 }" alt="Image" width="261.66px" height="261.66px">
-                      <img src="resources/img/product/${product.image_original_file2 }" alt="Image" width="261.66px" height="261.66px">
+                      <img src="resources/img/product/${product.image_real_file1 }" alt="Image" width="261.66px" height="261.66px">
+                      <img src="resources/img/product/${product.image_real_file2 }" alt="Image" width="261.66px" height="261.66px">
                     </a>
                   </figure>
                   <div class="product-meta" style="width: 261.66px; height: 160.72px">

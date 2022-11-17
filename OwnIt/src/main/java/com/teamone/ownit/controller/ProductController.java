@@ -145,30 +145,18 @@ public class ProductController {
 			cart = service.checkCart(sId);
 			JSONArray jsonArray = new JSONArray();
 			
-			// 1. List 객체 크기만큼 반복
 			for(CartVO c : cart) {
-				// 2. JSONObject 클래스 인스턴스 생성
-				//    => 파라미터 : VO 객체(Getter/Setter, 기본생성자 필요)
 				JSONObject jsonObject = new JSONObject(c);
-//				System.out.println(jsonObject);
-				
-				// 3. JSONArray 객체의 put() 메서드를 호출하여 JSONObject 객체 추가
 				jsonArray.put(jsonObject);
 			}
-			System.out.println(cart);
+//			System.out.println(cart);
 			try {
-	//			 응답 데이터를 직접 생성하여 웹페이지에 출력
-	//			 HttpSertvletResponse 객체의 getWriter() 메서드를 통해 PrintWriter 객체를 리턴받아
-	//			 해당 객체의 print() 메서드를 호출하여 응답데이터 출력
-	//			 => 단, 객체 데이터 출력 전 한글 인코딩 처리 필수!
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().print(jsonArray);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
 	}
 	
 	@GetMapping(value = "viewMyCart")
@@ -177,64 +165,40 @@ public class ProductController {
 		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			cart = service.checkCart2(sId);
-			System.out.println(cart);
-//			result.put("cart", cart);
+			cart = service.checkCart(sId);
+			model.addAttribute("cart", cart);
 //			System.out.println(cart);
-//			int cnt = 0;
-			model.addAttribute(cart);
 		}
 		return "order/order_cart";
 	}
 	
+	@PostMapping(value = "delAndReloadCart")
+	@ResponseBody
+	public void deleteCart(HttpSession session, HttpServletResponse response, int product_idx) {
+//		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			int deleteCount = service.deleteCart(sId, product_idx);
+			if(deleteCount > 0) {
+				cart = service.checkCart(sId);
+				JSONArray jsonArray = new JSONArray();
+				
+				for(CartVO c : cart) {
+					JSONObject jsonObject = new JSONObject(c);
+					jsonArray.put(jsonObject);
+				}
+				try {
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().print(jsonArray);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
 	
 	
 	

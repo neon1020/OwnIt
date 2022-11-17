@@ -62,8 +62,8 @@ public class ProductService {
 		return mapper.checkCart(sId);
 	}
 
-	public List<CartVO> checkCart2(String sId) {
-		return mapper.checkCart2(sId);
+	public int deleteCart(String sId, int product_idx) {
+		return mapper.deleteCart(sId, product_idx);
 	}
 
 
@@ -113,8 +113,6 @@ public class ProductService {
 
 
 
-
-
 	
 	
 	
@@ -499,8 +497,7 @@ public class ProductService {
 	
 	
 	
-
-
+	
 // 박주닮 501번
 	public ProductVO productDetail(int product_idx) {
 		return mapper.productDetail(product_idx);
@@ -532,9 +529,7 @@ public class ProductService {
 
 	
 
-
-
-
+	
 
 
 

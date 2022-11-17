@@ -14,12 +14,20 @@
 		background-color: #353535;
 		border-color: #353535;
 	}
+	.media-title {
+		font-size: 1.2em;
+		line-height: 1.2;
+		-webkit-line-clamp: 2;
+	}
 </style>
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+function numberWithCommas(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 $(function() {
 	$('.cartInTop').click(function() {
-		debugger;
 		$.ajax({
 			url:'checkCart',
 			type:'POST',
@@ -29,6 +37,7 @@ $(function() {
 					var html = "";
 				$.each(cart, function(index) {
 // 					alert(JSON.stringify(cart[index]));
+					var buyPrice = numberWithCommas(cart[index].product_buy_price);
 					
 					html += "<div class='row gutter-3'>";
 					html += "<div class='col-12' id='cartItems'>";
@@ -36,14 +45,14 @@ $(function() {
 					html += "<div class='row align-items-center'>";
 					html += "<div class='col-lg-9'>"
 					html += "<div class='media media-product'>";
-					html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_original_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
+					html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"&pageNum='><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
 					html += "<div class='media-body'>";
-					html += "<h5 class='media-title'>" + cart[index].product_name + "</h5>";
+					html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
 					html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
 					html += "</div></div></div>";
 					html += "<div class='col-lg-3 text-center text-lg-right'>";
-					html += "<span class='cart-item-price'>"+ cart[index].product_buy_price +"원</span>";
-					html += "</div><a href='#!' class='cart-item-close'><i class='icon-x'></i></a></div></div></div></div>";
+					html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
+					html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
 				});
 				
 				$('.myCartItems').html(html);
@@ -51,6 +60,41 @@ $(function() {
 		});
 	});
 });
+function delFromCart(item) {
+	var delIdx = item.id.split('_')[1];
+	$.ajax({
+		url:'delAndReloadCart',
+		type:'POST',
+		data: {
+			product_idx:delIdx
+		},
+		dataType:'json',
+		success:function(cart) {
+			var html = "";
+			$.each(cart, function(index) {
+//					alert(JSON.stringify(cart[index]));
+				var buyPrice = numberWithCommas(cart[index].product_buy_price);
+				
+				html += "<div class='row gutter-3'>";
+				html += "<div class='col-12' id='cartItems'>";
+				html += "<div class='cart-item cart-item-sm'>";
+				html += "<div class='row align-items-center'>";
+				html += "<div class='col-lg-9'>"
+				html += "<div class='media media-product'>";
+				html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
+				html += "<div class='media-body'>";
+				html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
+				html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
+				html += "</div></div></div>";
+				html += "<div class='col-lg-3 text-center text-lg-right'>";
+				html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
+				html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
+			});
+			
+			$('.myCartItems').html(html);
+		}
+	});
+}
 
 </script>
 </head>
@@ -163,17 +207,17 @@ $(function() {
                   <div class="row align-items-center">
                     <div class="col-lg-9">
                       <div class="media media-product">
-                        <a href="#!"><img src="resources/img/product/${cart.image_original_file1 }" alt="Image" style="width: 70px; height: 70px;"></a>
+                        <a href="#!"><img src="#" alt="Image" style="width: 70px; height: 70px;"></a>
                         <div class="media-body"	>
-                          <h5 class="media-title">${cart.product_name }</h5>
-                          <span class="media-subtitle">${cart.product_color }</span>
+                          <h5 class="media-title"></h5>
+                          <span class="media-subtitle"></span>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-3 text-center text-lg-right">
-                      <span class="cart-item-price">${cart.product_buy_price }</span>
+                      <span class="cart-item-price"></span>
                     </div>
-                    <a href="#!" class="cart-item-close"><i class="icon-x"></i></a>
+                    <a class="cart-item-close"><i class="icon-x"></i></a>
                   </div>
                 </div>
               </div>
