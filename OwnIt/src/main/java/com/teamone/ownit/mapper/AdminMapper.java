@@ -26,6 +26,12 @@ public interface AdminMapper {
 	// Product 등록 (글쓰기) + 다중 파일 업로드
 	int insertProductImage(AdminProductVO product);
 
+	// Product 수정을 위해 글 가져오기
+	AdminProductVO selectProduct(int product_idx);
+
+	// Product Modify 수정 작업 수행
+	int updateProduct(AdminProductVO product);
+
 	// Order - BuyList 갯수 조회
 	int selectBuyListCount(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
@@ -45,6 +51,8 @@ public interface AdminMapper {
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
 
 
+
+
 	
 	
 	
@@ -297,6 +305,198 @@ public interface AdminMapper {
 	
 	
 	
-	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 500
 	
 }
