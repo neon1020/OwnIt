@@ -1,9 +1,12 @@
 package com.teamone.ownit.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.MypageMapper;
+import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 
@@ -20,34 +23,19 @@ public class MypageService {
 		return mapper.selectMemberInfo(id);
 	}
 
-	public MypageSellListVO getMySell(String id) {
-		return mapper.selectMySell(id);
+	public int getMySellListCount(String searchType, String keyword, String id) {
+		return mapper.selectMySellListCount(searchType, keyword, id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public List<MypageSellListVO> getMySell(int startRow, int listLimit, String searchType, String keyword, String id) {
+		return mapper.selectMySell(startRow, listLimit, searchType, keyword, id);
+	}
+
+	public int modifyMember(MemberVO member, String newPasswd) {
+		return mapper.updateMember(member, newPasswd);
+	}
+
+
 	
 	
 	
