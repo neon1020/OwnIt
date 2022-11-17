@@ -89,7 +89,7 @@
 											<th>진행상황</th>
 										</tr>
 										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
+											<td><img src="resources/img/product/${mysell.image_real_file1 }" width="60" height="60"></td>
 											<td style="text-align: left;"><a href="" style="color: black;">${mysell.product_name }</a></td>
 											<td>${mysell.order_sell_date }</td>
 											<td>${mysell.product_sell_price }</td>

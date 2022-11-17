@@ -2,9 +2,11 @@ package com.teamone.ownit.vo;
 
 public class MypageSellListVO {
 	private int member_idx;
-	private String image_original_file1;
+	private String member_id;
+	private String image_real_file1;
 	private String product_idx;
 	private String product_name;
+	private String product_image;
 	private String product_sell_price;
 	private String order_sell_idx;
 	private String order_sell_gb;
@@ -14,13 +16,16 @@ public class MypageSellListVO {
 	public MypageSellListVO() {}
 
 	// 파라미터 생성자
-	public MypageSellListVO(int member_idx, String image_original_file1, String product_idx, String product_name,
-			String product_sell_price, String order_sell_idx, String order_sell_gb, String order_sell_date) {
+	public MypageSellListVO(int member_idx, String member_id, String image_real_file1, String product_idx,
+			String product_name, String product_image, String product_sell_price, String order_sell_idx,
+			String order_sell_gb, String order_sell_date) {
 		super();
 		this.member_idx = member_idx;
-		this.image_original_file1 = image_original_file1;
+		this.member_id = member_id;
+		this.image_real_file1 = image_real_file1;
 		this.product_idx = product_idx;
 		this.product_name = product_name;
+		this.product_image = product_image;
 		this.product_sell_price = product_sell_price;
 		this.order_sell_idx = order_sell_idx;
 		this.order_sell_gb = order_sell_gb;
@@ -36,12 +41,20 @@ public class MypageSellListVO {
 		this.member_idx = member_idx;
 	}
 
-	public String getImage_original_file1() {
-		return image_original_file1;
+	public String getMember_id() {
+		return member_id;
 	}
 
-	public void setImage_original_file1(String image_original_file1) {
-		this.image_original_file1 = image_original_file1;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
+	public String getImage_real_file1() {
+		return image_real_file1;
+	}
+
+	public void setImage_real_file1(String image_real_file1) {
+		this.image_real_file1 = image_real_file1;
 	}
 
 	public String getProduct_idx() {
@@ -58,6 +71,14 @@ public class MypageSellListVO {
 
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
+	}
+
+	public String getProduct_image() {
+		return product_image;
+	}
+
+	public void setProduct_image(String product_image) {
+		this.product_image = product_image;
 	}
 
 	public String getProduct_sell_price() {
@@ -95,10 +116,11 @@ public class MypageSellListVO {
 	// toString 오버라이딩
 	@Override
 	public String toString() {
-		return "MypageSellListVO [member_idx=" + member_idx + ", image_original_file1=" + image_original_file1
-				+ ", product_idx=" + product_idx + ", product_name=" + product_name + ", product_sell_price="
-				+ product_sell_price + ", order_sell_idx=" + order_sell_idx + ", order_sell_gb=" + order_sell_gb
-				+ ", order_sell_date=" + order_sell_date + "]";
+		return "MypageSellListVO [member_idx=" + member_idx + ", member_id=" + member_id + ", image_real_file1="
+				+ image_real_file1 + ", product_idx=" + product_idx + ", product_name=" + product_name
+				+ ", product_image=" + product_image + ", product_sell_price=" + product_sell_price
+				+ ", order_sell_idx=" + order_sell_idx + ", order_sell_gb=" + order_sell_gb + ", order_sell_date="
+				+ order_sell_date + "]";
 	}
 
 
