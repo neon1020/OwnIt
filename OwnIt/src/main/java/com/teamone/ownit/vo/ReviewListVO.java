@@ -3,7 +3,9 @@ package com.teamone.ownit.vo;
 public class ReviewListVO {
 
 	private int review_idx;
-	private String review_image;
+	private String review_image1;
+	private String review_image2;
+	private String review_image3;
 	private String member_image;
 	private String product_image;
 	private String member_nickname;
@@ -15,12 +17,14 @@ public class ReviewListVO {
 	
 	public ReviewListVO() {}
 
-	public ReviewListVO(int review_idx, String review_image, String member_image, String product_image,
-			String member_nickname, String product_name, String product_buy_price, String review_content,
-			String review_date, int review_reply_count) {
+	public ReviewListVO(int review_idx, String review_image1, String review_image2, String review_image3,
+			String member_image, String product_image, String member_nickname, String product_name,
+			String product_buy_price, String review_content, String review_date, int review_reply_count) {
 		super();
 		this.review_idx = review_idx;
-		this.review_image = review_image;
+		this.review_image1 = review_image1;
+		this.review_image2 = review_image2;
+		this.review_image3 = review_image3;
 		this.member_image = member_image;
 		this.product_image = product_image;
 		this.member_nickname = member_nickname;
@@ -39,12 +43,28 @@ public class ReviewListVO {
 		this.review_idx = review_idx;
 	}
 
-	public String getReview_image() {
-		return review_image;
+	public String getReview_image1() {
+		return review_image1;
 	}
 
-	public void setReview_image(String review_image) {
-		this.review_image = review_image;
+	public void setReview_image1(String review_image1) {
+		this.review_image1 = review_image1;
+	}
+
+	public String getReview_image2() {
+		return review_image2;
+	}
+
+	public void setReview_image2(String review_image2) {
+		this.review_image2 = review_image2;
+	}
+
+	public String getReview_image3() {
+		return review_image3;
+	}
+
+	public void setReview_image3(String review_image3) {
+		this.review_image3 = review_image3;
 	}
 
 	public String getMember_image() {
@@ -113,13 +133,12 @@ public class ReviewListVO {
 
 	@Override
 	public String toString() {
-		return "ReviewListVO [review_idx=" + review_idx + ", review_image=" + review_image + ", member_image="
-				+ member_image + ", product_image=" + product_image + ", member_nickname=" + member_nickname
-				+ ", product_name=" + product_name + ", product_buy_price=" + product_buy_price + ", review_content="
-				+ review_content + ", review_date=" + review_date + ", review_reply_count=" + review_reply_count + "]";
+		return "ReviewListVO [review_idx=" + review_idx + ", review_image1=" + review_image1 + ", review_image2="
+				+ review_image2 + ", review_image3=" + review_image3 + ", member_image=" + member_image
+				+ ", product_image=" + product_image + ", member_nickname=" + member_nickname + ", product_name="
+				+ product_name + ", product_buy_price=" + product_buy_price + ", review_content=" + review_content
+				+ ", review_date=" + review_date + ", review_reply_count=" + review_reply_count + "]";
 	}
 
-	
-	
 	
 }

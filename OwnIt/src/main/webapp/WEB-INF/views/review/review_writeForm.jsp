@@ -12,26 +12,26 @@
     
     <script src="resources/js/jquery-3.6.1.js"></script>
     <script>
-	    $(document).ready(function (e){
-		    $("#imageFile").on("change", function(event) {
-		        var file = event.target.files[0];
-		        var reader = new FileReader(); 
-		        reader.onload = function(e) {
-		            $("#preview").attr("src", e.target.result);
-		        }
-		        reader.readAsDataURL(file);
-		    });
-	    });  
+      $(document).ready(function (e){
+        $("#imageFile").on("change", function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader(); 
+            reader.onload = function(e) {
+                $("#preview").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(file);
+        });
+      });  
     </script>
     
     <style type="text/css">
-	    .pl-lg-5, .px-lg-5 { flex: 0 0 35%; padding: 0 !important; margin: 150px auto; }
-	    .form-control { width: 600px; margin: 10px auto; }
-	    .form-control:focus { border-color: #101010; }
-	    #exampleInputEmail1 { width: 530px; height: 60px; }
-	    /* 사진업로드 */
-	    img #preview { width: 200px; height: 200px; }
-	    input[type=file]::file-selector-button, .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
+      .pl-lg-5, .px-lg-5 { flex: 0 0 35%; padding: 0 !important; margin: 150px auto; }
+      .form-control { width: 600px; margin: 10px auto; }
+      .form-control:focus { border-color: #101010; }
+      #exampleInputEmail1 { width: 530px; height: 60px; }
+      /* 사진업로드 */
+      img #preview { width: 200px; height: 200px; }
+      input[type=file]::file-selector-button, .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
     </style>
     
   </head>
@@ -44,26 +44,28 @@
       <h1 class="mb-0">Review</h1>
 
       <!-- ********************************* 리뷰 작성 부분 ********************************* -->
-      <form action="reviewWritePro" method="post" enctype="multipart/form-data">
-	      <section id="component-1">
-	        <div class="component">
-	          <div class="form-group">
-	          	<img src="resources/img/product/${product.image_original_file1 }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
-	            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="${product.product_name }" readonly="readonly">
-	            <textarea rows="10" cols="30" class="form-control" placeholder="내용을 입력하세요"></textarea>
-	          </div>
-	          <div class="filebox clearfix">
-			    <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; background-size: cover;">
-				<input type="file" id="imageFile">
-			  </div>
-	        </div>
-	      </section>
-	      	<div style="float: right;">
-	      	  <input type="submit" class="submit" value="리뷰등록">
-	      	</div>
-	    </form>
-	</article>
-	
+      <form action="review_WritePro" method="post" enctype="multipart/form-data">
+       <input type="hidden" name="product_idx" value="${product.product_idx }" />
+       <input type="hidden" name="member_idx" value="8" />
+        <section id="component-1">
+          <div class="component">
+            <div class="form-group">
+              <img src="resources/img/product/${product.image_original_file1 }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="${product.product_name }" readonly="readonly">
+              <textarea rows="10" cols="30" name="review_content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <div class="filebox clearfix">
+          <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; object-fit: cover;">
+        <input type="file" name="files" id="imageFile" required="required" multiple="multiple">
+        </div>
+          </div>
+        </section>
+          <div style="float: right;">
+            <input type="submit" class="submit" value="리뷰등록">
+          </div>
+      </form>
+  </article>
+  
     <!-- footer -->
     <jsp:include page="../inc/footer.jsp"></jsp:include>
 

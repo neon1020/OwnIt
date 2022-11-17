@@ -33,7 +33,7 @@ public interface MemberMapper {
 
 	int deleteAuthInfo(Auth_infoVO authInfo);
 	
-	
+	String selectPasswd(MemberVO member);
 	
 	
 	
@@ -300,6 +300,8 @@ public interface MemberMapper {
 	// 류혜지 - 300
 	// 이메일 찾기에 필요한 findEmail() 메서드 정의
 	public MemberVO findEmail(MemberVO member);
+
+	
 	
 	
 	
