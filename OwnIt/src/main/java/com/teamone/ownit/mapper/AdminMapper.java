@@ -32,6 +32,12 @@ public interface AdminMapper {
 	// Product Modify 수정 작업 수행
 	int updateProduct(AdminProductVO product);
 
+	// 삭제 전 실제 업로드 된 파일명 조회
+	String selectRealFiles(int product_idx);
+	
+	// Product Delete 삭제 작업 수행
+	int deleteProduct(int product_idx);
+
 	// Order - BuyList 갯수 조회
 	int selectBuyListCount(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
@@ -53,6 +59,8 @@ public interface AdminMapper {
 
 
 
+
+
 	
 	
 	
@@ -486,15 +494,7 @@ public interface AdminMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	// 정채연 - 500

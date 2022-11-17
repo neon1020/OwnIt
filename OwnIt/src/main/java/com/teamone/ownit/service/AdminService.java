@@ -48,6 +48,16 @@ public class AdminService {
 		return mapper.updateProduct(product);
 	}
 	
+	// 삭제 전 실제 업로드 된 파일명 조회 작업 요청
+	public String getRealFiles(int product_idx) {
+		return mapper.selectRealFiles(product_idx);
+	}
+
+	// Product Delete 삭제 작업 수행
+	public int removeProduct(int product_idx) {
+		return mapper.deleteProduct(product_idx);
+	}
+
 	// Order - BuyList 갯수 조회
 	public int getBuyListCount(String searchType, String keyword) {
 		return mapper.selectBuyListCount(searchType, keyword);
@@ -72,18 +82,8 @@ public class AdminService {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 	
 	

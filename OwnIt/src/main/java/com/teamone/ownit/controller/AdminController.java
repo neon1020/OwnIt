@@ -3,6 +3,7 @@ package com.teamone.ownit.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -243,7 +244,6 @@ public class AdminController {
 				}
 			}
 			
-			
 			if(!originalFileName2.equals("")) {
 				try {
 					mFile2.transferTo(new File(saveDir, product.getImage_real_file2()));
@@ -261,7 +261,6 @@ public class AdminController {
 					e.printStackTrace();
 				}
 			}
-			
 			
 			if(!originalFileName3.equals("")) {
 				try {
@@ -283,6 +282,38 @@ public class AdminController {
 		}
 		
 		
+		return "redirect:/admin_productList?pageNum=" + pageNum;
+	}
+	
+	
+	// Product Delete 삭제 작업 수행
+	@GetMapping(value = "admin_productDelete")
+	public String admin_productDelete(@ModelAttribute AdminProductVO product, @RequestParam String deleteList, @RequestParam int pageNum, Model model, HttpSession session) {
+		
+		System.out.println("삭제할 상품번호 목록 : " + deleteList);
+        int[] deleteNum = Stream.of(deleteList.split(",")).mapToInt(Integer::parseInt).toArray();
+		
+        
+		for(int product_idx : deleteNum) {
+			String realFiles = service.getRealFiles(product_idx);
+			
+			String[] realFileList = realFiles.split("/");
+			
+			int deleteCount = service.removeProduct(product_idx);
+			
+			if(deleteCount > 0) {
+				String uploadDir = "/resources/img/product"; 
+				String saveDir = session.getServletContext().getRealPath(uploadDir);
+				System.out.println("실제 업로드 경로 : " + saveDir);
+				
+				for(int i = 0; i < realFileList.length; i++) {
+					File f = new File(saveDir, realFileList[i]);	
+					if(f.exists())  {f.delete();}
+				}
+			} else {
+				System.out.println(product_idx + "번 삭제 실패!");
+			}
+		}
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
@@ -457,38 +488,7 @@ public class AdminController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

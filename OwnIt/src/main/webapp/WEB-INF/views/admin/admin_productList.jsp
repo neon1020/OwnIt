@@ -20,32 +20,34 @@
 	<!-- 체크박스 전체선택, 전체해제 -->
 	function checkAll(){
 	    if( $("#th_checkAll").is(':checked') ){
-	      $("input[name=checkRow]").prop("checked", true);
+	      $("input[name=deleteList]").prop("checked", true);
 	    }else{
-	      $("input[name=checkRow]").prop("checked", false);
+	      $("input[name=deleteList]").prop("checked", false);
 	    }
 	}
 
 	
 	<!-- 삭제(체크박스된 것 전부) -->
 	function deleteAction(){
-		  var checkRow = "";
-		  $( "input[name='checkRow']:checked" ).each (function (){
-		    checkRow = checkRow + $(this).val()+"," ;
-		  });
-		  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-		 
-		  if(checkRow == ''){
-		    alert("삭제할 상품을 선택하세요.");
-		    return false;
-		  }
-		  console.log("### checkRow => {}"+checkRow);
-		 
-		  if(confirm("상품을 삭제 하시겠습니까?")){
-			  out.println(checkRow);
-		      location.href="admin_productList";      
-		  }
+		  
+		var deleteList = "";
+		$( "input[name='deleteList']:checked" ).each (function (){
+			deleteList = deleteList + $(this).val()+",";
+		});
+		
+		deleteList = deleteList.substring(0,deleteList.lastIndexOf( ",")); //맨끝 콤마 지우기
+		
+		if(deleteList == ''){
+			alert("삭제할 상품을 선택하세요.");
+			return false;
 		}
+		
+		if(confirm("상품을 삭제 하시겠습니까?")){
+			alert(deleteList);
+		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + ${param.pageNum};
+// 		    return deleteList;
+		}
+	}
 	
 
 
@@ -166,11 +168,10 @@
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
-	                                
 	                                	<c:forEach var="product" items="${productList }">
 		                                    <tr>
 		                                    	<td>
-		                                    		<input type="checkbox" name="checkRow" value="${product.product_idx}" style="outline: 1px solid #000000">
+		                                    		<input type="checkbox" name="deleteList" value="${product.product_idx}" style="outline: 1px solid #000000">
 		                                    	</td>
 	                                        	<td>
 	                                        		<img class="mr-3" src="resources/img/product/${product.image_real_file1}" width="80" height="80">
@@ -209,7 +210,7 @@
 	                            <hr>
 	                        </div>
 	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
-	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction();">선택 삭제</button>
+	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction()">선택 삭제</button>
 							
 							<!-- 페이징 처리 Start -->
 							<div class="bootstrap-pagination">
