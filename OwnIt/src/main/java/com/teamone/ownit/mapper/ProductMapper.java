@@ -42,11 +42,11 @@ public interface ProductMapper {
 	// 장바구니 조회
 	List<CartVO> checkCart(@Param("sId")String sId);
 
-	// 장바구니 항목삭제
+	// 장바구니 항목삭제(개별)
 	int deleteCart(@Param("sId")String sId, @Param("product_idx")int product_idx);
 
-
-
+	// 장바구니 항목삭제(전체)
+	int deleteAllCart(@Param("sId")String sId);
 
 
 
@@ -512,6 +512,8 @@ public interface ProductMapper {
 	
 
 	
+
+	
 								
 
 	
@@ -895,6 +897,4 @@ public interface ProductMapper {
 	
 	
 
-	
-	
 }

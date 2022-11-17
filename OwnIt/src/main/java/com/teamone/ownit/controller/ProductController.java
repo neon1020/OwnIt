@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -179,25 +180,31 @@ public class ProductController {
 		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			int deleteCount = service.deleteCart(sId, product_idx);
-			if(deleteCount > 0) {
-				cart = service.checkCart(sId);
-				JSONArray jsonArray = new JSONArray();
-				
-				for(CartVO c : cart) {
-					JSONObject jsonObject = new JSONObject(c);
-					jsonArray.put(jsonObject);
-				}
-				try {
-					response.setCharacterEncoding("UTF-8");
-					response.getWriter().print(jsonArray);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		    service.deleteCart(sId, product_idx);
+			cart = service.checkCart(sId);
+			JSONArray jsonArray = new JSONArray();
+			
+			for(CartVO c : cart) {
+				JSONObject jsonObject = new JSONObject(c);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+	}
 	
-	
+	@PostMapping(value = "deleteAllCart")
+	@ResponseBody
+	public void deleteAllCart(HttpSession session) {
+//		String sId = (String)session.getAttribute("sId");
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			service.deleteAllCart(sId);
+		}
 	}
 	
 	
@@ -489,14 +496,7 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 // 박주닮
 	@GetMapping(value = "product_detail")

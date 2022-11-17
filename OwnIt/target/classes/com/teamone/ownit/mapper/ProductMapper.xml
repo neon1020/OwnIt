@@ -116,10 +116,10 @@
 			AND product_idx = #{product_idx}
 	</delete>
 
-
-
-
-
+	<delete id="deleteAllCart">
+		DELETE FROM cart
+			WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
+	</delete>
 
 
 

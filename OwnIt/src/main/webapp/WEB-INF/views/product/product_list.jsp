@@ -109,43 +109,24 @@
 //   }
 
 function changeHeart(heart) {
-	$(function() {
-		var heartId = heart.id.split('_')[0];
-		var index = heart.id.split('_')[1];
-		debugger;
-		$.ajax({
-			url:'addAndRemoveLikeList',
-			type:'POST',
-			data:{
-				product_idx:index
-			},
-			success:function(result){
-				if(heartId == "heart") {
-					var a = $('#heart_' + result);
-					var html = "";
-					var html2 = "";
-					a.removeClass('product-like');
-					a.addClass('product-like-full');
-// 					a.removeId('#heart_'+result);
-// 					a.addId('#heartFull_'+result);
-				} else if(heartId == "heartFull") {
-					var b = $('#heartFull_' + result);
-					var html = "";
-					var html2 = "";
-					b.removeClass('product-like-full');
-					b.addClass('product-like');
-// 					b.removeId('#heartFull_'+result);
-// 					b.addId('#heart_'+result);
-				}
-// 				html += "<a class='product-like-full' id='heartFull_${product.product_idx }' onclick='changeHeart(this)'></a>";
-// 				html2 += "<a class='product-like' id='heart_${product.product_idx }' onclick='changeHeart(this)'></a>";
-// //					$('#heartSection').remove();
-// 				$('#heartSection1').html(html);
-// 				$('#heartSection2').html(html2);
+	var index = heart.id.split('_')[1];
+	var full = heart.className.indexOf('full') > -1
+	$.ajax({
+		url:'addAndRemoveLikeList',
+		type:'POST',
+		data:{product_idx:index},
+		success:function(result){
+			if(!full) { // 빈하트 -> 채움
+				var a = $('#heart_' + result);
+				a.removeClass('product-like');
+				a.addClass('product-like-full');
+			} else if(full) { // 채워진 -> 빈하트
+				var b = $('#heart_' + result);
+				b.removeClass('product-like-full');
+				b.addClass('product-like');
 			}
-		});
-// 		$(this).unbind();
-	})
+		}
+	});
 }
 
 $(function() {
@@ -164,6 +145,7 @@ $(function() {
 				} else {
 					$('#'+index+' > a').html(result).css('color', 'red');
 				}
+				checkCart();
 			}
 		});
 	});
@@ -231,7 +213,6 @@ $(function() {
         <div class="row gutter-4">
 		<!-- sidebar -->
         <jsp:include page="../inc/sidebar_product.jsp"></jsp:include>
-        
           <!-- 상품 목록 리스팅 코드 / content -->
           <div class="col-lg-9">
             <div class="row gutter-2 gutter-lg-3">
@@ -256,7 +237,7 @@ $(function() {
 	                  <c:choose>
                     	<c:when test="${product.myWish ne 0}">
                     	  <span id="heartSection1">
-                   			<a class="product-like-full" id="heartFull_${product.product_idx }" onclick="changeHeart(this)"></a>
+                   			<a class="product-like-full" id="heart_${product.product_idx }" onclick="changeHeart(this)"></a>
                    		  </span>
                    		</c:when>
                    		<c:otherwise>

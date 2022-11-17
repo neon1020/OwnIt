@@ -14,6 +14,15 @@
 		background-color: #353535;
 		border-color: #353535;
 	}
+	#deleteAllCart {
+		background-color: #101010;
+		border-color: #101010;
+		color: white;
+	}
+	#deleteAllCart:hover {
+		background-color: #353535;
+		border-color: #353535;
+	}
 </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -48,10 +57,11 @@
  			dataType:'json',
  			success:function(result) {
  				var html = "";
-//  				location.reload();
- 				$.each(cart, function(index) {
+ 				if(result != 0) {
+ 				$.each(result, function(index) {
 // 						alert(JSON.stringify(result[index]));
  					var buyPrice = numberWithCommas(result[index].product_buy_price);
+ 					var countTimesPrice = numberWithCommas(result[index].countTimesPrice).split(".")[0];
  					html += "<div class='cart-item'>";
  					html += "<div class='row align-items-center'>";
  					html += "<div class='col-12 col-lg-6'>";
@@ -71,14 +81,32 @@
  					html += "<span class='counter-plus icon-plus' field='qty-"+ result[index].product_idx +"'></span>";
  					html += "</div></div>";
  					html += "<div class='col-4 col-lg-2 text-center'>";
- 					html += "<span class='cart-item-price'>"+ result[index].countTimesPrice +"원</span>";
- 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCart(this)''><i class='icon-x'></i></a></div></div>";
+ 					html += "<span class='cart-item-price'>"+ countTimesPrice +"원</span>";
+ 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
  				});
  				
- 				$('#myCartItemsInOrder').html(html);
- 			}
- 		});
+				$('#myCartItemsInOrder').html(html);
+ 				} else {
+ 					$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
+ 				}
+ 			} // success
+ 		}); // ajax
  	}
+ 	
+ 	$(function() {
+	 	$('#deleteAllCart').click(function() {
+	 		var isCertain = confirm("장바구니내의 모든 상품을 삭제하시겠습니까?");
+	 		if(isCertain) {	
+		 		$.ajax({
+		 			url:'deleteAllCart',
+		 			type:'POST',
+		 			success:function() {
+		 				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
+		 			}
+		 		});
+	 		}
+	 	});
+ 	});
  </script>
   </head>
   <body>
@@ -109,10 +137,10 @@
           </div>
         </div>
         <div class="row gutter-2 gutter-lg-4 justify-content-end">
-
           <div class="col-lg-8 cart-item-list" id="myCartItemsInOrder">
-
             <!-- cart item -->
+            <c:choose>
+            <c:when test="${not empty cart }">
             <c:forEach var="cart" items="${cart }">
             <!-- 여기부터 -->
             <div class="cart-item">
@@ -145,6 +173,11 @@
             </div>
             <!-- 여기까지 -->
 		   </c:forEach>
+		   </c:when>
+		   <c:otherwise>
+		   <img src="resources/img/product/empty_cart.png" style="max-width: 70%;">
+		   </c:otherwise>
+		   </c:choose>
           </div>
 
           <div class="col-lg-4">
@@ -160,7 +193,7 @@
                 <ul class="list-group list-group-minimal">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     상품 금액
-                    <span></span>
+                    <span class="totalPrice"></span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     배송비
@@ -177,7 +210,7 @@
                 </ul>
               </div>
             </div>
-            <a href="#" class="btn btn-lg btn-primary btn-block mt-1" id="btn">장바구니 비우기</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="deleteAllCart">장바구니 비우기</a>
             <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">선택상품 주문</a>
             <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">전체상품 주문</a>
           </div>

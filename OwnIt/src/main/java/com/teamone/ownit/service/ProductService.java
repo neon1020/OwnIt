@@ -66,6 +66,9 @@ public class ProductService {
 		return mapper.deleteCart(sId, product_idx);
 	}
 
+	public int deleteAllCart(String sId) {
+		return mapper.deleteAllCart(sId);
+	}
 
 
 
@@ -112,9 +115,6 @@ public class ProductService {
 
 
 
-
-	
-	
 	
 	
 	
@@ -531,7 +531,7 @@ public class ProductService {
 
 	
 
-
+	
 
 
 
