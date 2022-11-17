@@ -35,6 +35,7 @@ public class ReviewController {
 	public String review(Model model) {
 		List<ReviewListVO> reviewList = service.getReviewList();
 		model.addAttribute("reviewList", reviewList);
+		
 		return "review/review";
 	}
 	
@@ -49,11 +50,23 @@ public class ReviewController {
         // 댓글 출력
         List<ReplyVO> reply = service.getReply(review_idx);
         model.addAttribute("reply", reply);
+        
 		return "review/review_detail";
 	}
 	
 	@GetMapping(value = "/review_mystyle")
-	public String reviewMystyle() {
+	public String reviewMystyle(@RequestParam int member_idx, @RequestParam int review_idx, Model model) {
+		// 프로필 출력
+		ReviewListVO review = service.getReview(review_idx);
+		model.addAttribute("review", review);
+		// 작성 리뷰 목록 출력
+		List<ReviewListVO> mystyleList = service.getMystyleList(member_idx);
+		model.addAttribute("mystyleList", mystyleList);
+		// 작성 게시물 수 출력
+		int reviewCount = service.getReviewCount(member_idx);
+		model.addAttribute("reviewCount", reviewCount);
+		System.out.println(reviewCount);
+		
 		return "review/review_mystyle";
 	}
 	
@@ -61,6 +74,7 @@ public class ReviewController {
 	public String reviewWrite(@RequestParam int order_buy_idx, Model model) {
 		ProductVO product = service.getProduct(order_buy_idx);
 		model.addAttribute("product", product);
+		
 		return "review/review_writeForm";
 	}
 	
@@ -127,6 +141,16 @@ public class ReviewController {
 	@GetMapping(value = "/review_modifyForm")
 	public String reviewModify() {
 		return "review/review_modifyForm";
+	}
+	
+	@GetMapping(value = "/review_delete")
+	public String reviewDelete(@ModelAttribute ReviewVO review, @RequestParam int review_idx, Model model) {
+		int deleteCount = service.removeReview(review);
+		if(deleteCount == 0) {
+			model.addAttribute("msg", "삭제 실패!");
+			return "member/fail_back";
+		}
+		return "redirect:/review";
 	}
 	
 }

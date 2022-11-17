@@ -46,9 +46,9 @@
         <div class="row">
           <div class="col text-center">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
-            <label for="btnradio1">인기</label>
+            <label for="btnradio1">최신</label>
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-      <label for="btnradio2">최신</label>
+            <label for="btnradio2">인기</label>
           </div>
         </div>
       </div>
@@ -67,10 +67,10 @@
                 <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
               </figure>
               <div class="card-body">
-                <a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+                <a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
                 <h3 class="card-content">${review.review_content }</h3>
                 <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
-                <h4 class="card-title"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
+                <h4 class="card-title"><a href="product_detail?product_idx=${review.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
           </div>

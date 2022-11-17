@@ -89,7 +89,7 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<img src="resources/img/product/${product.image_original_file1 }" id="sellFormImage">
+		          				<img src="resources/img/product/${product.image_real_file1 }" id="sellFormImage">
 		          				<span>
 		          					${product.product_brand }
 		          				</span><br>

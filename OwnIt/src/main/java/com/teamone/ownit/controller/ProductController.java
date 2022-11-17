@@ -1,17 +1,24 @@
 package com.teamone.ownit.controller;
 
+import java.io.IOException;
 import java.util.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.teamone.ownit.service.ProductService;
 import com.teamone.ownit.vo.*;
 
@@ -36,10 +43,10 @@ public class ProductController {
 		return "product/product_list";
 	}
 	
-	@GetMapping(value = "cart")
-	public String cart() {
-		return "order/order_cart";
-	}
+//	@GetMapping(value = "cart")
+//	public String cart() {
+//		return "order/order_cart";
+//	}
 	
 	@GetMapping(value = "order_complete")
 	public String complete() {
@@ -83,7 +90,7 @@ public class ProductController {
 		return "";
 	}
 
-	@GetMapping(value = "addLikeList")
+	@PostMapping(value = "addAndRemoveLikeList")
 	@ResponseBody
 	public String addLikeList(HttpSession session, int product_idx) {
 //		String sId = (String)session.getAttribute("sId");
@@ -96,20 +103,7 @@ public class ProductController {
 				if(insertCount == 0) {
 					System.out.println("위시리스트 추가 실패 : " + sId + " , " + product_idx);
 				}
-			}
-		}
-		return product_idx + "";
-	}
-
-	@GetMapping(value = "deleteLikeList")
-	@ResponseBody
-	public String deleteLikeList(HttpSession session, int product_idx) {
-//		String sId = (String)session.getAttribute("sId");
-		System.out.println(product_idx);
-		String sId = "test1@naver.com";
-		if(sId.length() != 0) {
-			int ischecked = service.checkLike(sId, product_idx);
-			if(ischecked != 0) {
+			} else {
 				System.out.println("삭제할 번호 : " + product_idx);
 				int deleteCount = service.deleteLike(sId, product_idx);
 				if(deleteCount == 0) {
@@ -141,64 +135,70 @@ public class ProductController {
 		return null;
 	}
 
-	@GetMapping(value = "checkCart", produces = "application/text; charset=UTF-8")
+	@PostMapping(value = "checkCart", produces = "application/text; charset=UTF-8")
 	@ResponseBody
-	public String checkCart(HttpSession session) {
+	public void checkCart(HttpSession session, HttpServletResponse response) {
 //		String sId = (String)session.getAttribute("sId");
 		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			cart = service.checkCart(sId);
-			System.out.println(cart);
-			int cnt = 0;
-			for(CartVO c : cart) cnt++;
+			JSONArray jsonArray = new JSONArray();
+			
+			for(CartVO c : cart) {
+				JSONObject jsonObject = new JSONObject(c);
+				jsonArray.put(jsonObject);
+			}
+//			System.out.println(cart);
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return cart.toString();
 	}
 	
+	@GetMapping(value = "viewMyCart")
+	public String viewMyCart(HttpSession session, Model model) {
+//		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			cart = service.checkCart(sId);
+			model.addAttribute("cart", cart);
+//			System.out.println(cart);
+		}
+		return "order/order_cart";
+	}
+	
+	@PostMapping(value = "delAndReloadCart")
+	@ResponseBody
+	public void deleteCart(HttpSession session, HttpServletResponse response, int product_idx) {
+//		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			int deleteCount = service.deleteCart(sId, product_idx);
+			if(deleteCount > 0) {
+				cart = service.checkCart(sId);
+				JSONArray jsonArray = new JSONArray();
+				
+				for(CartVO c : cart) {
+					JSONObject jsonObject = new JSONObject(c);
+					jsonArray.put(jsonObject);
+				}
+				try {
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().print(jsonArray);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
 	
 	
 	

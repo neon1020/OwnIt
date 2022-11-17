@@ -3,6 +3,8 @@ package com.teamone.ownit.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class MemberController {
 	}
 	
 	@GetMapping(value = "/member_login")
-	public String login() {
+	public String login(HttpSession session, Model model) {
 		return "member/member_login";
 	}
 	
@@ -166,7 +168,9 @@ public class MemberController {
 	
 	// 로그인 수행
 	@PostMapping(value = "member_loginPro")
-	public String loginPro(@ModelAttribute MemberVO member, Model model, HttpSession session) {
+	public String loginPro(@ModelAttribute MemberVO member, @RequestParam(value="save_email", required=false) String save_email,
+			Model model, HttpSession session, HttpServletResponse response) {
+		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
 		// member 객체의 member_id, member_passwd 와 일치하는 패스워드 가져오기
@@ -177,37 +181,33 @@ public class MemberController {
 			return "notice/fail_back";
 		} else {
 			session.setAttribute("sId", member.getMember_id());
+			
+			// 회원 정보 가져와서 Model 객체에 저장
+			MemberVO se_member = service.getMember(member);
+			session.setAttribute("member", se_member);
+			
+			// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
+			if(save_email != null) {
+				Cookie cookie = new Cookie("cookieId", member.getMember_id());
+				cookie.setMaxAge(60 * 60 * 24);
+				response.addCookie(cookie);
+			} else {
+				Cookie cookie = new Cookie("cookieId", null);
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+			
 			return "redirect:/";
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 로그아웃 수행
+	@GetMapping(value = "member_logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:/";
+	}
 	
 	
 	

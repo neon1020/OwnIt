@@ -1,5 +1,10 @@
 package com.teamone.ownit.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 
@@ -9,26 +14,14 @@ public interface MypageMapper {
 	// 회원 정보 조회에 필요한 selectMemberInfo() 메서드 정의
 	MypageVO selectMemberInfo(String id);
 
-	MypageSellListVO selectMySell(String id); 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	int selectMySellListCount(@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id); 
+
+	List<MypageSellListVO> selectMySell(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id);
+
+	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd);
+
 	
 	
 	

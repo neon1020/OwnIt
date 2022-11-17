@@ -72,17 +72,19 @@
       <article class="card card-post">
         <div>
           <div style="float: left; width: 300px; display: inline-block;">
-            <a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+            <a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
           </div>
           <div style="float: right; width: 450px; display: inline-block;">
-            <h4 class="card-title" style="float: right;"><a href="post.html"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
+            <h4 class="card-title" style="float: right;"><a href="product_detail?product_idx=${review.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
           </div>
         </div>
         <div class="owl-carousel text-center" data-nav="true" data-margin="20" data-loop="false" data-dots="true">
           <c:forEach var="image" items="${reviewImage }">
-            <div class="equal equal-50">
-              <img class="image-detail" src="resources/img/review/${image.review_image1 }">
-            </div>
+            <c:if test="${not empty image.review_image1 }">
+	            <div class="equal equal-50">
+	              <img class="image-detail" src="resources/img/review/${image.review_image1 }">
+	            </div>
+	          </c:if>
           </c:forEach>
         </div>
         <div class="card-body">
@@ -138,7 +140,7 @@
                 <button type="button" class="btn btn-primary btn-modal1" data-dismiss="modal">취소</button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-primary btn-modal2">삭제</button>
+                <button type="button" class="btn btn-primary btn-modal2" onclick="location.href='review_delete?review_idx=${review.review_idx}'">삭제</button>
               </div>
             </div>
           </div>
