@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.MemberMapper">
 
-<!-- 정채연 -->
+<!-- 정채연 --> 
 
 <!-- 회원가입 : 이메일 중복 체크 -->
 <select id="selectEmail" parameterType="String" resultType="Integer">
@@ -53,7 +53,12 @@
 	SELECT member_idx FROM member WHERE member_id = #{id}
 </select>
 
-<!-- 회원가입 : 회원 인증 정보 저장(auth_info 테이블) -->
+<!-- 회원가입 : 회원 인증 정보 유무 확인 -->
+<select id="selectAuthCode" resultType="Integer">
+	SELECT count(*) FROM auth_info WHERE member_idx = #{member_idx}
+</select>
+
+<!-- 회원가입 : 회원 인증 정보 신규 저장(auth_info 테이블) -->
 <insert id="insertAuthCode">
 	INSERT INTO auth_info
 	VALUES (
@@ -62,45 +67,40 @@
 	)
 </insert>
 
+<!-- 회원가입 : 기존 회원 인증 정보 덮어쓰기(auth_info 테이블) -->
+<update id="updateAuthCode">
+	UPDATE auth_info
+		SET
+			auth_code = #{auth_code}
+		WHERE
+			member_idx = #{member_idx}
+</update>
 
+<!-- 회원가입 : 회원 인증 정보 가져오기 -->
+<select id="selectAuthInfo" resultType="Integer">
+	SELECT count(*) FROM auth_info
+	WHERE
+		member_idx = #{member_idx}
+		AND
+		auth_code = #{auth_code}
+</select>
 
+<!-- 회원가입 : 회원 인증 여부 변경(0 -> 1) -->
+<update id="updateAuthInfo">
+	UPDATE member
+		SET
+			member_auth_gb = 1
+		WHERE
+			member_idx = #{member_idx}
+</update>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 회원가입 : 회원 인증 정보 삭제 -->
+<delete id="deleteAuthInfo">
+	DELETE
+		FROM auth_info
+		WHERE
+			member_idx = #{member_idx}
+</delete>
 
 
 
