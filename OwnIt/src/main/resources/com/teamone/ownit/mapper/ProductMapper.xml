@@ -513,7 +513,7 @@
 	<!--  상품 상세정보 하단 리뷰 리스트 목록 -->
 	<select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
 		 SELECT r.review_idx AS review_idx, 
-		 		i.image_real_file1 AS review_image, 
+		 		i.image_real_file1 AS review_image1, 
 		 		i2.image_real_file1 AS product_image, 
 		 		i3.image_real_file1 AS member_image, 
 		 		m.member_nickname AS member_nickname, 

@@ -502,8 +502,6 @@ public interface ProductMapper {
 
 	// 한 상품에 대한 상세정보
 	ProductVO productDetail(@Param("product_idx") int product_idx);
-	// 한 상품에 대한 이미지정보
-	ImageVO selectDetailImage(@Param("product_idx") int product_idx);
 	// 상품 상세정보 리뷰리스트
 	List<ReviewListVO> selectReviewList(@Param("product_idx") int product_idx, 
 										@Param("startRow") int startRow,
@@ -895,6 +893,8 @@ public interface ProductMapper {
 	
 	
 	
+	
+
 	
 	
 }
