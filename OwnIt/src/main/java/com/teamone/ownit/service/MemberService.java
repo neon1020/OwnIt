@@ -297,9 +297,6 @@ public class MemberService {
 	
 	
 	
-	
-	
-	
 	// 류혜지 - 300
 	// 아이디 찾기
 		public MemberVO findEmail(MemberVO member) {
