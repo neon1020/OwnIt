@@ -89,11 +89,11 @@
 											<th>진행상황</th>
 										</tr>
 										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
-											<td>2022.10.04</td>
-											<td>647,000원</td>
-											<td>발송완료</td>
+											<td><img src="resources/img/product/${mysell.image_real_file1 }" width="60" height="60"></td>
+											<td style="text-align: left;"><a href="" style="color: black;">${mysell.product_name }</a></td>
+											<td>${mysell.order_sell_date }</td>
+											<td>${mysell.product_sell_price }</td>
+											<td>${mysell.order_sell_gb }</td>
 										</tr>
 										<tr>
 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>

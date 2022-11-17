@@ -8,7 +8,7 @@ import com.teamone.ownit.vo.MemberVO;
 
 
 
-public interface MemberMapper { 
+public interface MemberMapper {  
 	
 	// 정채연
 	int selectEmail(String email);
@@ -22,18 +22,18 @@ public interface MemberMapper {
 	int selectMember_idx(String id);
 
 	int insertAuthCode(Auth_infoVO authInfo);
+
+	int selectAuthCode(Auth_infoVO authInfo);
+
+	int updateAuthCode(Auth_infoVO authInfo);
+
+	int selectAuthInfo(Auth_infoVO authInfo);
+
+	int updateAuthInfo(Auth_infoVO authInfo);
+
+	int deleteAuthInfo(Auth_infoVO authInfo);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	String selectPasswd(MemberVO member);
 	
 	
 	
@@ -300,6 +300,8 @@ public interface MemberMapper {
 	// 류혜지 - 300
 	// 이메일 찾기에 필요한 findEmail() 메서드 정의
 	public MemberVO findEmail(MemberVO member);
+
+	
 	
 	
 	
