@@ -156,6 +156,26 @@
 				p.product_idx = #{product_idx}
 	</update>
 	
+	<!-- 게시물 실제 업로드 파일명들 조회 -->
+	<select id="selectRealFiles" resultType="String">
+		SELECT 
+				CONCAT(i.image_real_file1, '/', i.image_real_file2, '/', i.image_real_file3) 
+			FROM 
+				product p LEFT OUTER JOIN image i
+			ON 
+				p.product_idx = i.product_idx
+			WHERE
+				p.product_idx = #{product_idx}
+	</select>
+	
+	<!-- Product Delete 삭제 -->
+	<delete id="deleteProduct">
+		DELETE
+			FROM product
+			WHERE 
+				product_idx = #{product_idx}
+	</delete>
+	
 	<!-- Order - Buy List 갯수 조회 -->
 	<select id="selectBuyListCount" resultType="integer">
 		SELECT COUNT(*)
@@ -302,26 +322,6 @@
 				order_sell_idx DESC
 			LIMIT #{startRow}, #{listLimit}
 	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
