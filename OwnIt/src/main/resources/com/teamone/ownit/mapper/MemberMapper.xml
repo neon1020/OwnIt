@@ -107,7 +107,10 @@
 	SELECT member_passwd FROM member WHERE member_id = #{member_id}
 </select>
 
-
+<!-- 멤버 1명의 정보 가져오기 -->
+<select id="selectMember" resultType="com.teamone.ownit.vo.MemberVO">
+	SELECT * FROM member WHERE member_id = #{member_id}
+</select>
 
 
 

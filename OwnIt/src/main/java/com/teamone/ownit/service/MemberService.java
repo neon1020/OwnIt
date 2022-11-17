@@ -75,7 +75,10 @@ public class MemberService {
 		return mapper.selectPasswd(member);
 	}
 	
-	
+	public MemberVO getMember(MemberVO member) {
+		System.out.println("MemberService - getMember()");
+		return mapper.selectMember(member);
+	}
 	
 	
 	
@@ -302,6 +305,8 @@ public class MemberService {
 		public MemberVO findEmail(MemberVO member) {
 			return mapper.findEmail(member);
 		}
+
+		
 
 		
 		

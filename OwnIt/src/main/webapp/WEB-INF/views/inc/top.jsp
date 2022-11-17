@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +34,15 @@ $(function() {
 		});
 	});
 });
+	
+	// 로그아웃 수행
+	function logout() {
+		let result = confirm("로그아웃 하시겠습니까?");
+		
+		if(result) {
+			location.href = "member_logout";
+		}
+	}
 
 </script>
 </head>
@@ -110,11 +120,27 @@ $(function() {
 
             <div class="collapse navbar-collapse order-4 order-lg-3" id="navbarMenu2">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="member_login">Log In</a>
-                </li>
-                
-                
+              
+              	<c:choose>
+					<c:when test="${empty sessionScope.sId}">
+						<li class="nav-item">
+		                  <a class="nav-link" href="member_login">Log In</a>
+		                </li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item">
+		                  <a class="nav-link" href="mypage">${member.member_nickname} 님</a>
+		                </li>
+		                <li class="nav-item">
+		                  <a class="nav-link" href="javascript:logout()">Log Out</a>
+		                </li>
+						<c:if test="${sessionScope.sId eq 'admin' }">
+							<li class="nav-item">
+			                  <a class="nav-link" href="admin">Admin Page</a>
+			                </li>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
                 <li class="nav-item cart">
                   <a data-toggle="modal" data-target="#cart" class="nav-link" ><span class="cartInTop">Cart</span><span>${cartCnt }</span></a>
                 </li>
