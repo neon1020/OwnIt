@@ -3,6 +3,8 @@ package com.teamone.ownit.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -90,7 +92,7 @@ public class MemberController {
 		int insertAddress = service.joinAddress(member, address);
 		
 		if(insertCount > 0 && insertAddress > 0) {
-			return "MemberSendAuthMail?id=" + member.getMember_id();
+			return "redirect:/MemberSendAuthMail?id=" + member.getMember_id();
 		} else {
 			model.addAttribute("msg", "회원가입 실패");
 			return "notice/fail_back";
@@ -98,7 +100,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 후 인증 메일 발송
-	@PostMapping(value = "MemberSendAuthMail")
+	@GetMapping(value = "MemberSendAuthMail")
 	public String SendMailPro(@RequestParam String id, Model model) {
 		// GenerateUserAuthenticationCode 클래스 인스턴스 생성 및 인증코드 생성
 		GenerateUserAuthenticationCode code = new GenerateUserAuthenticationCode(20);
@@ -131,14 +133,14 @@ public class MemberController {
 		}
 		
 		if(!isSendSuccess || insertCount == 0 || updateCount == 0) {
-			return "MemberSendAuthMail?id=" + id + "&member_idx=" + member_idx;
+			return "redirect:/MemberSendAuthMail?id=" + id + "&member_idx=" + member_idx;
 		} else {
 			return "member/member_joinSuccess";
 		}
 	}
 	
 	// 인증 메일 발송 후 인증 처리 작업
-	@PostMapping(value = "MemberAuth")
+	@GetMapping(value = "MemberAuth")
 	public String MemberAuthPro(@RequestParam String id, @RequestParam String authCode, Model model) {
 		Auth_infoVO authInfo = new Auth_infoVO();
 		authInfo.setMember_idx(service.getMember_idx(id));
@@ -151,7 +153,7 @@ public class MemberController {
 			int deleteCount = service.removeAuthInfo(authInfo);
 			
 			if(updateCount > 0 && deleteCount > 0) {
-				return "member_login";
+				return "redirect:/member_login";
 			} else {
 				model.addAttribute("msg", "인증 정보 갱신 실패! 재시도 해주세요.");
 				return "notice/fail_back";
@@ -162,24 +164,22 @@ public class MemberController {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 로그인 수행
+	@PostMapping(value = "member_loginPro")
+	public String loginPro(@ModelAttribute MemberVO member, Model model, HttpSession session) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		// member 객체의 member_id, member_passwd 와 일치하는 패스워드 가져오기
+		String passwd = service.getPasswd(member);
+		
+		if(passwd == null || !encoder.matches(member.getMember_passwd(), passwd)) {
+			model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			return "notice/fail_back";
+		} else {
+			session.setAttribute("sId", member.getMember_id());
+			return "redirect:/";
+		}
+	}
 	
 	
 	

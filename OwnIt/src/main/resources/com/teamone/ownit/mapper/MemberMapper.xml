@@ -102,10 +102,10 @@
 			member_idx = #{member_idx}
 </delete>
 
-
-
-
-
+<!-- 로그인 : 아이디, 비밀번호 일치 여부 확인 -->
+<select id="selectPasswd" resultType="String">
+	SELECT member_passwd FROM member WHERE member_id = #{member_id}
+</select>
 
 
 
