@@ -107,45 +107,46 @@
 // 	});
 // 	$(this).unbind();
 //   }
-$(function() {
-	$('.product-like').click(function() {
-		var heart = $(this);
-		var index = $(this).attr('id').split('_')[1];
-		$.ajax({
-			url:'addLikeList',
-			type:'GET',
-			data:{
-				product_idx:index
-			},
-			success:function(result){
-				var a = $('#heart_' + result);
-				a.removeClass('product-like');
-				a.addClass('product-like-full');
-				// heart 의 클래스를 .product-like-full로 변경
-				//$('.product').load(location.href + " .product");
-			}
-		});
-	});
-});
 
-$(function() {
-	$('.product-like-full').click(function() {
-		var heartFull = $(this);
-		var index = $(this).attr('id').split('_')[1];
+function changeHeart(heart) {
+	$(function() {
+		var heartId = heart.id.split('_')[0];
+		var index = heart.id.split('_')[1];
+		debugger;
 		$.ajax({
-			url:'deleteLikeList',
-			type:'GET',
+			url:'addAndRemoveLikeList',
+			type:'POST',
 			data:{
 				product_idx:index
 			},
 			success:function(result){
-				var b = $('#heartFull_' + result);
-				b.removeClass('product-like-full');
-				b.addClass('product-like');
+				if(heartId == "heart") {
+					var a = $('#heart_' + result);
+					var html = "";
+					var html2 = "";
+					a.removeClass('product-like');
+					a.addClass('product-like-full');
+// 					a.removeId('#heart_'+result);
+// 					a.addId('#heartFull_'+result);
+				} else if(heartId == "heartFull") {
+					var b = $('#heartFull_' + result);
+					var html = "";
+					var html2 = "";
+					b.removeClass('product-like-full');
+					b.addClass('product-like');
+// 					b.removeId('#heartFull_'+result);
+// 					b.addId('#heart_'+result);
+				}
+// 				html += "<a class='product-like-full' id='heartFull_${product.product_idx }' onclick='changeHeart(this)'></a>";
+// 				html2 += "<a class='product-like' id='heart_${product.product_idx }' onclick='changeHeart(this)'></a>";
+// //					$('#heartSection').remove();
+// 				$('#heartSection1').html(html);
+// 				$('#heartSection2').html(html2);
 			}
 		});
-	});
-});
+// 		$(this).unbind();
+	})
+}
 
 $(function() {
 	$('.product-action').click(function() {
@@ -239,8 +240,8 @@ $(function() {
                 <div class="product">
                   <figure class="product-image">
                     <a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">
-                      <img src="resources/img//product/${product.image_original_file1 }" alt="Image" width="261.66px" height="261.66px">
-                      <img src="resources/img//product/${product.image_original_file2 }" alt="Image" width="261.66px" height="261.66px">
+                      <img src="resources/img/product/${product.image_real_file1 }" alt="Image" width="261.66px" height="261.66px">
+                      <img src="resources/img/product/${product.image_real_file2 }" alt="Image" width="261.66px" height="261.66px">
                     </a>
                   </figure>
                   <div class="product-meta" style="width: 261.66px; height: 160.72px">
@@ -252,14 +253,18 @@ $(function() {
                         <a href="#!" style="color: #101010;">장바구니에 추가</a>
                       </span>
                     </div>
-                    <c:choose>
+	                  <c:choose>
                     	<c:when test="${product.myWish ne 0}">
-                   			<a href="#!" class="product-like-full" id="heartFull_${product.product_idx }"></a>
+                    	  <span id="heartSection1">
+                   			<a class="product-like-full" id="heartFull_${product.product_idx }" onclick="changeHeart(this)"></a>
+                   		  </span>
                    		</c:when>
                    		<c:otherwise>
-                   			<a href="#!" class="product-like" id="heart_${product.product_idx }"></a>
+                   		  <span id="heartSection2">
+                   			<a class="product-like" id="heart_${product.product_idx }" onclick="changeHeart(this)"></a>
+                   		  </span>
                    		</c:otherwise>
-                   	</c:choose>
+	                  </c:choose>
                     <a href="product_detail?product_idx=${product.product_idx }#review" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
                   </div>
                 </div>

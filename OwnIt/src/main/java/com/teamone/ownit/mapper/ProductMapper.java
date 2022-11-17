@@ -1,6 +1,7 @@
 package com.teamone.ownit.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -41,6 +42,8 @@ public interface ProductMapper {
 	// 장바구니 조회
 	List<CartVO> checkCart(@Param("sId")String sId);
 
+	// 장바구니 항목삭제
+	int deleteCart(@Param("sId")String sId, @Param("product_idx")int product_idx);
 
 
 
@@ -111,11 +114,6 @@ public interface ProductMapper {
 
 
 
-
-
-
-
-
 	
 	
 	
@@ -496,6 +494,8 @@ public interface ProductMapper {
 	
 	
 
+	
+	
 	
 	
 // 박주닮 501
@@ -510,6 +510,10 @@ public interface ProductMapper {
 										@Param("listLimit") int listLimit);
 
 	int selectReviewListCount(@Param("product_idx") int product_idx);
+
+	
+
+	
 								
 
 	
@@ -880,10 +884,6 @@ public interface ProductMapper {
 
 
 
-	
-	
-	
-	
 	
 	
 	
