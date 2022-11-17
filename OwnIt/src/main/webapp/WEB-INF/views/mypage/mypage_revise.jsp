@@ -6,13 +6,93 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+	<script type="text/javascript">
+		var isCorrectPassword = false;	
+		var isEqualPassword = false;
+		
+    	// 패스워드 형식 확인 & 패스워드 안전도 점검
+    	function checkPassword() {
+    		var password = $('#password').val();
+    		var passwordRegex = /^[\w!@#$%^&*]{8,16}$/;
+    		
+    		if(password === '') {
+    			$('#passwordResult').html("");
+    		} else {
+				if(passwordRegex.exec(password)) {
+					var upperCaseRegex = /[A-Z]/;
+					var lowerCaseRegex = /[a-z]/;
+					var numRegex = /[0-9]/;
+					var specialCharRegex = /[!@#$%^&*_]/;
+					
+					var count = 0;
+					
+					if(upperCaseRegex.exec(password)) {
+						count++;
+					} 
+					if(lowerCaseRegex.exec(password)) {
+						count++;
+					} 
+					if(numRegex.exec(password)) {
+						count++;
+					} 
+					if(specialCharRegex.exec(password)) {
+						count++;
+					}
+					
+					switch (count) {
+					case 4: $("#passwordResult").html("안전도 : 상");
+							$("#passwordResult").css("color", "blue");
+							isCorrectPassword = true;
+							break;
+					case 3: $("#passwordResult").html("안전도 : 중");
+							$("#passwordResult").css("color", "green");
+							isCorrectPassword = true;
+							break;
+					case 2: $("#passwordResult").html("안전도 : 하");
+							$("#passwordResult").css("color", "orange");
+							isCorrectPassword = true;
+							break;
+					default: $("#passwordResult").html("영문 대소문자, 숫자, 특수기호 중 2가지 이상 사용");
+							 $("#passwordResult").css("color", "red");
+							 isCorrectPassword = false;
+							 break;
+					}
+				} else {
+					$("#passwordResult").html("8 ~ 16 자리 영문 대소문자, 숫자, 특수문자 입력");
+					$("#passwordResult").css("color", "red");
+					isCorrectPassword = false;
+				}
+    		}
+		}
+    	
+    	// 패스워드 재확인 일치 여부
+		function checkRePassword() {
+			var password = $('#password').val();
+			var rePassword = $('#rePassword').val();
+			
+			if(rePassword === '') {
+				$("#password2Result").html("");
+			} else {
+	    		if(password == rePassword) {
+	    			$("#password2Result").html("비밀번호 일치");
+					$("#password2Result").css("color", "blue");
+					isEqualPassword = true;
+	    		} else {
+	    			$("#password2Result").html("비밀번호 불일치");
+					$("#password2Result").css("color", "red");
+					isEqualPassword = false;
+	    		}
+			}
+		}
+	</script>    
 </head>
 <body>
 	<!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
+<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
 	<!-- /header -->   
 
     <!-- hero -->
@@ -46,7 +126,7 @@
 						<div class="tab-content" id="myTabContent">
 
 							<!-- mypage_revise -->
-                 			<form action="mypage_revisePro" method="post" id="join">
+                 			<form action="mypage_revisePro" method="post" id="joinForm" enctype="multipart/form-data"> 
 								<div class="tab-pane fade show active" id="sidebar-1-1" role="tabpanel" aria-labelledby="sidebar-1-1">
 									<div class="row mb-2">
 									</div>
@@ -103,27 +183,31 @@
 									<div class="row gutter-1">
 										<div class="col-12">
 											<div class="form-group">
-												<label for="exampleInput8">새 패스워드</label>
-												<input id="exampleInput8" type="password" class="form-control" placeholder="Password">
+												<label for="exampleInput8">기존 패스워드</label>
+												<input id="exampleInput8" type="password" name="member_passwd" class="form-control" placeholder="Password">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput9">새 패스워드</label>
-												<input id="exampleInput9" type="password" class="form-control" placeholder="Password">
+												<input id="password" type="password" name="newPasswd" class="form-control" oninput="checkPassword()" placeholder="8 ~ 16 글자 (영문 대소문자, 숫자, 특수기호)">
+												<span id="passwordResult"><!-- 자바스크립트에 의해 메세지가 표시될 공간 --></span>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput10">새 패스워드 재확인</label>
-												<input id="exampleInput10" type="password" class="form-control" placeholder="Password">
+												<input id="rePassword" type="password" name="newPasswd2" class="form-control" oninput="checkRePassword()" placeholder="8 ~ 16 글자 (영문 대소문자, 숫자, 특수기호)">
+												<span id="password2Result"><!-- 자바스크립트에 의해 메세지가 표시될 공간 --></span>
 											</div>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col" style="text-align: center;">
-											<input type="submit" value="변경하기" class="btn btn-dark btn-rounded">
+											<input type="submit" value="변경" class="btn btn-dark btn-rounded">
+											<input type="button" value="취소" onclick="history.back()" class="btn btn-dark btn-rounded">
+											<input type="button" value="탈퇴" onclick="#" class="btn btn-outline-dark btn-rounded">								
 										</div>
 									</div>
 								</div>

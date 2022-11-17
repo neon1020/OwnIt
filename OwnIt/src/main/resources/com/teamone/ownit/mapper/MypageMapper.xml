@@ -20,13 +20,27 @@
 				ON m.member_idx = i.member_idx
 				WHERE member_id=#{member_id}
     </select>	
-	
+	<!-- 전체 게시물 목록 갯수 조회(검색 기능 추가) -->
+	<select id="selectMySellListCount" resultType="integer">
+		SELECT 
+			COUNT(*) 
+			FROM member m
+				LEFT JOIN image i
+				ON m.member_idx = i.product_idx
+				LEFT JOIN order_sell o
+				ON m.member_idx = o.order_sell_idx
+				LEFT JOIN product p
+				ON m.member_idx = p.product_idx				
+				WHERE member_id=#{id}			
+			
+	</select>	
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
         SELECT 
         	m.member_id,
         	i.image_real_file1,
         	p.product_name, 
 			p.product_sell_price,
+			o.order_sell_idx,
  			o.order_sell_date,
 			o.order_sell_gb
 				FROM member m
@@ -35,70 +49,19 @@
 				LEFT JOIN order_sell o
 				ON m.member_idx = o.order_sell_idx
 				LEFT JOIN product p
-				ON m.member_idx = p.product_idx				
-				WHERE member_id=#{id}
+				ON m.member_idx = p.product_idx	
+			WHERE member_id=#{id}
+			ORDER BY 
+				o.order_sell_idx DESC
+			LIMIT #{startRow}, #{listLimit}
     </select>		
+	<update id="updateMember">
+		UPDATE member
+				member_passwd = #{newPasswd}
+			WHERE 
+				member_id = #{member.member_id} AND member_passwd = #{member.member_passwd}
+	</update>	
 	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
