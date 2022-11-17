@@ -411,7 +411,7 @@
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
               <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image }"></a>
+                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
               </figure>
               <div class="card-body">
               	<a class="profile" href="review_mystyle"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
