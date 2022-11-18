@@ -220,8 +220,8 @@ public class AdminController {
 		product.setImage_original_file2(originalFileName2);
 		product.setImage_original_file3(originalFileName3);
 		product.setImage_real_file1(uuid + "_" + originalFileName1);
-		product.setImage_real_file1(uuid + "_" + originalFileName2);
-		product.setImage_real_file1(uuid + "_" + originalFileName3);
+		product.setImage_real_file2(uuid + "_" + originalFileName2);
+		product.setImage_real_file3(uuid + "_" + originalFileName3);
 		
 		int updateCount = service.modifyProduct(product);
 		
@@ -405,87 +405,24 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
-	
-
-	
-	
-
-	
-	
-	
-	
-	
-	
-
-
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// Order_Sell 상태 변경 (order_sell_gb) + product_sell_count
+	@PostMapping(value = "admin_orderSellModify")
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam int pageNum, Model model) {
+		System.out.println(pageNum);
+		System.out.println(adminOrder.getOrder_sell_gb());
+		System.out.println(adminOrder.getOrder_sell_idx());
+		System.out.println(adminOrder.getProduct_sell_count());
+		System.out.println(adminOrder.getProduct_idx());
+		
+		
+		int updateCount = service.updateOrderSell(adminOrder);
+		
+		if(updateCount > 0) {
+			return "redirect:/admin_productSellList?pageNum=" + pageNum;
+		}
+		
+		return "";
+	}
 	
 	
 
@@ -493,6 +430,69 @@ public class AdminController {
 	
 	
 	
+	
+	
+
+
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+
 	
 	
 	

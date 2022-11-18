@@ -22,6 +22,9 @@
 	function func1() {
 		confirm('변경하시겠습니까?');
 	}
+	
+// 	var status = $("#inlineFormCustomSelect option:selected").val();
+// 	alert(status);
 
 </script>
 <body>
@@ -152,16 +155,21 @@
 	                                            <td>${sellList.account_bank }&nbsp;${sellList.account_owner_name }<br>${sellList.account_num }</td>
 	                                            <c:set var="date" value="${sellList.order_sell_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
-	                                            <td>
-	                                            	<select class="custom-select col-9" id="inlineFormCustomSelect">
-	                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>
-	                                                    <option value="1" ${sellList.order_sell_gb == '1' ? 'selected="selected"' : ''}>검수중</option>
-	                                                    <option value="2" ${sellList.order_sell_gb == '2' ? 'selected="selected"' : ''}>검수완료</option>
-	                                                </select>
-	                                            </td>
-	                                            <td>
-	                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Apply</button>
-	                                            </td>
+	                                            <form action="admin_orderSellModify" method="post">
+	                                            <input type="hidden" name="product_idx" value="${sellList.product_idx }" />
+	                                            <input type="hidden" name="order_sell_idx" value="${sellList.order_sell_idx }" />
+	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+		                                            <td>
+		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_sell_gb">
+		                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>
+		                                                    <option value="1" ${sellList.order_sell_gb == '1' ? 'selected="selected"' : ''}>검수중</option>
+		                                                    <option value="2" ${sellList.order_sell_gb == '2' ? 'selected="selected"' : ''}>검수완료</option>
+		                                                </select>
+		                                            </td>
+		                                            <td>
+		                                            	<button type="submit" class="btn mb-1 btn-outline-dark">Apply</button>
+		                                            </td>
+	                                            </form>
 	                                        </tr>
                                     	</c:forEach>
                                     </tbody>

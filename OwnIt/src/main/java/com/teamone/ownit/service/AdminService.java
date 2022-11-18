@@ -78,17 +78,17 @@ public class AdminService {
 		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
 	}
 
+	// Order_Sell 상태 변경 (order_sell_gb) + product_sell_count
+	public int updateOrderSell(AdminOrderVO adminOrder) {
+		return mapper.modifyOrderSell(adminOrder);
+	}
 
 
 
 
 
 
-	
-	
-	
-	
-	
+
 	
 	
 	
