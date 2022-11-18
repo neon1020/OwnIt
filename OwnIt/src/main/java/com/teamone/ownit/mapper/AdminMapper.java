@@ -56,11 +56,14 @@ public interface AdminMapper {
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
 
+	// Order_Sell 상태 변경 (order_sell_gb) + product_sell_count
+	int modifyOrderSell(AdminOrderVO adminOrder);
 
 
 
 
 
+
 	
 	
 	
@@ -434,9 +437,6 @@ public interface AdminMapper {
 	
 
 
-	
-	
-	
 	
 	
 	
