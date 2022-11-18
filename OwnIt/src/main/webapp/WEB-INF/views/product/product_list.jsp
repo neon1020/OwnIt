@@ -150,6 +150,34 @@ $(function() {
 		});
 	});
 });
+
+var str = "";
+$(function() {
+	$('input[type=checkbox]').click(function() {
+		if($(this).is(":checked")){
+			str += $(this).attr('name')+":"+$(this).attr('id')+"/";
+		} else {
+			var removeStr = $(this).attr('name')+":"+$(this).attr('id')+"/"
+			str = str.replace(removeStr, '');
+		}
+	});
+	
+	$('.nav-link').click(function() {
+		str = str.replace('undefined:undefined/', '');
+		str = str.replace('category:phone/', '');
+		str = str.replace('category:tablet/', '');
+		str = str.replace('category:watch/', '');
+		str = str.replace('category:earphone/', '');
+		str = str.replace('category:headphone/', '');
+		str = str.replace('category:laptop/', '');
+		str += $(this).attr('name')+":"+$(this).attr('id')+"/";
+	});
+	
+	$('select').change(function() {
+		var selected = $(this).id+"/";
+		alert(selected);
+	});
+});
 </script>
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -202,7 +230,7 @@ $(function() {
             </div>
           </div>
          <div class="col-md-6 text-md-right" style="margin-top: 25px">
-           <select onchange="arrayByCategory(this.value)">
+           <select><!-- onchange="arrayByCategory(this.value)" -->
 	          <option value="product_popular" id="product_popular" selected="selected">인기순</option>
 	          <option value="price_high" id="price_high">가격높은순</option>
 	          <option value="price_low" id="price_low">가격낮은순</option>

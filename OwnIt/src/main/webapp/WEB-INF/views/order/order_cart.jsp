@@ -57,6 +57,7 @@
  			dataType:'json',
  			success:function(result) {
  				var html = "";
+ 				var totalPrice = 0;
  				if(result != 0) {
  				$.each(result, function(index) {
 // 						alert(JSON.stringify(result[index]));
@@ -76,8 +77,8 @@
  					html += "<div class='col-4 col-lg-2 text-center'>";
  					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
  					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
- 					html += "<span class='counter-minus icon-minus' field='qty-"+ result[index].product_idx  +"'></span>";
- 					html += "<input type='text' name='qty-"+ result[index].product_idx +"' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
+ 					html += "<span class='counter-minus icon-minus' onclick='minusNum("+ result[idx].product_idx +")' field='qty-"+ result[index].product_idx  +"'></span>";
+ 					html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[idx].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
  					html += "<span class='counter-plus icon-plus' field='qty-"+ result[index].product_idx +"'></span>";
  					html += "</div></div>";
  					html += "<div class='col-4 col-lg-2 text-center'>";
@@ -107,6 +108,18 @@
 	 		}
 	 	});
  	});
+ 	
+ 	$('.counter-minus').click(function() {
+ 		alert("바귐");
+ 	});
+	
+ 	function minusNum(idx) {
+ 		debugger;
+ 		var value = $('#cartCount_'+idx).val()-1;
+ 		alert(value);
+ 	}
+ 	
+ 	
  </script>
   </head>
   <body>
@@ -160,8 +173,8 @@
                 </div>
                 <div class="col-4 col-lg-2 text-center">
                   <div class="counter">
-                    <span class="counter-minus icon-minus" field='qty-${cart.product_idx }'></span>
-                    <input type='text' name='qty-${cart.product_idx }' class="counter-value" value="${cart.cart_count }" min="1" max="5">
+                    <span class="counter-minus icon-minus" field='qty-${cart.product_idx }' onclick="minusNum(${cart.product_idx})"></span>
+                    <input type='text' name='qty-${cart.product_idx }' readonly="readonly" id="cartCount_${cart.product_idx }" class="counter-value" value="${cart.cart_count }" min="1" max="5">
                     <span class="counter-plus icon-plus" field='qty-${cart.product_idx }'></span>	
                   </div>
                 </div>
