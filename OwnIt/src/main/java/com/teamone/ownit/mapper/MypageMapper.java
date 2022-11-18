@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.WishlistVO;
 
 public interface MypageMapper {
 
@@ -22,9 +23,8 @@ public interface MypageMapper {
 
 	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd);
 
-	
-	
-	
+	List<WishlistVO> selectWishlist(String id);
+
 	
 	
 	

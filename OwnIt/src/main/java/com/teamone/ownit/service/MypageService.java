@@ -9,6 +9,7 @@ import com.teamone.ownit.mapper.MypageMapper;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.WishlistVO;
 
 @Service
 public class MypageService {
@@ -35,12 +36,11 @@ public class MypageService {
 		return mapper.updateMember(member, newPasswd);
 	}
 
+	public List<WishlistVO> getwishlist(String id) {
+		return mapper.selectWishlist(id);
+	}
 
-	
-	
-	
-	
-	
+
 	
 	
 	
