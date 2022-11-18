@@ -52,7 +52,7 @@
 								<div class="row mt-2">
 									<div class="form-group col-12">
 										<label for="exampleInputEmail1">Email</label>
-										<input type="email" class="form-control" name="member_id" id="exampleInputEmail1" value="${cookie.cookieId.value}">
+										<input type="text" class="form-control" name="member_id" id="exampleInputEmail1" value="${cookie.cookieId.value}">
 									</div>
 									<div class="form-group col-12 mt-1">
 										<label for="exampleInputPassword1">Password</label>

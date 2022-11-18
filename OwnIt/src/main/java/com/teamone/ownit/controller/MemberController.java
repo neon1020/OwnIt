@@ -139,8 +139,14 @@ public class MemberController {
 		if(!isSendSuccess || insertCount == 0 || updateCount == 0) {
 			return "redirect:/MemberSendAuthMail?id=" + id + "&member_idx=" + member_idx;
 		} else {
-			return "member/member_joinSuccess";
+			return "redirect:/member_joinSuccess?id=" + id;
 		}
+	}
+	
+	// 회원가입 완료 화면 요청
+	@GetMapping(value = "/member_joinSuccess")
+	public String joinSuccess() {
+		return "member/member_joinSuccess";
 	}
 	
 	// 인증 메일 발송 후 인증 처리 작업
@@ -185,11 +191,16 @@ public class MemberController {
 			// 메일 인증 완료 여부 확인
 			int getAuthStatus = service.getAuthStatus(member);
 			if(getAuthStatus > 0) {
+				MemberVO se_member = service.getMember(member);
+				
+				// Session 객체에 sId 저장
 				session.setAttribute("sId", member.getMember_id());
 				
-				// 회원 정보 가져와서 Model 객체에 저장
-				MemberVO se_member = service.getMember(member);
-				session.setAttribute("member", se_member);
+				// Session 객체에 sIdx 저장
+				session.setAttribute("sIdx", se_member.getMember_idx());
+				
+				// Session 객체에 sNick 저장
+				session.setAttribute("sNick", se_member.getMember_nickname());
 				
 				// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
 				if(save_email != null) {
@@ -267,7 +278,7 @@ public class MemberController {
 				model.addAttribute("msg", "정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.");
 				return "notice/fail_back";
 			} else {
-				return "member/member_findPasswdResult";
+				return "redirect:/member_findPasswdResult";
 			}
 		} else {
 			model.addAttribute("msg", "존재하지 않는 회원입니다.");
@@ -275,8 +286,11 @@ public class MemberController {
 		}
 	}
 	
-	
-	
+	// 패스워드 찾기 후 완료 화면
+	@GetMapping(value = "/member_findPasswdResult")
+	public String findPasswdResult() {
+		return "member/member_findPasswdResult";
+	}
 	
 	
 	
