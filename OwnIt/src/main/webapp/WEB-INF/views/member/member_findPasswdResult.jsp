@@ -29,7 +29,7 @@
 			<br>
 			<br>
 			<div style="text-align: center;">
-				<h5>임시 비밀번호를 전송하였습니다. 전송 받은 임시 비밀번호로 로그인해주세요.</h5>
+				<h5>임시 비밀번호를 전송하였습니다. 전송 받은 임시 비밀번호로 로그인해주세요.</h5> 
 				<br>
 				<br>
 				<div class="container-fluid">

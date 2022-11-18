@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -40,11 +41,6 @@ public class MemberController {
 	private MemberService service;
 
 	// 정채연
-	@GetMapping(value = "/member_findPasswd")
-	public String findPasswd() {
-		return "member/member_findPasswd";
-	}
-	
 	@GetMapping(value = "/member_joinForm")
 	public String joinForm() {
 		return "member/member_joinForm";
@@ -84,6 +80,12 @@ public class MemberController {
 	// 회원가입 수행
 	@PostMapping(value = "member_joinPro")
 	public String joinPro(@ModelAttribute MemberVO member, @ModelAttribute AddressVO address, Model model) {
+		
+		// 선택 약관 null 값 처리
+		if(member.getMember_agree() == null) {
+			member.setMember_agree("0");
+		}
+		
 		// 1. 패스워드 암호화
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String securePassword = encoder.encode(member.getMember_passwd());
@@ -180,24 +182,33 @@ public class MemberController {
 			model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			return "notice/fail_back";
 		} else {
-			session.setAttribute("sId", member.getMember_id());
-			
-			// 회원 정보 가져와서 Model 객체에 저장
-			MemberVO se_member = service.getMember(member);
-			session.setAttribute("member", se_member);
-			
-			// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
-			if(save_email != null) {
-				Cookie cookie = new Cookie("cookieId", member.getMember_id());
-				cookie.setMaxAge(60 * 60 * 24);
-				response.addCookie(cookie);
+			// 메일 인증 완료 여부 확인
+			int getAuthStatus = service.getAuthStatus(member);
+			if(getAuthStatus > 0) {
+				session.setAttribute("sId", member.getMember_id());
+				
+				// 회원 정보 가져와서 Model 객체에 저장
+				MemberVO se_member = service.getMember(member);
+				session.setAttribute("member", se_member);
+				
+				// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
+				if(save_email != null) {
+					Cookie cookie = new Cookie("cookieId", member.getMember_id());
+					cookie.setMaxAge(60 * 60 * 24);
+					response.addCookie(cookie);
+				} else {
+					Cookie cookie = new Cookie("cookieId", null);
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				}
+				
+				return "redirect:/";
+				
 			} else {
-				Cookie cookie = new Cookie("cookieId", null);
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
+				model.addAttribute("msg", "메일 인증 후 로그인해주세요.");
+				return "notice/fail_back";
 			}
 			
-			return "redirect:/";
 		}
 	}
 	
@@ -209,117 +220,304 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 류혜지 - 300
-	
-	//이메일 찾기 페이지 이동 
-	@GetMapping(value = "member_findEmailForm")
-	public String findEmailForm() {
-		return "member/member_findEmailForm";
+	// 회원 탈퇴
+	@GetMapping(value = "member_remove")
+	public String removeMember(HttpSession session, Model model) {
+		String member_id = (String)session.getAttribute("sId");
+		int deleteCount = service.removeMember(member_id);
+		
+		if(deleteCount > 0) {
+			session.invalidate();
+			return "redirect:/";
+		} else {
+			model.addAttribute("msg", "탈퇴에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
 	}
+	
+	// 패스워드 찾기
+	@GetMapping(value = "member_findPasswd")
+	public String findPasswd(@RequestParam String member_id, Model model) {
+		int getMember = service.getMember2(member_id);
+		
+		if(getMember > 0) {
+			// GenerateUserAuthenticationCode 클래스 인스턴스 생성 및 인증코드 생성
+			GenerateUserAuthenticationCode code = new GenerateUserAuthenticationCode(12);
+			String newPass = code.getAuthCode();
+			
+			// 인증 메일 발송에 사용될 정보(수신자 메일주소, 메일 제목, 메일 본문) 생성
+			String subject = "[OwnIt] OwnIt 비밀번호 찾기 메일";
+			String content = "새로운 비밀번호는 " + newPass + " 입니다.<br>"
+					+ "<a href='http://localhost:8081/ownit/member_login'><b>로그인 페이지로 이동</b></a>";
+			
+			// 인증 메일 발송을 위해 SendMail 클래스 인스턴스 생성 및 sendMail() 메소드 호출하여 메일 발송
+			SendMail sendMail = new SendMail();
+			boolean isSendSuccess = sendMail.sendMail(member_id, subject, content);
+			
+			// 새 비밀번호 암호화하여 member 테이블에 저장
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String secureNewPassword = encoder.encode(newPass);
+			
+			int updateCount = service.modifyPasswd(member_id, secureNewPassword);
+			
+			if(!isSendSuccess) {
+				model.addAttribute("msg", "메일 발송에 실패하였습니다. 다시 시도해주세요.");
+				return "notice/fail_back";
+			} else if(updateCount == 0) {
+				model.addAttribute("msg", "정보 수정 중 오류가 발생하였습니다. 다시 시도해주세요.");
+				return "notice/fail_back";
+			} else {
+				return "member/member_findPasswdResult";
+			}
+		} else {
+			model.addAttribute("msg", "존재하지 않는 회원입니다.");
+			return "notice/fail_back";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 류혜지 - 500
+	
 	
     // 아이디 찾기 실행
-	@PostMapping(value="member_findEmailResult")
-	public String findEmailPro(MemberVO member, Model model) {
-		member = service.findEmail(member);
+	@GetMapping(value="member_findEmail")
+	public String findEmailPro(@RequestParam String member_phone, Model model) {
+		System.out.println(member_phone + ", " + member_phone);
+		MemberVO member = service.findEmail(member_phone);
+		System.out.println(member);
+		model.addAttribute("member", member);
 		
-		if(member == null) { 
-			model.addAttribute("check", 1);
-		} else { 
-			model.addAttribute("check", 0);
-			model.addAttribute("member_id", member.getMember_id());
-		}
-		return "member/member_findEmailForm";
+		return "member/member_findEmail";
 	}
-	
-	
 	
 	
 	

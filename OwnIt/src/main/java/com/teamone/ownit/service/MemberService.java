@@ -80,25 +80,25 @@ public class MemberService {
 		return mapper.selectMember(member);
 	}
 	
+	public int getMember2(String member_id) {
+		System.out.println("MemberService - getMember()");
+		return mapper.selectMember2(member_id);
+	}
 	
+	public int getAuthStatus(MemberVO member) {
+		System.out.println("MemberService - getAuthStatus()");
+		return mapper.selectAuthStatus(member);
+	}
 	
+	public int removeMember(String member_id) {
+		System.out.println("MemberService - removeMember()");
+		return mapper.deleteMember(member_id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public int modifyPasswd(String member_id, String secureNewPassword) {
+		System.out.println("MemberService - modifyPasswd()");
+		return mapper.updatePasswd(member_id, secureNewPassword);
+	}
 	
 	
 	
@@ -299,9 +299,17 @@ public class MemberService {
 	
 	// 류혜지 - 300
 	// 아이디 찾기
-		public MemberVO findEmail(MemberVO member) {
-			return mapper.findEmail(member);
+		public MemberVO findEmail(String member_phone) {
+			return mapper.findEmail(member_phone);
 		}
+
+
+
+		
+
+		
+
+		
 
 		
 

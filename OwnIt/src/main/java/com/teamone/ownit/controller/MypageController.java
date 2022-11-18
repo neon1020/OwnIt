@@ -18,6 +18,7 @@ import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.PageInfo;
+import com.teamone.ownit.vo.WishlistVO;
 
 @Controller
 public class MypageController {
@@ -31,8 +32,22 @@ public class MypageController {
 	}
 	
 	@GetMapping(value = "wishlist")
-	public String wishlist() {
+	public String wishlist(@RequestParam String id, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		System.out.println(id + ", " + sId);
+		
+		if(id == null || sId == null || id.equals("") || (!id.equals(sId) && !sId.equals("admin"))) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		} else {
+		List<WishlistVO> wishlist = service.getwishlist(id);
+		model.addAttribute("wishlist", wishlist);
+		System.out.println(wishlist);
+		// member/member_info.jsp 페이지로 이동
 		return "mypage/mypage_wishlist";
+		
+		
+		}
 	}
 	
 	@GetMapping(value = "/mypage")
@@ -127,6 +142,7 @@ public class MypageController {
 	@PostMapping(value = "/mypage_revisePro")
 	public String revise(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
 			Model model, HttpSession session) {
+//		String sId = "test1@naver.com";
 		String sId = (String)session.getAttribute("sId");
 		String id = member.getMember_id();			
 		
@@ -160,22 +176,6 @@ public class MypageController {
 			return "notice/fail_back";
 		}		
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

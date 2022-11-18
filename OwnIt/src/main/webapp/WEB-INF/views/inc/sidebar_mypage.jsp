@@ -22,7 +22,7 @@
 										<a class="nav-link" href="mypage_sell?id=${sessionScope.sId }">판매내역</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="wishlist">관심상품</a>
+										<a class="nav-link" href="wishlist?id=${sessionScope.sId }">관심상품</a>
 									</li>
 								</ul>
 							</div>
