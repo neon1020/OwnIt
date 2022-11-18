@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+      <!-- meta -->
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
     <title>Product</title>
@@ -118,6 +119,46 @@
 	    }
     </style>
   </head>
+<!-- kakao sdk 호출 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+<script type="text/javascript">
+  // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+  Kakao.init('1782262d4bfba22efdc59a399005f94e');
+
+  // SDK 초기화 여부를 판단합니다.
+  console.log(Kakao.isInitialized());
+
+  function kakaoShare() {
+	  Kakao.Link.sendDefault({
+	      objectType: 'feed',
+	      content: {
+	        title: '${product.product_brand}',
+	        description: '${product.product_name}',
+	        imageUrl:
+	          'http://localhost:8081/ownit/resources/img/product/n_sa1_1.jpg',
+	        link: {
+	          mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	          webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	        },
+	      },
+	      social: {
+	        likeCount: 286,  //좋아요 수
+	        commentCount: 45,  //댓글 수
+	        sharedCount: 845,  //공유 수
+	      },
+	      buttons: [
+	        {
+	          title: '웹으로 보기',  //첫 번째 버튼 
+	          link: {
+	            mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',  //버튼 클릭 시 이동 링크
+	            webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	          },
+	        },
+	      ],
+	    })
+  }
+</script>
   <body>
 
     <!-- header -->
@@ -155,7 +196,7 @@
     <section class="hero pt-5">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
-
+			
           <div class="col-lg-7">
             <div class="row gutter-1 justify-content-between">
               <div class="col-lg-10 order-lg-2">
@@ -348,12 +389,10 @@
                     		상품 공유하기
                     	</span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="width: 250px;">
                       <li>
-                        <a class="dropdown-item" href="#">Facebook</a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">Twitter</a>
+                        <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn"><img src="resources/img/member/kakao.jpg"></a>
+                        <a href="#"><img src="resources/img/member/naver.jpg"></a>
                       </li>
                     </ul>
                   </li>
@@ -362,7 +401,6 @@
             </div>
             
           </div>
-
         </div>
       </div>
     </section>

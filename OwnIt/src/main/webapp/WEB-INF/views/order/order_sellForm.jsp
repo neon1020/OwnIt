@@ -174,11 +174,6 @@
 	          					+ 새 계좌 추가
 	          				</a>
 	          			</span><br>
-	          			<span id="sell_span2" style="float: right; font-size: 13px;">
-		          			<a id="account" href="#" data-toggle="modal" data-target="#exampleModal-4" style="color: black; ">
-								변경
-							</a>
-		          		</span>
 	          			은행 : <span id="sell_span2" class="checkAccount">${member.account_bank}</span><br>
 	          			계좌 : <span id="sell_span2">${member.account_num }</span><br>
 	          			예금주 : <span id="sell_span2">${member.account_owner_name }</span>
