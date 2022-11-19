@@ -195,7 +195,7 @@
 								</a>
 			          		</span>
 				          		주소별칭 : <span id="sell_span2">${member.address_nickname }</span><br>
-			          			받는분 : <span id="sell_span2">${member.member_name }</span>	<br>
+			          			받는분 : <span id="sell_span2">${member.address_recipient }</span>	<br>
 			          			연락처 : <span id="sell_span2">${member.member_phone }</span><br>
 			          			반송주소 : <span id="sell_span2" class="checkAddress">${member.address1 } ${member.address2 }</span><br>
 	          			</th>
@@ -412,6 +412,9 @@
 			      	<input type="hidden" name="account_idx" value="${member.account_idx }">
 		        <a>주소별칭</a>
 		        <input id="address_nickname" name="address_nickname" type="text" class="form-control" required="required" placeholder="주소의 별칭"><br>
+		        
+		        <a>받는분</a>
+		        <input id=address_recipient name="address_recipient" type="text" class="form-control" required="required" placeholder="받는분 성함"><br>
 		        
 		        <a>우편번호<input type="button" class="btn" onclick="execDaumPostcode()"value="우편번호" style="color:black; float: right; border: solid 1px black; padding: 3px; border-radius: 10px;"></a>
 		        <input id="address_zipcode" name="address_zipcode" type="text" class="form-control" required="required" placeholder="우편번호를 검색하세요"><br>

@@ -583,7 +583,8 @@
 				#{address1},
 				#{address2},
 				'1',
-				#{address_nickname}
+				#{address_nickname},
+				#{address_recipient}
 			);
 	</insert>
 
@@ -638,7 +639,7 @@
 			WHERE account.member_idx=#{member_idx};
 	</select>
 	
-	
+	<!-- 계좌 추가 성공시 새로운 계좌로 보이도록 하는 구문 -->
 	<select id="newAccountSellForm" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
 		SELECT * 
 			FROM member

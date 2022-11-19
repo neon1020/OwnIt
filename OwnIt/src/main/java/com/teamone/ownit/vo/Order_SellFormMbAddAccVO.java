@@ -18,6 +18,7 @@ public class Order_SellFormMbAddAccVO {
 	private String address2;
 	private String address_gb;
 	private String address_nickname;
+	private String address_recipient;
 	private int account_idx;
 	private String account_bank;
 	private String account_num;
@@ -30,8 +31,9 @@ public class Order_SellFormMbAddAccVO {
 	public Order_SellFormMbAddAccVO(int member_idx, String member_id, String member_passwd, String member_name,
 			String member_nickname, String member_phone, String member_image, String member_join_date,
 			String member_auth_gb, String member_agree, int address_idx, String address_zipcode, String address1,
-			String address2, String address_gb, String address_nickname, int account_idx, String account_bank,
-			String account_num, String account_owner_name, String account_gb, String account_nickname) {
+			String address2, String address_gb, String address_nickname, String address_recipient, int account_idx,
+			String account_bank, String account_num, String account_owner_name, String account_gb,
+			String account_nickname) {
 		super();
 		this.member_idx = member_idx;
 		this.member_id = member_id;
@@ -49,6 +51,7 @@ public class Order_SellFormMbAddAccVO {
 		this.address2 = address2;
 		this.address_gb = address_gb;
 		this.address_nickname = address_nickname;
+		this.address_recipient = address_recipient;
 		this.account_idx = account_idx;
 		this.account_bank = account_bank;
 		this.account_num = account_num;
@@ -185,6 +188,14 @@ public class Order_SellFormMbAddAccVO {
 		this.address_nickname = address_nickname;
 	}
 
+	public String getAddress_recipient() {
+		return address_recipient;
+	}
+
+	public void setAddress_recipient(String address_recipient) {
+		this.address_recipient = address_recipient;
+	}
+
 	public int getAccount_idx() {
 		return account_idx;
 	}
@@ -235,17 +246,16 @@ public class Order_SellFormMbAddAccVO {
 
 	@Override
 	public String toString() {
-		return "Order_SellFormMbAddAcc [member_idx=" + member_idx + ", member_id=" + member_id + ", member_passwd="
+		return "Order_SellFormMbAddAccVO [member_idx=" + member_idx + ", member_id=" + member_id + ", member_passwd="
 				+ member_passwd + ", member_name=" + member_name + ", member_nickname=" + member_nickname
 				+ ", member_phone=" + member_phone + ", member_image=" + member_image + ", member_join_date="
 				+ member_join_date + ", member_auth_gb=" + member_auth_gb + ", member_agree=" + member_agree
 				+ ", address_idx=" + address_idx + ", address_zipcode=" + address_zipcode + ", address1=" + address1
 				+ ", address2=" + address2 + ", address_gb=" + address_gb + ", address_nickname=" + address_nickname
-				+ ", account_idx=" + account_idx + ", account_bank=" + account_bank + ", account_num=" + account_num
-				+ ", account_owner_name=" + account_owner_name + ", account_gb=" + account_gb + ", account_nickname="
-				+ account_nickname + "]";
+				+ ", address_recipient=" + address_recipient + ", account_idx=" + account_idx + ", account_bank="
+				+ account_bank + ", account_num=" + account_num + ", account_owner_name=" + account_owner_name
+				+ ", account_gb=" + account_gb + ", account_nickname=" + account_nickname + "]";
 	}
-	
 
 	
 }
