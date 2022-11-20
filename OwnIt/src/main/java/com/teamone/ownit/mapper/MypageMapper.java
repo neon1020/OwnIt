@@ -296,13 +296,5 @@ public interface MypageMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 정채연 - 300
 }
