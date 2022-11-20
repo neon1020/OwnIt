@@ -96,7 +96,7 @@
 				WHERE m.member_id=#{id}
     </select>
 
-	<!-- 주소록 불러오기 -->	
+	<!-- 주소록 목록 -->	
     <select id="selectAddress" resultType="com.teamone.ownit.vo.AddressVO">
         SELECT 
 			m.member_idx,
@@ -113,8 +113,20 @@
 				WHERE m.member_id=#{id}
     </select>
 
-
-
+	<!-- 주소록 추가 -->
+	<insert id="insertAddress">
+		insert into address
+			values(
+				null,
+				#{member_idx},
+				#{address_zipcode},
+				#{address1},
+				#{address2},
+				'1',
+				#{address_nickname},
+				#{address_recipient}
+			);
+	</insert>
 
 
 

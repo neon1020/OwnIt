@@ -6,9 +6,9 @@ public class AddressVO {
 	private String address_zipcode;
 	private String address1;
 	private String address2;
-	private String address_recipient;
 	private String address_gb;
 	private String address_nickname;
+	private String address_recipient;
 	
 	// 기본 생성자
 	public AddressVO() {}

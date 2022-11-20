@@ -38,6 +38,9 @@ public interface MypageMapper {
 	//주소록 목록
 	List<AddressVO> selectAddress(String id);
 
+	//주소록 추가
+	int insertAddress(AddressVO address);
+
 	
 	
 	

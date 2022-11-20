@@ -54,6 +54,21 @@ public class MypageController {
 		}		
 	}
 	
+	//주소록 추가
+	@PostMapping(value = "addAddress")
+	public String writePro(@ModelAttribute AddressVO address, Model model) {
+		int insertCount = service.registAddress(address);
+		System.out.println(address);
+		if(insertCount > 0) {
+			return "redirect:/address";
+		} else {
+			model.addAttribute("msg", "등록 실패!");
+			return "notice/fail_back";
+		}
+	}	
+	
+	//주소록 삭제
+	
 	//위시리스트 목록
 	@GetMapping(value = "wishlist")
 	public String wishlist(@RequestParam String id, Model model, HttpSession session) {

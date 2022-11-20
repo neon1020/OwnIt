@@ -56,6 +56,11 @@ public class MypageService {
 	public List<AddressVO> getAddress(String id) {
 		return mapper.selectAddress(id);
 	}
+	
+	//주소록 추가
+	public int registAddress(AddressVO address) {
+		return mapper.insertAddress(address);
+	}
 
 
 	
