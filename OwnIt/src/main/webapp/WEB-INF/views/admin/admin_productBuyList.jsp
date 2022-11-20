@@ -136,6 +136,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    	
                                     	<c:forEach var="buyList" items="${buyList }">
 	                                        <tr>
 	                                            <td>${buyList.order_buy_idx }</td>
@@ -144,7 +145,6 @@
 	                                            	${buyList.product_name }
 	                                            </td>
 	                                            <td>
-<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
 	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원
 	                                            </td>
 	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
@@ -163,6 +163,15 @@
 	                                            </td>
 	                                        </tr>
                                         </c:forEach>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                     </tbody>
                                 </table>
 	                            <hr>

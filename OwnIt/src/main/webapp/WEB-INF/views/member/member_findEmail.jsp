@@ -12,7 +12,7 @@
 <body>
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
+<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
 	<!-- /header -->   
 	
 	<c:if test="${not empty sessionScope.sId }">
@@ -30,18 +30,44 @@
 			<br>
 			<br>
 			<div style="text-align: center;">
-				<h3>이메일 주소 찾기에 성공하였습니다.</h3>
-				<hr>
-				<br>
-				<h5>이메일 주소</h5>
-				<p>a***@naver.com</p>
-				<div class="container-fluid">
-	          		<div class="row gutter-0">
-			            <div class="col-2" style="margin: auto;">
-			              <button type="button" class="btn btn-dark btn-rounded" onclick="location.href='member_login'">로그인</button>
+			<c:choose>
+				<c:when test="${member.member_id eq null }">
+					<h3>찾으시는 아이디가 없습니다.</h3>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<div class="container-fluid">
+		          		<div class="row gutter-0">
+				            <div class="col-2" style="margin: auto;">
+				              <button type="button" class="btn btn-dark btn-rounded" onclick="location.href='member_joinForm'">가입하기</button>
+				            </div>
 			            </div>
-		            </div>
-				</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<h3>이메일 주소 찾기에 성공하였습니다.</h3>
+					<br>
+					<br>
+					<h5>${member.member_id }</h5>
+					<br>
+					<div class="container-fluid">
+		          		<div class="row gutter-0">
+				            <div class="col-2" style="margin: auto;">
+				              <button type="button" class="btn btn-dark btn-rounded" onclick="location.href='member_login'">로그인</button>
+				            </div>
+			            </div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+<!-- 				<div class="container-fluid"> -->
+<!-- 	          		<div class="row gutter-0"> -->
+<!-- 			            <div class="col-2" style="margin: auto;"> -->
+<!-- 			              <button type="button" class="btn btn-dark btn-rounded" onclick="location.href='member_login'">로그인</button> -->
+<!-- 			            </div> -->
+<!-- 		            </div> -->
+<!-- 				</div> -->
             </div>
 		</div>
 	</section>

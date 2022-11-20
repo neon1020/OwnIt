@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,26 +12,26 @@
 <body>
 	<!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
+<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
 	<!-- /header -->  
 
     <!-- hero -->
-	<section class="hero hero-small bg-purple text-white">
-		<div class="container">
-			<div class="row gutter-2 gutter-md-4 align-items-end">
-				<div class="col-md-6 text-center text-md-left">
-					<h1 class="mb-0">김뽀얌이</h1>
-					<span class="text-muted">부산광역시, 대한민국</span>
-				</div>
-				<div class="col-md-6 text-center text-md-right">
-					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a>
-				</div>
-			</div>
-		</div>
-	</section>
+<!-- 	<section class="hero hero-small bg-purple text-white"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<div class="row gutter-2 gutter-md-4 align-items-end"> -->
+<!-- 				<div class="col-md-6 text-center text-md-left"> -->
+<!-- 					<h1 class="mb-0">김뽀얌이</h1> -->
+<!-- 					<span class="text-muted">부산광역시, 대한민국</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-md-6 text-center text-md-right"> -->
+<!-- 					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</section> -->
 
     <!-- listing -->
-	<section class="pt-5">
+	<section class="pt-5" style="margin-top: 100px;">
 		<div class="container">
 			<div class="row gutter-4 justify-content-between">
 
@@ -88,34 +89,36 @@
 											<th>판매금액</th>
 											<th>진행상황</th>
 										</tr>
-										<tr>
-											<td><img src="resources/img/product/${mysell.image_real_file1 }" width="60" height="60"></td>
-											<td style="text-align: left;"><a href="" style="color: black;">${mysell.product_name }</a></td>
-											<td>${mysell.order_sell_date }</td>
-											<td>${mysell.product_sell_price }</td>
-											<td>${mysell.order_sell_gb }</td>
-										</tr>
-										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-											<td>2022.09.22</td>
-											<td>1,918,000원</td>
-											<td>입고완료</td>
-										</tr>
-										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-											<td>2022.09.22</td>
-											<td>1,918,000원</td>
-											<td>검수합격</td>
-										</tr>
-										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-											<td>2022.09.22</td>
-											<td>1,918,000원</td>
-											<td>정산완료 <input type="button" value="정산정보" class="btn btn-outline-dark btn-sm"></td>
-										</tr>				
+										<c:forEach var="mysell" items="${mysell }">
+											<tr>
+												<td><img src="resources/img/product/${mysell.image_real_file1 }" width="60" height="60"></td>
+												<td style="text-align: left;"><a href="" style="color: black;">${mysell.product_name }</a></td>
+												<td>${mysell.order_sell_date }</td>
+												<td>${mysell.product_sell_price }</td>
+												<td>${mysell.order_sell_gb }</td>
+											</tr>
+										</c:forEach>
+<!-- 										<tr> -->
+<!-- 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td> -->
+<!-- 											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td> -->
+<!-- 											<td>2022.09.22</td> -->
+<!-- 											<td>1,918,000원</td> -->
+<!-- 											<td>입고완료</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td> -->
+<!-- 											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td> -->
+<!-- 											<td>2022.09.22</td> -->
+<!-- 											<td>1,918,000원</td> -->
+<!-- 											<td>검수합격</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td> -->
+<!-- 											<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td> -->
+<!-- 											<td>2022.09.22</td> -->
+<!-- 											<td>1,918,000원</td> -->
+<!-- 											<td>정산완료 <input type="button" value="정산정보" class="btn btn-outline-dark btn-sm"></td> -->
+<!-- 										</tr>				 -->
 									</table>		  	
 								</div>
 								

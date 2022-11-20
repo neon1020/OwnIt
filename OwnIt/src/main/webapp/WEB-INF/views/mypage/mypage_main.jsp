@@ -11,26 +11,26 @@
 <body>
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
+<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
 	<!-- /header -->    
 
     <!-- hero -->
-	<section class="hero hero-small bg-purple text-white">
-		<div class="container">
-			<div class="row gutter-2 gutter-md-4 align-items-end">
-				<div class="col-md-6 text-center text-md-left">
-					<h1 class="mb-0">김뽀얌이</h1>
-					<span class="text-muted">부산광역시, 대한민국</span>
-				</div>
-				<div class="col-md-6 text-center text-md-right">
-					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a>
-				</div>
-			</div>
-		</div>
-	</section>
+<!-- 	<section class="hero hero-small bg-purple text-white"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<div class="row gutter-2 gutter-md-4 align-items-end"> -->
+<!-- 				<div class="col-md-6 text-center text-md-left"> -->
+<!-- 					<h1 class="mb-0">김뽀얌이</h1> -->
+<!-- 					<span class="text-muted">부산광역시, 대한민국</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-md-6 text-center text-md-right"> -->
+<!-- 					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</section> -->
 
     <!-- listing -->
-	<section class="pt-5">
+	<section class="pt-5" style="margin-top: 100px;">
 		<div class="container">
 			<div class="row gutter-4 justify-content-between">
 
