@@ -2,11 +2,10 @@ package com.teamone.ownit.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ReviewMapper;
-import com.teamone.ownit.vo.ProductVO;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
@@ -32,13 +31,13 @@ public class ReviewService {
 		return mapper.selectReviewImage(review_idx);
 	}
 
-    // 리뷰 댓글
+    // 리뷰 댓글 출력
 	public List<ReplyVO> getReply(int review_idx) {
         return mapper.selectReply(review_idx);
 	}
 	
 	// 리뷰 폼 상품 출력
-	public ProductVO getProduct(int order_buy_idx) {
+	public ReviewListVO getProduct(int order_buy_idx) {
 		return mapper.selectProduct(order_buy_idx);
 	}
 
@@ -66,6 +65,22 @@ public class ReviewService {
 	public int getReviewCount(int member_idx) {
 		return mapper.selectReviewCount(member_idx);
 	}
+
+	// 리뷰 수정
+	public int modifyReview(ReviewVO review) {
+		return mapper.updateReview(review);
+	}
+
+	// 리뷰 이미지 수정
+	public int modifyReviewImage(ReviewVO review) {
+		return mapper.updateReviewImage(review);
+	}
+
+	// 리뷰 댓글 등록
+	public int registReply(ReplyVO reply) {
+		return mapper.insertReply(reply);
+	}
+
 
 
 
