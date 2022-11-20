@@ -23,6 +23,15 @@
         }
         cnt++;
       }
+      
+      function forwardReply() {
+<%--     	    <%if(sId != null) {%> --%>
+   	      var content = document.getElementById("reply_content").value;
+   	      location.href = "review_reply?member_idx=25&review_idx=${review.review_idx }&reply_content=" + content;
+<%--     	    <%} else {%> --%>
+//     	      alert("댓글은 로그인 후 사용 가능합니다!");
+<%--     	    <%}%> --%>
+    	  }
     </script>
     
     <style type="text/css">
@@ -98,25 +107,30 @@
     <section id="component-1">
       <div class="component">
         <table style="width: 780px;">
-        <!-- ********************************* 필요한 부분 ********************************* -->
+        <!-- ********************************* 댓글 목록 ********************************* -->
         <c:forEach var="re" items="${reply }">
           <tr>
             <td style="width: 180px;"><a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }"><span class="eyebrow text-muted">${re.member_nickname }</span></a></td>
             <td style="width: 470px;">${re.reply_content }</td>
             <td> <!-- ************* 댓글쓴이에게만 보이는 버튼 ************* -->
+<%--             <c:if test="${(sessionScope.sIdx == re.member_idx) && not empty sessionScope.sIdx }"> --%>
               <button type="button" class="btn btn-primary btn-rounded btn-reply">수정</button>
               <button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2">삭제</button>
+<%--             </c:if> --%>
             </td>
           </tr>
         </c:forEach>
-        <!-- ********************************* 필요한 부분 ********************************* -->
         
+        <!-- ********************************* 댓글 작성 ********************************* -->
         </table>
         <div class="form-group">
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
+          <input type="text" class="form-control" id="reply_content" id="exampleInputEmail1" style="width: 700px; float: left;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
+          <button type="button" class="btn btn-primary btn-rounded btn-reply" onclick="forwardReply()" style="float: left; margin: 7px auto;">댓글등록</button>
         </div> <!-- ***************************** 리뷰 글쓴이에게만 보이는 버튼 ***************************** -->
-        <button type="button" class="btn btn-primary btn-rounded on" style="float: right;" data-toggle="modal" data-target="#exampleModal-1">삭제</button>
-        <button type="button" class="btn btn-primary btn-rounded on" style="float: right;" onclick="location.href='review_modifyForm'">수정</button>
+        <c:if test="${(sessionScope.sId == review.member_id) && not empty sessionScope.sId }">
+	        <button type="button" class="btn btn-primary btn-rounded on" style="float: right;" data-toggle="modal" data-target="#exampleModal-1">삭제</button>
+	        <button type="button" class="btn btn-primary btn-rounded on" style="float: right;" onclick="location.href='review_modifyForm?review_idx=${review.review_idx}'">수정</button>
+	      </c:if>
       </div>
      </section>
      

@@ -12,16 +12,71 @@
     
     <script src="resources/js/jquery-3.6.1.js"></script>
     <script>
-      $(document).ready(function (e){
-        $("#imageFile").on("change", function(event) {
-            var file = event.target.files[0];
-            var reader = new FileReader(); 
-            reader.onload = function(e) {
-                $("#preview").attr("src", e.target.result);
-            }
-            reader.readAsDataURL(file);
-        });
-      });  
+		$(function(){
+			var fileNum = 0;
+		  //이미지 등록
+		  $("#AddImgs").change(function(e){
+		      //div 내용 비워주기
+		      $('#Preview').empty();
+		      
+		      var files = e.target.files;
+		      var arr = Array.prototype.slice.call(files);
+		      //업로드 가능 파일인지 체크
+		      for(var i = 0; i < files.length; i++){
+		          if(!checkExtension(files[i].name)){
+		              return false;
+		          }
+		          if(files.length > 3){
+		        	    alert('업로드 파일은 3개를 초과할 수 없습니다.');
+		              $("#AddImgs").val("");  //파일 초기화
+		              return false;
+		          }
+		      }
+		      preview(arr);
+		
+		      function checkExtension(fileName){
+		          var regex = new RegExp("(.*?)\.(exe|hwp|zip|alz|txt)$");
+		
+		          if(regex.test(fileName)){
+		              alert('파일형식을 확인해주세요.');
+		              $("#AddImgs").val("");  //파일 초기화
+		              return false;
+		          }
+		          return true;
+		      }
+		
+	      function preview(arr){
+	    	  arr.forEach(function(f){
+            //div에 이미지 추가
+            var str = '<li class="ui-state-default">';
+            //이미지 파일 미리보기
+            if(f.type.match('image.*')){
+	            //파일을 읽기 위한 FileReader객체 생성
+	            var reader = new FileReader(); 
+	            arr.push(f);
+	            reader.onload = function (e) { 
+	            //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+	              str += '<img src="'+e.target.result+'" title="'+f.name+'" width=80 height=80>';
+	              str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
+	              str += '</li>';
+	              $(str).appendTo('#Preview');
+	              fileNum++;
+	            }
+            reader.readAsDataURL(f);
+            } 
+          });
+	    	  console.log(arr);
+	      }
+	      
+			  //이미지 삭제
+	      function delImg(fileNum){
+          var no = fileNum.replace(/[^0-9]/g, "");
+          arr[no].is_delete = true;
+          $('#' + fileNum).remove();
+          fileCount--;
+	      };
+		  });
+		});
     </script>
     
     <style type="text/css">
@@ -29,9 +84,18 @@
       .form-control { width: 600px; margin: 10px auto; }
       .form-control:focus { border-color: #101010; }
       #exampleInputEmail1 { width: 530px; height: 60px; }
+      .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
       /* 사진업로드 */
-      img #preview { width: 200px; height: 200px; }
-      input[type=file]::file-selector-button, .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
+/*       img #preview { width: 200px; height: 200px; } */
+      input[type=file]::file-selector-button { display: none; }
+    
+      .inputFile, #Preview, #Preview li { float:left }
+			.inputFile { margin-bottom: 10px; width: 100px; }
+			.addImgBtn { text-align: center; width: 80px; height: 80px; line-height: 71px; background-color: #fff; color: #b7b7b7; border: 2px solid #b7b7b7; font-size: 35px; padding: 0; }
+			#Preview { margin-left: 20px; width: 300px; }
+			#Preview li { margin-left: 10px; margin-bottom: 10px; position: relative; border: 1px solid #ececec; cursor:move }
+			.delBtn { position: absolute; top: 0; right: 0; font-size: 13px; background-color: #000; color: #fff; width: 18px; height: 18px;
+			    line-height: 16px; display: inline-block; text-align: center; cursor: pointer; }    
     </style>
     
   </head>
@@ -46,18 +110,23 @@
       <!-- ********************************* 리뷰 작성 부분 ********************************* -->
       <form action="review_WritePro" method="post" enctype="multipart/form-data">
        <input type="hidden" name="product_idx" value="${product.product_idx }" />
-       <input type="hidden" name="member_idx" value="8" />
+       <input type="hidden" name="member_idx" value="${product.member_idx }" />
         <section id="component-1">
           <div class="component">
             <div class="form-group">
-              <img src="resources/img/product/${product.image_original_file1 }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
+              <img src="resources/img/product/${product.product_image }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
               <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="${product.product_name }" readonly="readonly">
-              <textarea rows="10" cols="30" name="review_content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+              <textarea rows="10" cols="30" name="review_content" class="form-control" placeholder="내용을 입력하세요" required></textarea>
             </div>
             <div class="filebox clearfix">
-          <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; object-fit: cover;">
-        <input type="file" name="files" id="imageFile" required="required" multiple="multiple">
-        </div>
+               <div class="inputFile">
+					       <label for="AddImgs" class="addImgBtn">+</label>
+					       <input type="file" name="files" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple required>
+						   </div>
+						   <ul id="Preview" class="sortable"></ul>
+<!-- 		          <img src="resources/img/review/blank.jpg" id="preview" style="width: 120px; height: 120px; object-fit: cover;"> -->
+<!-- 		          <input type="file" name="files" id="imageFile" required="required" multiple="multiple"> -->
+		        </div>
           </div>
         </section>
           <div style="float: right;">
