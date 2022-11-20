@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/vendor.css" />
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style.css" />
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style type="text/css">
     	.input-group {
     		width: 400px;
@@ -77,19 +78,20 @@
 
                   <!-- addresses -->
                   <div class="tab-pane fade show active" id="sidebar-1-3">
-                    <div class="row">
-                      <div class="col">
-                        <h3 class="mb-0">Addresses</h3>
-                        <span class="eyebrow">2 개의 배송지가 있습니다.</span>
-                      </div>
-                    </div>
-                    <div class="row gutter-2">
+<!--                     <div class="row"> -->
+<!--                       <div class="col"> -->
+<!--                         <h3 class="mb-0">Addresses</h3> -->
+<!--                         <span class="eyebrow">2 개의 배송지가 있습니다.</span> -->
+<!--                       </div> -->
+<!--                     </div> -->
+                  <div class="row gutter-2">
+                    <c:forEach var="address" items="${address }">
                       <div class="col-md-6">
                         <div class="card card-data">
                           <div class="card-header card-header-options">
                             <div class="row align-items-center">
                               <div class="col">
-                                <h3 class="card-title">Home (기본배송지)</h3>
+                                <h3 class="card-title">${address.address_nickname } (${address.address_gb }기본배송지)</h3>
                               </div>
                               <div class="col text-right">
                                 <div class="dropdown">
@@ -112,92 +114,16 @@
                           <div class="card-body w-100" style="height: 240px;">
                             <h5 class="eyebrow text-muted">Address</h5>
                             <p class="card-text">
-                            	51435 <br>
-                            	경남 창원시 성산구 중앙대로 151 (용호동)
+                            	(우편번호) ${address.address_zipcode } <br>
+                            	(도로명주소) ${address.address1 } <br>
+                            	(상세주소) ${address.address2 } 
                             </p>
-                            <h5 class="eyebrow text-muted">To</h5>
-                            <p class="card-text">김감자</p>
+                            <h5 class="eyebrow text-muted">수령인</h5>
+                            <p class="card-text">${address.address_recipient } </p>
                           </div>
                         </div>
                       </div>
-                      
-                      <!-- --------------------------------------------------------------------------------------------------------- -->
-                      
-                      <div class="col-md-6">
-                        <div class="card card-data">
-                          <div class="card-header card-header-options">
-                            <div class="row align-items-center">
-                              <div class="col">
-                                <h3 class="card-title">Company</h3>
-                              </div>
-                              <div class="col text-right">
-                                <div class="dropdown">
-                                  <button id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-lg btn-secondary btn-ico"><i class="icon-more-vertical"></i></button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address">기본 배송지 설정</a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#edit_address">배송지 수정</a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#delete_address">배송지 삭제</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="card-body w-100" style="height: 240px;">
-                            <h5 class="eyebrow text-muted">Address</h5>
-                            <p class="card-text">
-                            	47246 <br>
-                            	부산광역시 부산진구 동천로 109 (부전동, 삼한골든게이트)<br>
-                            	7층 아이티윌 부산교육센터
-                            </p>
-                            <h5 class="eyebrow text-muted">To</h5>
-                            <p class="card-text">김감자</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-6">
-                        <div class="card card-data">
-                          <div class="card-header card-header-options">
-                            <div class="row align-items-center">
-                              <div class="col">
-                                <h3 class="card-title">Company</h3>
-                              </div>
-                              <div class="col text-right">
-                                <div class="dropdown">
-                                  <button id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-lg btn-secondary btn-ico"><i class="icon-more-vertical"></i></button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address">기본 배송지 설정</a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#edit_address">배송지 수정</a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#delete_address">배송지 삭제</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="card-body w-100" style="height: 240px;">
-                            <h5 class="eyebrow text-muted">Address</h5>
-                            <p class="card-text">
-                            	47246 <br>
-                            	부산광역시 부산진구 동천로 109 (부전동, 삼한골든게이트)<br>
-                            	7층 아이티윌 부산교육센터
-                            </p>
-                            <h5 class="eyebrow text-muted">To</h5>
-                            <p class="card-text">김감자</p>
-                          </div>
-                        </div>
-                      </div>
+                     </c:forEach>
                     </div>
 
                     <div class="row">
@@ -209,40 +135,40 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="cardNumber">Zipcode</label>
-                          <input id="cardNumber" type="text" class="form-control" placeholder="우편번호">
+                          <input id="cardNumber" type="text" class="form-control" name="" placeholder="우편번호">
                         </div>
                       </div>
                       
-                      <!-- 우편번호 검색 버튼 필요할 시 사용!! -->
-<!--                       <div class="col-6 col-md-3"> -->
-<!--                         <div class="form-group"> -->
-<!--                     	  <label for="cardNumber">간격맞추기용</label> -->
-<!--                           <button type="button" class="btn btn-block btn-primary">우편번호 검색</button> -->
-<!--                         </div> -->
-<!--                       </div> -->
+<!--                       우편번호 검색 버튼 필요할 시 사용!! -->
+                      <div class="col-6 col-md-3">
+                        <div class="form-group">
+                    	  <label for="cardNumber">간격맞추기용</label>
+                          <button type="button" class="btn btn-block btn-primary">우편번호 검색</button>
+                        </div>
+                      </div>
 
                       <div class="col-6 col-md-3">
                         <div class="form-group">
                           <label for="cardNumber2">Address Nickname</label>
-                          <input id="cardNumber2" type="text" class="form-control" placeholder="주소별칭">
+                          <input id="cardNumber2" type="text" class="form-control" name="" placeholder="주소별칭">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="cardNumber">Address</label>
-                          <input id="cardNumber" type="text" class="form-control" placeholder="주소">
+                          <input id="cardNumber" type="text" class="form-control" name="" placeholder="주소">
                         </div>
                       </div>
                       <div class="col-6 col-md-3">
                         <div class="form-group">
                           <label for="cardNumber2">Detail Address</label>
-                          <input id="cardNumber2" type="text" class="form-control" placeholder="상세주소">
+                          <input id="cardNumber2" type="text" class="form-control" name="" placeholder="상세주소">
                         </div>
                       </div>
                       <div class="col-6 col-md-3">
                         <div class="form-group">
                           <label for="cardNumber3">Name</label>
-                          <input id="cardNumber3" type="text" class="form-control" placeholder="받으시는 분">
+                          <input id="cardNumber3" type="text" class="form-control" name="" placeholder="받으시는 분">
                         </div>
                       </div>
                       <div class="col-12" style="text-align: center;">

@@ -3,12 +3,15 @@
 <mapper namespace="com.teamone.ownit.mapper.MypageMapper">
 
 	<!-- 류혜지 -->
+	
+	<!-- 회원정보 조회	 -->
 	<select id="selectMemberInfo" resultType="com.teamone.ownit.vo.MypageVO">
         SELECT 
         	i.image_original_file1,
         	m.member_id, 
  			m.member_nickname,
 			m.member_name,
+			m.member_image,
 			m.member_phone,
 			a.address_zipcode,
 			a.address1,
@@ -20,7 +23,8 @@
 				ON m.member_idx = i.member_idx
 				WHERE member_id=#{member_id}
     </select>	
-	<!-- 전체 게시물 목록 갯수 조회(검색 기능 추가) -->
+    
+	<!-- 구매내역 게시글 갯수 -->
 	<select id="selectMySellListCount" resultType="integer">
 		SELECT 
 			COUNT(*) 
@@ -34,6 +38,8 @@
 				WHERE member_id=#{id}			
 			
 	</select>	
+	
+	<!-- 구매내역 게시글 -->
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
         SELECT 
         	m.member_id,
@@ -54,14 +60,25 @@
 			ORDER BY 
 				o.order_sell_idx DESC
 			LIMIT #{startRow}, #{listLimit}
-    </select>		
+    </select>	
+    
+    <!-- 비밀번호 조회 -->	
+	<select id="selectPasswd" resultType="String">
+		SELECT member_passwd 
+			FROM member
+			WHERE member_id=#{sId}
+	</select>
+	
+	<!-- 비밀번호 변경 -->    
 	<update id="updateMember">
 		UPDATE member
-				member_passwd = #{newPasswd}
+			SET
+				member_passwd = #{secureNewPassword}
 			WHERE 
-				member_id = #{member.member_id} AND member_passwd = #{member.member_passwd}
+				member_id = #{member.member_id}
 	</update>	
 	
+	<!-- 위시리스트 불러오기 -->	
     <select id="selectWishlist" resultType="com.teamone.ownit.vo.WishlistVO">
         SELECT 
 			m.member_idx,
@@ -79,37 +96,22 @@
 				WHERE m.member_id=#{id}
     </select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 주소록 불러오기 -->	
+    <select id="selectAddress" resultType="com.teamone.ownit.vo.AddressVO">
+        SELECT 
+			m.member_idx,
+			m.member_id,
+			a.address_zipcode,
+			a.address1,
+			a.address2,
+			a.address_recipient,
+			a.address_gb,
+			a.address_nickname
+				FROM address a
+				LEFT JOIN member m
+				ON a.member_idx = m.member_idx
+				WHERE m.member_id=#{id}
+    </select>
 
 
 

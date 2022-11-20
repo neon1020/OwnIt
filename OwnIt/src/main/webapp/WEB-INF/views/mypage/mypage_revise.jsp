@@ -126,33 +126,35 @@
 						<div class="tab-content" id="myTabContent">
 
 							<!-- mypage_revise -->
-                 			<form action="mypage_revisePro" method="post" id="joinForm" enctype="multipart/form-data"> 
+	                 		<form action="mypage_reviseProfile" method="post" id="joinForm" enctype="multipart/form-data"> 
+								<div class="col-md-12">
+									<img src="resources/img/member/${mypage.member_image }" width="100" height="100" style="border-radius: 10em; margin-right: 10px">
+									<input type="button" name="member_image" value="이미지 변경" class="btn btn-outline-dark btn-rounded btn-sm">
+									<input type="button" value="삭제" class="btn btn-outline-dark btn-rounded btn-sm">
+									<hr>
+								</div>
+							</form>
+                 			<form action="mypage_revisePro" method="post" id="joinForm"> 
 								<div class="tab-pane fade show active" id="sidebar-1-1" role="tabpanel" aria-labelledby="sidebar-1-1">
 									<div class="row mb-2">
 									</div>
 									<div class="row gutter-1">
-										<div class="col-md-12">
-											<img src="resources/img/member/${mypage.image_original_file1 }" width="100" height="100" style="border-radius: 10em">
-											<input type="button" value="이미지 변경" class="btn btn-outline-dark btn-rounded btn-sm">
-											<input type="button" value="삭제" class="btn btn-outline-dark btn-rounded btn-sm">
-											<hr>
-										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput1">이메일 주소</label>
-												<input id="exampleInput1" type="text" class="form-control" value="${mypage.member_id }" readonly="readonly">
+												<input id="exampleInput1" type="text" name="member_id" class="form-control" value="${mypage.member_id }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput2">닉네임</label>
-												<input id="exampleInput2" type="text" class="form-control" value="${mypage.member_nickname }" readonly="readonly">
+												<input id="exampleInput2" type="text" class="form-control" name="member_nickname" value="${mypage.member_nickname }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInput6">이름</label>
-												<input id="exampleInput6" type="text" class="form-control" value="${mypage.member_name }" readonly="readonly">
+												<input id="exampleInput6" type="text" class="form-control" name="member_name" value="${mypage.member_name }" readonly="readonly">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -205,7 +207,7 @@
 
 									<div class="row">
 										<div class="col" style="text-align: center;">
-											<input type="submit" value="변경" class="btn btn-dark btn-rounded">
+											<input type="submit" value="변경" class="btn btn-dark btn-rounded" >
 											<input type="button" value="취소" onclick="history.back()" class="btn btn-dark btn-rounded">
 											<input type="button" value="탈퇴" onclick="#" class="btn btn-outline-dark btn-rounded">								
 										</div>

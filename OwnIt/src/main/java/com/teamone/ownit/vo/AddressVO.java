@@ -6,6 +6,7 @@ public class AddressVO {
 	private String address_zipcode;
 	private String address1;
 	private String address2;
+	private String address_recipient;
 	private String address_gb;
 	private String address_nickname;
 	
@@ -14,13 +15,14 @@ public class AddressVO {
 
 	// 파라미터 생성자
 	public AddressVO(int address_idx, int member_idx, String address_zipcode, String address1, String address2,
-			String address_gb, String address_nickname) {
+			String address_recipient, String address_gb, String address_nickname) {
 		super();
 		this.address_idx = address_idx;
 		this.member_idx = member_idx;
 		this.address_zipcode = address_zipcode;
 		this.address1 = address1;
 		this.address2 = address2;
+		this.address_recipient = address_recipient;
 		this.address_gb = address_gb;
 		this.address_nickname = address_nickname;
 	}
@@ -66,6 +68,14 @@ public class AddressVO {
 		this.address2 = address2;
 	}
 
+	public String getAddress_recipient() {
+		return address_recipient;
+	}
+
+	public void setAddress_recipient(String address_recipient) {
+		this.address_recipient = address_recipient;
+	}
+
 	public String getAddress_gb() {
 		return address_gb;
 	}
@@ -81,12 +91,13 @@ public class AddressVO {
 	public void setAddress_nickname(String address_nickname) {
 		this.address_nickname = address_nickname;
 	}
-
+	
 	// toString 오버라이딩
 	@Override
 	public String toString() {
-		return "addressVO [address_idx=" + address_idx + ", member_idx=" + member_idx + ", address_zipcode="
-				+ address_zipcode + ", address1=" + address1 + ", address2=" + address2 + ", address_gb=" + address_gb
-				+ ", address_nickname=" + address_nickname + "]";
+		return "AddressVO [address_idx=" + address_idx + ", member_idx=" + member_idx + ", address_zipcode="
+				+ address_zipcode + ", address1=" + address1 + ", address2=" + address2 + ", address_recipient="
+				+ address_recipient + ", address_gb=" + address_gb + ", address_nickname=" + address_nickname + "]";
 	}
+
 }
