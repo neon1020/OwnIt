@@ -97,9 +97,9 @@
 	          						%>
 		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
 		          				<div style="text-align: center;">
-			          					   <a style="float: left;">① 판매검수</a> 
-			          					   <a>② 판매반려</a> 
-			          					   <a style="float: right">③ 판매완료</a>
+			          					   <a style="float: left;">① 검수대기중</a> 
+			          					   <a>② 검수중</a> 
+			          					   <a style="float: right">③ 검수완료</a>
 			          			</div>
 	          				</div>
 	          			</th>
