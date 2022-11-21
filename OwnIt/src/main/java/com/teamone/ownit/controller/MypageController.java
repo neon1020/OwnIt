@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.MypageService;
+import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
@@ -26,11 +27,6 @@ import com.teamone.ownit.vo.WishlistVO;
 public class MypageController {
 	@Autowired
 	private MypageService service;
-	
-	
-	
-	
-	
 	
 	
 	
@@ -290,7 +286,10 @@ public class MypageController {
 	
 	
 	
-
+	
+	
+	
+	
 	
 	
 	
@@ -304,9 +303,86 @@ public class MypageController {
 		return "mypage/mypage_order";
 	}
 	
-	@GetMapping(value = "account")
-	public String account() {
+	// 마이페이지 : 계좌 정보 불러오기
+	@GetMapping(value = "mypage_account")
+	public String account(int member_idx, Model model) {
+		
+		// 계좌 리스트 불러와서 model 객체에 저장
+		List<AccountVO> account = service.getAccountList(member_idx);
+		model.addAttribute("account", account);
+		
+		// 계좌 갯수 불러와서 model 객체에 저장
+		int accountCount = service.getAccountCount(member_idx);
+		model.addAttribute("accountCount", accountCount);
+		
 		return "mypage/mypage_account";
 	}
 	
-}
+	// 마이페이지 : 계좌 추가 작업
+	@PostMapping(value = "mypage_addAccount")
+	public String addAccount(AccountVO account, int member_idx, HttpSession session, Model model) {
+		int accountCount = service.getAccountCount(member_idx);
+		
+		if(accountCount >= 4) {
+			model.addAttribute("msg", "정산 계좌는 최대 4개까지 등록 가능합니다.");
+			return "notice/fail_back";
+		} else {
+			int insertCount = service.addAccount(account, member_idx, accountCount);
+			
+			if(insertCount > 0) {
+				model.addAttribute("accountCount", accountCount);
+				return "redirect:/mypage_account?member_idx=" + member_idx;
+			} else {
+				model.addAttribute("msg", "계좌 추가에 실패하였습니다. 다시 시도해주세요.");
+				return "notice/fail_back";
+			}
+		}
+		
+	}
+	
+	// 마이페이지 : 계좌 수정 작업
+	@PostMapping(value = "editAccount")
+	public String editAccount(int account_idx, int member_idx, AccountVO account, Model model) {
+		account.setAccount_idx(account_idx);
+		
+		int updateCount = service.modifyAccount(account);
+		
+		if(updateCount > 0) {
+			return "redirect:/mypage_account?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "계좌 수정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}
+	
+	// 마이페이지 : 계좌 삭제 작업
+	@PostMapping(value = "deleteAccount")
+	public String deleteAccount(int account_idx, int member_idx, Model model) {
+		int deleteCount = service.removeAccount(account_idx);
+		
+		if(deleteCount > 0) {
+			return "redirect:/mypage_account?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "계좌 삭제에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}
+	
+	// 마이페이지 : 기본 계좌 설정 작업
+	@PostMapping(value = "defaultAccount")
+	public String defaultAccount(int account_idx, int member_idx, Model model) {
+		// 계좌 전체 1(나머지 계좌)로 설정
+		int setOther = service.otherAccount(member_idx);
+		
+		// 해당 계좌 0(기본 계좌)으로 설정
+		int setDefault = service.defaultAccount(member_idx, account_idx);
+		
+		if(setOther > 0 && setDefault > 0) {
+			return "redirect:/mypage_account?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "기본 계좌 설정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}
+	
+} // controller 끝

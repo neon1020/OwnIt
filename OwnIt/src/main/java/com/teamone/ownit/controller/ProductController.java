@@ -117,9 +117,9 @@ public class ProductController {
 	@GetMapping(value = "addCart", produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String addCart(HttpSession session, int product_idx) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		System.out.println(product_idx);
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			int isContained = service.isContainedInCart(sId, product_idx);
 			if(isContained > 0) {

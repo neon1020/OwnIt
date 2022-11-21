@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
@@ -53,6 +54,21 @@ public interface MypageMapper {
 	
 	//주소록 삭제
 	int deleteAddress(AddressVO address);
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 
@@ -276,46 +292,23 @@ public interface MypageMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 	
 	// 정채연 - 300
+	int selectAccountCount(int member_idx);
+
+	int insertAccount(@Param("account") AccountVO account, @Param("member_idx") int member_idx, @Param("accountCount") int accountCount);
+
+	List<AccountVO> selectAccountList(int member_idx);
+
+	int updateAccount(AccountVO account);
+
+	int deleteAccount(int account_idx);
+
+	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
+
+	int otherAccount(int member_idx);
 }

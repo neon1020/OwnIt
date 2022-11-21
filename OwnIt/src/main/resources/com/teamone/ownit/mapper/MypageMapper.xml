@@ -298,4 +298,99 @@
 
 
 <!-- 정채연 -->
+
+<!-- 계좌 관리 : 해당 회원의 총 계좌 갯수 구하기 -->
+<select id="selectAccountCount" resultType="Integer">
+	SELECT COUNT(*) FROM account WHERE member_idx = #{member_idx}
+</select>
+
+<!-- 계좌 관리 : 계좌 추가 작업 수행 -->
+<insert id="insertAccount">
+	<selectKey keyProperty="isMain" resultType="Integer" order="BEFORE">
+		SELECT COUNT(account_gb) FROM account
+			WHERE
+			member_idx = #{member_idx}
+			AND
+			account_gb = 0
+	</selectKey>
+	INSERT INTO account
+	VALUES (
+		NULL,
+		#{member_idx},
+		#{account.account_bank},
+		#{account.account_num},
+		#{account.account_owner_name},
+		<if test="accountCount == 0">
+			'0',
+		</if>
+		<if test="accountCount > 0">
+			<choose>
+				<when test="isMain == 0">
+					'0',
+				</when>
+				<when test="isMain > 0">
+					'1',
+				</when>
+			</choose>
+		</if>
+		#{account.account_nickname}
+	)
+</insert>
+
+<!-- 계좌 관리 : 해당 회원의 계좌 목록 가져오기 -->
+<select id="selectAccountList" resultType="com.teamone.ownit.vo.AccountVO">
+	SELECT * FROM account
+	WHERE
+		member_idx = #{member_idx}
+	ORDER BY account_gb
+</select>
+
+<!-- 계좌 관리 : 계좌 정보 수정 -->
+<update id="updateAccount">
+	UPDATE account
+		SET
+			account_bank = #{account_bank},
+			account_num = #{account_num},
+			account_owner_name = #{account_owner_name},
+			account_nickname = #{account_nickname}
+		WHERE
+			account_idx = #{account_idx}
+</update>
+
+<!-- 계좌 관리 : 계좌 삭제 -->
+<delete id="deleteAccount">
+	DELETE
+		FROM account
+		WHERE
+			account_idx = #{account_idx}
+</delete>
+
+<!-- 계좌 관리 : 기본 계좌 설정 -->
+<update id="defaultAccount">
+	UPDATE account
+		SET
+			account_gb = '0'
+		WHERE
+			member_idx = #{member_idx}
+			AND
+			account_idx = #{account_idx}
+</update>
+
+<!-- 계좌 관리 : 기본 계좌 설정 전 전체 나머지 계좌로 설정 -->
+<update id="otherAccount">
+	UPDATE account
+		SET
+			account_gb = '1'
+		WHERE
+			member_idx = #{member_idx}
+</update>
+
+
+
+
+
+
+
+
+
 </mapper> 
