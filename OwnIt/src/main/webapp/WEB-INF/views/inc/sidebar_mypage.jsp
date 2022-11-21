@@ -40,7 +40,7 @@
 										<a class="nav-link" href="address">주소록</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="account">판매 정산 계좌</a>
+										<a class="nav-link" href="mypage_account?member_idx=${sessionScope.sIdx }">판매 정산 계좌</a>
 									</li>
 								</ul>
 							</div>
