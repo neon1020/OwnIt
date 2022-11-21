@@ -526,30 +526,25 @@ public class OrderController {
 	public String order_sellForm(@RequestParam int product_idx,
 								 @ModelAttribute Order_SellFormMbAddAccVO address,
 								 Model model, HttpSession session) {
-		int address_idx = 0;
-		int insertAddressCount = 0;
-		int account_idx = 0;
+		int address_idx = 0, insertAddressCount = 0 ,account_idx = 0;
 		String sId = (String)session.getAttribute("sId");
 		MemberVO memberIdx = service.selectMemberIdx(sId);
 		int member_idx = memberIdx.getMember_idx();
 		address.setMember_idx(member_idx);
-		// 주소를 입력 받았을시에만 실행
-		if(address.getAddress1() != null && !address.getAddress1().equals("")) {
-			// 주소추가를 입력받았을시 주소 갯수 조회
-			int addressCounter = service.getCountAddress(member_idx);
-			if(addressCounter > 3 ) { // 주소가 3개보다 많을 경우(4개이상일경우)
-					model.addAttribute("msg", "주소는 4개까지만 등록 가능합니다!");
-					return "order/fail_back";
-			} else { // 주소가 4개 미만일경우 주소 추가
-				insertAddressCount = service.insertAddress(address);
-				if(insertAddressCount > 0) {
-					System.out.println("주소 추가 성공");
-					address_idx = service.selectAddressIdx(member_idx);
-					account_idx = address.getAccount_idx();
-				}
+			// 주소 갯수 조회
+		int addressCounter = service.getCountAddress(member_idx);
+		if(addressCounter > 3 ) { // 주소가 3개보다 많을 경우(4개이상일경우)
+				model.addAttribute("msg", "주소는 4개까지만 등록 가능합니다!");
+				return "order/fail_back";
+		} else { // 주소가 4개 미만일경우 주소 추가
+			insertAddressCount = service.insertAddress(address);
+			if(insertAddressCount > 0) {
+				System.out.println("주소 추가 성공");
+				address_idx = service.selectAddressIdx(member_idx);
+				account_idx = address.getAccount_idx();
 			}
-			
 		}
+			
 		return "redirect:/order_sellForm?product_idx="+product_idx
 									   +"&address_idx=" +address_idx
 									   +"&account_idx="+account_idx;
@@ -632,7 +627,7 @@ public class OrderController {
 	
 	
 	
-	// 상품 판매 (맵핑호출 시 account_idx 를 주면 insert작업수행, account_idx를 주지않으면 insert작업 수행안함)
+	// 상품 판매 (판매자 정보 INSERT작업)
 	@PostMapping(value = "/order_sellDetail")
 	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell) {
 		System.out.println("post방식 호출됨");
