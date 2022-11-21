@@ -164,6 +164,7 @@
 		                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>
 		                                                    <option value="1" ${sellList.order_sell_gb == '1' ? 'selected="selected"' : ''}>검수중</option>
 		                                                    <option value="2" ${sellList.order_sell_gb == '2' ? 'selected="selected"' : ''}>검수완료</option>
+		                                                    <option value="3" ${sellList.order_sell_gb == '3' ? 'selected="selected"' : ''}>반려</option>
 		                                                </select>
 		                                            </td>
 		                                            <td>

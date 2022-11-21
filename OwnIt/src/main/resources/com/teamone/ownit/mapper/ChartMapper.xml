@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teamone.ownit.mapper.ChartMapper">
+
+	
+	<select id="selectTypeList" resultType="com.teamone.ownit.vo.ChartVO">
+		SELECT p.product_type, round(count(p.product_type) / (SELECT COUNT(*) FROM order_buy) * 100,0) AS cnt
+			FROM 
+				order_buy ob LEFT OUTER JOIN product p
+			ON 
+				ob.product_idx = p.product_idx
+			GROUP BY p.product_type;	
+	</select>
+	
+	
+	
+
+
+
+</mapper>
