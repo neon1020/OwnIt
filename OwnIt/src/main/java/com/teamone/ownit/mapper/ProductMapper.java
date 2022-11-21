@@ -48,8 +48,8 @@ public interface ProductMapper {
 	// 장바구니 항목삭제(전체)
 	int deleteAllCart(@Param("sId")String sId);
 
-
-
+	// 장바구니 cart_count 수정
+	void updateCartCount(@Param("sId")String sId, @Param("product_idx")int product_idx, @Param("cart_count")int cart_count);
 
 
 
@@ -514,6 +514,8 @@ public interface ProductMapper {
 	
 
 	
+
+	
 								
 
 	
@@ -895,6 +897,4 @@ public interface ProductMapper {
 	
 	
 	
-	
-
 }

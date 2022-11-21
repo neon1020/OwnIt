@@ -32,93 +32,92 @@
     <title>Cart</title>
  <script src="resources/js/jquery-3.6.1.js"></script> 
  <script type="text/javascript">
- 
- 	function numberWithCommas(n) {
-	    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
- 	$(function() {
- 		$('#cbAll').click(function() {
- 			if($("#cbAll").is(":checked")) {
- 				$("input[type=checkbox]").prop("checked", true);
- 			} else {
- 				$("input[type=checkbox]").prop("checked", false);
+ 	
+function minusNum(idx) {
+	var cntVal = Number($('#cartCount_'+idx).val())-1;
+// 	loadCart(idx, cntVal);
+}
+
+function plusNum(idx) {
+	var cntVal = Number($('#cartCount_'+idx).val())+1;
+// 	loadCart(idx, cntVal);
+}
+
+function numberWithCommas(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+$(function() {
+	$('#cbAll').click(function() {
+		if($("#cbAll").is(":checked")) {
+			$("input[type=checkbox]").prop("checked", true);
+		} else {
+			$("input[type=checkbox]").prop("checked", false);
+		}
+	});
+});
+ 	
+function delFromCartInOrder(item) {
+	var delIdx = item.id.split('_')[1];
+	$.ajax({
+		url:'delAndReloadCart',
+		type:'POST',
+		data: {
+			product_idx:delIdx,
+		},
+		dataType:'json',
+		success:function(result) {
+			var html = "";
+			var totalPrice = 0;
+			if(result != 0) {
+			$.each(result, function(index) {
+				var buyPrice = numberWithCommas(result[index].product_buy_price);
+				var countTimesPrice = numberWithCommas(result[index].countTimesPrice).split(".")[0];
+				html += "<div class='cart-item'>";
+				html += "<div class='row align-items-center'>";
+				html += "<div class='col-12 col-lg-6'>";
+				html += "<div class='media media-product'>";
+				html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+				html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
+				html += "<div class='media-body'>";
+				html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
+				html += "<span class='small'>" + result[index].product_color  + "</span>";
+				html += "<span class='media-subtitle'>" + result[index].product_color + "</span>";
+				html += "</div></div></div>";
+				html += "<div class='col-4 col-lg-2 text-center'>";
+				html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
+				html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
+				html += "<span class='counter-minus icon-minus' onclick='minusNum("+ result[index].product_idx +")' field='qty-"+ result[index].product_idx  +"'></span>";
+				html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[index].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
+				html += "<span class='counter-plus icon-plus' onclick='plusNum("+ result[index].product_idx +")' field='qty-"+ result[index].product_idx +"'></span>";
+				html += "</div></div>";
+				html += "<div class='col-4 col-lg-2 text-center'>";
+				html += "<span class='cart-item-price'>"+ countTimesPrice +"원</span>";
+				html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
+			});
+			
+			$('#myCartItemsInOrder').html(html);
+			} else {
+				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
+			}
+		} // success
+	}); // ajax
+}
+ 	
+$(function() {
+	$('#deleteAllCart').click(function() {
+		var isCertain = confirm("장바구니내의 모든 상품을 삭제하시겠습니까?");
+		if(isCertain) {	
+ 		$.ajax({
+ 			url:'deleteAllCart',
+ 			type:'POST',
+ 			success:function() {
+ 				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
  			}
  		});
- 	});
- 	
- 	function delFromCartInOrder(item) {
- 		var delIdx = item.id.split('_')[1];
- 		$.ajax({
- 			url:'delAndReloadCart',
- 			type:'POST',
- 			data: {
- 				product_idx:delIdx
- 			},
- 			dataType:'json',
- 			success:function(result) {
- 				var html = "";
- 				var totalPrice = 0;
- 				if(result != 0) {
- 				$.each(result, function(index) {
-// 						alert(JSON.stringify(result[index]));
- 					var buyPrice = numberWithCommas(result[index].product_buy_price);
- 					var countTimesPrice = numberWithCommas(result[index].countTimesPrice).split(".")[0];
- 					html += "<div class='cart-item'>";
- 					html += "<div class='row align-items-center'>";
- 					html += "<div class='col-12 col-lg-6'>";
- 					html += "<div class='media media-product'>";
- 					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
- 					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
- 					html += "<div class='media-body'>";
- 					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
- 					html += "<span class='small'>" + result[index].product_color  + "</span>";
- 					html += "<span class='media-subtitle'>" + result[index].product_color + "</span>";
- 					html += "</div></div></div>";
- 					html += "<div class='col-4 col-lg-2 text-center'>";
- 					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
- 					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
- 					html += "<span class='counter-minus icon-minus' onclick='minusNum("+ result[idx].product_idx +")' field='qty-"+ result[index].product_idx  +"'></span>";
- 					html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[idx].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
- 					html += "<span class='counter-plus icon-plus' field='qty-"+ result[index].product_idx +"'></span>";
- 					html += "</div></div>";
- 					html += "<div class='col-4 col-lg-2 text-center'>";
- 					html += "<span class='cart-item-price'>"+ countTimesPrice +"원</span>";
- 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
- 				});
- 				
-				$('#myCartItemsInOrder').html(html);
- 				} else {
- 					$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
- 				}
- 			} // success
- 		}); // ajax
- 	}
- 	
- 	$(function() {
-	 	$('#deleteAllCart').click(function() {
-	 		var isCertain = confirm("장바구니내의 모든 상품을 삭제하시겠습니까?");
-	 		if(isCertain) {	
-		 		$.ajax({
-		 			url:'deleteAllCart',
-		 			type:'POST',
-		 			success:function() {
-		 				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
-		 			}
-		 		});
-	 		}
-	 	});
- 	});
- 	
- 	$('.counter-minus').click(function() {
- 		alert("바귐");
- 	});
-	
- 	function minusNum(idx) {
- 		debugger;
- 		var value = $('#cartCount_'+idx).val()-1;
- 		alert(value);
- 	}
- 	
+		}
+	});
+});
  	
  </script>
   </head>
@@ -175,7 +174,7 @@
                   <div class="counter">
                     <span class="counter-minus icon-minus" field='qty-${cart.product_idx }' onclick="minusNum(${cart.product_idx})"></span>
                     <input type='text' name='qty-${cart.product_idx }' readonly="readonly" id="cartCount_${cart.product_idx }" class="counter-value" value="${cart.cart_count }" min="1" max="5">
-                    <span class="counter-plus icon-plus" field='qty-${cart.product_idx }'></span>	
+                    <span class="counter-plus icon-plus" field='qty-${cart.product_idx }' onclick="plusNum(${cart.product_idx})"></span>	
                   </div>
                 </div>
                 <div class="col-4 col-lg-2 text-center">

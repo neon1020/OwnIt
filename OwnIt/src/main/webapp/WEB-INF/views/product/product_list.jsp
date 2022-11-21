@@ -12,6 +12,26 @@
 	<title>Listing</title>
 </head>
 <style>
+/* IE */
+select::-ms-expand { 
+	display: none;
+}
+.select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 35px;
+  background-size: 20px;
+  padding: 5px 30px 5px 10px;
+  border-radius: 4px;
+  outline: 0 none;
+}
+.select option {
+  color: black;
+  padding: 3px 0;
+}
 .items {
 	display: block;
 	width: 867px;
@@ -88,7 +108,7 @@
 	color: red; }
 .product-like:hover::before {
 	content: "\ebde";
-	color: red;; }
+	color: red; }
 .product-action > a:hover {
 	cursor: pointer;
 }
@@ -188,13 +208,14 @@ function listByCategory() {
 			data:{
 				categories:str
 			},
+			dataType:'json',
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success:function(prd) {
-				var myWish = prd.myWish;
 				var html = "";
 				var cnt = 0;
 				$.each(prd, function(index) {
 					var buyPrice = numberWithCommas(prd[index].product_buy_price);
+					var myWish = prd[index].my_wish;
 					html += "<div class='col-6 col-md-4'>";
 					html += "<div class='product'>";
 					html += "<figure class='product-image'>";
@@ -220,7 +241,7 @@ function listByCategory() {
 					cnt+=1;
 				});
 				$('#listHere').html(html);
-				$('#productCnt').html(cnt);
+				$('#productCnt').html(cnt +" products");
 			}
 		});
 	});
@@ -278,7 +299,7 @@ function listByCategory() {
             </div>
           </div>
          <div class="col-md-6 text-md-right" style="margin-top: 25px">
-           <select i><!-- onchange="arrayByCategory(this.value)" -->
+           <select class="select"><!-- onchange="arrayByCategory(this.value)" -->
 	          <option value="product_popular" id="productListing" selected="selected">인기순</option>
 	          <option value="price_high" id="productListing">가격높은순</option>
 	          <option value="price_low" id="productListing">가격낮은순</option>
@@ -311,7 +332,7 @@ function listByCategory() {
                       </span>
                     </div>
 	                  <c:choose>
-                    	<c:when test="${product.myWish ne 0}">
+                    	<c:when test="${product.my_wish ne 0}">
                     	  <span id="heartSection1">
                    			<a class="product-like-full" id="heart_${product.product_idx }" onclick="changeHeart(this)"></a>
                    		  </span>

@@ -55,24 +55,31 @@ public class ProductController {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			System.out.println(categories);
+//			System.out.println(categories);
 			String[] divideCategory = categories.split("/");
 			List<String> brands = new ArrayList<String>();
 			String category = "";
 			String productListing = "";
 			for(String str : divideCategory) {
 				if(str.contains("brand")) {
-					brands.add(str.split(":")[1]);
+					if(str.split(":")[1].equals("ETC")) {
+						System.out.println("들어옴");
+						brands.add("BANG&OLUFSEN");
+						brands.add("LENOVO");
+						brands.add("MARSHALL");
+						brands.add("XIAOMI");
+					} else {
+						brands.add(str.split(":")[1]);
+					}
 				} else if(str.contains("category")) {
 					category = str.split(":")[1];
 				} else if(str.contains("productListing")) {
 					productListing = str.split(":")[1];
 				}
 			}
-//			System.out.println(brands+", "+category+", " + productListing);
+//			System.out.println(brands+", "+category+", "+ productListing);
 			List<ProductVO> productList = service.getCategorisedProduct(sId, brands, category, productListing);
 			JSONArray jsonArray = new JSONArray();
-			System.out.println(productList);
 			for(ProductVO product : productList) {
 				JSONObject jsonObject = new JSONObject(product);
 				jsonArray.put(jsonObject);
@@ -202,6 +209,30 @@ public class ProductController {
 		}
 	}
 	
+//	@PostMapping(value = "updateCartCount")
+//	@ResponseBody
+//	public void updateCartCount(HttpSession session, HttpServletResponse response, int product_idx, int cart_count) {
+////		String sId = (String)session.getAttribute("sId");
+//		List<CartVO> cart = null;
+//		System.out.println(cart_count);
+//		String sId = "test1@naver.com";
+//		if(sId.length() != 0) {
+//		    service.updateCartCount(sId, product_idx, cart_count);
+//			cart = service.checkCart(sId);
+//			JSONArray jsonArray = new JSONArray();
+//			
+//			for(CartVO c : cart) {
+//				JSONObject jsonObject = new JSONObject(c);
+//				jsonArray.put(jsonObject);
+//			}
+//			try {
+//				response.setCharacterEncoding("UTF-8");
+//				response.getWriter().print(jsonArray);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	
 	
@@ -465,38 +496,7 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
+		
 	
 // 박주닮
 	@GetMapping(value = "product_detail")
