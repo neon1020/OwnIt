@@ -76,6 +76,19 @@
 	.addressChange > th{
 		border-bottom: 1px solid gray;
 	}
+	.accountChange:hover{
+		background-color:#dcdcdc;
+		cursor: pointer;
+	}
+	.accountChange > th{
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
+		color: #5a5a5a;
+		font-size: 13px;
+	}
+	.addressChangeTable:first-child tr:first-child th {
+		color: black;
+	}
 	
 	#titleAddress{
 		font: bold; 
@@ -178,21 +191,29 @@
 	          			 </th>
 	          		</tr>
 	          		<tr>
-	          			<th><span id="sell_span">판매 정산계좌</span><br>
+	          			<th><span id="sell_span">판매 정산계좌</span>
 	          			<span id="sell_span" style="float: right; font-size: 11px;">
 	          				<a id="account" href="#" data-toggle="modal" data-target="#exampleModal-3" style="color: black; border: 0px;">
 	          					+ 새 계좌 추가
 	          				</a>
 	          			</span><br>
-	          			은행 : <span id="sell_span2" class="checkAccount">
-	          						${member.account_bank}
-	          				   </span><br>
-	          			계좌 : <span id="sell_span2">
-	          						${member.account_num }
-	          				   </span><br>
-	          			예금주 : <span id="sell_span2">
-	          						${member.account_owner_name }
-	          					</span>
+          				<span id="sell_span2" style="float: right; font-size: 13px;">
+		          			<a id="address2" href="#" data-toggle="modal" data-target="#exampleModal-4" style="color: black; ">
+								변경
+							</a>
+		          		</span>
+		          		계좌별칭 : <span id="sell_span2" class="checkAccount">
+	          							${member.account_nickname}
+	          				  	   </span><br>
+	          			은행 : 	   <span id="sell_span2" class="checkAccount">
+	          							${member.account_bank}
+	          				   	   </span><br>
+	          			계좌번호 : 	   <span id="sell_span2">
+	          							${member.account_num }
+	          				   	   </span><br>
+	          			예금주 :   <span id="sell_span2">
+	          							${member.account_owner_name }
+	          					   </span>
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -365,138 +386,183 @@
 
 </script>
 
-	<!--  계좌 추가 버튼 클릭시 나오는 모달창 -->
-	<form action="insertAccount" method="post" onsubmit="return checkAccount()">
-		<div class="modal fade" id="exampleModal-3" tabindex="-3" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">계좌 추가</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">×</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-			      	<input type="hidden" name="member_idx" value="${member.member_idx }">
-			      	<input type="hidden" name="product_idx" value="${product.product_idx }">
-			      	<input type="hidden" name="address_idx" value="${member.address_idx }">
-			      	
-			        <div class="form-group">
-		                  <label for="cardNumber">은행명</label>
-		                    <select id="account_bank" name="account_bank" class="custom-select">
-		                      <option value="">은행 선택</option>
-		                      <option value="신한">신한</option>
-		                      <option value="국민">국민</option>
-		                      <option value="농협">농협</option>
-		                      <option value="우리">우리</option>
-		                      <option value="카카오">카카오</option>
-		                      <option value="부산">부산</option>
-		                    </select>
-		               </div>
-		               
-                       <div class="form-group">
-                         <label for="cardNumber">계좌번호</label>
-                         <input type="text" name="account_num" class="form-control" placeholder="계좌번호" required="required">
-                       </div>
-                       <div class="form-group">
-                         <label for="cardNumber">계좌별칭</label>
-                         <input type="text" name="account_nickname"class="form-control" placeholder="계좌별칭" required="required">
-                       </div>
-                       <div class="form-group">
-                          <label for="cardNumber">예금주</label>
-                          <input type="text" name="account_owner_name"class="form-control" placeholder="예금주 명을 정확히 입력하세요" required="required">
-                        </div>
-		      </div>
-		      <div class="modal-footer">
-		        <div class="container-fluid">
-		          <div class="row gutter-0">
-		            <div class="col">
-		              <input type="submit" class="btn btn-block btn-dark btn-rounded" value="저장하기">
-		            </div>
-		          </div>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		</div>							
-	</form>
+			<!--  계좌 추가 버튼 클릭시 나오는 모달창 -->
+			<form action="insertAccount" method="post" onsubmit="return checkAccount()">
+				<div class="modal fade" id="exampleModal-3" tabindex="-3" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">계좌 추가</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">×</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+					      	<input type="hidden" name="member_idx" value="${member.member_idx }">
+					      	<input type="hidden" name="product_idx" value="${product.product_idx }">
+					      	<input type="hidden" name="address_idx" value="${member.address_idx }">
+					      	<div class="form-group">
+		                         <label for="cardNumber">계좌별칭</label>
+		                         <input type="text" name="account_nickname"class="form-control" placeholder="계좌별칭" required="required">
+	                       </div>
+					        <div class="form-group">
+				                  <label for="cardNumber">은행명</label>
+				                    <select id="account_bank" name="account_bank" class="custom-select">
+				                      <option value="">은행 선택</option>
+				                      <option value="신한">신한</option>
+				                      <option value="국민">국민</option>
+				                      <option value="농협">농협</option>
+				                      <option value="우리">우리</option>
+				                      <option value="카카오">카카오</option>
+				                      <option value="부산">부산</option>
+				                    </select>
+				               </div>
+		                       <div class="form-group">
+		                         <label for="cardNumber">계좌번호</label>
+		                         <input type="text" name="account_num" class="form-control" placeholder="계좌번호" required="required">
+		                       </div>
+		                       <div class="form-group">
+		                          <label for="cardNumber">예금주</label>
+		                          <input type="text" name="account_owner_name"class="form-control" placeholder="예금주 명을 정확히 입력하세요" required="required">
+		                        </div>
+				      </div>
+				      <div class="modal-footer">
+				        <div class="container-fluid">
+				          <div class="row gutter-0">
+				            <div class="col">
+				              <input type="submit" class="btn btn-block btn-dark btn-rounded" value="저장하기">
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>							
+			</form>
 	
 	
-	<!--  주소 추가 버튼 클릭시 나오는 모달창 -->
-	<form action="order_sellForm" method="post">
-		<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">새 주소 추가</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">×</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		      		<input type="hidden" name="member_idx" value="${member.member_idx }">
-			      	<input type="hidden" name="product_idx" value="${product.product_idx }">
-			      	<input type="hidden" name="account_idx" value="${member.account_idx }">
-		        <a>주소별칭</a>
-		        <input id="address_nickname" name="address_nickname" type="text" class="form-control" required="required" placeholder="주소의 별칭"><br>
-		        
-		        <a>받는분</a>
-		        <input id=address_recipient name="address_recipient" type="text" class="form-control" required="required" placeholder="받는분 성함"><br>
-		        
-		        <a>우편번호<input type="button" class="btn" onclick="execDaumPostcode()"value="우편번호" style="color:black; float: right; border: solid 1px black; padding: 3px; border-radius: 10px;"></a>
-		        <input id="address_zipcode" name="address_zipcode" type="text" class="form-control" required="required" placeholder="우편번호를 검색하세요"><br>
-		        
-		        <a>주소</a>
-		        <input id="address1" name="address1" type="text" class="form-control" required="required" placeholder="우편번호 검색후 자동입력됩니다" ><br>
-		        <a>상세주소</a>
-		        <input id="address2" name="address2" type="text" class="form-control" required="required" placeholder="건물,아파트,동/호수 입력" ><br>
-		      </div>
-		      <div class="modal-footer">
-		        <div class="container-fluid">
-		          <div class="row gutter-0">
-		            <div class="col">
-		              <input type="submit" class="btn btn-block btn-dark btn-rounded" value="저장하기">
-		            </div>
-		          </div>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		</div>							
-	</form>
+			<!--  주소 추가 버튼 클릭시 나오는 모달창 -->
+			<form action="order_sellForm" method="post">
+				<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">새 주소 추가</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">×</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      		<input type="hidden" name="member_idx" value="${member.member_idx }">
+					      	<input type="hidden" name="product_idx" value="${product.product_idx }">
+					      	<input type="hidden" name="account_idx" value="${member.account_idx }">
+				        <a>주소별칭</a>
+				        <input id="address_nickname" name="address_nickname" type="text" class="form-control" required="required" placeholder="주소의 별칭"><br>
+				        
+				        <a>받는분</a>
+				        <input id=address_recipient name="address_recipient" type="text" class="form-control" required="required" placeholder="받는분 성함"><br>
+				        
+				        <a>우편번호<input type="button" class="btn" onclick="execDaumPostcode()"value="우편번호" style="color:black; float: right; border: solid 1px black; padding: 3px; border-radius: 10px;"></a>
+				        <input id="address_zipcode" name="address_zipcode" type="text" class="form-control" required="required" placeholder="우편번호를 검색하세요"><br>
+				        
+				        <a>주소</a>
+				        <input id="address1" name="address1" type="text" class="form-control" required="required" placeholder="우편번호 검색후 자동입력됩니다" ><br>
+				        <a>상세주소</a>
+				        <input id="address2" name="address2" type="text" class="form-control" required="required" placeholder="건물,아파트,동/호수 입력" ><br>
+				      </div>
+				      <div class="modal-footer">
+				        <div class="container-fluid">
+				          <div class="row gutter-0">
+				            <div class="col">
+				              <input type="submit" class="btn btn-block btn-dark btn-rounded" value="저장하기">
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>							
+			</form>
 	
 	
-	<!--  주소 변경 버튼 클릭시 나오는 모달창 -->
-	<div class="modal fade" id="exampleModal-2" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">주소록</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">×</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	      	<table class="addressChangeTable">
-	      	<c:forEach var="address" items="${addressList }" >
-          		<tr class="addressChange" height="150px" onclick="location.href='order_sellForm?product_idx=${product.product_idx}&address_idx=${address.address_idx}&account_idx=${member.account_idx }'">
-          			<th>
-          				<c:if test="${address.address_gb eq '0' }">
-          				<span id="titleAddress" >(대표주소)</span><br>
-          				</c:if>
-		          		주소별칭 : <span id="sell_span2">${address.address_nickname }</span><br>
-	          			받는분 : <span id="sell_span2">${address.member_name }</span><br>
-	          			연락처 : <span id="sell_span2">${address.member_phone }</span><br>
-	          			반송주소 : <span id="sell_span2" class="checkAddress" style="font-size: 13px;">${address.address1 }, ${address.address2 }</span><br>
-          			</th>
-          		</tr>      	
-	      	</c:forEach>
-	      	</table>
-	      </div>
-	    </div>
-	  </div>
-	</div>							
+			<!--  주소 변경 버튼 클릭시 나오는 모달창 -->
+			<div class="modal fade" id="exampleModal-2" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">주소록</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">×</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<table class="addressChangeTable">
+			      	<c:forEach var="address" items="${addressList }" >
+		          		<tr class="addressChange" height="150px" onclick="location.href='order_sellForm?product_idx=${product.product_idx}&address_idx=${address.address_idx}&account_idx=${member.account_idx }'">
+		          			<th>
+		          				<c:if test="${address.address_gb eq '0' }">
+		          				<span id="titleAddress" >(대표주소)</span><br>
+		          				</c:if>
+				          		<span id="sell_span2">${address.address_nickname }</span><br>
+			          			받는분 : <span id="sell_span2">${address.member_name }</span><br>
+			          			연락처 : <span id="sell_span2">${address.member_phone }</span><br>
+			          			반송주소 : <span id="sell_span2" class="checkAddress" style="font-size: 13px;">${address.address1 }, ${address.address2 }</span><br>
+		          			</th>
+		          		</tr>      	
+			      	</c:forEach>
+			      	</table>
+			      </div>
+			    </div>
+			  </div>
+			</div>							
 							
+			<!--  계좌 변경 버튼 클릭시 나오는 모달창 -->
+			<div class="modal fade" id="exampleModal-4" tabindex="-4" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document" style="width: 600px; max-width: 600px;">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">내 계좌</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">×</span>
+			        </button>
+			      </div>
+			      <div class="modal-body" >
+			      	<table class="addressChangeTable" >
+			      		<tr>
+			      			<th width="150px;">
+			      				계좌별칭
+			      			</th>
+			      			<th width="100px;">
+			      				은행
+			      			</th>
+			      			<th width="200px;">
+			      				계좌번호
+			      			</th>
+			      			<th width="100px;">
+			      				예금주
+			      			</th>
+			      		</tr>
+			      		
+			      	<c:forEach var="account" items="${accountList }" >
+		          		<tr class="accountChange" height="150px" onclick="location.href='order_sellForm?product_idx=${product.product_idx}&address_idx=${member.address_idx}&account_idx=${account.account_idx }'">
+				          		<th>
+	          						<c:if test="${account.account_gb eq '0' }">
+		          						<span id="titleAddress" >(대표 계좌)</span><br>
+		          					</c:if>
+	          						${account.account_nickname }
+		          				</th>
+			          			<th>${account.account_bank }</th>
+			          			<th>${account.account_num }</th>
+			          			<th>${account.account_owner_name}</th>
+		          		</tr>      	
+			      	</c:forEach>
+			      	</table>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
+	
+	
 	
 	 </article>
     </section>

@@ -527,7 +527,7 @@ public class OrderController {
 								 @ModelAttribute Order_SellFormMbAddAccVO address,
 								 Model model, HttpSession session) {
 		int address_idx = 0;
-		int addressCount = 0;
+		int insertAddressCount = 0;
 		int account_idx = 0;
 		String sId = (String)session.getAttribute("sId");
 		MemberVO memberIdx = service.selectMemberIdx(sId);
@@ -535,12 +535,20 @@ public class OrderController {
 		address.setMember_idx(member_idx);
 		// 주소를 입력 받았을시에만 실행
 		if(address.getAddress1() != null && !address.getAddress1().equals("")) {
-			addressCount = service.insertAddress(address);
-				if(addressCount > 0) {
+			// 주소추가를 입력받았을시 주소 갯수 조회
+			int addressCounter = service.getCountAddress(member_idx);
+			if(addressCounter > 3 ) { // 주소가 3개보다 많을 경우(4개이상일경우)
+					model.addAttribute("msg", "주소는 4개까지만 등록 가능합니다!");
+					return "order/fail_back";
+			} else { // 주소가 4개 미만일경우 주소 추가
+				insertAddressCount = service.insertAddress(address);
+				if(insertAddressCount > 0) {
 					System.out.println("주소 추가 성공");
 					address_idx = service.selectAddressIdx(member_idx);
 					account_idx = address.getAccount_idx();
+				}
 			}
+			
 		}
 		return "redirect:/order_sellForm?product_idx="+product_idx
 									   +"&address_idx=" +address_idx
@@ -550,10 +558,18 @@ public class OrderController {
 
 	//상품 판매시 계좌추가 
 	@PostMapping(value = "/insertAccount")
-	public String insertAccount(@ModelAttribute Order_SellFormInsertAccount account,@RequestParam int address_idx) {
+	public String insertAccount(Model model, @ModelAttribute Order_SellFormInsertAccount account,@RequestParam int address_idx) {
+		
+		
 		int product_idx = account.getProduct_idx();
 		int member_idx = account.getMember_idx();
 		System.out.println(member_idx + "member_idx");
+		// 계좌가 4개 미만일 경우에만 등록
+		int accountCounter = service.getCountAccount(member_idx);
+		if(accountCounter > 3 ) { // 주소가 3개보다 많을 경우(4개이상일경우)
+				model.addAttribute("msg", "계좌는 최대 4개까지만 등록 가능합니다!");
+				return "order/fail_back";
+		}
 		int account_idx = 0;
 		int insertCount = service.insertAccountSell(account);
 		if(insertCount > 0) {
@@ -567,7 +583,7 @@ public class OrderController {
 				   +"&account_idx="+account_idx;
 	}
 		
-	// 상품판매폼(PRG 패턴)
+	// 상품판매폼(get)
 	@GetMapping(value = "/order_sellForm")
 	public String order_sellForm(@RequestParam int product_idx,
 								 @RequestParam(defaultValue = "0") int address_idx ,
@@ -580,6 +596,9 @@ public class OrderController {
 		int member_idx = memberIdx.getMember_idx();
 		List<Order_SellFormMbAddAccVO> addressList = service.selectAddressList(member_idx);
 		model.addAttribute("addressList", addressList);
+		
+		List<Order_SellFormMbAddAccVO> accountList = service.selectAccountList(member_idx);
+		model.addAttribute("accountList", accountList);
 		
 		System.out.println("account_idx"+account_idx);
 		System.out.println("member_idx"+member_idx);
@@ -672,6 +691,8 @@ public class OrderController {
 		return "member/member_login";
 	}
 	
+	
+	//
 	
 
 	

@@ -14,12 +14,14 @@
 		border: black;
 		border-radius: 15px;
 	}
+	
 	input[type=checkbox]{
 	float: right; 
 	width: 20px; 
 	height: 20px;
 	}
-	span{
+	
+	span1{
 		font: bold; 
 		color: black;
 	}
@@ -96,7 +98,7 @@ $(document).ready(function() {
 	          	<table class="table">
 	          		<tr>
 	          			<th style="font-size: 30px; font: bold; color: black;">
-		          			<span style="color: red;">구매</span>
+		          			<span id="span1" style="color: red;">구매</span>
 		          			하시기 전에 꼭 확인하세요.
 	          			</th>
 	          		</tr>
@@ -104,16 +106,16 @@ $(document).ready(function() {
 	          		<tr>
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-	          				<span >${product.product_brand }</span><br> 
+	          				<span id="span1">${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
-	          				<span>${product.product_model_num }</span>
+	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
 	          		</tr>
 	          		
 	          		<tr>
 	          			<th>
 	          				<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
-		          			<span>구매하려는 상품이 맞습니다.</span><br>
+		          			<span id="span1">구매하려는 상품이 맞습니다.</span><br>
 		          			상품 이미지, 모델번호, 출시일, 상품명, 사이즈를 한 번 더 확인했습니다.
 	          			</th>
 	          		</tr>
@@ -121,7 +123,7 @@ $(document).ready(function() {
 	          		<tr>
 	          			<th>
 	          				<input type="checkbox" id="check2" name="check-box" onchange="checkForm()">
-		          				<span>국내에서 발매한 정품 · 새상품입니다.</span><br>
+		          				<span id="span1">국내에서 발매한 정품 · 새상품입니다.</span><br>
 		          				모든 구성품이 그대로이며, 한 번도 착용하지 않은 정품・새상품입니다.<br>
 		          				국내 발매 상품 여부는 확인드리지 않습니다.
 	          				</th>
@@ -129,7 +131,7 @@ $(document).ready(function() {
 	          		
 	          		<tr>
 	          			<th>
-	          				<span>제조사에서 불량으로 인정하지 않는 기준은 하자로 판단하지 않습니다.</span><br>
+	          				<span id="span1">제조사에서 불량으로 인정하지 않는 기준은 하자로 판단하지 않습니다.</span><br>
 	          				<input type="checkbox" id="check3" name="check-box" onchange="checkForm()">박스/패키지와 상품 컨디션에 민감하시다면 검수 기준을 반드시 확인하시기 바랍니다.<br>
 	          				<a href="javascript:func1()"><span style="color: skyblue;">검수기준 보기</span></a>
 	          			</th>

@@ -548,6 +548,15 @@ public class OrderService {
 		public int selectAddressIdx(int member_idx) {
 			return mapper.selectAddressIdx(member_idx);
 		}
+		public List<Order_SellFormMbAddAccVO> selectAccountList(int member_idx) {
+			return mapper.selectAccountList(member_idx);
+		}
+		public int getCountAddress(int member_idx) {
+			return mapper.getCountAddress(member_idx);
+		}
+		public int getCountAccount(int member_idx) {
+			return mapper.getCountAccount(member_idx);
+		}
 
 
 

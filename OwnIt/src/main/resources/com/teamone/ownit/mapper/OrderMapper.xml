@@ -685,12 +685,28 @@
 
 
 
+	<!--  계좌목록 가져오는 구문 -->
+	<select id="selectAccountList" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		SELECT * FROM account,member
+				WHERE account.member_idx=#{member_idx}
+				AND member.member_idx=#{member_idx}
+				ORDER BY account_gb *1 asc;
+	</select>
 
 
-
-
-
-
+	<!--  회원의 주소 갯수 조회 -->
+	<select id="getCountAddress" resultType="integer">
+		SELECT count(address_idx) as addressCounter 
+		FROM address 
+		WHERE member_idx=#{member_idx};
+	</select>
+	
+	<!--  회원의 계좌 갯수 조회 -->
+	<select id="getCountAccount" resultType="integer">
+		SELECT count(account_idx) as accountCounter 
+		FROM account 
+		WHERE member_idx=#{member_idx};
+	</select>
 
 
 

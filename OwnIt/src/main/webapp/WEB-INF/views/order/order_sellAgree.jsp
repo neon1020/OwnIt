@@ -18,7 +18,7 @@
 	height: 20px;
 	}
 	
-	span{
+	span1{
 	font: bold; 
 	color: black;
 	}
@@ -99,7 +99,7 @@
 		          	<table class="table">
 		          		<tr>
 		          			<th style="font-size: 30px; font: bold; color: black;">
-			          			<span style="color: skyblue;">
+			          			<span id="span1" style="color: skyblue;">
 			          				판매
 			          			</span>
 			          			하시기 전에 꼭 확인하세요.
@@ -108,11 +108,11 @@
 		          		<tr>
 		          			<th>
 		          				<img src="resources/img/product/${product.image_real_file1 }" id="sellFormImage">
-		          				<span>
+		          				<span id="span1">
 		          					${product.product_brand }
 		          				</span><br>
 		          				 ${product.product_name }<br>
-		          				 <span>
+		          				 <span id="span1">
 		          				 	${product.product_model_num }
 		          				 </span>
 		          			</th>
@@ -121,7 +121,7 @@
 		          		<tr>
 		          			<th>
 			          			<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
-			          			<span>
+			          			<span id="span1">
 			          				판매하려는 상품이 맞습니다.
 			          			</span><br>
 			          			상품 이미지, 모델번호, 출시일, 상품명, 사이즈를 한 번 더 확인했습니다.
@@ -129,7 +129,7 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<span>
+		          				<span id="span1">
 		          					국내에서 발매한 정품 · 새상품입니다.
 		          				</span><br>
 		          				<input type="checkbox" id="check2" name="check-box" onchange="checkForm()">
@@ -139,13 +139,13 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<span>
+		          				<span id="span1">
 		          					박스/패키지의 상태를 확인합니다.
 		          				</span><br>
 		          				<input type="checkbox" id="check3" name="check-box" onchange="checkForm()">
 		          				박스/패키지 상태에 따른 검수 기준을 확인했습니다.<br>
 		          				<a href="javascript:func1()">
-		          					<span style="color: skyblue;">
+		          					<span id="span1" style="color: skyblue;">
 		          						검수기준 보기
 		          					</span>
 		          				</a>
@@ -153,7 +153,7 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<span>
+		          				<span id="span1">
 		          					이중 포장하여 선불 발송합니다.
 		          				</span><br>
 		          				<input type="checkbox" id="check4" name="check-box" onchange="checkForm()">
@@ -162,7 +162,7 @@
 		          		</tr>
 		          		<tr>
 		          			<th>
-		          				<span>
+		          				<span id="span1">
 		          					OwnIt의 최신 이용정책을 모두 확인하였으며, 판매를 계속합니다.
 		          				</span><br>
 		          				<input type="checkbox" id="check5" name="check-box" onchange="checkForm()">

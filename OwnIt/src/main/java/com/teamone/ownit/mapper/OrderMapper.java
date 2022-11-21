@@ -535,6 +535,12 @@ public interface OrderMapper {
 
 	int selectAddressIdx(int member_idx);
 
+	List<Order_SellFormMbAddAccVO> selectAccountList(int member_idx);
+
+	int getCountAddress(int member_idx);
+
+	int getCountAccount(int member_idx);
+
 
 
 
