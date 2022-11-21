@@ -97,7 +97,7 @@
 <!--                       </div> -->
 <!--                     </div> -->
                   <div class="row gutter-2">
-                    <c:forEach var="address" items="${address }">
+                    <c:forEach var="address" items="${address }" varStatus="vs">
                       <div class="col-md-6">
                         <div class="card card-data">
                           <div class="card-header card-header-options">
@@ -113,18 +113,26 @@
                                 	</c:otherwise>
                                 </c:choose>
                               </div>
+                              
                               <div class="col text-right">
                                 <div class="dropdown">
                                   <button id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-lg btn-secondary btn-ico"><i class="icon-more-vertical"></i></button>
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address">대표 배송지 설정</a>
+                                      <c:choose>
+                                        <c:when test="${address.address_gb == '0'}">
+                                          <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address${vs.index}">대표 배송지 해제</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                          <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address${vs.index}">대표 배송지 설정</a>
+                                        </c:otherwise>
+                                      </c:choose>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#edit_address">배송지 수정</a>
+                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#edit_address${vs.index}">배송지 수정</a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#delete_address">배송지 삭제</a>
+                                      <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#delete_address${vs.index}">배송지 삭제</a>
                                     </li>
                                   </ul>
                                 </div>
@@ -143,8 +151,159 @@
                           </div>
                         </div>
                       </div>
-                     </c:forEach>
-                    </div>
+                   
+                     
+<!-- modal(edit_address) -->
+<div class="modal fade" id="edit_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">주소지 수정</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script type="text/javascript">
+		// 우편번호 & 주소 검색 API - Modal ver.
+		function execDaumPostcode2() {
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            $("#zipCodeMo").val(data.zonecode); // 우편번호
+		            $("#address1_mo").val(data.roadAddress); // 주소
+		            $("#address2_mo").focus(); // 상세주소에 focus 요청
+		        }
+		    }).open();
+		}
+	</script>
+	      <div class="input-group">
+	        <input type="text" class="form-control form-control-lg" name="address_zipcode" id="zipCodeMo" placeholder="우편번호 검색" onclick="execDaumPostcode()" aria-label="Zipcode">
+          </div>
+	      <div class="input-address">
+	        <input type="text" class="form-control form-control-lg" name="address1" id="address1_mo" placeholder="우편번호 검색 후, 자동 입력 됩니다" aria-label="Address1">
+	      </div>
+	      <div class="input-address">
+	      	<input type="text" class="form-control form-control-lg" name="address2" id="address2_mo" placeholder="건물/아파트/동호수 입력" aria-label="Address2">
+	      </div>
+	      <div class="input-address">
+	      	<input type="text" class="form-control form-control" name="address_nickname" placeholder="주소이름" aria-label="Address_Nickname">
+	      </div>
+	      <div class="input-address">
+	      	<input type="text" class="form-control form-control" name="address_recipient" placeholder="수령인" aria-label="Address_Nickname">
+	      </div>
+      </div>
+      <div class="modal-footer">
+        <div class="container-fluid">
+          <div class="row gutter-0">
+            <div class="col">
+              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='deleteAddress?member_idx=${sessionScope.sIdx }&address_idx=${address.address_idx}'">Save</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<!-- modal(delete_address) -->
+<div class="modal fade" id="delete_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	      <p>해당 주소지를 삭제하시겠습니까?</p>
+      </div>
+      <div class="modal-footer">
+        <div class="container-fluid">
+          <div class="row gutter-0">
+            <div class="col">
+              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='deleteAddress?member_idx=${sessionScope.sIdx }&address_idx=${address.address_idx}'">Yes</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<!-- modal(default_address) -->
+<c:choose>
+  <c:when test="${address.address_gb == '0'}">
+    <div class="modal fade" id="default_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">대표 배송지 해제</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+		      <p>대표 배송지 설정을 해제 하시겠습니까?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <div class="container-fluid">
+	          <div class="row gutter-0">
+	            <div class="col">
+	              <button type="button" class="btn btn-block btn-primary">Yes</button>
+	            </div>
+	            <div class="col">
+	              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>	                                    	
+  </c:when>
+  
+    <c:otherwise>
+      <div class="modal fade" id="default_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h5 class="modal-title" id="exampleModalLabel">대표 배송지 설정</h5>
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">×</span>
+	          </button>
+	        </div>
+	        <div class="modal-body">
+		      <p>대표 배송지로 설정하시겠습니까?</p>
+	        </div>
+	        <div class="modal-footer">
+	          <div class="container-fluid">
+	            <div class="row gutter-0">
+	              <div class="col">
+	                <button type="button" class="btn btn-block btn-primary">Yes</button>
+	              </div>
+	              <div class="col">
+	                <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>	     
+    </c:otherwise>
+  </c:choose>	
+	
+  </c:forEach>	               
+</div>
+                    
 
                     <div class="row">
                       <div class="col">
@@ -153,6 +312,7 @@
                     </div>
                     
                     <form action="addAddress" method="post" id="address" name="address">
+                    <input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
 	                    <div class="row gutter-1">
 	                      <div class="col-6 col-md-3">
 	                        <div class="form-group">
@@ -160,15 +320,6 @@
 	                          <input id="zipCode" type="text" class="form-control" name="address_zipcode" onclick="execDaumPostcode()" placeholder="우편번호 검색">
 	                        </div>
 	                      </div>
-	                      
-	<!--                       우편번호 검색 버튼 필요할 시 사용!! -->
-<!-- 	                      <div class="col-6 col-md-3"> -->
-<!-- 	                        <div class="form-group"> -->
-<!-- 	                    	  <label for="cardNumber"></label> -->
-<!-- 	                          <button type="button" class="btn btn-block btn-dark" onclick="execDaumPostcode()">우편번호 검색</button> -->
-<!-- 	                        </div> -->
-<!-- 	                      </div> -->
-	
 	                      <div class="col-md-6">
 	                        <div class="form-group">
 	                          <label for="cardNumber">Address</label>
@@ -194,7 +345,7 @@
 		                        </div>
 		                      </div>
 		                      <div class="col-12" style="text-align: center;">
-		                        <input type="submit" value="추가하기" class="btn btn-dark btn-rounded" onclick="#">
+		                        <input type="submit" value="추가하기" class="btn btn-dark btn-rounded" >
 		                      </div>
 		                    </div>
 		                  </form>
@@ -208,106 +359,9 @@
     </section>
     <!-- listing -->
     
-    <!-- modal(edit_address) -->
-    <div class="modal fade" id="edit_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">주소지 수정</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">×</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-		      <div class="input-group">
-		        <input type="text" class="form-control form-control-lg" placeholder="우편번호" aria-label="Zipcode">
-		        <div class="input-group-append">
-		          <button type="button" class="btn btn-lg btn-primary">우편번호 검색</button><br>
-		        </div>
-	          </div>
-		      <div class="input-address">
-		        <input type="text" class="form-control form-control-lg" placeholder="주소" aria-label="Address1">
-		      </div>
-		      <div class="input-address">
-		      	<input type="text" class="form-control form-control-lg" placeholder="상세주소" aria-label="Address2">
-		      </div>
-		      <div class="input-address">
-		      	<input type="text" class="form-control form-control-lg" placeholder="주소별칭" aria-label="Address_Nickname">
-		      </div>
-	      </div>
-	      <div class="modal-footer">
-	        <div class="container-fluid">
-	          <div class="row gutter-0">
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Close</button>
-	            </div>
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-primary">Save</button>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 	
-	<!-- modal(delete_address) -->
-    <div class="modal fade" id="delete_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">주소지 삭제</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">×</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-		      <p>해당 주소지를 삭제하시겠습니까?</p>
-	      </div>
-	      <div class="modal-footer">
-	        <div class="container-fluid">
-	          <div class="row gutter-0">
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-primary">Yes</button>
-	            </div>
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
-	<!-- modal(default_address) -->
-    <div class="modal fade" id="default_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">기본 배송지 설정</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">×</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-		      <p>기본 배송지로 설정하시겠습니까?</p>
-	      </div>
-	      <div class="modal-footer">
-	        <div class="container-fluid">
-	          <div class="row gutter-0">
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-primary">Yes</button>
-	            </div>
-	            <div class="col">
-	              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 
     <!-- footer -->
     <jsp:include page="../inc/footer.jsp"></jsp:include>
