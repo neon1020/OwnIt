@@ -24,7 +24,16 @@
     $(document).ready(function (e){
 	    $("#imageFile").on("change", function(event) {
 	        var file = event.target.files[0];
-	        var reader = new FileReader(); 
+	        var files = event.target.files; 
+	        var reader = new FileReader();
+	        
+	        if(files.length != 3){
+        	    alert('이미지 갯수 확인! (3장 업로드 필수)');
+              $("#imageFile").val("");  //파일 초기화
+              $("#preview").attr("src", "resources/img/review/blank.jpg");
+              return false;
+          }
+	        
 	        reader.onload = function(e) {
 	            $("#preview").attr("src", e.target.result);
 	        }
