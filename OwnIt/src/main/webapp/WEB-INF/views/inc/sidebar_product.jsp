@@ -19,27 +19,27 @@
            					<div>
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="phone">- 휴대폰</a>
+	       								<a class="nav-link" name="category" id="휴대폰">- 휴대폰</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=스마트폰" role="category" id="phone">- 휴대폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="tablet">- 태블릿</a>
+	       								<a class="nav-link" name="category" id="태블릿">- 태블릿</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=태블릿" role="category" id="tablet">- 태블릿</a> -->
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="watch">- 스마트워치</a>
+	       								<a class="nav-link" name="category" id="스마트워치">- 스마트워치</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=스마트워치" role="category" id="watch">- 스마트워치</a> -->
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="earphone">- 이어폰</a>
+	       								<a class="nav-link" name="category" id="이어폰">- 이어폰</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=이어폰" role="category" id="earphone">- 이어폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="headphone">- 헤드폰</a>
+	       								<a class="nav-link" name="category" id="헤드폰">- 헤드폰</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=헤드폰" role="category" id="headphone">- 헤드폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="laptop">- 노트북</a>
+	       								<a class="nav-link" name="category" id="노트북">- 노트북</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=노트북" role="category" id="laptop">- 노트북</a> -->
 	       							</li>
 	     						</ul>
@@ -59,28 +59,28 @@
 			<span class="widget-title">Brands</span>
 			<div class="widget-content" >
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" name="brand" id="Apple"  value="Apple">
-					<label class="custom-control-label" for="Apple">Apple</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="APPLE"  value="Apple">
+					<label class="custom-control-label" for="APPLE">Apple</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" name="brand" id="Samsung" value="Samsung">
-					<label class="custom-control-label" for="Samsung">Samsung</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="SAMSUNG" value="Samsung">
+					<label class="custom-control-label" for="SAMSUNG">Samsung</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" name="brand" id="Sony" value="Sony">
-					<label class="custom-control-label" for="Sony">Sony</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="SONY" value="Sony">
+					<label class="custom-control-label" for="SONY">Sony</label>
 				</div>
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" name="brand" id="LG" value="LG">
 					<label class="custom-control-label" for="LG">LG</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" name="brand" id="Bose" value="Bose">
-					<label class="custom-control-label" for="Bose">BOSE</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="BOSE" value="Bose">
+					<label class="custom-control-label" for="BOSE">BOSE</label>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" name="brand" id="etc" value="etc">
-					<label class="custom-control-label" for="etc">ETC</label>
+					<input type="checkbox" class="custom-control-input" name="brand" id="ETC" value="etc">
+					<label class="custom-control-label" for="ETC">ETC</label>
 				</div>
 			</div>		
 		</div>
@@ -90,11 +90,11 @@
 		<span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-5" aria-expanded="false" aria-controls="collapse-5" role="button">
 			Filter by Price
 		</span>
-		<div class="d-lg-block collapse" id="collapse-5">
-			<span class="widget-title">Price(ajax 처리)</span>
-			<div class="widget-content">
-				<input type="text" class="rangeslider" name="Range Slider" value="" />
-			</div>
-		</div>
+<!-- 		<div class="d-lg-block collapse" id="collapse-5"> -->
+<!-- 			<span class="widget-title">Price(ajax 처리)</span> -->
+<!-- 			<div class="widget-content"> -->
+<!-- 				<input type="text" class="rangeslider" name="Range Slider" value="" /> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 	</div>
 </aside>

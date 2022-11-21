@@ -23,14 +23,9 @@ public class ProductService {
 		return mapper.getProductList(sId);
 	}
 
-	public List<ProductVO> getCategorisedProduct(String id, String sId) {
+	public List<ProductVO> getCategorisedProduct(String sId, List<String> brands, String category, String productListing) {
 		System.out.println("getCategorisedProduct()");
-		return mapper.getCategorisedProduct(id, sId);
-	}
-
-	public List<ProductVO> arrayByCategory(String id, String sId) {
-		System.out.println("arrayByCategory()");
-		return mapper.arrayByCategory(id, sId);
+		return mapper.getCategorisedProduct(sId, brands, category, productListing);
 	}
 
 	public int checkLike(String sId, int product_idx) {
@@ -115,6 +110,11 @@ public class ProductService {
 
 
 
+	
+	
+	
+	
+	
 	
 	
 	

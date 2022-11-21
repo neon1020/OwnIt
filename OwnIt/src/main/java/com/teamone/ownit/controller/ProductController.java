@@ -44,51 +44,46 @@ public class ProductController {
 		return "product/product_list";
 	}
 	
-//	@GetMapping(value = "cart")
-//	public String cart() {
-//		return "order/order_cart";
-//	}
-	
 	@GetMapping(value = "order_complete")
 	public String complete() {
 		return "product/product_order_complete";
 	}
 	
-	@GetMapping(value = "listProductByCategory")
-	public String listProduct(String id, Model model, HttpSession session) {
+	@PostMapping(value = "listProductByCategory")
+	@ResponseBody
+	public void listProduct(String categories, HttpServletResponse response, HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			List<ProductVO> productList = service.getCategorisedProduct(id, sId);
-	//		System.out.println(productList);
-			int cnt = 0;
+			System.out.println(categories);
+			String[] divideCategory = categories.split("/");
+			List<String> brands = new ArrayList<String>();
+			String category = "";
+			String productListing = "";
+			for(String str : divideCategory) {
+				if(str.contains("brand")) {
+					brands.add(str.split(":")[1]);
+				} else if(str.contains("category")) {
+					category = str.split(":")[1];
+				} else if(str.contains("productListing")) {
+					productListing = str.split(":")[1];
+				}
+			}
+//			System.out.println(brands+", "+category+", " + productListing);
+			List<ProductVO> productList = service.getCategorisedProduct(sId, brands, category, productListing);
+			JSONArray jsonArray = new JSONArray();
 			System.out.println(productList);
-			for(ProductVO product : productList) cnt++;
-			model.addAttribute("productList", productList);
-			model.addAttribute("cnt", cnt);
+			for(ProductVO product : productList) {
+				JSONObject jsonObject = new JSONObject(product);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return "product/product_list";
-	}
-
-	@GetMapping(value = "arrayByCategory")
-	public String arrayByCategory(String id, Model model, HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-		String sId = "test1@naver.com";
-		if(sId.length() != 0) {
-			List<ProductVO> productList = service.arrayByCategory(id, sId);
-	//		System.out.println(productList);
-			int cnt = 0;
-			for(ProductVO product : productList) cnt++;
-			model.addAttribute("productList", productList);
-			model.addAttribute("cnt", cnt);
-		}
-		return "product/product_list";
-	}
-
-	@GetMapping(value = "arrayByBrand")
-	public String arrayByBrand(String chArr) {
-		System.out.println(chArr);
-		return "";
 	}
 
 	@PostMapping(value = "addAndRemoveLikeList")
@@ -497,6 +492,11 @@ public class ProductController {
 	
 	
 
+	
+	
+	
+	
+	
 	
 // 박주닮
 	@GetMapping(value = "product_detail")
