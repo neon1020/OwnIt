@@ -113,10 +113,10 @@
 	    	margin-top: 15px;
 	    	
 	    }
-	    #btn3:hover{
-	    	background: black;
-	    	color: white;
-	    }
+/* 	    #btn3:hover{ */
+/* 	    	background: black; */
+/* 	    	color: white; */
+/* 	    } */
     </style>
   </head>
 <!-- kakao sdk 호출 -->
@@ -128,7 +128,6 @@
 
   // SDK 초기화 여부를 판단합니다.
   console.log(Kakao.isInitialized());
-
   function kakaoShare() {
 	  Kakao.Link.sendDefault({
 	      objectType: 'feed',
@@ -136,16 +135,15 @@
 	        title: '${product.product_brand}',
 	        description: '${product.product_name}',
 	        imageUrl:
-	          'http://localhost:8081/ownit/resources/img/product/n_sa1_1.jpg',
+	          'https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F7c%2F1d%2Fc9%2F7c1dc952fc68ecbf71dfb5a488714b09.jpg&type=a340',
 	        link: {
 	          mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
 	          webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
 	        },
 	      },
 	      social: {
-	        likeCount: 286,  //좋아요 수
-	        commentCount: 45,  //댓글 수
-	        sharedCount: 845,  //공유 수
+	        likeCount: ${wishCount},  //관심품목 담은횟수
+	        commentCount: ${listCount},  //리뷰 개수
 	      },
 	      buttons: [
 	        {
@@ -261,7 +259,7 @@
 				</button>
 				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
 					<p>
-						∑관심상품 | <fmt:formatNumber value="9641" pattern="#,###"/>
+						∑관심상품 | <fmt:formatNumber value="${wishCount }" pattern="#,###"/>
 					</p>
 				</button>
               </div>
@@ -389,10 +387,10 @@
                     		상품 공유하기
                     	</span>
                     </a>
-                    <ul class="dropdown-menu" style="width: 250px;">
+                    <ul class="dropdown-menu" style="width: 240px;">
                       <li>
                         <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn"><img src="resources/img/member/kakao.jpg"></a>
-                        <a href="#"><img src="resources/img/member/naver.jpg"></a>
+                        <img src="resources/img/member/naver.jpg">
                       </li>
                     </ul>
                   </li>
@@ -412,21 +410,12 @@
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <h3>Style <span style="font-size: 15px;">(257)</span></h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Style</li>
-              </ol>
-            </nav>
+            <h3>review <span style="font-size: 15px;">(${listCount })</span></h3>
           </div>
         </div>
       </div>
-    </section>
-    
-    
+      <br>
     <!-- 인기 최신 -->
-    <section class="hero hero-small">
       <div class="container">
         <div class="row">
           <div class="col text-center">

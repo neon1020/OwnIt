@@ -503,8 +503,15 @@ public class ProductController {
 	public String product_detail(@RequestParam int product_idx, Model model,
 								 @RequestParam(defaultValue = "1") int pageNum,
 								 @RequestParam(defaultValue = "1") int pageNum2) {
+		// 상품 정보
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
+		
+		// 관심상품에 담은 총갯수
+		int wishCount = service.selectWishCount(product_idx);
+		model.addAttribute("wishCount",wishCount);
+		
+		
 		// 페이징
 		int listLimit = 8; 
 		int pageListLimit = 10; 
@@ -512,6 +519,11 @@ public class ProductController {
 		// 상품에 대한 리뷰 목록
 		List<ReviewListVO> reviewList = service.getReviewList(product_idx,startRow,listLimit);
 		int listCount = service.getReviewListCount(product_idx);
+		
+		// 상품에 대한 리뷰 갯수
+		model.addAttribute("listCount", listCount);
+		
+		
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
 		int startPage = (pageNum2 - 1) / pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;
@@ -520,6 +532,7 @@ public class ProductController {
 		}
 		Product_DetailPageInfoVO pageInfo = new Product_DetailPageInfoVO(
 				pageNum2, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("pageInfo", pageInfo);
 		

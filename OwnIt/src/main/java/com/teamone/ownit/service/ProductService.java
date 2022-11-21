@@ -511,6 +511,12 @@ public class ProductService {
 		return mapper.selectReviewListCount(product_idx);
 	}
 
+	public int selectWishCount(int product_idx) {
+		return mapper.selectWishCount(product_idx);
+	}
+
+
+
 	
 
 	

@@ -549,10 +549,14 @@
                    ON((r.member_idx = m.member_idx))
                    WHERE r.product_idx = #{product_idx};
 	</select>
+	<!-- 상품의 관심품목 갯수 -->
+	<select id="selectWishCount" resultType="integer">
+		SELECT count(member_idx) as wishCount 
+		FROM wishlist 
+		WHERE product_idx=#{product_idx};
+	</select>
 
-
-
-
+	
 
 
 

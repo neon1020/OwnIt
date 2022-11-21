@@ -509,6 +509,9 @@ public interface ProductMapper {
 
 	int selectReviewListCount(@Param("product_idx") int product_idx);
 
+	int selectWishCount(@Param("product_idx") int product_idx);
+
+
 	
 
 	
