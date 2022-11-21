@@ -118,8 +118,36 @@
                                      <!-- 하이퍼링크에 사용할 글번호와 페이지번호는 URL 에 있는 파라미터 사용 -->
 									<div style="text-align: center;">
                                      	<input type="button" value="수정" class="btn btn-dark" onclick="location.href='admin_noticeUpdate?notice_idx=${param.notice_idx }&pageNum=${param.pageNum}'">
-                                     	<input type="button" value="삭제" class="btn btn-dark" onclick="location.href='admin_noticeDelete?notice_idx=${param.notice_idx }&pageNum=${param.pageNum}'">
+                                     	<input type="button" value="삭제" class="btn btn-dark" data-toggle="modal" data-target="#basicModal">
                                      	<input type="button" value="목록" class="btn btn-dark" onclick="location.href='admin_noticeList?pageNum=${param.pageNum}'">
+                                     
+	                                    <!-- Modal -->
+	                                    <div class="modal fade" id="basicModal">
+	                                        <div class="modal-dialog" role="document">
+	                                            <div class="modal-content">
+	                                                <div class="modal-header">
+<!-- 	                                                    <h5 class="modal-title">Modal title</h5> -->
+	                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+	                                                    </button>
+	                                                </div>
+	                                                <div class="modal-body">글을 삭제 하시겠습니까?</div>
+	                                                <div class="modal-footer" style="text-align: center;">
+	                                                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+	                                                    <button type="button" class="btn btn-dark" onclick="location.href='admin_noticeDelete?notice_idx=${notice.notice_idx}'">삭제</button>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
                                      </div>
                                 </div>
                             </div>

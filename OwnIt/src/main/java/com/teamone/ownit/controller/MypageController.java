@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamone.ownit.service.MypageService;
 import com.teamone.ownit.vo.AccountVO;
+import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
@@ -26,12 +27,50 @@ public class MypageController {
 	@Autowired
 	private MypageService service;
 	
+	
+	
+	
+	
 	// 류혜지
-	@GetMapping(value = "address")
-	public String address() {
-		return "mypage/mypage_address";
+	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+	@GetMapping(value = "/mypage")
+	public String mypage() {
+		return "mypage/mypage_main";
 	}
 	
+	//주소록 목록
+	@GetMapping(value = "address")
+	public String address(@RequestParam String id, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		System.out.println(id + ", " + sId);		
+		if(id == null || sId == null || id.equals("") || (!id.equals(sId) && !sId.equals("admin"))) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		} else {
+		List<AddressVO> address = service.getAddress(id);
+		model.addAttribute("address", address);
+		System.out.println(address);
+		// member/member_info.jsp 페이지로 이동
+		return "mypage/mypage_address";
+		}		
+	}
+	
+	//주소록 추가
+	@PostMapping(value = "addAddress")
+	public String writePro(@ModelAttribute AddressVO address, Model model) {
+		int insertCount = service.registAddress(address);
+		System.out.println(address);
+		if(insertCount > 0) {
+			return "redirect:/address";
+		} else {
+			model.addAttribute("msg", "등록 실패!");
+			return "notice/fail_back";
+		}
+	}	
+	
+	//주소록 삭제
+	
+	//위시리스트 목록
 	@GetMapping(value = "wishlist")
 	public String wishlist(@RequestParam String id, Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
@@ -46,16 +85,10 @@ public class MypageController {
 		System.out.println(wishlist);
 		// member/member_info.jsp 페이지로 이동
 		return "mypage/mypage_wishlist";
-		
-		
 		}
 	}
 	
-	@GetMapping(value = "/mypage")
-	public String mypage() {
-		return "mypage/mypage_main";
-	}
-	
+	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
 	public String sell(
 			@RequestParam(defaultValue = "") String searchType, 
@@ -119,9 +152,7 @@ public class MypageController {
 		}
 	}
 	
-	
-	
-	
+	//회원 정보 불러오기
 	@GetMapping(value = "/mypage_revise")
 	public String revise(@RequestParam String id, Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
@@ -140,75 +171,44 @@ public class MypageController {
 		}
 	}
 	
+	//비밀번호 수정
 	@PostMapping(value = "/mypage_revisePro")
 	public String revise(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
 			Model model, HttpSession session) {
-//		String sId = "test1@naver.com";
 		String sId = (String)session.getAttribute("sId");
-		String id = member.getMember_id();			
 		
-		if(id != null && sId != null && id.equals(sId) || sId.equals("admin")) {
+		if(sId != null && !sId.equals("")) {
+			String passwd = service.getPasswd(sId);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String secureNewPassword = encoder.encode(newPasswd);
+			// System.out.println("새비밀번호 : " + secureNewPassword);
 			
-			// 새 패스워드는 존재할 경우에만 해싱
-			if(newPasswd != null && !newPasswd.equals("")) {
-				newPasswd = encoder.encode(newPasswd);
-			}
-			
-			// Service 객체의 modifyMember() 메서드를 호출하여 회원 정보 수정
-			// => 파라미터 : MemberVO 객체(member), 새 패스워드(newPasswd)
-			// => 리턴타입 : int(updateCount)
-			int updateCount = service.modifyMember(member, newPasswd);
-			System.out.println(member);
-			System.out.println(newPasswd);
-			System.out.println("결과 : " + updateCount);
-			
-			// 업데이트 결과(updateCount) 성공(0보다 클 경우)이면
-			if(updateCount > 0) {
-				// "MemberInfo.me" 서블릿 요청(id 파라미터 필요)
-				return "redirect:/mypage_revise?id=" + id;
-			} else {
-				// 아니면(= 실패) Model 객체의 "msg" 속성에 "수정 실패!" 저장 후 fail_back.jsp 이동
-				model.addAttribute("msg", "수정 실패!");
+			if(passwd == null || !encoder.matches(member.getMember_passwd(), passwd)) {
+				model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 				return "notice/fail_back";
+			} else {
+				// Service 객체의 modifyMember() 메서드를 호출하여 회원 정보 수정
+				// => 파라미터 : MemberVO 객체(member), 새 패스워드(newPasswd)
+				// => 리턴타입 : int(updateCount)
+				int updateCount = service.modifyMember(member, secureNewPassword);
+				System.out.println(member);
+				System.out.println("결과 : " + updateCount);
+				
+				// 업데이트 결과(updateCount) 성공(0보다 클 경우)이면
+				if(updateCount > 0) {
+					// "MemberInfo.me" 서블릿 요청(id 파라미터 필요)
+					return "redirect:/mypage_revise?id=" + member.getMember_id();
+				} else {
+					// 아니면(= 실패) Model 객체의 "msg" 속성에 "수정 실패!" 저장 후 fail_back.jsp 이동
+					model.addAttribute("msg", "수정 실패!");
+					return "notice/fail_back";
+				}
 			}
 		} else {
 			model.addAttribute("msg", "잘못된 접근입니다!");
 			return "notice/fail_back";
 		}		
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

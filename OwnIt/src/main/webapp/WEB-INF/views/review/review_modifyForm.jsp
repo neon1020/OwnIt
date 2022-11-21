@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,16 +13,71 @@
     
     <script src="resources/js/jquery-3.6.1.js"></script>
     <script>
-	    $(document).ready(function (e){
-		    $("#imageFile").on("change", function(event) {
-		        var file = event.target.files[0];
-		        var reader = new FileReader(); 
-		        reader.onload = function(e) {
-		            $("#preview").attr("src", e.target.result);
-		        }
-		        reader.readAsDataURL(file);
-		    });
-	    });  
+    $(function(){
+        var fileNum = 0;
+        //이미지 등록
+        $("#AddImgs").change(function(e){
+            //div 내용 비워주기
+            $('#Preview').empty();
+            
+            var files = e.target.files;
+            var arr = Array.prototype.slice.call(files);
+            //업로드 가능 파일인지 체크
+            for(var i = 0; i < files.length; i++){
+                if(!checkExtension(files[i].name)){
+                    return false;
+                }
+                if(files.length > 3){
+                    alert('업로드 파일은 3개를 초과할 수 없습니다.');
+                    $("#AddImgs").val("");  //파일 초기화
+                    return false;
+                }
+            }
+            preview(arr);
+      
+            function checkExtension(fileName){
+                var regex = new RegExp("(.*?)\.(exe|hwp|zip|alz|txt)$");
+      
+                if(regex.test(fileName)){
+                    alert('파일형식을 확인해주세요.');
+                    $("#AddImgs").val("");  //파일 초기화
+                    return false;
+                }
+                return true;
+            }
+      
+          function preview(arr){
+            arr.forEach(function(f){
+              //div에 이미지 추가
+              var str = '<li class="ui-state-default">';
+              //이미지 파일 미리보기
+              if(f.type.match('image.*')){
+                //파일을 읽기 위한 FileReader객체 생성
+                var reader = new FileReader(); 
+                arr.push(f);
+                reader.onload = function (e) { 
+                //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                  str += '<img src="'+e.target.result+'" title="'+f.name+'" width=80 height=80>';
+                  str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
+                  str += '</li>';
+                  $(str).appendTo('#Preview');
+                  fileNum++;
+                }
+              reader.readAsDataURL(f);
+              } 
+            });
+            console.log(arr);
+          }
+          
+          //이미지 삭제
+          function delImg(fileNum){
+            var no = fileNum.replace(/[^0-9]/g, "");
+            arr[no].is_delete = true;
+            $('#' + fileNum).remove();
+            fileCount--;
+          };
+        });
+      });
     </script>
     
     <style type="text/css">
@@ -29,9 +85,17 @@
 	    .form-control { width: 600px; margin: 10px auto; }
 	    .form-control:focus { border-color: #101010; }
 	    #exampleInputEmail1 { width: 530px; height: 60px; }
+	    .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
 	    /* 사진업로드 */
-	    img #preview { width: 200px; height: 200px; }
-	    input[type=file]::file-selector-button, .submit { background-color: #101010; border-color: #101010; color: #FFF; border-radius: 1em; font-size: 14px; padding: 6px 14px; }
+	    input[type=file]::file-selector-button { display: none; }
+    
+      .inputFile, #Preview, #Preview li { float:left }
+      .inputFile { margin-bottom: 10px; width: 100px; }
+      .addImgBtn { text-align: center; width: 80px; height: 80px; line-height: 71px; background-color: #fff; color: #b7b7b7; border: 2px solid #b7b7b7; font-size: 35px; padding: 0; }
+      #Preview { margin-left: 20px; width: 300px; }
+      #Preview li { margin-left: 10px; margin-bottom: 10px; position: relative; border: 1px solid #ececec; cursor:move }
+      .delBtn { position: absolute; top: 0; right: 0; font-size: 13px; background-color: #000; color: #fff; width: 18px; height: 18px;
+          line-height: 16px; display: inline-block; text-align: center; cursor: pointer; }    
     </style>
     
   </head>
@@ -39,28 +103,40 @@
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
 
-    <!-- 페이지 제목 -->
+    <!-- ********************************* 페이지 제목 ********************************* -->
     <article class="col-lg-9 pl-lg-5" style="width: 600px;">
       <h1 class="mb-0">Review</h1>
 
       <!-- **************************** 리뷰 작성 부분 **************************** -->
-      <section id="component-1">
-        <div class="component">
-          <div class="form-group">
-          	<img src="resources/img/review/iphone1dt.jpg" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Apple iPhone 13 128GB Starlight (Korean Ver.)" readonly="readonly">
-            <textarea rows="10" cols="30" class="form-control" placeholder="오프라인에서는 구하기 힘든 모델인데 역시 온잇에는 있더라구요! 만족스럽게 잘 구매했습니다~"></textarea>
+      <form action="review_modifyPro" method="post" enctype="multipart/form-data">
+       <input type="hidden" name="review_idx" value="${review.review_idx }" />
+        <section id="component-1">
+          <div class="component">
+            <div class="form-group">
+              <img src="resources/img/product/${review.product_image }" id="itemdt" style="width: 60px; height: 60px; margin-right: 10px; float: left; background-size: cover;">
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="${review.product_name }" readonly="readonly">
+              <textarea rows="10" cols="30" name="review_content" class="form-control" required>${review.review_content }</textarea>
+            </div>
+            <div class="filebox clearfix">
+               <div class="inputFile">
+                 <label for="AddImgs" class="addImgBtn">+</label>
+                 <input type="file" name="files" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple required>
+               </div>
+               <ul id="Preview" class="sortable">
+	               <c:forEach var="image" items="${reviewImage }">
+				           <li class="ui-state-default">
+                     <img src="resources/img/review/${image.review_image1 }" width=80 height=80>
+                     <span class="delBtn">x</span>
+                   </li>
+				         </c:forEach>
+               </ul>
+            </div>
           </div>
-          <div class="filebox clearfix">
-		    <img src="resources/img/review/iphone3.jpg" id="preview" style="width: 120px; height: 120px; background-size: cover;">
-			<input type="file" id="imageFile">
-		  </div>
-        </div>
-      </section>
-      	<div style="float: right;">
-      	  <input type="submit" class="submit" value="리뷰수정">
-      	</div>
-      <!-- **************************** 리뷰 작성 부분 **************************** -->
+        </section>
+          <div style="float: right;">
+            <input type="submit" class="submit" value="리뷰수정">
+          </div>
+      </form>
 	</article>
 	
     <!-- footer -->
