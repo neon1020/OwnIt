@@ -7,12 +7,6 @@
 <title>Insert title here</title>
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
-    <script type="text/javascript">
-    	function check() {
-    		let test = $('#date1').val();
-    		console.log(test);
-    	}
-    </script>
 </head>
 <body>
 	<!-- header -->
@@ -82,10 +76,10 @@
 										<table style="margin: auto;">
 											<tr>
 												<td colspan="3">
-													<input type="button" value="2개월" class="btn btn-outline-dark btn-rounded btn-sm">
+													<input type="button" value="최근 2개월" class="btn btn-outline-dark btn-rounded btn-sm">
 													<input type="button" value="4개월" class="btn btn-outline-dark btn-rounded btn-sm">
 													<input type="button" value="6개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="date" id="date1" name="date1" onclick="check()">  ~  <input type="date" id="date2" name="date2">
+													<input type="month">~<input type="month">
 													<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">
 												</td>
 											</tr>
