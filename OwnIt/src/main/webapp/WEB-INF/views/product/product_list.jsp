@@ -138,25 +138,23 @@ function changeHeart(heart) {
 	});
 }
 
-$(function() {
-	$('.product-action').click(function() {
-		var index = $(this).attr('id');
-		$.ajax({
-			url:'addCart',
-			type:'GET',
-			data:{
-				product_idx:index
-			},
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			success:function(result){
-				if(result == 'Added') {
-					$('#'+index+' > a').html(result).css('color', 'blue');
-				} else {
-					$('#'+index+' > a').html(result).css('color', 'red');
-				}
-				checkCart();
+$(document).on("click", ".product-action", function() {
+	var index = $(this).attr('id');
+	$.ajax({
+		url:'addCart',
+		type:'GET',
+		data:{
+			product_idx:index
+		},
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success:function(result){
+			if(result == 'Added') {
+				$('#'+index+' > a').html(result).css('color', 'blue');
+			} else {
+				$('#'+index+' > a').html(result).css('color', 'red');
 			}
-		});
+		checkCart();
+		}
 	});
 });
 
