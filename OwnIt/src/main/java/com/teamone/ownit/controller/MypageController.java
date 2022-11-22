@@ -237,12 +237,14 @@ public class MypageController {
 			List<AddressVO> address = service.getAddress(member_idx);
 			model.addAttribute("address", address);
 			System.out.println(address);
+			// 계좌 갯수 불러와서 model 객체에 저장
+			int addressCount = service.getAddressCount(member_idx);
+			model.addAttribute("addressCount", addressCount);
 			// member/member_info.jsp 페이지로 이동
 			return "mypage/mypage_address";
 		} else {
 			model.addAttribute("msg", "잘못된 접근입니다!");
 			return "notice/fail_back";
-		
 		}		
 	}
 	
@@ -267,6 +269,20 @@ public class MypageController {
 	}	
 	
 	//주소록 수정
+	@PostMapping(value = "updateAddress")
+	public String updateAddress(AddressVO address, int member_idx, Model model, HttpSession session) {
+		int updateCount = service.updateAddress(address);
+		
+		if(updateCount == 0) {
+			model.addAttribute("msg", "주소지 수정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+		return "redirect:/address?member_idx=" + member_idx;
+	}	
+	
+	//대표 주소 활성 & 비활성
+	
+	
 	
 	//주소록 삭제
 	@GetMapping(value = "deleteAddress")
@@ -274,7 +290,7 @@ public class MypageController {
 		
 		int deleteCount = service.removeAddress(address);
 		if(deleteCount == 0) {
-			model.addAttribute("msg", "삭제 실패!");
+			model.addAttribute("msg", "주소지 삭제에 실패하였습니다. 다시 시도해주세요.");
 			return "notice/fail_back";
 		}
 		return "redirect:/address?member_idx=" + member_idx;
@@ -297,7 +313,191 @@ public class MypageController {
 	
 	
 	
-	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 500
 	@GetMapping(value = "/mypage_order")
 	public String order() {
 		return "mypage/mypage_order";

@@ -79,6 +79,12 @@ public class MypageService {
 		return mapper.insertAddress(address, member_idx, addressCount);
 	}
 	
+	//주소록 수정
+	public int updateAddress(AddressVO address) {
+		return mapper.updateAddress(address);
+	}
+	
+	
 	//주소록 삭제
 	public int removeAddress(AddressVO address) {
 		return mapper.deleteAddress(address);
@@ -110,12 +116,6 @@ public class MypageService {
 
 
 
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -332,7 +332,8 @@ public class MypageService {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
 	}
-	
+
+
 	
 	
 	

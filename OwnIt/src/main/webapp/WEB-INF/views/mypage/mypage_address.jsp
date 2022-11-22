@@ -90,12 +90,12 @@
 
                   <!-- addresses -->
                   <div class="tab-pane fade show active" id="sidebar-1-3">
-<!--                     <div class="row"> -->
-<!--                       <div class="col"> -->
+                    <div class="row">
+                      <div class="col">
 <!--                         <h3 class="mb-0">Addresses</h3> -->
-<!--                         <span class="eyebrow">2 개의 배송지가 있습니다.</span> -->
-<!--                       </div> -->
-<!--                     </div> -->
+                        <span class="eyebrow">${addressCount }개의 배송지가 있습니다.</span>
+                      </div>
+                    </div>
                   <div class="row gutter-2">
                     <c:forEach var="address" items="${address }" varStatus="vs">
                       <div class="col-md-6">
@@ -163,41 +163,31 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
+      <form action="updateAddress" method="post" id="updateAddress">
+      <input type="hidden" name="address_idx" value="${address.address_idx }">
+	  <input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
       <div class="modal-body">
-      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-      <script type="text/javascript">
-		// 우편번호 & 주소 검색 API - Modal ver.
-		function execDaumPostcode2() {
-		    new daum.Postcode({
-		        oncomplete: function(data) {
-		            $("#zipCodeMo").val(data.zonecode); // 우편번호
-		            $("#address1_mo").val(data.roadAddress); // 주소
-		            $("#address2_mo").focus(); // 상세주소에 focus 요청
-		        }
-		    }).open();
-		}
-	</script>
 	      <div class="input-group">
-	        <input type="text" class="form-control form-control-lg" name="address_zipcode" id="zipCodeMo" placeholder="우편번호 검색" onclick="execDaumPostcode()" aria-label="Zipcode">
+	        <input type="text" class="form-control form-control-lg" name="address_zipcode" value="${address.address_zipcode }" readonly="readonly" placeholder="우편번호 검색" aria-label="Zipcode">
           </div>
 	      <div class="input-address">
-	        <input type="text" class="form-control form-control-lg" name="address1" id="address1_mo" placeholder="우편번호 검색 후, 자동 입력 됩니다" aria-label="Address1">
+	        <input type="text" class="form-control form-control-lg" name="address1" value="${address.address1 }" readonly="readonly" placeholder="우편번호 검색 후, 자동 입력 됩니다" aria-label="Address1">
 	      </div>
 	      <div class="input-address">
-	      	<input type="text" class="form-control form-control-lg" name="address2" id="address2_mo" placeholder="건물/아파트/동호수 입력" aria-label="Address2">
+	      	<input type="text" class="form-control form-control-lg" name="address2" value="${address.address2 }" placeholder="건물/아파트/동호수 입력" aria-label="Address2">
 	      </div>
 	      <div class="input-address">
-	      	<input type="text" class="form-control form-control" name="address_nickname" placeholder="주소이름" aria-label="Address_Nickname">
+	      	<input type="text" class="form-control form-control" name="address_nickname" value="${address.address_nickname }" placeholder="주소이름" aria-label="Address_Nickname">
 	      </div>
 	      <div class="input-address">
-	      	<input type="text" class="form-control form-control" name="address_recipient" placeholder="수령인" aria-label="Address_Nickname">
+	      	<input type="text" class="form-control form-control" name="address_recipient" value="${address.address_recipient }" placeholder="수령인" aria-label="Address_Nickname">
 	      </div>
       </div>
       <div class="modal-footer">
         <div class="container-fluid">
           <div class="row gutter-0">
             <div class="col">
-              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='deleteAddress?member_idx=${sessionScope.sIdx }&address_idx=${address.address_idx}'">Save</button>
+              <button type="submit" class="btn btn-block btn-dark btn-rounded">Save</button>
             </div>
             <div class="col">
               <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">Close</button>
@@ -205,6 +195,7 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </div>
