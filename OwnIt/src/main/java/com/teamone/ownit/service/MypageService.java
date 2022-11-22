@@ -40,13 +40,13 @@ public class MypageService {
 	}
 	
 	//판매내역 갯수 조회
-	public int getMySellListCount(String searchType, String keyword, String id) {
-		return mapper.selectMySellListCount(searchType, keyword, id);
+	public int getMySellListCount(int member_idx) {
+		return mapper.selectMySellListCount(member_idx);
 	}
 	
 	//판매내역 목록
-	public List<MypageSellListVO> getMySell(int startRow, int listLimit, String searchType, String keyword, String id) {
-		return mapper.selectMySell(startRow, listLimit, searchType, keyword, id);
+	public List<MypageSellListVO> getMySell(int member_idx, int startRow, int listLimit) {
+		return mapper.selectMySell(member_idx, startRow, listLimit);
 	}
 	
 	//위시리스트 갯수 조회
@@ -57,6 +57,16 @@ public class MypageService {
 	//위시리스트 목록
 	public List<WishlistVO> getWishlist(int member_idx, int startRow, int listLimit) {
 		return mapper.selectWishlist(member_idx,startRow,listLimit);
+	}
+	
+	//장바구니에 존재하는지 확인
+	public int isContainedInCart(int member_idx, int product_idx) {
+		return mapper.isContainedInCart(member_idx, product_idx);
+	}
+	
+	//장바구니 추가
+	public int addToCart(int member_idx, int product_idx) {
+		return mapper.addToCart(member_idx, product_idx);
 	}
 	
 	//위시리스트 삭제
@@ -84,6 +94,13 @@ public class MypageService {
 		return mapper.updateAddress(address);
 	}
 	
+	//주소록 대표 배송지 설정
+	public int otherAddress(int member_idx) {
+		return mapper.otherAddress(member_idx);
+	}
+	public int defaultAddress(int member_idx, int address_idx) {
+		return mapper.defaultAddress(member_idx, address_idx);
+	}
 	
 	//주소록 삭제
 	public int removeAddress(AddressVO address) {
@@ -332,6 +349,14 @@ public class MypageService {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
 	}
+
+
+
+
+
+
+
+
 
 
 	

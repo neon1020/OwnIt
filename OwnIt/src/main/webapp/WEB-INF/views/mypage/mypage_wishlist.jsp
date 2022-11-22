@@ -114,7 +114,7 @@
 					        <div class="container-fluid">
 					          <div class="row gutter-0">
 					            <div class="col">
-					              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='addCart?product_idx=${wishlist.product_idx}'">Yes</button>
+					              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
 					            </div>
 					            <div class="col">
 					              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>

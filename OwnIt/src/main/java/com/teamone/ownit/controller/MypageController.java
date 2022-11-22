@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.teamone.ownit.service.MypageService;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
+import com.teamone.ownit.vo.CartVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
@@ -100,22 +101,14 @@ public class MypageController {
 	
 	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
-	public String sell(
-			@RequestParam(defaultValue = "") String searchType, 
-			@RequestParam(defaultValue = "") String keyword, 
-			@RequestParam(defaultValue = "1") int pageNum, Model model, 
-			@RequestParam String id, HttpSession session) {
+	public String sell(@RequestParam int member_idx, Model model, HttpSession session,
+			@RequestParam(defaultValue = "1") int pageNum) {
 		String sId = (String)session.getAttribute("sId");
-		System.out.println(id + ", " + sId);
-		
-		if(id == null || sId == null || id.equals("") || (!id.equals(sId) && !sId.equals("admin"))) {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "notice/fail_back";
-		} else {
+		if(sId != null && !sId.equals("")) {	
 			// -------------------------------------------------------------------
 			// 페이징 처리를 위한 계산 작업
-			int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
-			int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+			int listLimit = 5; // 한 페이지 당 표시할 게시물 목록 갯수 
+			int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
 			
 			// 조회 시작 게시물 번호(행 번호) 계산
 			int startRow = (pageNum - 1) * listLimit;
@@ -123,11 +116,12 @@ public class MypageController {
 			// Service 객체의 getNoticeList() 메서드를 호출하여 게시물 목록 조회
 			// => 파라미터 : 시작행번호, 페이지 당 목록 갯수
 			// => 리턴타입 : List<NoticeVO>(noticeList)
-			List<MypageSellListVO> mysell = service.getMySell(startRow, listLimit, searchType, keyword, id);
+			List<MypageSellListVO> mysell = service.getMySell(member_idx, startRow, listLimit);
 			// -------------------------------------------
 			// Service 객체의 getNoticeListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 			// => 파라미터 : 없음, 리턴타입 : int(listCount)
-			int listCount = service.getMySellListCount(searchType, keyword, id);
+			int listCount = service.getMySellListCount(member_idx);
+			System.out.println("글 갯수 : " + listCount);
 			
 			// 페이지 계산 작업 수행
 			// 전체 페이지 수 계산
@@ -157,8 +151,13 @@ public class MypageController {
 			// 게시물 목록(noticeList) 과 페이징 처리 정보(pageInfo)를 Model 객체에 저장
 			model.addAttribute("mysell", mysell);
 			model.addAttribute("pageInfo", pageInfo);
+			model.addAttribute("sellCount", listCount);
+			System.out.println(mysell);
 			
 			return "mypage/mypage_sell";
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
 		}
 	}
 	
@@ -216,6 +215,29 @@ public class MypageController {
 			return "notice/fail_back";
 		}
 	}
+	
+	//위시리스트 장바구니 담기
+	@GetMapping(value = "mypage_addCart")
+	public String addAddress(CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
+			Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) {
+			int isContained = service.isContainedInCart(member_idx, product_idx);
+			
+			if(isContained > 0) {
+				model.addAttribute("msg", "이미 장바구니에 존재하는 상품 입니다");
+				return "notice/fail_back";
+			} else {
+				int insertCount = service.addToCart(member_idx, product_idx);
+				if(insertCount > 0) {
+					System.out.println("장바구니에 추가됨");
+				} return "mypage/mypage_wishlist";
+			}
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		}
+	}	
 	
 	//위시리스트 삭제
 	@GetMapping(value = "deleteWishlist")
@@ -280,9 +302,22 @@ public class MypageController {
 		return "redirect:/address?member_idx=" + member_idx;
 	}	
 	
-	//대표 주소 활성 & 비활성
-	
-	
+	//주소록 대표 배송지 설정
+	@PostMapping(value = "defaultAddress")
+	public String defaultAddress(int address_idx, int member_idx, Model model) {
+		// 계좌 전체 1(나머지 계좌)로 설정
+		int setOther = service.otherAddress(member_idx);
+		
+		// 해당 계좌 0(기본 계좌)으로 설정
+		int setDefault = service.defaultAddress(member_idx, address_idx);
+		
+		if(setOther > 0 && setDefault > 0) {
+			return "redirect:/address?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "대표 주소록 설정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}	
 	
 	//주소록 삭제
 	@GetMapping(value = "deleteAddress")
@@ -460,42 +495,7 @@ public class MypageController {
 	
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	// 정채연 - 500
 	@GetMapping(value = "/mypage_order")

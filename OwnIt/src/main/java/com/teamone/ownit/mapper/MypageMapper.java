@@ -27,18 +27,23 @@ public interface MypageMapper {
 	String selectPasswd(String sId);
 	
 	//판매내역 갯수 조회
-	int selectMySellListCount(@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id); 
+	int selectMySellListCount(int member_idx); 
 	
 	//판매내역 목록
-	List<MypageSellListVO> selectMySell(
-			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id);
+	List<MypageSellListVO> selectMySell(@Param("member_idx") int member_idx, @Param("startRow") int startRow, 
+										@Param("listLimit") int listLimit);
 
 	//위시리스트 목록
 	List<WishlistVO> selectWishlist(@Param("member_idx") int member_idx, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	
 	//위시리스트 갯수 조회
 	int selectWishlistCount(int member_idx);
+	
+	//장바구니에 존재하는지 확인
+	int isContainedInCart(@Param("member_idx") int member_idx, @Param("product_idx")int product_idx);
+	
+	//장바구니 추가
+	int addToCart(@Param("member_idx") int member_idx, @Param("product_idx")int product_idx);
 	
 	//위시리스트 삭제
 	int deleteWishlist(@Param("member_idx") int member_idx, @Param("product_idx") int product_idx);
@@ -54,6 +59,10 @@ public interface MypageMapper {
 	
 	//주소록 수정
 	int updateAddress(AddressVO address);
+	
+	//주소록 대표 배송지 설정
+	int otherAddress(int member_idx);
+	int defaultAddress(@Param("member_idx") int member_idx, @Param("address_idx") int address_idx);
 	
 	//주소록 삭제
 	int deleteAddress(AddressVO address);
@@ -284,16 +293,7 @@ public interface MypageMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -311,6 +311,12 @@ public interface MypageMapper {
 	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
 
 	int otherAccount(int member_idx);
+
+	
+
+	
+
+
 
 	
 }

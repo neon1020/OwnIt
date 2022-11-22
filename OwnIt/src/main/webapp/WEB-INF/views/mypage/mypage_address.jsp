@@ -92,7 +92,7 @@
                   <div class="tab-pane fade show active" id="sidebar-1-3">
                     <div class="row">
                       <div class="col">
-<!--                         <h3 class="mb-0">Addresses</h3> -->
+                        <h3 class="mb-0">주소록</h3>
                         <span class="eyebrow">${addressCount }개의 배송지가 있습니다.</span>
                       </div>
                     </div>
@@ -120,12 +120,9 @@
                                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li>
                                       <c:choose>
-                                        <c:when test="${address.address_gb == '0'}">
-                                          <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address${vs.index}">대표 배송지 해제</a>
-                                        </c:when>
-                                        <c:otherwise>
+                                        <c:when test="${address.address_gb == '1'}">
                                           <a class="dropdown-item" href="#!" data-toggle="modal" data-target="#default_address${vs.index}">대표 배송지 설정</a>
-                                        </c:otherwise>
+                                        </c:when>
                                       </c:choose>
                                     </li>
                                     <li>
@@ -230,75 +227,44 @@
 </div>
 	
 <!-- modal(default_address) -->
-<c:choose>
-  <c:when test="${address.address_gb == '0'}">
     <div class="modal fade" id="default_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">대표 배송지 해제</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">대표 배송지 설정</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">×</span>
 	        </button>
 	      </div>
+   		  <form action="defaultAddress" method="post" id="default_address">
+	      <input type="hidden" name="address_idx" value="${address.address_idx }">
+		  <input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
 	      <div class="modal-body">
-		      <p>대표 배송지 설정을 해제 하시겠습니까?</p>
+		      <p>대표 배송지로 설정 하시겠습니까?</p>
 	      </div>
 	      <div class="modal-footer">
 	        <div class="container-fluid">
 	          <div class="row gutter-0">
 	            <div class="col">
-	              <button type="button" class="btn btn-block btn-primary">Yes</button>
+            	  <button type="submit" class="btn btn-block btn-dark btn-rounded">Yes</button>
 	            </div>
 	            <div class="col">
-	              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
+	              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
 	            </div>
 	          </div>
 	        </div>
 	      </div>
+	      </form>
 	    </div>
 	  </div>
 	</div>	                                    	
-  </c:when>
-  
-    <c:otherwise>
-      <div class="modal fade" id="default_address${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <h5 class="modal-title" id="exampleModalLabel">대표 배송지 설정</h5>
-	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">×</span>
-	          </button>
-	        </div>
-	        <div class="modal-body">
-		      <p>대표 배송지로 설정하시겠습니까?</p>
-	        </div>
-	        <div class="modal-footer">
-	          <div class="container-fluid">
-	            <div class="row gutter-0">
-	              <div class="col">
-	                <button type="button" class="btn btn-block btn-primary">Yes</button>
-	              </div>
-	              <div class="col">
-	                <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>	     
-    </c:otherwise>
-  </c:choose>	
-	
   </c:forEach>	               
 </div>
                     
 
                     <div class="row">
                       <div class="col">
-                        <h3>새 배송지 추가</h3>
+                        <h4>새 배송지 추가</h4>
                       </div>
                     </div>
                     
