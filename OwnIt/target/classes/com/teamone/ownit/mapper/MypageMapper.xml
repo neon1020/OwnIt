@@ -3,12 +3,15 @@
 <mapper namespace="com.teamone.ownit.mapper.MypageMapper">
 
 	<!-- 류혜지 -->
+	
+	<!-- 회원정보 조회	 -->
 	<select id="selectMemberInfo" resultType="com.teamone.ownit.vo.MypageVO">
         SELECT 
         	i.image_original_file1,
         	m.member_id, 
  			m.member_nickname,
 			m.member_name,
+			m.member_image,
 			m.member_phone,
 			a.address_zipcode,
 			a.address1,
@@ -20,7 +23,8 @@
 				ON m.member_idx = i.member_idx
 				WHERE member_id=#{member_id}
     </select>	
-	<!-- 전체 게시물 목록 갯수 조회(검색 기능 추가) -->
+    
+	<!-- 구매내역 게시글 갯수 -->
 	<select id="selectMySellListCount" resultType="integer">
 		SELECT 
 			COUNT(*) 
@@ -34,6 +38,8 @@
 				WHERE member_id=#{id}			
 			
 	</select>	
+	
+	<!-- 구매내역 게시글 -->
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
         SELECT 
         	m.member_id,
@@ -54,14 +60,25 @@
 			ORDER BY 
 				o.order_sell_idx DESC
 			LIMIT #{startRow}, #{listLimit}
-    </select>		
+    </select>	
+    
+    <!-- 비밀번호 조회 -->	
+	<select id="selectPasswd" resultType="String">
+		SELECT member_passwd 
+			FROM member
+			WHERE member_id=#{sId}
+	</select>
+	
+	<!-- 비밀번호 변경 -->    
 	<update id="updateMember">
 		UPDATE member
-				member_passwd = #{newPasswd}
+			SET
+				member_passwd = #{secureNewPassword}
 			WHERE 
-				member_id = #{member.member_id} AND member_passwd = #{member.member_passwd}
+				member_id = #{member.member_id}
 	</update>	
 	
+	<!-- 위시리스트 불러오기 -->	
     <select id="selectWishlist" resultType="com.teamone.ownit.vo.WishlistVO">
         SELECT 
 			m.member_idx,
@@ -69,116 +86,86 @@
 			p.product_idx,
 			p.product_name,
         	i.image_real_file1
-				FROM wishlist w
+					FROM wishlist w
+					LEFT JOIN member m
+					ON w.member_idx = m.member_idx
+					LEFT JOIN product p
+					ON w.product_idx = p.product_idx	
+					LEFT JOIN image i
+					ON w.product_idx = i.product_idx	
+				WHERE w.member_idx=#{member_idx}
+				LIMIT #{startRow}, #{listLimit}				
+    </select>
+
+	<!-- 위시리스트 갯수 조회 -->	    
+	<select id="selectWishlistCount" resultType="integer">
+		SELECT COUNT(*) 
+			FROM wishlist w
 				LEFT JOIN member m
 				ON w.member_idx = m.member_idx
 				LEFT JOIN product p
 				ON w.product_idx = p.product_idx	
 				LEFT JOIN image i
-				ON w.product_idx = i.product_idx				
-				WHERE m.member_id=#{id}
+				ON w.product_idx = i.product_idx
+			WHERE w.member_idx=#{member_idx}
+	</select>
+	
+	<!-- 위시리스트 삭제 -->
+	<delete id="deleteWishlist">
+		DELETE FROM wishlist
+			WHERE 
+				member_idx = #{member_idx}
+			AND 
+				product_idx = #{product_idx}
+	</delete>
+	
+	<!-- 주소록 목록 -->	
+    <select id="selectAddress" resultType="com.teamone.ownit.vo.AddressVO">
+        SELECT 
+			m.member_idx,
+			m.member_id,
+			a.address_idx,
+			a.address_zipcode,
+			a.address1,
+			a.address2,
+			a.address_recipient,
+			a.address_gb,
+			a.address_nickname
+				FROM address a
+				LEFT JOIN member m
+				ON a.member_idx = m.member_idx
+				WHERE m.member_idx=#{member_idx}
     </select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 주소록 갯수 조회 -->
+	<select id="selectAddressCount" resultType="integer">
+	SELECT COUNT(*) 
+		FROM address
+		WHERE member_idx=#{member_idx}
+	</select>
+
+	<!-- 주소록 추가 -->
+	<insert id="insertAddress">
+		insert into address
+			values(
+				null,
+				#{member_idx},
+				#{address.address_zipcode},
+				#{address.address1},
+				#{address.address2},
+				'1',
+				#{address.address_nickname},
+				#{address.address_recipient}
+			)
+	</insert>
+
+	<!-- 주소록 삭제 -->
+	<delete id="deleteAddress">
+		DELETE
+			FROM address
+			WHERE 
+				address_idx = #{address_idx}
+	</delete>
 
 
 
@@ -311,4 +298,99 @@
 
 
 <!-- 정채연 -->
+
+<!-- 계좌 관리 : 해당 회원의 총 계좌 갯수 구하기 -->
+<select id="selectAccountCount" resultType="Integer">
+	SELECT COUNT(*) FROM account WHERE member_idx = #{member_idx}
+</select>
+
+<!-- 계좌 관리 : 계좌 추가 작업 수행 -->
+<insert id="insertAccount">
+	<selectKey keyProperty="isMain" resultType="Integer" order="BEFORE">
+		SELECT COUNT(account_gb) FROM account
+			WHERE
+			member_idx = #{member_idx}
+			AND
+			account_gb = 0
+	</selectKey>
+	INSERT INTO account
+	VALUES (
+		NULL,
+		#{member_idx},
+		#{account.account_bank},
+		#{account.account_num},
+		#{account.account_owner_name},
+		<if test="accountCount == 0">
+			'0',
+		</if>
+		<if test="accountCount > 0">
+			<choose>
+				<when test="isMain == 0">
+					'0',
+				</when>
+				<when test="isMain > 0">
+					'1',
+				</when>
+			</choose>
+		</if>
+		#{account.account_nickname}
+	)
+</insert>
+
+<!-- 계좌 관리 : 해당 회원의 계좌 목록 가져오기 -->
+<select id="selectAccountList" resultType="com.teamone.ownit.vo.AccountVO">
+	SELECT * FROM account
+	WHERE
+		member_idx = #{member_idx}
+	ORDER BY account_gb
+</select>
+
+<!-- 계좌 관리 : 계좌 정보 수정 -->
+<update id="updateAccount">
+	UPDATE account
+		SET
+			account_bank = #{account_bank},
+			account_num = #{account_num},
+			account_owner_name = #{account_owner_name},
+			account_nickname = #{account_nickname}
+		WHERE
+			account_idx = #{account_idx}
+</update>
+
+<!-- 계좌 관리 : 계좌 삭제 -->
+<delete id="deleteAccount">
+	DELETE
+		FROM account
+		WHERE
+			account_idx = #{account_idx}
+</delete>
+
+<!-- 계좌 관리 : 기본 계좌 설정 -->
+<update id="defaultAccount">
+	UPDATE account
+		SET
+			account_gb = '0'
+		WHERE
+			member_idx = #{member_idx}
+			AND
+			account_idx = #{account_idx}
+</update>
+
+<!-- 계좌 관리 : 기본 계좌 설정 전 전체 나머지 계좌로 설정 -->
+<update id="otherAccount">
+	UPDATE account
+		SET
+			account_gb = '1'
+		WHERE
+			member_idx = #{member_idx}
+</update>
+
+
+
+
+
+
+
+
+
 </mapper> 
