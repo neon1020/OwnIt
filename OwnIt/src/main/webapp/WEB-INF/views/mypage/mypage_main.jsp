@@ -7,6 +7,7 @@
 <title>Insert title here</title>
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 </head>
 <body>
     <!-- header -->
@@ -47,16 +48,19 @@
 							<!-- mypage_main -->
 							<div class="row gutter-1">
 								<div class="col-md-12">
+								<c:forEach var="myProfile" items="${myProfile }">
 									<table>
 										<tr>
-											<td><img src="resources/img/member/ppoyam.jpg" width="100" height="100" style="border-radius: 10em"></td>
-											<td style="width: 600px;">김뽀얌이<br>el****@naver.com</td>
+<!-- 											<td><img src="resources/img/member/ppoyam.jpg" width="100" height="100" style="border-radius: 10em"></td> -->
+											<td><img src="resources/img/member/${myProfile.member_image }" width="100" height="100" style="border-radius: 10em; margin-right: 10px"></td>
+											<td style="width: 600px;">${myProfile.member_nickname }<br>${myProfile.member_id }</td>
 											<td>
 												<input type="button" value="프로필 수정" class="btn btn-outline-dark btn-rounded btn-sm" onclick="location.href='mypage_revise'">
 												<input type="button" value="내 스타일" class="btn btn-outline-dark btn-rounded btn-sm" onclick="location.href='review_mystyle'">
 											</td>
 										</tr>        
 									</table>
+									</c:forEach>
 								</div>	
 								<div class="col-md-12" style="margin-top: 40px;">
 									<h5>구매내역</h5>			

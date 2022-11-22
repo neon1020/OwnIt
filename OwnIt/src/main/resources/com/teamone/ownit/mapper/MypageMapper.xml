@@ -40,6 +40,11 @@
 				member_id = #{member.member_id}
 	</update>	
 	
+	<!-- 메인 (프로필, 구매내역, 판매내역, 위시리스트 목록) -->	
+	<select id="selectMyProfile" resultType="com.teamone.ownit.vo.MypageMainVO">	
+        SELECT * FROM member WHERE member_idx = #{member_idx}
+    </select>	
+	
 	<!-- 판매내역 목록 -->
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
         SELECT 
@@ -126,7 +131,7 @@
 	<!-- 장바구니 추가 -->	 
 	<insert id="addToCart">
 		INSERT INTO cart
-		VALUES 
+		VALUES(
 		#{member_idx}, 
 		#{product_idx}, 
 		1, 

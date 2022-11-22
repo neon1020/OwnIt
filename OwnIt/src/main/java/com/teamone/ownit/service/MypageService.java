@@ -9,6 +9,7 @@ import com.teamone.ownit.mapper.MypageMapper;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.WishlistVO;
@@ -38,6 +39,16 @@ public class MypageService {
 	public String getPasswd(String sId) {
 		return mapper.selectPasswd(sId);
 	}
+	
+	//메인 (프로필)
+	public List<MypageMainVO> getMyProfile(int member_idx) {
+		return mapper.selectMyProfile(member_idx);
+	}
+	
+	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+//	public List<MypageMainVO> getMypageMainList(int member_idx) {
+//		return mapper.selectMypageMainList(member_idx);
+//	}
 	
 	//판매내역 갯수 조회
 	public int getMySellListCount(int member_idx) {
@@ -349,6 +360,8 @@ public class MypageService {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
 	}
+
+
 
 
 

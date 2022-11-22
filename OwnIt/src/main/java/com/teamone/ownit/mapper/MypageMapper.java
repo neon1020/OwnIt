@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.WishlistVO;
@@ -25,6 +26,12 @@ public interface MypageMapper {
 	
 	//패스워드 조회
 	String selectPasswd(String sId);
+	
+	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+	List<MypageMainVO> selectMyProfile(int member_idx);
+	
+//	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+//	List<MypageMainVO> selectMypageMainList(int member_idx);
 	
 	//판매내역 갯수 조회
 	int selectMySellListCount(int member_idx); 
@@ -311,6 +318,8 @@ public interface MypageMapper {
 	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
 
 	int otherAccount(int member_idx);
+
+	
 
 	
 

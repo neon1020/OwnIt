@@ -163,24 +163,24 @@
 												<input id="exampleInput7" type="text" class="form-control" value="${mypage.member_phone }" readonly="readonly">
 											</div>
 										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label for="exampleInput5">우편번호</label>
-												<input id="exampleInput5" type="text" class="form-control" value="${mypage.address_zipcode }" readonly="readonly">
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label for="exampleInput4">도로명주소</label>
-												<input id="exampleInput4" type="text" class="form-control" value="${mypage.address1 }" readonly="readonly">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="exampleInput3">상세주소</label>
-												<input id="exampleInput3" type="text" class="form-control" value="${mypage.address2 }" readonly="readonly">
-											</div>
-										</div>
+<!-- 										<div class="col-md-3"> -->
+<!-- 											<div class="form-group"> -->
+<!-- 												<label for="exampleInput5">우편번호</label> -->
+<%-- 												<input id="exampleInput5" type="text" class="form-control" value="${mypage.address_zipcode }" readonly="readonly"> --%>
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-md-3"> -->
+<!-- 											<div class="form-group"> -->
+<!-- 												<label for="exampleInput4">도로명주소</label> -->
+<%-- 												<input id="exampleInput4" type="text" class="form-control" value="${mypage.address1 }" readonly="readonly"> --%>
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-md-6"> -->
+<!-- 											<div class="form-group"> -->
+<!-- 												<label for="exampleInput3">상세주소</label> -->
+<%-- 												<input id="exampleInput3" type="text" class="form-control" value="${mypage.address2 }" readonly="readonly"> --%>
+<!-- 											</div> -->
+<!-- 										</div> -->
 									</div>
 									<div class="row gutter-1">
 										<div class="col-12">

@@ -18,6 +18,7 @@ import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.CartVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.PageInfo;
@@ -93,11 +94,37 @@ public class MypageController {
 		}		
 	}	
 	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+	//메인 (프로필)
 	@GetMapping(value = "/mypage")
-	public String mypage() {
-		return "mypage/mypage_main";
+	public String mypageProfile(@RequestParam int member_idx, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) {			
+			List<MypageMainVO> myProfile = service.getMyProfile(member_idx);
+			model.addAttribute("myProfile", myProfile);
+			System.out.println("myProfile : " + myProfile);		
+			return "mypage/mypage_main";
+			} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		}			
 	}
+	
+	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+//	@GetMapping(value = "/mypage")
+//	public String mypage(@RequestParam int member_idx, Model model, HttpSession session) {
+//		String sId = (String)session.getAttribute("sId");
+//		if(sId != null && !sId.equals("")) {			
+//			List<MypageMainVO> mypage = service.getMypageMainList(member_idx);
+//			model.addAttribute("mypage", mypage);
+//			System.out.println(mypage);		
+//			return "mypage/mypage_main";
+//			} else {
+//			model.addAttribute("msg", "잘못된 접근입니다!");
+//			return "notice/fail_back";
+//		}			
+//	}
+	
+	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
 	
 	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
@@ -218,7 +245,7 @@ public class MypageController {
 	
 	//위시리스트 장바구니 담기
 	@GetMapping(value = "mypage_addCart")
-	public String addAddress(CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
+	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
 			Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {
@@ -231,7 +258,8 @@ public class MypageController {
 				int insertCount = service.addToCart(member_idx, product_idx);
 				if(insertCount > 0) {
 					System.out.println("장바구니에 추가됨");
-				} return "mypage/mypage_wishlist";
+				} 
+				return "redirect:/wishlist?member_idx=" + member_idx;
 			}
 		} else {
 			model.addAttribute("msg", "잘못된 접근입니다!");
