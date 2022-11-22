@@ -2,10 +2,11 @@ package com.teamone.ownit.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
+import com.teamone.ownit.vo.AdminOrderGroup;
 import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
 import com.teamone.ownit.vo.ProductVO;
@@ -77,6 +78,27 @@ public class AdminService {
 	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword) {
 		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
 	}
+	
+	// Order_Buy 상태 변경 (order_buy_gb)
+	public int updateOrderBuy(AdminOrderVO adminOrder) {
+		return mapper.modifyOrderBuy(adminOrder);
+	}
+
+	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
+	public int updateOrderSell(AdminOrderVO adminOrder) {
+		return mapper.modifyOrderSell(adminOrder);
+	}
+
+	public List<AdminOrderGroup> getOneOrder(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectOrderGroup(startRow, listLimit, searchType, keyword);
+	}
+
+	// ProductList 재고변경
+	public int updateProductLeftCount(ProductVO product) {
+		return mapper.modifyProductLeftCount(product);
+	}
+
+	
 
 
 
@@ -84,29 +106,7 @@ public class AdminService {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

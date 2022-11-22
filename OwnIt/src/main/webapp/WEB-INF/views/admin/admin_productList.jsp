@@ -180,22 +180,26 @@
 		                                        <td>${product.product_brand }</td>
 		                                        <td>${product.product_type }</td>
 		                                        <td>${product.product_name }</td>
-		                                        <td>
-		                                        	<input type="number" style="width: 50px" class="form-control form-control-sm" value="${product.product_left_count }">
-		                                        </td>
-		                                        <td>
-		                                        	<c:choose>
-		                                        		<c:when test="${product.product_left_count eq '0'}">
-		                                        			<i class="fa fa-close text-danger mr-2"></i>판매중단
-		                                        		</c:when>
-		                                        		<c:otherwise>
-		                                        			<i class="fa fa-circle-o text-info  mr-2"></i>판매중
-		                                        		</c:otherwise>
-		                                        	</c:choose>
-												</td>
-		                                        <td>
-		                                        	<button type="button" class="btn mb-1 btn-dark">Apply</button>
-		                                        </td>
+			                                    <form action="admin_productLeftCountModify" method="post">
+			                                    <input type="hidden" name="product_idx" value="${product.product_idx }" />
+	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+			                                        <td>
+			                                        	<input type="number" min="0" style="width: 50px" class="form-control form-control-sm" name="product_left_count" value="${product.product_left_count }">
+			                                        </td>
+			                                        <td>
+			                                        	<c:choose>
+			                                        		<c:when test="${product.product_left_count eq '0'}">
+			                                        			<i class="fa fa-close text-danger mr-2"></i>판매중단
+			                                        		</c:when>
+			                                        		<c:otherwise>
+			                                        			<i class="fa fa-circle-o text-info  mr-2"></i>판매중
+			                                        		</c:otherwise>
+			                                        	</c:choose>
+													</td>
+			                                        <td>
+			                                        	<button type="submit" class="btn mb-1 btn-dark">Apply</button>
+			                                        </td>
+			                                    </form>
 		                                        <td onclick="location.href='admin_productModifyForm?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}'" style="cursor: pointer;">
 		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
 														<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

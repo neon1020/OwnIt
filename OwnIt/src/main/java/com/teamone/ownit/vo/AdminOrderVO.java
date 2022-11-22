@@ -2,12 +2,15 @@ package com.teamone.ownit.vo;
 
 public class AdminOrderVO {
 	private int order_buy_idx;
+	private int order_group_idx;
 	private int order_sell_idx;
 	
 	private int product_idx;
 	private String product_name;
 	private String product_sell_price;
 	private String product_buy_price;
+	private int product_sell_count;
+	private int product_left_count;
 
 	private int member_idx;
 	private String member_name;
@@ -34,9 +37,18 @@ public class AdminOrderVO {
 	public int getOrder_buy_idx() {
 		return order_buy_idx;
 	}
+	
 	public void setOrder_buy_idx(int order_buy_idx) {
 		this.order_buy_idx = order_buy_idx;
 	}
+	public int getOrder_group_idx() {
+		return order_group_idx;
+	}
+
+	public void setOrder_group_idx(int order_group_idx) {
+		this.order_group_idx = order_group_idx;
+	}
+
 	public int getOrder_sell_idx() {
 		return order_sell_idx;
 	}
@@ -67,6 +79,22 @@ public class AdminOrderVO {
 	public void setProduct_buy_price(String product_buy_price) {
 		this.product_buy_price = product_buy_price;
 	}
+	public int getProduct_sell_count() {
+		return product_sell_count;
+	}
+
+	public void setProduct_sell_count(int product_sell_count) {
+		this.product_sell_count = product_sell_count;
+	}
+
+	public int getProduct_left_count() {
+		return product_left_count;
+	}
+
+	public void setProduct_left_count(int product_left_count) {
+		this.product_left_count = product_left_count;
+	}
+
 	public int getMember_idx() {
 		return member_idx;
 	}
@@ -159,21 +187,7 @@ public class AdminOrderVO {
 	public void setOrder_sell_date(String order_sell_date) {
 		this.order_sell_date = order_sell_date;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "AdminOrderVO [order_buy_idx=" + order_buy_idx + ", order_sell_idx=" + order_sell_idx + ", product_idx="
-				+ product_idx + ", product_name=" + product_name + ", product_sell_price=" + product_sell_price
-				+ ", product_buy_price=" + product_buy_price + ", member_idx=" + member_idx + ", member_name="
-				+ member_name + ", member_phone=" + member_phone + ", account_idx=" + account_idx + ", account_bank="
-				+ account_bank + ", account_num=" + account_num + ", account_owner_name=" + account_owner_name
-				+ ", address_idx=" + address_idx + ", address_zipcode=" + address_zipcode + ", address1=" + address1
-				+ ", address2=" + address2 + ", order_buy_gb=" + order_buy_gb + ", order_buy_date=" + order_buy_date
-				+ ", order_sell_gb=" + order_sell_gb + ", order_sell_date=" + order_sell_date + "]";
-	}
-	
-	
-	
-	
 	
 }

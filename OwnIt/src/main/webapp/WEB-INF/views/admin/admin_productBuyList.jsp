@@ -1,9 +1,12 @@
+<%@page import="com.teamone.ownit.vo.AdminOrderGroup"%>
+<%@page import="java.util.List"%>
 <%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<% List<AdminOrderGroup> orderGroup = (List<AdminOrderGroup>)request.getAttribute("orderGroup"); System.out.println(orderGroup);%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,32 +139,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	<c:forEach var="buyList" items="${buyList }">
+                                    	
+                                    	<c:set var="index" value="1"></c:set>
+                                    	<c:forEach var="buyList" items="${buyList }" varStatus="itemCount">
 	                                        <tr>
-	                                            <td>${buyList.order_buy_idx }</td>
+	                                            <td>${buyList.order_group_idx }</td>
 	                                            <td>${buyList.member_name }</td>
 	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${buyList.product_name }">
 	                                            	${buyList.product_name }
 	                                            </td>
 	                                            <td>
-<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
 	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원
 	                                            </td>
 	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
 	                                            <c:set var="date" value="${buyList.order_buy_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
-	                                            <td>
-	                                            	<select class="custom-select col-9" id="inlineFormCustomSelect">
-	                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>
-	                                                    <option value="1" ${buyList.order_buy_gb == '1' ? 'selected="selected"' : ''}>배송중</option>
-	                                                    <option value="2" ${buyList.order_buy_gb == '2' ? 'selected="selected"' : ''}>배송완료</option>
-	                                                    <option value="3" ${buyList.order_buy_gb == '3' ? 'selected="selected"' : ''}>구매확정</option>
-	                                                </select>
-	                                            </td>
-	                                            <td>
-	                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Apply</button>
-	                                            </td>
+		                                        <form action="admin_orderBuyModify" method="post">  
+		                                        <input type="hidden" name="product_idx" value="${buyList.product_idx }" />
+	                                            <input type="hidden" name="order_buy_idx" value="${buyList.order_buy_idx }" />
+	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+		                                            <td>
+		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_buy_gb">
+		                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>
+		                                                    <option value="1" ${buyList.order_buy_gb == '1' ? 'selected="selected"' : ''}>배송중</option>
+		                                                    <option value="2" ${buyList.order_buy_gb == '2' ? 'selected="selected"' : ''}>배송완료</option>
+		                                                    <option value="3" ${buyList.order_buy_gb == '3' ? 'selected="selected"' : ''}>구매확정</option>
+		                                                </select>
+		                                            </td>
+		                                            <td>
+		                                            	<button type="submit" class="btn mb-1 btn-outline-dark">Apply</button>
+		                                            </td>
+	                                            </form>
 	                                        </tr>
+	                                        
                                         </c:forEach>
                                     </tbody>
                                 </table>

@@ -191,7 +191,7 @@ function delFromCart(item) {
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item">
-		                  <a class="nav-link" href="mypage">${member.member_nickname} 님</a>
+		                  <a class="nav-link" href="mypage">${sessionScope.sNick} 님</a>
 		                </li>
 		                <li class="nav-item">
 		                  <a class="nav-link" href="javascript:logout()">Log Out</a>
