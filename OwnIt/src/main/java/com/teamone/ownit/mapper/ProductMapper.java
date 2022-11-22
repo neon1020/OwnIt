@@ -505,7 +505,8 @@ public interface ProductMapper {
 	// 상품 상세정보 리뷰리스트
 	List<ReviewListVO> selectReviewList(@Param("product_idx") int product_idx, 
 										@Param("startRow") int startRow,
-										@Param("listLimit") int listLimit);
+										@Param("listLimit") int listLimit, 
+										@Param("keyword") String keyword);
 
 	int selectReviewListCount(@Param("product_idx") int product_idx);
 

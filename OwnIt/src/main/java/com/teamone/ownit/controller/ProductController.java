@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.teamone.ownit.service.ProductService;
 import com.teamone.ownit.vo.*;
@@ -500,44 +499,75 @@ public class ProductController {
 	
 // 박주닮
 	@GetMapping(value = "product_detail")
-	public String product_detail(@RequestParam int product_idx, Model model,
-								 @RequestParam(defaultValue = "1") int pageNum,
-								 @RequestParam(defaultValue = "1") int pageNum2) {
+	public String product_detail(@RequestParam(defaultValue = "0") int product_idx, Model model,
+								@RequestParam(defaultValue = "1") int pageNum, 
+								@RequestParam(defaultValue = "1") int pageNum2,
+								@RequestParam(defaultValue = "") String keyword,
+								HttpServletResponse response) {
+//		System.out.println("컨트롤러 리뷰 키워드 : " + keyword + " product_idx : " + product_idx);
 		// 상품 정보
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
-		
+
 		// 관심상품에 담은 총갯수
 		int wishCount = service.selectWishCount(product_idx);
-		model.addAttribute("wishCount",wishCount);
-		
-		
+		model.addAttribute("wishCount", wishCount);
+
 		// 페이징
-		int listLimit = 8; 
-		int pageListLimit = 10; 
+		int listLimit = 8;
+		int pageListLimit = 10;
 		int startRow = (pageNum2 - 1) * listLimit;
 		// 상품에 대한 리뷰 목록
-		List<ReviewListVO> reviewList = service.getReviewList(product_idx,startRow,listLimit);
+		List<ReviewListVO> reviewList = service.getReviewList(product_idx, startRow, listLimit,keyword);
 		int listCount = service.getReviewListCount(product_idx);
 		
 		// 상품에 대한 리뷰 갯수
 		model.addAttribute("listCount", listCount);
-		
-		
-		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+
+		int maxPage = (int) Math.ceil((double) listCount / listLimit);
 		int startPage = (pageNum2 - 1) / pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;
-		if(endPage > maxPage) {
+		if (endPage > maxPage) {
 			endPage = maxPage;
 		}
-		Product_DetailPageInfoVO pageInfo = new Product_DetailPageInfoVO(
-				pageNum2, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
-		
+		Product_DetailPageInfoVO pageInfo = new Product_DetailPageInfoVO(pageNum2, listLimit, listCount, pageListLimit,
+				maxPage, startPage, endPage);
+
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("pageInfo", pageInfo);
 		
-			return "product/product_detail";
+		if(!keyword.equals("")) { //체크박스가 체크됐을때만 
+			JSONArray jsonArray = new JSONArray();
+			for(ReviewListVO review : reviewList) {
+				// 2. JSONObject 클래스 인스턴스 생성
+				//    => 파라미터 : VO 객체(Getter/Setter, 기본생성자 필요)
+				JSONObject jsonObject = new JSONObject(review);
+				
+				// 3. JSONArray 객체의 put() 메서드를 호출하여 JSONObject 객체 추가
+				jsonArray.put(jsonObject);
+			}
+			System.out.println(jsonArray);
+			
+			try {
+				// 응답 데이터를 직접 생성하여 웹페이지에 출력
+				// HttpSertvletResponse 객체의 getWriter() 메서드를 통해 PrintWriter 객체를 리턴받아
+				// 해당 객체의 print() 메서드를 호출하여 응답데이터 출력
+				// => 단, 객체 데이터 출력 전 한글 인코딩 처리 필수!
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+				System.out.println(jsonArray);
+				return null;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
+
+		
+
+		return "product/product_detail";
+
 	}
 	
 

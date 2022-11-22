@@ -503,8 +503,8 @@ public class ProductService {
 		return mapper.productDetail(product_idx);
 	}
 	//리뷰 목록
-	public List<ReviewListVO> getReviewList(int product_idx, int startRow, int listLimit) {
-		return mapper.selectReviewList(product_idx, startRow,listLimit);
+	public List<ReviewListVO> getReviewList(int product_idx, int startRow, int listLimit, String keyword) {
+		return mapper.selectReviewList(product_idx, startRow,listLimit,keyword);
 	}
 
 	public int getReviewListCount(int product_idx) {
