@@ -158,6 +158,19 @@
 				#{address.address_recipient}
 			)
 	</insert>
+	
+	<!-- 주소록 수정 -->
+	<update id="updateAddress">
+	UPDATE address
+		SET
+			address_zipcode = #{address_zipcode},
+			address1 = #{address1},
+			address2 = #{address2},
+			address_nickname = #{address_nickname},
+			address_recipient = #{address_recipient}
+		WHERE
+			address_idx = #{address_idx}
+	</update>
 
 	<!-- 주소록 삭제 -->
 	<delete id="deleteAddress">
@@ -284,20 +297,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 정채연 -->
+<!-- 정채연 300 -->
 
 <!-- 계좌 관리 : 해당 회원의 총 계좌 갯수 구하기 -->
 <select id="selectAccountCount" resultType="Integer">

@@ -52,6 +52,9 @@ public interface MypageMapper {
 	//주소록 추가
 	int insertAddress(@Param("address") AddressVO address, @Param("member_idx") int member_idx, @Param("addressCount") int addressCount);
 	
+	//주소록 수정
+	int updateAddress(AddressVO address);
+	
 	//주소록 삭제
 	int deleteAddress(AddressVO address);
 
@@ -292,9 +295,6 @@ public interface MypageMapper {
 	
 	
 	
-
-	
-	
 	
 	
 	// 정채연 - 300
@@ -311,4 +311,6 @@ public interface MypageMapper {
 	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
 
 	int otherAccount(int member_idx);
+
+	
 }
