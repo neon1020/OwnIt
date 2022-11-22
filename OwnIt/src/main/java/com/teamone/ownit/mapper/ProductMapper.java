@@ -49,10 +49,10 @@ public interface ProductMapper {
 	int deleteAllCart(@Param("sId")String sId);
 
 	// 장바구니 cart_count 수정
-	void updateCartCount(@Param("sId")String sId, @Param("product_idx")int product_idx, @Param("cart_count")int cart_count);
+	int updateCartCount(@Param("sId")String sId, @Param("product_idx")int product_idx, @Param("cart_count")int cart_count);
 
-
-
+	// 장바구니 cart_count 비교
+	int selectCartCount(@Param("product_idx")int product_idx);
 
 
 
@@ -516,6 +516,8 @@ public interface ProductMapper {
 	
 
 	
+
+	
 								
 
 	
@@ -886,8 +888,6 @@ public interface ProductMapper {
 
 
 
-	
-	
 	
 	
 	

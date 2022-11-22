@@ -209,30 +209,46 @@ public class ProductController {
 		}
 	}
 	
-//	@PostMapping(value = "updateCartCount")
-//	@ResponseBody
-//	public void updateCartCount(HttpSession session, HttpServletResponse response, int product_idx, int cart_count) {
-////		String sId = (String)session.getAttribute("sId");
-//		List<CartVO> cart = null;
+	@PostMapping(value = "updateCartCount")
+	@ResponseBody
+	public void updateCartCount(HttpSession session, HttpServletResponse response, int product_idx, int cart_count) {
+//		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+//		System.out.println(product_idx);
 //		System.out.println(cart_count);
-//		String sId = "test1@naver.com";
-//		if(sId.length() != 0) {
-//		    service.updateCartCount(sId, product_idx, cart_count);
-//			cart = service.checkCart(sId);
-//			JSONArray jsonArray = new JSONArray();
-//			
-//			for(CartVO c : cart) {
-//				JSONObject jsonObject = new JSONObject(c);
-//				jsonArray.put(jsonObject);
-//			}
-//			try {
-//				response.setCharacterEncoding("UTF-8");
-//				response.getWriter().print(jsonArray);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			int leftCnt = service.selectCartCount(product_idx);
+			if(leftCnt >= cart_count) {
+				int updateCount = service.updateCartCount(sId, product_idx, cart_count);
+				if(updateCount > 0) {
+					cart = service.checkCart(sId);
+					System.out.println(cart);
+					JSONArray jsonArray = new JSONArray();
+					
+					for(CartVO c : cart) {
+						JSONObject jsonObject = new JSONObject(c);
+						jsonArray.put(jsonObject);
+					}
+					try {
+						response.setCharacterEncoding("UTF-8");
+						response.getWriter().print(jsonArray);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("실패");
+				}
+			} else {
+				try {
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().print("구매가능 갯수초과");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	
 	
@@ -481,22 +497,6 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
 	
 // 박주닮
 	@GetMapping(value = "product_detail")

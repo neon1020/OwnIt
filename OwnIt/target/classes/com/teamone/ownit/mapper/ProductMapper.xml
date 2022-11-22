@@ -101,14 +101,14 @@
 		SET cart_count = #{cart_count}
 		WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
 		AND
-			  product_idx = #{product_idx}
+		product_idx = #{product_idx}
 	</update>
 
-
-
-
-
-
+	<select id="selectCartCount" resultType="int">
+		SELECT product_left_count
+		FROM product
+		WHERE product_idx = #{product_idx}
+	</select>
 
 
 

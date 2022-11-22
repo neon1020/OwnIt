@@ -65,7 +65,15 @@ public class ProductService {
 		return mapper.deleteAllCart(sId);
 	}
 
-	public void updateCartCount(String sId, int product_idx, int cart_count) {}
+	public int updateCartCount(String sId, int product_idx, int cart_count) {
+		System.out.println("updateCartCount()");
+		return mapper.updateCartCount(sId, product_idx, cart_count);
+	}
+
+	public int selectCartCount(int product_idx) {
+		System.out.println("selectCartCount()");
+		return mapper.selectCartCount(product_idx);
+	}
 
 
 
@@ -107,14 +115,6 @@ public class ProductService {
 
 
 
-
-
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -535,7 +535,7 @@ public class ProductService {
 
 	
 
-
+	
 
 
 
