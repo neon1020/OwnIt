@@ -11,6 +11,7 @@
       <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+    <script src="resources/js/jquery-3.6.1.js"></script>
     <title>Product</title>
     <style type="text/css">
 		.col-lg-4 { 
@@ -122,7 +123,7 @@
   </head>
 <!-- kakao sdk 호출 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="resources/js/jquery-3.6.1.js"></script>
+
 
 <script type="text/javascript">
   // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -421,40 +422,61 @@
       <div class="container">
         <div class="row">
           <div class="col text-center">
-          	<input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
+          	<input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="onclick1()" checked >
            	<label for="btnradio1">인기</label>
-           	<input type="radio" class="btn-check" name="btnradio" id="btnradio2" >
+           	<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()">
  			<label for="btnradio2">최신</label>
+ 			<input type="text" id="test">
           </div>
         </div>
       </div>
     </section>
     <!--  인기 최신 끝 -->
-    <script>
+
+    <script type="text/javascript">
     // 상품 상세페이지 하단의 인기 / 최신 버튼 누를시 keyword 파라미터 ajax 호출
-    $(function(){
-    	$("input[name=btnradio]").on("change",function(){ // 버튼이 변경됐을때
-    		let keyword = ""; // string 타입 변수용
-    		if($("#btnradio1").is(":checked")){ // 인기체크
-    			keyword = "star";
-    		}else{//최신 체크
-    			keyword = "new";
-    		}
-    		alert(keyword);
-    		$.ajax({
-    			url: "product_detail",
-    			type: "get",
-    			data: {
-    					"keyword" : keyword, 
-    					"product_idx" : ${product.product_idx}
-    			},
-    			datatype:"json",
-    			success : function(review) { // 갔다온 다음 결과값
-    					alert(review);  
-    			}  // 데이터 =review
-    		});// ajax
-    	});// change
-    }); //end
+//     $(function(){
+    	function onclick1(){ // 버튼이 변경됐을때
+    		$(function(){
+	    		let keyword = ""; // string 타입 변수용
+	    		if($("#btnradio1").is(":checked")){ // 인기체크
+	    			keyword = "star";
+	    		}else{//최신 체크
+	    			keyword = "new";
+	    		}
+// 	    		alert(keyword);
+	    		$.ajax({
+	    			url: 'product_detail',
+	    			type: 'get',
+	    			contentType:'application/json;charset=utf-8',
+	    			dataType:'json',
+	    			data: {'keyword' : keyword,'product_idx' : '${product.product_idx}'},
+	    			success : function(review) { // 갔다온 다음 결과값
+	    				var changeR = "";
+						$.each(review, function(i,review){
+	    				var buyprice = review.product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+							changeR +="<div class='col-md-6 col-lg-4'>\
+										<article class='card card-post'>\
+										<figure class='equal equal-50'>\
+										<a class='image image-fade' href='review_detail?review_idx="+review.review_idx+"'>\
+										<img src='resources/img/review/"+review.review_image1+"'>\
+										</a></figure><div class='card-body'>\
+										<a class='profile' href='review_mystyle?member_idx="+review.member_idx+"&review_idx="+review.review_idx+"'>\
+										<img src='resources/img/member/"+review.member_image+"'>\
+										<span class='eyebrow text-muted'>"+review.member_nickname+"</span></a>\
+										<h3 class='card-content'>"+review.review_content+"</h3>\
+										<div class='like'><img src='resources/img/review/like_none.jpg'>128&nbsp;&nbsp;\
+										<img src='resources/img/review/reply.jpg'>"+review.review_reply_count+"</div><h4 class='card-title'>\
+										<a href='product_detail?product_idx="+review.product_idx+"'>\
+										<img src='resources/img/product/"+review.product_image+"'>\
+										<div class='subject'>"+review.product_name+"<br>"+ buyprice +"&nbsp;원</div></a>\
+										</h4></div></article></div>";
+							});
+						$("#reviewchange").html(changeR);
+	    			}  // 데이터 =review
+	    		});// ajax
+    		});
+    	}
     </script>
     
     
@@ -462,6 +484,7 @@
       <div class="container">
         <div class="row masonry gutter-3" id="reviewchange">
           <c:forEach var="review" items="${reviewList }">
+          <!-- ajax 인기순 처리 시작 -->
           <div class="col-md-6 col-lg-4">
             <article class="card card-post">
               <figure class="equal equal-50">
@@ -475,6 +498,7 @@
               </div>
             </article>
           </div>
+          <!-- 끝 -->
         </c:forEach>
           
           
