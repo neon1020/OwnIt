@@ -236,13 +236,13 @@ public class ProductController {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} else {
-					System.out.println("실패");
-				}
+				} 
 			} else {
 				try {
+					String err = "{\"err\": \"구매가능 갯수초과\"}";
+					JSONObject jsonObject = new JSONObject(err);
 					response.setCharacterEncoding("UTF-8");
-					response.getWriter().print("구매가능 갯수초과");
+					response.getWriter().print(jsonObject);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

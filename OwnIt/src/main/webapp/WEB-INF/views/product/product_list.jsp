@@ -194,10 +194,6 @@ $(function() {
 	});
 });
 
-function numberWithCommas(n) {
-    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
 function listByCategory() {
 	$(function() {
 		$.ajax({
