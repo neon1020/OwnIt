@@ -505,10 +505,6 @@ public class MypageController {
 	
 	
 	// 정채연 - 500
-	@GetMapping(value = "/mypage_order")
-	public String order() {
-		return "mypage/mypage_order";
-	}
 	
 	// 마이페이지 : 계좌 정보 불러오기
 	@GetMapping(value = "mypage_account")
@@ -635,9 +631,6 @@ public class MypageController {
 			// Service 객체의 getOrderListCount() 메소드를 호출하여 해당 회원의 전체 구매 목록 갯수 조회
 			// => 파라미터 : 검색조건, 리턴타입 : int(listCount)
 			int listCount = service.getOrderListCount(date1, date2, member_idx);
-			
-			System.out.println(orderList);
-			System.out.println(listCount);
 			
 			// ----------------------------------------------------------------------------------------
 			
