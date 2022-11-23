@@ -518,8 +518,19 @@ public class ProductController {
 		int pageListLimit = 10;
 		int startRow = (pageNum2 - 1) * listLimit;
 		// 상품에 대한 리뷰 목록
-		List<ReviewListVO> reviewList = service.getReviewList(product_idx, startRow, listLimit,keyword);
+		List<Product_ReviewListVO> reviewList = service.getReviewList(product_idx, startRow, listLimit,keyword);
 		int listCount = service.getReviewListCount(product_idx);
+		if(reviewList.get(0).getReview_idx() > 0) { // 상품에 대한 리뷰리스트가 존재할 경우에 실행
+			// style 좋아요 갯수 조회
+			int styleLikeCount = 0;
+			System.out.println("styleLikeCountstyleLikeCount : " + styleLikeCount);
+			for(Product_ReviewListVO style : reviewList) {
+				//각 리뷰에 대한 좋아요 갯수
+				styleLikeCount = service.getStyleLike(style.getReview_idx()); 
+				style.setStyle_like_count(styleLikeCount);
+			}
+			System.out.println("styleLikeCountstyleLikeCount : " + styleLikeCount);
+		}
 		
 		// 상품에 대한 리뷰 갯수
 		model.addAttribute("listCount", listCount);
@@ -538,7 +549,7 @@ public class ProductController {
 		
 		if(!keyword.equals("")) { //체크박스가 체크됐을때만 
 			JSONArray jsonArray = new JSONArray();
-			for(ReviewListVO review : reviewList) {
+			for(Product_ReviewListVO review : reviewList) {
 				JSONObject jsonObject = new JSONObject(review);
 				// 2. JSONObject 클래스 인스턴스 생성
 				//    => 파라미터 : VO 객체(Getter/Setter, 기본생성자 필요)

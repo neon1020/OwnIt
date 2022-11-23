@@ -510,8 +510,8 @@
 
 
 
-	<!--  상품 상세정보 하단 리뷰 리스트 목록 -->
-	<select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
+	<!--  상품 상세정보 하단 리뷰 리스트 목록 체크한 값에대한 동적처리 -->
+	<select id="selectReviewList" resultType="com.teamone.ownit.vo.Product_ReviewListVO">
 		 SELECT r.review_idx AS review_idx, 
 		 		i.image_real_file1 AS review_image1, 
 		 		i2.image_real_file1 AS product_image, 
@@ -532,19 +532,20 @@
 			       					  LEFT JOIN product p ON((r.product_idx = p.product_idx))) 
 			       					  LEFT JOIN member m ON((r.member_idx = m.member_idx))) 
 			       WHERE r.product_idx = #{product_idx}
-			       <if test="!keyword.equals('')">
 						<choose>
-							<when test="keyword.equals('star')">
-								ORDER BY review_reply_count DESC 
-							</when>
 							<when test="keyword.equals('new')">
-								ORDER BY r.review_date ASC 
+								ORDER BY r.review_date DESC
+							</when>
+							<when test="keyword.equals('star')">
+								ORDER BY r.review_date DESC
 							</when>
 							<when test="keyword.equals('reply')">
-								ORDER BY review_reply_count DESC
+								ORDER BY r.review_reply_count DESC
+							</when>
+							<when test="keyword.equals('')">
+								ORDER BY r.review_date DESC
 							</when>
 						</choose>
-					</if>
 		       LIMIT #{startRow} , #{listLimit};
 	</select>
 	<!--  상품 상세정보 하단 상품에 대한 리뷰 리스트 갯수 -->
@@ -570,7 +571,11 @@
 		WHERE product_idx=#{product_idx};
 	</select>
 
-	
+	<select id="selectStyleCount" resultType="integer">
+		SELECT count(s.review_idx) styleLikeCount 
+		FROM style_like_list s 
+		WHERE s.review_idx=#{review_idx};
+	</select>
 
 
 

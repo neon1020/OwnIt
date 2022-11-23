@@ -422,11 +422,12 @@
       <div class="container">
         <div class="row">
           <div class="col text-center">
-          	<input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="onclick1()" checked >
-           	<label for="btnradio1">인기</label>
-           	<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()">
- 			<label for="btnradio2">최신</label>
- 			<input type="text" id="test">
+           	<input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked onclick="onclick1()">
+ 			<label for="btnradio1">New</label>
+          	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1()">
+           	<label for="btnradio3">Star</label>
+ 			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()">
+ 			<label for="btnradio2">Comment</label>
           </div>
         </div>
       </div>
@@ -439,10 +440,12 @@
     	function onclick1(){ // 버튼이 변경됐을때
     		$(function(){
 	    		let keyword = ""; // string 타입 변수용
-	    		if($("#btnradio1").is(":checked")){ // 인기체크
-	    			keyword = "star";
-	    		}else{//최신 체크
+	    		if($("#btnradio1").is(":checked")){ 		// 최신순
 	    			keyword = "new";
+	    		}else if($("#btnradio2").is(":checked")){	//댓글순
+	    			keyword = "reply";
+	    		}else if($("#btnradio3").is(":checked")){	//인기순
+	    			keyword = "star";
 	    		}
 // 	    		alert(keyword);
 	    		$.ajax({
@@ -465,7 +468,7 @@
 										<img src='resources/img/member/"+review.member_image+"'>\
 										<span class='eyebrow text-muted'>"+review.member_nickname+"</span></a>\
 										<h3 class='card-content'>"+review.review_content+"</h3>\
-										<div class='like'><img src='resources/img/review/like_none.jpg'>128&nbsp;&nbsp;\
+										<div class='like'><img src='resources/img/review/like_none.jpg'>"+review.style_like_count+"&nbsp;&nbsp;\
 										<img src='resources/img/review/reply.jpg'>"+review.review_reply_count+"</div><h4 class='card-title'>\
 										<a href='product_detail?product_idx="+review.product_idx+"'>\
 										<img src='resources/img/product/"+review.product_image+"'>\
@@ -493,7 +496,7 @@
               <div class="card-body">
               	<a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
                 <h3 class="card-content">${review.review_content }</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
+                <div class="like"><img src="resources/img/review/like_none.jpg">${review.style_like_count }&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
                 <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
               </div>
             </article>
