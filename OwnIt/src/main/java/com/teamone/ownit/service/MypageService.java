@@ -40,15 +40,25 @@ public class MypageService {
 		return mapper.selectPasswd(sId);
 	}
 	
-	//메인 (프로필)
-	public List<MypageMainVO> getMyProfile(int member_idx) {
-		return mapper.selectMyProfile(member_idx);
+	//마이페이지 메인 - 프로필
+	public List<MypageMainVO> getMainProfile(int member_idx) {
+		return mapper.selectMainProfile(member_idx);
 	}
 	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
-//	public List<MypageMainVO> getMypageMainList(int member_idx) {
-//		return mapper.selectMypageMainList(member_idx);
-//	}
+	//마이페이지 메인 - 구매내역
+	public List<MypageMainVO> getMainOrder(int member_idx) {
+		return mapper.selectMainOrder(member_idx);
+	}
+	
+	//마이페이지 메인 - 판매내역
+	public List<MypageMainVO> getMainSell(int member_idx) {
+		return mapper.selectMainSell(member_idx);
+	}
+	
+	//마이페이지 메인 - 위시리스트	
+	public List<MypageMainVO> getMainWish(int member_idx) {
+		return mapper.selectMainWish(member_idx);
+	}
 	
 	//판매내역 갯수 조회
 	public int getMySellListCount(int member_idx) {
@@ -287,44 +297,6 @@ public class MypageService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 정채연 - 300
 	public int getAccountCount(int member_idx) {
 		System.out.println("MypageService - getAccountCount()");
@@ -360,6 +332,10 @@ public class MypageService {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
 	}
+
+
+
+
 
 
 

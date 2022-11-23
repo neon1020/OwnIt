@@ -94,37 +94,35 @@ public class MypageController {
 		}		
 	}	
 	
-	//메인 (프로필)
+	//마이페이지 메인(프로필, 구매, 판매, 위시)
 	@GetMapping(value = "/mypage")
-	public String mypageProfile(@RequestParam int member_idx, Model model, HttpSession session) {
+	public String myMain(@RequestParam int member_idx, Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
+		System.out.println("아이디:" +  sId);
 		if(sId != null && !sId.equals("")) {			
-			List<MypageMainVO> myProfile = service.getMyProfile(member_idx);
-			model.addAttribute("myProfile", myProfile);
-			System.out.println("myProfile : " + myProfile);		
+			
+			List<MypageMainVO> mainProfile = service.getMainProfile(member_idx);
+			model.addAttribute("mainProfile", mainProfile);
+			System.out.println("mainProfile : " + mainProfile);
+			
+			List<MypageMainVO> mainOrder = service.getMainOrder(member_idx);
+			model.addAttribute("mainOrder", mainOrder);
+			System.out.println("mainOrder : " + mainOrder);	
+			
+			List<MypageMainVO> mainSell = service.getMainSell(member_idx);
+			model.addAttribute("mainSell", mainSell);
+			System.out.println("mainSell : " + mainSell);		
+			
+			List<MypageMainVO> mainWish = service.getMainWish(member_idx);
+			model.addAttribute("mainWish", mainWish);
+			System.out.println("mainWish : " + mainWish);		
+			
 			return "mypage/mypage_main";
 			} else {
 			model.addAttribute("msg", "잘못된 접근입니다!");
 			return "notice/fail_back";
 		}			
 	}
-	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
-//	@GetMapping(value = "/mypage")
-//	public String mypage(@RequestParam int member_idx, Model model, HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-//		if(sId != null && !sId.equals("")) {			
-//			List<MypageMainVO> mypage = service.getMypageMainList(member_idx);
-//			model.addAttribute("mypage", mypage);
-//			System.out.println(mypage);		
-//			return "mypage/mypage_main";
-//			} else {
-//			model.addAttribute("msg", "잘못된 접근입니다!");
-//			return "notice/fail_back";
-//		}			
-//	}
-	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
 	
 	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
@@ -250,7 +248,6 @@ public class MypageController {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {
 			int isContained = service.isContainedInCart(member_idx, product_idx);
-			
 			if(isContained > 0) {
 				model.addAttribute("msg", "이미 장바구니에 존재하는 상품 입니다");
 				return "notice/fail_back";
@@ -497,31 +494,6 @@ public class MypageController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	
 
 	

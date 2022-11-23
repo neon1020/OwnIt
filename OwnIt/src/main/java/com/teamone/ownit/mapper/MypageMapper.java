@@ -27,11 +27,17 @@ public interface MypageMapper {
 	//패스워드 조회
 	String selectPasswd(String sId);
 	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
-	List<MypageMainVO> selectMyProfile(int member_idx);
+	//마이페이지 메인 - 프로필
+	List<MypageMainVO> selectMainProfile(int member_idx);
 	
-//	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
-//	List<MypageMainVO> selectMypageMainList(int member_idx);
+	//마이페이지 메인 - 구매내역
+	List<MypageMainVO> selectMainOrder(int member_idx);	
+	
+	//마이페이지 메인 - 판매내역
+	List<MypageMainVO> selectMainSell(int member_idx);	
+	
+	//마이페이지 메인 - 위시리스트
+	List<MypageMainVO> selectMainWish(int member_idx);	
 	
 	//판매내역 갯수 조회
 	int selectMySellListCount(int member_idx); 
@@ -291,19 +297,6 @@ public interface MypageMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
 	// 정채연 - 300
 	int selectAccountCount(int member_idx);
 
@@ -318,6 +311,10 @@ public interface MypageMapper {
 	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
 
 	int otherAccount(int member_idx);
+
+
+
+	
 
 	
 
