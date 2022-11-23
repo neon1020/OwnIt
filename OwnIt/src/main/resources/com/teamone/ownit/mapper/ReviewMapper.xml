@@ -32,13 +32,16 @@
     </select>
         
     <select id="selectReply" resultType="com.teamone.ownit.vo.ReplyVO">
-        SELECT * FROM reply r
-                        LEFT JOIN image i
-                        ON r.member_idx = i.member_idx
-                        LEFT JOIN member m
-            ON r.member_idx = m.member_idx
-            WHERE r.review_idx = #{review_idx}
-            ORDER BY r.reply_re_ref DESC
+        SELECT * 
+          FROM reply r
+          LEFT JOIN image i
+          ON r.member_idx = i.member_idx
+          LEFT JOIN member m
+          ON r.member_idx = m.member_idx
+          WHERE 
+            r.review_idx = #{review_idx}
+          ORDER BY 
+            r.reply_re_ref DESC
     </select>
     
     <select id="selectProduct" resultType="com.teamone.ownit.vo.ReviewListVO">
@@ -95,6 +98,13 @@
             review_idx = #{review_idx}
     </delete>
     
+    <select id="selectProfile" resultType="com.teamone.ownit.vo.ReviewListVO">
+         SELECT DISTINCT member_nickname, member_image
+          FROM reviewList
+          WHERE
+            member_idx = #{member_idx}
+    </select>
+    
     <select id="selectMystyleList" resultType="com.teamone.ownit.vo.ReviewListVO">
 		    SELECT *
 		       FROM reviewList
@@ -130,6 +140,14 @@
             review_idx = #{review_idx}
     </update>
     
+    <update id="updateReplycount">
+        UPDATE review
+          SET 
+            review_reply_count = review_reply_count + 1
+          WHERE 
+            review_idx = #{review_idx}
+    </update>
+    
     <insert id="insertReply">
       <selectKey keyProperty="reply_re_ref" resultType="integer" order="BEFORE">
         SELECT MAX(reply_re_ref) FROM reply
@@ -146,5 +164,56 @@
             DATE_FORMAT(now(), '%y-%m-%d %H:%i')
             )
     </insert>
+    
+    <select id="selectReplyCount" resultType="integer">
+        SELECT COUNT(*) 
+          FROM reply
+          WHERE 
+            review_idx = #{review_idx};
+    </select>
+    
+    <delete id="deleteReply">
+        DELETE
+          FROM reply
+          WHERE
+            review_idx = #{review_idx}
+            AND
+            reply_re_ref = #{reply_re_ref}
+    </delete>
+    
+    <update id="updateReplycount2">
+        UPDATE review
+          SET 
+            review_reply_count = review_reply_count - 1
+          WHERE 
+            review_idx = #{review_idx}
+    </update>
+    
+    <select id="selectLike" resultType="int">
+        SELECT COUNT(*)
+          FROM style_like_list
+          WHERE 
+            review_idx = #{review_idx}
+            AND
+            member_idx = #{member_idx}
+    </select>
+    
+    <insert id="insertLike">
+        INSERT
+          INTO style_like_list
+          VALUES (
+            #{member_idx},
+            #{review_idx}
+          )
+    </insert>
+    
+    <delete id="deleteLike">
+        DELETE
+          FROM style_like_list
+          WHERE
+            member_idx = #{member_idx}
+            AND
+            review_idx = #{review_idx}
+    </delete>
 
 </mapper> 

@@ -16,13 +16,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.ReviewService;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
+import com.teamone.ownit.vo.Style_like_listVO;
 
 @Controller
 public class ReviewController {
@@ -39,32 +42,75 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_detail")
-	public String reviewDetail(@RequestParam int review_idx, Model model) {
+	public String reviewDetail(@RequestParam int review_idx, Model model, HttpSession session) {
 		// 리뷰 출력
 		ReviewListVO review = service.getReview(review_idx);
 		model.addAttribute("review", review);
+		
 		// 리뷰 이미지 출력
 		List<ReviewListVO> reviewImage = service.getReviewImage(review_idx);
         model.addAttribute("reviewImage", reviewImage);
+        
         // 댓글 출력
         List<ReplyVO> reply = service.getReply(review_idx);
         model.addAttribute("reply", reply);
         
+        // 댓글 수 출력
+        int replyCount = service.getReplyCount(review_idx);
+        model.addAttribute("replyCount", replyCount);
+        
+        // 좋아요
+        Style_like_listVO like = new Style_like_listVO();
+        like.setReview_idx(review_idx);
+        if(session.getAttribute("sIdx")!=null) {
+        	int member_idx = (int)session.getAttribute("sIdx");
+        	like.setMember_idx(member_idx);
+        	int reviewlike = service.findLike(like);
+        	System.out.println(reviewlike);
+        	model.addAttribute("heart", reviewlike);
+        } else {
+        	int member_idx = 0;
+        	int reviewlike = service.findLike(like);
+        	System.out.println(reviewlike);
+        	model.addAttribute("heart", reviewlike);
+        }
+        
 		return "review/review_detail";
 	}
 	
+	@ResponseBody 
+	@PostMapping(value = "/heart", produces = "application/json")
+	public int heart(@RequestParam int review_idx, @RequestParam int heart, HttpSession session) {
+		int member_idx = (int)session.getAttribute("sIdx");
+		
+		Style_like_listVO likeVO = new Style_like_listVO();
+		
+		likeVO.setMember_idx(member_idx);
+		likeVO.setReview_idx(review_idx);
+		System.out.println(heart);
+		
+		if(heart >= 1) {
+            service.removeLike(likeVO);
+            heart = 0;
+        } else {
+            service.pushLike(likeVO);
+            heart = 1;
+        }
+		
+		return heart;
+	}
+	
 	@GetMapping(value = "/review_mystyle")
-	public String reviewMystyle(@RequestParam int member_idx, @RequestParam int review_idx, Model model) {
+	public String reviewMystyle(@RequestParam int member_idx, Model model) {
 		// 프로필 출력
-		ReviewListVO review = service.getReview(review_idx);
-		model.addAttribute("review", review);
+		ReviewListVO profile = service.getProfile(member_idx);
+		model.addAttribute("profile", profile);
 		// 작성 리뷰 목록 출력
 		List<ReviewListVO> mystyleList = service.getMystyleList(member_idx);
 		model.addAttribute("mystyleList", mystyleList);
 		// 작성 게시물 수 출력
 		int reviewCount = service.getReviewCount(member_idx);
 		model.addAttribute("reviewCount", reviewCount);
-		System.out.println(reviewCount);
 		
 		return "review/review_mystyle";
 	}
@@ -214,16 +260,43 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_reply")
-	public String reviewReply(Model model, @ModelAttribute ReplyVO reply) {
+	public String reviewReply(Model model, @ModelAttribute ReplyVO reply, @RequestParam int review_idx, HttpSession session) {
 		int insertCount = service.registReply(reply);
 		
 		if(insertCount > 0) { 
+			service.increaseReplycount(review_idx);
 			return "redirect:/review_detail?review_idx=" + reply.getReview_idx();
 		} else { 
 			model.addAttribute("msg", "등록 실패!");
-			return "member/fail_back";
+			return "notice/fail_back";
 		}
+		
 	}
+	
+	@GetMapping(value = "/review_replyDelete")
+	public String replyDelete(
+			Model model, @ModelAttribute ReplyVO reply, HttpSession session,
+			@RequestParam int review_idx, @RequestParam int reply_re_ref) {
+		int deleteCount = service.removeReply(reply);
+		
+		if(deleteCount > 0) { 
+			service.decreaseReplycount(review_idx);
+			return "redirect:/review_detail?review_idx=" + reply.getReview_idx();
+		} else { 
+			model.addAttribute("msg", "삭제 실패!");
+			return "notice/fail_back";
+		}
+		
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
 	
 	
 }

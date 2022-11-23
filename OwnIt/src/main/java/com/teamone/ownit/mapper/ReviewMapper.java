@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
+import com.teamone.ownit.vo.Style_like_listVO;
 
 public interface ReviewMapper {
 
@@ -25,6 +26,8 @@ public interface ReviewMapper {
 	int insertReviewImage(ReviewVO review);
 
 	int deleteReview(ReviewVO review);
+	
+	ReviewListVO selectProfile(int member_idx);
 
 	List<ReviewListVO> selectMystyleList(int member_idx);
 
@@ -34,7 +37,26 @@ public interface ReviewMapper {
 
 	int updateReviewImage(ReviewVO review);
 
+	void updateReplycount(int review_idx);
+	
 	int insertReply(ReplyVO reply);
+
+	int selectReplyCount(int review_idx);
+
+	int deleteReply(ReplyVO reply);
+
+	void updateReplycount2(int review_idx);
+
+//	Style_like_listVO selectLike(@Param("member_idx") int member_idx, @Param("review_idx") int review_idx);
+	
+	int selectLike(Style_like_listVO like);
+
+	void deleteLike(Style_like_listVO likeVO);
+
+	void insertLike(Style_like_listVO likeVO);
+
+
+	
 
 
 	
