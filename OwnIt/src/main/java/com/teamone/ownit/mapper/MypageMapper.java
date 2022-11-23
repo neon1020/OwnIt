@@ -36,29 +36,6 @@ public interface MypageMapper {
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id);
 
-//	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd);
-//
-//	List<WishlistVO> selectWishlist(String id);
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//비밀번호 수정
-	int updateMember(@Param("member") MemberVO member, @Param("secureNewPassword") String secureNewPassword);
-	
 	//위시리스트 목록
 	List<WishlistVO> selectWishlist(@Param("member_idx") int member_idx, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	
