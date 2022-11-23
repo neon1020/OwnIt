@@ -11,6 +11,8 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.Order_buyMyVO;
+import com.teamone.ownit.vo.Order_buyVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 @Service
@@ -356,6 +358,16 @@ public class MypageService {
 	public int otherAccount(int member_idx) {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
+	}
+
+	public List<Order_buyMyVO> getOrderList(int startRow, int listLimit, String date1, String date2, int member_idx) {
+		System.out.println("MypageService - getOrderList()");
+		return mapper.selectOrderList(startRow, listLimit, date1, date2, member_idx);
+	}
+
+	public int getOrderListCount(String date1, String date2, int member_idx) {
+		System.out.println("MypageService - getOrderListCount()");
+		return mapper.selectOrderListCount(date1, date2, member_idx);
 	}
 	
 	

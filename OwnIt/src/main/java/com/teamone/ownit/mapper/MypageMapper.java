@@ -9,6 +9,8 @@ import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.Order_buyMyVO;
+import com.teamone.ownit.vo.Order_buyVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 public interface MypageMapper {
@@ -27,9 +29,9 @@ public interface MypageMapper {
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("id") String id);
 
-	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd);
-
-	List<WishlistVO> selectWishlist(String id);
+//	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd);
+//
+//	List<WishlistVO> selectWishlist(String id);
 
 	
 
@@ -331,4 +333,8 @@ public interface MypageMapper {
 	int defaultAccount(@Param("member_idx") int member_idx, @Param("account_idx") int account_idx);
 
 	int otherAccount(int member_idx);
+
+	List<Order_buyMyVO> selectOrderList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
+
+	int selectOrderListCount(@Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 }

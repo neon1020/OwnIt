@@ -44,7 +44,29 @@
 		#{address.address1},
 		#{address.address2},
 		'0',
-		'주소'
+		'주소',
+		#{member.member_name}
+	)
+</insert>
+
+<!-- 회원가입 : 회원가입 작업 수행 (image 테이블) -->
+<insert id="insertImage">
+	<selectKey keyProperty="member_idx" resultType="Integer" order="BEFORE">
+		SELECT MAX(member_idx) FROM member
+	</selectKey>
+	INSERT INTO image
+	VALUES (
+		null,
+		null,
+		null,
+		#{member_idx},
+		'member',
+		'profile_default.png',
+		'profile_default.png',
+		null,
+		null,
+		null,
+		null
 	)
 </insert>
 
