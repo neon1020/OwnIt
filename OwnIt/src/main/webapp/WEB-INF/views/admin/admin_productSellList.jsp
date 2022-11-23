@@ -18,13 +18,10 @@
 
 </head>
 <script type="text/javascript">
-	
+
 	function func1() {
 		confirm('변경하시겠습니까?');
 	}
-	
-// 	var status = $("#inlineFormCustomSelect option:selected").val();
-// 	alert(status);
 
 </script>
 <body>
@@ -107,6 +104,13 @@
                             <div class="card-title">
 	                            <h2>Sell Product</h2>
 	                        </div>
+	                        
+	                        <div style="text-align: center;">
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_0'">검수대기중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_1'" style="margin: 0 5px">검수중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_2'">검수완료</button>
+		          			</div>
+	                        
                             <!-- 검색기능 Start -->
 	                        <form action="admin_productSellList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
@@ -159,6 +163,7 @@
 	                                            <input type="hidden" name="product_idx" value="${sellList.product_idx }" />
 	                                            <input type="hidden" name="order_sell_idx" value="${sellList.order_sell_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+	                                            <input type="hidden" name="status" value="all" />
 		                                            <td>
 		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_sell_gb">
 		                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>

@@ -29,6 +29,13 @@
 </script>
 <body>
 
+	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
+		<script>
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
+
     <!--*******************
         Preloader start
     ********************-->
@@ -139,8 +146,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	
-                                    	<c:set var="index" value="1"></c:set>
                                     	<c:forEach var="buyList" items="${buyList }" varStatus="itemCount">
 	                                        <tr>
 	                                            <td>${buyList.order_group_idx }</td>

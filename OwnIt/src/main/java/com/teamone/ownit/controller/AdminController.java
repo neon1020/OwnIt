@@ -2,19 +2,34 @@ package com.teamone.ownit.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
-import com.teamone.ownit.vo.*;
+import com.teamone.ownit.vo.AdminOrderGroup;
+import com.teamone.ownit.vo.AdminOrderVO;
+import com.teamone.ownit.vo.AdminProductVO;
+import com.teamone.ownit.vo.PageInfo;
+import com.teamone.ownit.vo.ProductVO;
 
 @Controller
 public class AdminController {
@@ -407,6 +422,132 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
+	@GetMapping(value = "admin_productSellList_0")
+	public String admin_productSellList_0(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletResponse response) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
+		// -------------------------------------------------------------------
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+		
+		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
+		List<AdminOrderVO> sellList = service.getSellList_0(startRow, listLimit, searchType, keyword);
+		
+		// -------------------------------------------
+		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		int listCount = service.getSellListCount_0(searchType, keyword);
+		
+		// 페이지 계산 작업 수행---------------------------------------------------------------
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {	endPage = maxPage; }
+		// --------------------------------------------------------------------------------
+		
+		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		// --------------------------------------------------------------------------------
+		model.addAttribute("sellList", sellList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_productSellList_0";
+	}
+	
+	
+	@GetMapping(value = "admin_productSellList_1")
+	public String admin_productSellList_1(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletResponse response) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
+		// -------------------------------------------------------------------
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+		
+		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
+		List<AdminOrderVO> sellList = service.getSellList_1(startRow, listLimit, searchType, keyword);
+		
+		// -------------------------------------------
+		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		int listCount = service.getSellListCount_1(searchType, keyword);
+		
+		// 페이지 계산 작업 수행---------------------------------------------------------------
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {	endPage = maxPage; }
+		// --------------------------------------------------------------------------------
+		
+		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		// --------------------------------------------------------------------------------
+		model.addAttribute("sellList", sellList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_productSellList_1";
+	}
+	
+	
+	@GetMapping(value = "admin_productSellList_2")
+	public String admin_productSellList_2(
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletResponse response) {
+		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
+		// -------------------------------------------------------------------
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+		
+		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
+		List<AdminOrderVO> sellList = service.getSellList_2(startRow, listLimit, searchType, keyword);
+		
+		// -------------------------------------------
+		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
+		int listCount = service.getSellListCount_2(searchType, keyword);
+		
+		// 페이지 계산 작업 수행---------------------------------------------------------------
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {	endPage = maxPage; }
+		// --------------------------------------------------------------------------------
+		
+		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		// --------------------------------------------------------------------------------
+		model.addAttribute("sellList", sellList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_productSellList_2";
+	}
+	
+	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	@PostMapping(value = "admin_orderBuyModify")
 	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
@@ -422,12 +563,20 @@ public class AdminController {
 	
 	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
 	@PostMapping(value = "admin_orderSellModify")
-	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
+		String page = "";
+		switch (status) {
+		case "0": page += "_0"; break;
+		case "1": page += "_1"; break;
+		case "2": page += "_2"; break;
+		default:
+			break;
+		}
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productSellList?pageNum=" + pageNum;
+			return "redirect:/admin_productSellList" + page + "?pageNum=" + pageNum;
 		}
 		
 		return "";

@@ -18,5 +18,20 @@ public class ChartService {
 	public List<ChartVO> getTypeList() {
 		return mapper.selectTypeList();
 	}
+
+
+	public List<ChartVO> monthlySalesBuy() {
+		return mapper.selectmonthlySalesBuy();
+	}
+
+
+	public List<ChartVO> monthlySalesSell() {
+		return mapper.selectmonthlySalesSell();
+	}
+
+
+	public List<ChartVO> productTop5() {
+		return mapper.selectproductTop5();
+	}
 	
 }

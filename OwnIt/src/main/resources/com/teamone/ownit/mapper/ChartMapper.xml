@@ -9,11 +9,46 @@
 				order_buy ob LEFT OUTER JOIN product p
 			ON 
 				ob.product_idx = p.product_idx
-			GROUP BY p.product_type;	
+			GROUP BY 
+				p.product_type;	
 	</select>
 	
 	
-	
+	<select id="selectmonthlySalesBuy" resultType="com.teamone.ownit.vo.ChartVO">
+		SELECT DATE_FORMAT(order_buy_date,'%y-%m') date, sum(p.product_buy_price) * 0.02 as sales_buy
+			FROM 
+				order_buy ob LEFT OUTER JOIN product p
+			ON 
+				ob.product_idx = p.product_idx
+			GROUP BY 
+				date
+            ORDER BY 
+            	date;
+	</select>
+
+	<select id="selectmonthlySalesSell" resultType="com.teamone.ownit.vo.ChartVO">
+		SELECT DATE_FORMAT(order_sell_date,'%y-%m') date, sum(p.product_sell_price) * 0.02 as sales_sell
+			FROM 
+				order_sell os LEFT OUTER JOIN product p
+			ON 
+				os.product_idx = p.product_idx
+			GROUP BY 
+				date
+            ORDER BY 
+            	date;
+	</select>
+
+	<select id="selectproductTop5" resultType="com.teamone.ownit.vo.ChartVO">
+		SELECT p.product_name, COUNT(ob.product_idx) AS cnt
+			FROM 
+				order_buy ob left join product p 
+			ON 
+				ob.product_idx = p.product_idx
+			GROUP BY 
+				product_name
+			ORDER BY 
+				cnt DESC;
+	</select>
 
 
 

@@ -79,6 +79,31 @@ public class AdminService {
 		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
 	}
 	
+	
+	
+	public int getSellListCount_0(String searchType, String keyword) {
+		return mapper.selectSellListCount_0(searchType, keyword);
+	}
+	public List<AdminOrderVO> getSellList_0(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectSellList_0(startRow, listLimit, searchType, keyword);
+	}
+	public int getSellListCount_1(String searchType, String keyword) {
+		return mapper.selectSellListCount_1(searchType, keyword);
+	}
+	public List<AdminOrderVO> getSellList_1(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectSellList_1(startRow, listLimit, searchType, keyword);
+	}
+	public int getSellListCount_2(String searchType, String keyword) {
+		return mapper.selectSellListCount_2(searchType, keyword);
+	}
+	public List<AdminOrderVO> getSellList_2(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectSellList_2(startRow, listLimit, searchType, keyword);
+	}
+	
+	
+	
+	
+	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	public int updateOrderBuy(AdminOrderVO adminOrder) {
 		return mapper.modifyOrderBuy(adminOrder);
@@ -97,6 +122,8 @@ public class AdminService {
 	public int updateProductLeftCount(ProductVO product) {
 		return mapper.modifyProductLeftCount(product);
 	}
+
+
 
 	
 

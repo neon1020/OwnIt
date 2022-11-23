@@ -58,6 +58,31 @@ public interface AdminMapper {
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
 
+	
+	
+	int selectSellListCount_0(
+			@Param("searchType")String searchType, @Param("keyword") String keyword);
+	
+	List<AdminOrderVO> selectSellList_0(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
+	
+	int selectSellListCount_1(
+			@Param("searchType")String searchType, @Param("keyword") String keyword);
+	
+	List<AdminOrderVO> selectSellList_1(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
+	
+	int selectSellListCount_2(
+			@Param("searchType")String searchType, @Param("keyword") String keyword);
+	
+	List<AdminOrderVO> selectSellList_2(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("searchType") String searchType, @Param("keyword") String keyword);
+	
+	
+	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	int modifyOrderBuy(AdminOrderVO adminOrder);
 	
@@ -69,6 +94,8 @@ public interface AdminMapper {
 	
 	// ProductList 재고변경
 	int modifyProductLeftCount(ProductVO product);
+
+
 
 	
 

@@ -9692,19 +9692,19 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   color: #ffffff;
   fill: #ffffff;
   font-size: 16px; }
-
+/* ----------- 11월 23일 김소희 : 차트 색상 변경 ----------- */
 .ct-chart .ct-series.ct-series-a .ct-bar,
 .ct-chart .ct-series.ct-series-a .ct-line,
 .ct-chart .ct-series.ct-series-a .ct-point,
 .ct-chart .ct-series.ct-series-a .ct-slice-donut {
-  stroke: #7571f9; }
+  stroke: #A0E4CB; }
 
 .ct-chart .ct-series.ct-series-b .ct-bar,
 .ct-chart .ct-series.ct-series-b .ct-line,
 .ct-chart .ct-series.ct-series-b .ct-point,
 .ct-chart .ct-series.ct-series-b .ct-slice-donut {
-  stroke: #ff5e5e; }
-
+  stroke: #CFF5E7; }
+/* ----------- 11월 23일 김소희 : 차트 색상 변경 ----------- */
 .ct-chart .ct-series.ct-series-c .ct-bar,
 .ct-chart .ct-series.ct-series-c .ct-line,
 .ct-chart .ct-series.ct-series-c .ct-point,

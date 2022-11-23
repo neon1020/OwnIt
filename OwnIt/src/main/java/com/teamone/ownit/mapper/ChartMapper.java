@@ -7,5 +7,11 @@ import com.teamone.ownit.vo.ChartVO;
 public interface ChartMapper {
 
 	List<ChartVO> selectTypeList();
+
+	List<ChartVO> selectmonthlySalesBuy();
+
+	List<ChartVO> selectmonthlySalesSell();
+
+	List<ChartVO> selectproductTop5();
 	
 }

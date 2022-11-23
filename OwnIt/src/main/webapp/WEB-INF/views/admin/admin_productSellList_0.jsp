@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,50 +18,13 @@
 
 </head>
 <script type="text/javascript">
-	
-	<!-- 체크박스 전체선택, 전체해제 -->
-	function checkAll(){
-	    if( $("#th_checkAll").is(':checked') ){
-	      $("input[name=deleteList]").prop("checked", true);
-	    }else{
-	      $("input[name=deleteList]").prop("checked", false);
-	    }
-	}
 
-	
-	<!-- 삭제(체크박스된 것 전부) -->
-	function deleteAction(){
-		  
-		var deleteList = "";
-		$( "input[name='deleteList']:checked" ).each (function (){
-			deleteList = deleteList + $(this).val()+",";
-		});
-		
-		deleteList = deleteList.substring(0,deleteList.lastIndexOf( ",")); //맨끝 콤마 지우기
-		
-		if(deleteList == ''){
-			alert("삭제할 상품을 선택하세요.");
-			return false;
-		}
-		
-		if(confirm("상품을 삭제 하시겠습니까?")){
-			alert(deleteList);
-		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + ${param.pageNum};
-// 		    return deleteList;
-		}
+	function func1() {
+		confirm('변경하시겠습니까?');
 	}
-	
-
 
 </script>
 <body>
-
-	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
-		<script>
-			alert("잘못된 접근입니다!");
-			location.href = "./";
-		</script>
-	</c:if>
 
     <!--*******************
         Preloader start
@@ -131,16 +96,26 @@
             <!-- row -->
 			<br>
             <div class="container-fluid">
-				<!-- table start -->
+
+				<!-- Table start -->
 				<div class="col-lg-12">
-	                <div class="card">
-	                    <div class="card-body">
-	                        <div class="card-title">
-	                            <h2>Product List</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+	                            <h2>Sell Product</h2>
 	                        </div>
-<!-- 							전체 | 판매중 | 판매중단 -->
-	                        <!-- 검색기능 Start -->
-	                        <form action="admin_productList" method="get">
+	                        
+	                        <div style="text-align: center;">
+	                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 20%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+                                </div>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_0'">검수대기중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_1'" style="margin: 0 5px">검수중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList_2'">검수완료</button>
+		          			</div>
+	                        
+                            <!-- 검색기능 Start -->
+	                        <form action="admin_productSellList_0" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
                                     <input type="text" name="keyword" class="form-control">
                                     <div class="input-group-append">
@@ -149,80 +124,68 @@
                                 </div>
                                 <select class="form-control" name="searchType" style="float: right; width: 100px">
                                     <option value="all" selected="selected">전체</option>
-                                    <option value="brand">Brand</option>
-                                    <option value="type">Type</option>
-                                    <option value="name">상품명</option>
+                                    <option value="order_sell_idx">주문번호</option>
+                                    <option value="member_name">고객명</option>
+                                     <option value="account_owner_name">예금주명</option>
+                                    <option value="product_name">상품명</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
-	                        <div class="table-responsive">
-	                        <hr>
-	                            <table class="table">
-	                                <thead>
-	                                    <tr>
-	                                    	<th width="20px">
-	                                    		<input id="th_checkAll" type="checkbox" name="checkAll" onclick="checkAll();" style="outline: 1px solid #000000">
-	                                    	</th>
-	                                        <th style="width: 80px"></th>
-	                                    	<th>모델번호</th>
-	                                    	<th>Brand</th>
-	                                    	<th>Type</th>
-	                                        <th>상품명</th>
-	                                        <th>재고수량</th>
-	                                        <th>판매상태</th>
-	                                        <th width="100px"></th>
-	                                        <th width="10px"></th>
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                	<c:forEach var="product" items="${productList }">
-		                                    <tr>
-		                                    	<td>
-		                                    		<input type="checkbox" name="deleteList" value="${product.product_idx}" style="outline: 1px solid #000000">
-		                                    	</td>
-	                                        	<td>
-	                                        		<img class="mr-3" src="resources/img/product/${product.image_real_file1}" width="80" height="80">
-	                                        	</td>
-		                                        <td>${product.product_model_num }</td>
-		                                        <td>${product.product_brand }</td>
-		                                        <td>${product.product_type }</td>
-		                                        <td>${product.product_name }</td>
-			                                    <form action="admin_productLeftCountModify" method="post">
-			                                    <input type="hidden" name="product_idx" value="${product.product_idx }" />
+                            <div class="table-responsive">
+                            <hr>
+                                <table class="table header-border">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">고객명</th>
+                                            <th scope="col" width="450px">상품명</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">정산계좌</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<c:forEach var="sellList" items="${sellList }">
+	                                        <tr>
+	                                            <td>${sellList.order_sell_idx }</td>
+	                                            <td>${sellList.member_name }</td>
+	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${sellList.product_name }">
+	                                            	${sellList.product_name }
+	                                            </td>
+<%-- 	                                            <td>${sellList.product_name }</td> --%>
+	                                            <td>
+<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
+	                                             	<fmt:formatNumber value="${sellList.product_sell_price }" pattern="#,###"/>원
+	                                            </td>
+	                                            <td>${sellList.account_bank }&nbsp;${sellList.account_owner_name }<br>${sellList.account_num }</td>
+	                                            <c:set var="date" value="${sellList.order_sell_date }" />
+	                                            <td>${fn:substring(date, 0, 8 ) }</td>
+	                                            <form action="admin_orderSellModify" method="post">
+	                                            <input type="hidden" name="product_idx" value="${sellList.product_idx }" />
+	                                            <input type="hidden" name="order_sell_idx" value="${sellList.order_sell_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
-			                                        <td>
-			                                        	<input type="number" min="0" style="width: 50px" class="form-control form-control-sm" name="product_left_count" value="${product.product_left_count }">
-			                                        </td>
-			                                        <td>
-			                                        	<c:choose>
-			                                        		<c:when test="${product.product_left_count eq '0'}">
-			                                        			<i class="fa fa-close text-danger mr-2"></i>판매중단
-			                                        		</c:when>
-			                                        		<c:otherwise>
-			                                        			<i class="fa fa-circle-o text-info  mr-2"></i>판매중
-			                                        		</c:otherwise>
-			                                        	</c:choose>
-													</td>
-			                                        <td>
-			                                        	<button type="submit" class="btn mb-1 btn-dark">Apply</button>
-			                                        </td>
-			                                    </form>
-		                                        <td onclick="location.href='admin_productModifyForm?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}'" style="cursor: pointer;">
-		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-														<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-														<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-													</svg>
-		                                        </td>
-		                                    </tr>
-	                                    </c:forEach>
-	                                    
-	                                </tbody>
-	                            </table>
+	                                            <input type="hidden" name="status" value="0" />
+		                                            <td>
+		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_sell_gb">
+		                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>
+		                                                    <option value="1" ${sellList.order_sell_gb == '1' ? 'selected="selected"' : ''}>검수중</option>
+		                                                    <option value="2" ${sellList.order_sell_gb == '2' ? 'selected="selected"' : ''}>검수완료</option>
+		                                                    <option value="3" ${sellList.order_sell_gb == '3' ? 'selected="selected"' : ''}>반려</option>
+		                                                </select>
+		                                            </td>
+		                                            <td>
+		                                            	<button type="submit" class="btn mb-1 btn-outline-dark">Apply</button>
+		                                            </td>
+	                                            </form>
+	                                        </tr>
+                                    	</c:forEach>
+                                    </tbody>
+                                </table>
 	                            <hr>
 	                        </div>
-	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
-	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction()">선택 삭제</button>
-							
+	                        
 							<!-- 페이징 처리 Start -->
 							<div class="bootstrap-pagination">
 							<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
@@ -231,7 +194,7 @@
 										
 									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+											<a class="page-link" href="admin_productSellList_0?pageNum=${pageInfo.pageNum - 1}">Previous</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
@@ -248,7 +211,7 @@
 											</c:when>
 											<c:otherwise>
 												<li class="page-item">
-													<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a>
+													<a class="page-link" href="admin_productSellList_0?pageNum=${i }">${i }</a>
 												</li>
 											</c:otherwise>
 										</c:choose>
@@ -256,7 +219,7 @@
 									
 									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+											<a class="page-link" href="admin_productSellList_0?pageNum=${pageInfo.pageNum + 1}">Next</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
@@ -267,10 +230,12 @@
 								</nav>
 							</div>
 							<!-- 페이징 처리 End -->
+							
 	                    </div>
 	                </div>
 	            </div>
 				<!-- table end -->
+				
             </div>
             <!-- #/ container -->
         </div>
