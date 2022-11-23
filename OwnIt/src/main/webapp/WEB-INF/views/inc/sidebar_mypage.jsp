@@ -16,7 +16,7 @@
 							<div>
 								<ul class="nav flex-column">
 									<li class="nav-item">
-										<a class="nav-link" href="mypage_order">구매내역</a>
+										<a class="nav-link" href="mypage_order?member_idx=${sessionScope.sIdx }">구매내역</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="mypage_sell?member_idx=${sessionScope.sIdx }">판매내역</a>

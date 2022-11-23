@@ -385,7 +385,41 @@
 			member_idx = #{member_idx}
 </update>
 
+<!-- 구매내역 : 해당 회원의 전체 구매내역 불러오기 -->
+<select id="selectOrderList" resultType="com.teamone.ownit.vo.Order_buyMyVO">
+	SELECT
+		o.order_buy_idx, o.product_idx, o.member_idx, o.order_buy_gb,
+		date_format(o.order_buy_date, '%y-%m-%d') order_buy_date,
+		i.image_real_file1, p.product_name, p.product_buy_price
+	FROM order_buy o
+	LEFT JOIN image i
+		ON o.product_idx = i.product_idx
+	LEFT JOIN product p
+		ON o.product_idx = p.product_idx
+	
+	WHERE o.member_idx = #{member_idx}
+	<if test="!date1.equals('') and !date2.equals('')">
+			AND
+			date_format(str_to_date(o.order_buy_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[>=]]> date_format(str_to_date(#{date1}, '%Y-%m-%d'), '%y-%m-%d')
+			AND
+			date_format(str_to_date(o.order_buy_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[<=]]> date_format(str_to_date(#{date2}, '%Y-%m-%d'), '%y-%m-%d')
+	</if>
+	ORDER BY
+			date_format(str_to_date(o.order_buy_date, '%Y-%m-%d'), '%y-%m-%d') DESC
+		LIMIT #{startRow}, #{listLimit}
+</select>
 
+<!-- 구매내역 : 해당 회원의 전체 구매내역 갯수 구하기 -->
+<select id="selectOrderListCount" resultType="Integer">
+	SELECT COUNT(*) FROM order_buy
+	WHERE member_idx = #{member_idx}
+	<if test="!date1.equals('') and !date2.equals('')">
+			AND
+			date_format(str_to_date(order_buy_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[>=]]> date_format(str_to_date(#{date1}, '%Y-%m-%d'), '%y-%m-%d')
+			AND
+			date_format(str_to_date(order_buy_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[<=]]> date_format(str_to_date(#{date2}, '%Y-%m-%d'), '%y-%m-%d')
+	</if>
+</select>
 
 
 
