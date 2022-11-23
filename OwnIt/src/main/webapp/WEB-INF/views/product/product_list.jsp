@@ -239,14 +239,14 @@ $(function() {
               <div class="col-6 col-md-4">
                 <div class="product">
                   <figure class="product-image">
-                    <a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">
+                    <a href="product_detail?product_idx=${product.product_idx }">
                       <img src="resources/img/product/${product.image_real_file1 }" alt="Image" width="261.66px" height="261.66px">
                       <img src="resources/img/product/${product.image_real_file2 }" alt="Image" width="261.66px" height="261.66px">
                     </a>
                   </figure>
                   <div class="product-meta" style="width: 261.66px; height: 160.72px">
-                  <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}"><b>${product.product_brand }</b></a></h3>
-                    <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
+                  <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }"><b>${product.product_brand }</b></a></h3>
+                    <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }">${product.product_name } </a></h3>
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
                       <span class="product-action" id="${product.product_idx }">

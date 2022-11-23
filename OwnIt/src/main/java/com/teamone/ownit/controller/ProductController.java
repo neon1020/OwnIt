@@ -500,10 +500,10 @@ public class ProductController {
 // 박주닮
 	@GetMapping(value = "product_detail")
 	public String product_detail(@RequestParam(defaultValue = "0") int product_idx, Model model,
-								@RequestParam(defaultValue = "1") int pageNum, 
 								@RequestParam(defaultValue = "1") int pageNum2,
 								@RequestParam(defaultValue = "") String keyword,
 								HttpServletResponse response) {
+		System.out.println("페이지넘 : " +pageNum2);
 		System.out.println("컨트롤러 리뷰 키워드 : " + keyword + " product_idx : " + product_idx);
 		// 상품 정보
 		ProductVO product = service.productDetail(product_idx);
@@ -549,6 +549,8 @@ public class ProductController {
 		
 		if(!keyword.equals("")) { //체크박스가 체크됐을때만 
 			JSONArray jsonArray = new JSONArray();
+			JSONObject jsonObjectpage = new JSONObject(pageInfo);
+			jsonArray.put(jsonObjectpage);
 			for(Product_ReviewListVO review : reviewList) {
 				JSONObject jsonObject = new JSONObject(review);
 				// 2. JSONObject 클래스 인스턴스 생성
@@ -558,7 +560,9 @@ public class ProductController {
 				System.out.println(jsonObject);
 				jsonArray.put(jsonObject);
 			}
-			System.out.println(jsonArray);
+			System.out.println("리스트제이슨어레이 : " + jsonArray);
+			System.out.println("페이지인포제이슨 : " + jsonObjectpage);
+				
 			try {
 				// 응답 데이터를 직접 생성하여 웹페이지에 출력
 				// HttpSertvletResponse 객체의 getWriter() 메서드를 통해 PrintWriter 객체를 리턴받아
@@ -566,6 +570,7 @@ public class ProductController {
 				// => 단, 객체 데이터 출력 전 한글 인코딩 처리 필수!
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().print(jsonArray);
+				System.out.println("리턴");
 				return null;
 			} catch (IOException e) {
 				e.printStackTrace();
