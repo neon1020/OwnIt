@@ -32,7 +32,8 @@
     <title>Cart</title>
  <script src="resources/js/jquery-3.6.1.js"></script> 
  <script type="text/javascript">
- 	
+
+// 상품 수량 변경 시 수행되는 함수
 function modifyCartCount(counter) {
 	var idx = counter.id.split('_')[1];
 	var plus = counter.className.indexOf('plus') > -1
@@ -60,8 +61,8 @@ function modifyCartCount(counter) {
 			var totalPrice = 0;
 			if(JSON.stringify(result).length > 100) {
 				$.each(result, function(index) {
-					var buyPrice = numberWithCommas(result[index].product_buy_price);
-					var countTimesPrice = numberWithCommas(result[index].countTimesPrice).split(".")[0];
+					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
+					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
 					html += "<div class='cart-item'>";
 					html += "<div class='row align-items-center'>";
 					html += "<div class='col-12 col-lg-6'>";
@@ -80,33 +81,20 @@ function modifyCartCount(counter) {
 					html += "<span class='counter-plus icon-plus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx +"'></span>";
 					html += "</div></div>";
 					html += "<div class='col-4 col-lg-2 text-center'>";
-					html += "<span class='cart-item-price'>"+ countTimesPrice +"원</span>";
+					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
 // 					totalPrice += Number(result[index].countTimesPrice);
 				});
 				$('#myCartItemsInOrder').html(html);
-// 				totalPrice = numberWithCommas(totalPrice);
-				$('.totalPrice').html(totalPrice+"원");
 			} else {
-				var fix = Number($('#cartCount_'+idx).val())-1;
-				$('#cartCount_'+idx).html("<input type='text' name='qty-"+ idx +"' id='cartCount_"+ idx +"' readonly='readonly' class='counter-value' value='"+ fix +"'>");
+				$('#cartCount_'+idx).val(Number($('#cartCount_'+idx).val())-1);
 				alert(result.err);
-				location.reload();
 			}
 		}
 	});
 }
 
-$(function() {
-	$('#cbAll').click(function() {
-		if($("#cbAll").is(":checked")) {
-			$("input[type=checkbox]").prop("checked", true);
-		} else {
-			$("input[type=checkbox]").prop("checked", false);
-		}
-	});
-});
- 	
+// 장바구니 개별항목 삭제 시 수행되는 함수
 function delFromCartInOrder(item) {
 	var delIdx = item.id.split('_')[1];
 	$.ajax({
@@ -121,8 +109,8 @@ function delFromCartInOrder(item) {
 			if(result != 0) {
 				var totalPrice = 0;
 				$.each(result, function(index) {
-					var buyPrice = numberWithCommas(result[index].product_buy_price);
-					var countTimesPrice = numberWithCommas(result[index].countTimesPrice).split(".")[0];
+					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
+					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
 					html += "<div class='cart-item'>";
 					html += "<div class='row align-items-center'>";
 					html += "<div class='col-12 col-lg-6'>";
@@ -141,20 +129,19 @@ function delFromCartInOrder(item) {
 					html += "<span class='counter-plus icon-plus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx +"'></span>";
 					html += "</div></div>";
 					html += "<div class='col-4 col-lg-2 text-center'>";
-					html += "<span class='cart-item-price'>"+ countTimesPrice +"원</span>";
+					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
 					totalPrice += Number(result[index].countTimesPrice);
 				});
 				$('#myCartItemsInOrder').html(html);
-				totalPrice = numberWithCommas(totalPrice);
-				$('.totalPrice').html(totalPrice+"원");
 			} else {
 				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
 			}
 		} // success
 	}); // ajax
 }
- 	
+
+// 장바구니 전체삭제 시 수행되는 함수
 $(document).on("click", "#deleteAllCart", function() {
 	var isCertain = confirm("장바구니내의 모든 상품을 삭제하시겠습니까?");
 	if(isCertain) {	
@@ -167,6 +154,68 @@ $(document).on("click", "#deleteAllCart", function() {
 		});
 	}
 });
+
+//체크박스 전체선택
+$(function() {
+	$('#cbAll').click(function() {
+		if($("#cbAll").is(":checked")) {
+			$("input[type=checkbox]").prop("checked", true);
+		} else {
+			$("input[type=checkbox]").prop("checked", false);
+		}
+	});
+});
+
+// 체크박스 선택 시 해당 상품 가격의 총 합이 결제 정보에 출력되는 기능
+var cbArr = [];
+var payTotal = 0;
+$(document).on("change", 'input[type=checkbox]', function() {
+	var idx = $(this).attr('id').split('cb')[1];
+	if(idx == 'All') {
+		if($(this).is(":checked")){
+			payTotal = 0;
+			debugger;
+			$('input[type=checkbox]:checked').each(function() {
+			    let cbId = $(this).attr('id').split('cb')[1];
+			    cbArr.push(cbId);
+			});
+			cbArr.shift();
+			for(var i = 0; i < cbArr.length; i++) {
+			   payTotal += Number(document.getElementById('countTimesPrice_'+cbArr[i]).innerText.split('원')[0].replaceAll(',',''));
+			}
+			$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+		} else {
+			$('input[type=checkbox]').each(function() {
+			    let cbId = $(this).attr('id').split('cb')[1];
+			    cbArr.pop();
+			});
+			cbArr.shift();
+			payTotal = 0;
+			$('.totalPrice').text(payTotal + "원");
+		}
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	} else {
+		if($(this).is(":checked")){
+			payTotal += Number(document.getElementById('countTimesPrice_'+idx).innerText.split('원')[0].replaceAll(',',''));
+		} else {
+			payTotal -= Number(document.getElementById('countTimesPrice_'+idx).innerText.split('원')[0].replaceAll(',',''));
+		}
+// 		document.getElementsByClassName("totalPrice").innerHtml = numberWithCommas(payTotal)+"원";
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	}
+});
+
+// 1. 상품 체크해두고 수량 조절 시 체크 풀리는 문제, 해당 상태에서 결제 정보 총 금액 변동되지 않는 문제
+// 2. 위의 과정 후 체크가 풀린 상태에서 다시 체크하면 결제 정보에 해당 금액들이 추가적으로 합산되는 문제
+// 선택 상품 주문 기능
+// $(document).on("change", 'input[type=checkbox]', function() {
+// 	if($(this).is(":checked")){
+		
+// 	} else {
+		
+// 	}
+// }
+// 전체 상품 주문 기능
  	
  </script>
   </head>
@@ -227,7 +276,7 @@ $(document).on("click", "#deleteAllCart", function() {
                   </div>
                 </div>
                 <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
+                  <span class="cart-item-price" id="countTimesPrice_${cart.product_idx }"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
                 </div>
                 <a class="cart-item-close" id="delCart_${cart.product_idx }" onclick="delFromCartInOrder(this)"><i class="icon-x"></i></a>
               </div>
