@@ -1,5 +1,7 @@
 package com.teamone.ownit.controller;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -58,7 +60,7 @@ public class MypageController {
 	//비밀번호 수정
 	@PostMapping(value = "/mypage_revisePro")
 	public String revise(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
-			Model model, HttpSession session) {
+						Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		
 		if(sId != null && !sId.equals("")) {
@@ -118,18 +120,37 @@ public class MypageController {
 			System.out.println("mainWish : " + mainWish);		
 			
 			return "mypage/mypage_main";
+			
 			} else {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "notice/fail_back";
+				model.addAttribute("msg", "잘못된 접근입니다!");
+				return "notice/fail_back";
 		}			
 	}
 	
 	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
-	public String sell(@RequestParam int member_idx, Model model, HttpSession session,
+	public String sell(Model model, int member_idx,
+			@RequestParam(defaultValue = "") String date1,
+			@RequestParam(defaultValue = "") String date2,
 			@RequestParam(defaultValue = "1") int pageNum) {
-		String sId = (String)session.getAttribute("sId");
-		if(sId != null && !sId.equals("")) {	
+			
+		// date1, date2 형식 : 2022-11-01
+		// date1 이 date2 보다 클 수 없도록 설정
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		int compare = 0;
+		try {
+			java.util.Date fmDate1 = fm.parse(date1);
+			java.util.Date fmDate2 = fm.parse(date2);
+			System.out.println(fmDate1 + ", " + fmDate2);
+			compare = fmDate1.compareTo(fmDate2);
+		} catch (ParseException e) {
+			// e.printStackTrace();
+		}
+		if(compare > 0) {
+			// date1 (이전날짜)가 더 큰 상황
+			model.addAttribute("msg", "날짜 설정을 확인해주세요.");
+			return "notice/fail_back";
+		} else {
 			// -------------------------------------------------------------------
 			// 페이징 처리를 위한 계산 작업
 			int listLimit = 5; // 한 페이지 당 표시할 게시물 목록 갯수 
@@ -141,11 +162,11 @@ public class MypageController {
 			// Service 객체의 getNoticeList() 메서드를 호출하여 게시물 목록 조회
 			// => 파라미터 : 시작행번호, 페이지 당 목록 갯수
 			// => 리턴타입 : List<NoticeVO>(noticeList)
-			List<MypageSellListVO> mysell = service.getMySell(member_idx, startRow, listLimit);
+			List<MypageSellListVO> mysell = service.getMySell(startRow, listLimit, date1, date2, member_idx);
 			// -------------------------------------------
 			// Service 객체의 getNoticeListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 			// => 파라미터 : 없음, 리턴타입 : int(listCount)
-			int listCount = service.getMySellListCount(member_idx);
+			int listCount = service.getMySellListCount(date1, date2, member_idx);
 			System.out.println("글 갯수 : " + listCount);
 			
 			// 페이지 계산 작업 수행
@@ -180,16 +201,13 @@ public class MypageController {
 			System.out.println(mysell);
 			
 			return "mypage/mypage_sell";
-		} else {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "notice/fail_back";
 		}
 	}
 	
 	//위시리스트 목록
 	@GetMapping(value = "wishlist")
 	public String wishlist(@RequestParam int member_idx, Model model, HttpSession session,
-			@RequestParam(defaultValue = "1") int pageNum) {
+						@RequestParam(defaultValue = "1") int pageNum) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {	
 			// -------------------------------------------------------------------
@@ -244,7 +262,7 @@ public class MypageController {
 	//위시리스트 장바구니 담기
 	@GetMapping(value = "mypage_addCart")
 	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
-			Model model, HttpSession session) {
+							Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {
 			int isContained = service.isContainedInCart(member_idx, product_idx);
@@ -346,8 +364,8 @@ public class MypageController {
 	
 	//주소록 삭제
 	@GetMapping(value = "deleteAddress")
-	public String delete(@ModelAttribute AddressVO address, @RequestParam int address_idx, @RequestParam int member_idx, Model model) {
-		
+	public String delete(@ModelAttribute AddressVO address, @RequestParam int address_idx, 
+						@RequestParam int member_idx, Model model) {
 		int deleteCount = service.removeAddress(address);
 		if(deleteCount == 0) {
 			model.addAttribute("msg", "주소지 삭제에 실패하였습니다. 다시 시도해주세요.");
@@ -357,24 +375,6 @@ public class MypageController {
 	}	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

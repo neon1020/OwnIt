@@ -6,23 +6,16 @@
 	
 	<!-- 회원정보 조회	 -->
 	<select id="selectMemberInfo" resultType="com.teamone.ownit.vo.MypageVO">
-        SELECT 
-        	i.image_original_file1,
-        	m.member_id, 
- 			m.member_nickname,
-			m.member_name,
-			m.member_image,
-			m.member_phone,
-			a.address_zipcode,
-			a.address1,
-			a.address2   	 
+		SELECT 
+			i.image_original_file1, m.member_id, m.member_nickname, m.member_name,
+			m.member_image, m.member_phone, a.address_zipcode, a.address1, a.address2   	 
 				FROM member m
-				LEFT JOIN address a
-				ON a.address_idx = m.member_idx
-				LEFT JOIN image i
-				ON m.member_idx = i.member_idx
+					LEFT JOIN address a
+						ON a.address_idx = m.member_idx
+					LEFT JOIN image i
+						ON m.member_idx = i.member_idx
 				WHERE member_id=#{member_id}
-    </select>	
+	</select>	
     
     <!-- 비밀번호 조회 -->	
 	<select id="selectPasswd" resultType="String">
@@ -43,37 +36,17 @@
 	<!-- 마이페이지 메인 - 프로필 -->	
 	<select id="selectMainProfile" resultType="com.teamone.ownit.vo.MypageMainVO">	
 		SELECT
-			m.member_idx, m.member_id, member_nickname, i.image_real_file1
+			m.member_idx, m.member_id, m.member_nickname, i.image_real_file1
 				FROM member m
 					LEFT JOIN image i
 						ON m.member_idx = i.member_idx
-				WHERE member_idx=#{member_idx}
+				WHERE m.member_idx=#{member_idx}
 	</select>
 	
-<!-- 	        SELECT  -->
-<!--             m.member_idx, m.member_id, m.member_name, m.member_nickname, m.member_image, -->
-<!--            i.image_real_file1, -->
-<!--               FROM member m -->
-<!--                LEFT JOIN image i -->
-<!--                   ON m.member_idx = i.member_idx -->
-<!--                LEFT JOIN product p -->
-<!--                   ON m.member_idx = p.member_idx -->
-<!--                LEFT JOIN wishlist w -->
-<!--                   ON m.product_idx = p.product_idx                  -->
-<!--                LEFT JOIN order_sell os -->
-<!--                   ON m.product_idx = p.product_idx -->
-<!--                LEFT JOIN order_buy ob -->
-<!--                   ON m.product_idx = p.product_idx            -->
-<!--                WHERE m.member_idx=#{member_idx} -->
-<!--                ORDER BY  -->
-<!--                   os.order_sell_date DESC -->
-<!--                   ob.order_buy_date DESC -->
-<!--                LIMIT 3	 -->
-    
 	<!-- 마이페이지 메인 - 구매내역 -->	
 	<select id="selectMainOrder" resultType="com.teamone.ownit.vo.MypageMainVO">
 		SELECT 
-			m.member_idx, i.image_real_file1, p.product_idx, p.product_name, p.product_sell_price, 
+			m.member_idx, i.image_real_file1, p.product_idx, p.product_name, p.product_buy_price, 
 			ob.order_buy_idx, ob.order_buy_date, ob.order_buy_gb
 				FROM order_buy ob
 					LEFT JOIN image i
@@ -108,93 +81,87 @@
 	    
 	<!-- 마이페이지 메인 - 위시리스트 -->	    
 	<select id="selectMainWish" resultType="com.teamone.ownit.vo.MypageMainVO">	
-        SELECT 
-			m.member_idx,
-			m.member_id,
-			p.product_idx,
-			p.product_name,
-        	i.image_real_file1
-					FROM wishlist w
+		SELECT 
+			m.member_idx, m.member_id, p.product_idx, p.product_name, i.image_real_file1
+				FROM wishlist w
 					LEFT JOIN member m
-					ON w.member_idx = m.member_idx
+						ON w.member_idx = m.member_idx
 					LEFT JOIN product p
-					ON w.product_idx = p.product_idx	
+						ON w.product_idx = p.product_idx	
 					LEFT JOIN image i
-					ON w.product_idx = i.product_idx	
+						ON w.product_idx = i.product_idx	
 				WHERE w.member_idx=#{member_idx}
 				LIMIT 6		
 	</select>		
 	
 	<!-- 판매내역 목록 -->
 	<select id="selectMySell" resultType="com.teamone.ownit.vo.MypageSellListVO">
-        SELECT 
-        	m.member_idx,
-        	m.member_id,
-        	i.image_real_file1,
-        	p.product_idx,
-        	p.product_name, 
-			p.product_sell_price,
-			o.order_sell_idx,
- 			o.order_sell_date,
-			o.order_sell_gb
+		SELECT 
+			o.member_idx, i.image_real_file1, o.product_idx, p.product_name, 
+			p.product_sell_price, o.order_sell_idx, o.order_sell_gb,
+			date_format(o.order_sell_date, '%y-%m-%d') order_sell_date
 				FROM order_sell o
-				LEFT JOIN image i
-				ON o.product_idx = i.product_idx
-				LEFT JOIN member m
-				ON o.member_idx = m.member_idx
-				LEFT JOIN product p
-				ON o.product_idx = p.product_idx	
-			WHERE o.member_idx=#{member_idx}
-			ORDER BY 
-				o.order_sell_date DESC
-			LIMIT #{startRow}, #{listLimit}
-    </select>	
-    
+					LEFT JOIN image i
+						ON o.product_idx = i.product_idx
+					LEFT JOIN product p
+						ON o.product_idx = p.product_idx	
+				WHERE o.member_idx=#{member_idx}
+				<if test="!date1.equals('') and !date2.equals('')">
+					AND
+					date_format(str_to_date(o.order_sell_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[>=]]> date_format(str_to_date(#{date1}, '%Y-%m-%d'), '%y-%m-%d')
+					AND
+					date_format(str_to_date(o.order_sell_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[<=]]> date_format(str_to_date(#{date2}, '%Y-%m-%d'), '%y-%m-%d')
+				</if>
+				ORDER BY
+						date_format(str_to_date(o.order_sell_date, '%Y-%m-%d'), '%y-%m-%d') DESC
+					LIMIT #{startRow}, #{listLimit}
+	</select>
 
-    <!-- 판매내역 갯수 조회 -->
+  <!-- 판매내역 갯수 조회 -->
 	<select id="selectMySellListCount" resultType="integer">
 		SELECT 
 			COUNT(*) 
 				FROM order_sell o
-				LEFT JOIN image i
-				ON o.product_idx = i.product_idx
-				LEFT JOIN member m
-				ON o.member_idx = m.member_idx
-				LEFT JOIN product p
-				ON o.product_idx = p.product_idx	
-			WHERE o.member_idx=#{member_idx}			
-			
+					LEFT JOIN image i
+						ON o.product_idx = i.product_idx
+					LEFT JOIN member m
+						ON o.member_idx = m.member_idx
+					LEFT JOIN product p
+						ON o.product_idx = p.product_idx	
+				WHERE o.member_idx=#{member_idx}
+				<if test="!date1.equals('') and !date2.equals('')">
+					AND
+					date_format(str_to_date(order_sell_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[>=]]> date_format(str_to_date(#{date1}, '%Y-%m-%d'), '%y-%m-%d')
+					AND
+					date_format(str_to_date(order_sell_date, '%Y-%m-%d'), '%y-%m-%d') <![CDATA[<=]]> date_format(str_to_date(#{date2}, '%Y-%m-%d'), '%y-%m-%d')
+				</if>			
 	</select>	
     
 	<!-- 위시리스트 목록 -->	
-    <select id="selectWishlist" resultType="com.teamone.ownit.vo.WishlistVO">
-        SELECT 
-			m.member_idx,
-			m.member_id,
-			p.product_idx,
-			p.product_name,
-        	i.image_real_file1
-					FROM wishlist w
+	<select id="selectWishlist" resultType="com.teamone.ownit.vo.WishlistVO">
+		SELECT 
+			m.member_idx, m.member_id, p.product_idx, p.product_name, i.image_real_file1
+				FROM wishlist w
 					LEFT JOIN member m
-					ON w.member_idx = m.member_idx
+						ON w.member_idx = m.member_idx
 					LEFT JOIN product p
-					ON w.product_idx = p.product_idx	
+						ON w.product_idx = p.product_idx	
 					LEFT JOIN image i
-					ON w.product_idx = i.product_idx	
+						ON w.product_idx = i.product_idx	
 				WHERE w.member_idx=#{member_idx}
 				LIMIT #{startRow}, #{listLimit}				
-    </select>
+	</select>
     
 	<!-- 위시리스트 갯수 조회 -->	    
 	<select id="selectWishlistCount" resultType="integer">
 		SELECT COUNT(*) 
 			FROM wishlist w
 				LEFT JOIN member m
-				ON w.member_idx = m.member_idx
+					ON w.member_idx = m.member_idx
 				LEFT JOIN product p
-				ON w.product_idx = p.product_idx	
+					ON w.product_idx = p.product_idx	
 				LEFT JOIN image i
-				ON w.product_idx = i.product_idx
+					ON w.product_idx = i.product_idx
 			WHERE w.member_idx=#{member_idx}
 	</select>
 	
@@ -211,46 +178,39 @@
 	<!-- 장바구니 추가 -->	 
 	<insert id="addToCart">
 		INSERT INTO cart
-		VALUES(
-		#{member_idx}, 
-		#{product_idx}, 
-		1, 
-		sysdate()
-		)
-	</insert>
+			VALUES(
+				#{member_idx}, 
+				#{product_idx}, 
+				1, 
+				sysdate()
+				)
+	</insert>	
 	
 	<!-- 위시리스트 삭제 -->
 	<delete id="deleteWishlist">
 		DELETE FROM wishlist
 			WHERE 
 				member_idx = #{member_idx}
-			AND 
+				AND 
 				product_idx = #{product_idx}
 	</delete>
 	
 	<!-- 주소록 목록 -->	
-    <select id="selectAddress" resultType="com.teamone.ownit.vo.AddressVO">
-        SELECT 
-			m.member_idx,
-			m.member_id,
-			a.address_idx,
-			a.address_zipcode,
-			a.address1,
-			a.address2,
-			a.address_recipient,
-			a.address_gb,
-			a.address_nickname
+	<select id="selectAddress" resultType="com.teamone.ownit.vo.AddressVO">
+		SELECT 
+			m.member_idx, m.member_id, a.address_idx, a.address_zipcode,
+			a.address1, a.address2, a.address_recipient, a.address_gb, a.address_nickname
 				FROM address a
-				LEFT JOIN member m
-				ON a.member_idx = m.member_idx
+					LEFT JOIN member m
+						ON a.member_idx = m.member_idx
 				WHERE m.member_idx=#{member_idx}
-    </select>
+	</select>
 
 	<!-- 주소록 갯수 조회 -->
 	<select id="selectAddressCount" resultType="integer">
-	SELECT COUNT(*) 
-		FROM address
-		WHERE member_idx=#{member_idx}
+		SELECT COUNT(*) 
+			FROM address
+			WHERE member_idx=#{member_idx}
 	</select>
 
 	<!-- 주소록 추가 -->
@@ -265,20 +225,20 @@
 				'1',
 				#{address.address_nickname},
 				#{address.address_recipient}
-			)
+				)
 	</insert>
 	
 	<!-- 주소록 수정 -->
 	<update id="updateAddress">
-	UPDATE address
-		SET
-			address_zipcode = #{address_zipcode},
-			address1 = #{address1},
-			address2 = #{address2},
-			address_nickname = #{address_nickname},
-			address_recipient = #{address_recipient}
-		WHERE
-			address_idx = #{address_idx}
+		UPDATE address
+			SET
+				address_zipcode = #{address_zipcode},
+				address1 = #{address1},
+				address2 = #{address2},
+				address_nickname = #{address_nickname},
+				address_recipient = #{address_recipient}
+			WHERE
+				address_idx = #{address_idx}
 	</update>
 	
 	<!-- 주소록 대표 배송지 설정 -->
@@ -308,51 +268,6 @@
 			WHERE 
 				address_idx = #{address_idx}
 	</delete>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

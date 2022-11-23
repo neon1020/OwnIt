@@ -24,7 +24,7 @@ public class MypageService {
 	
 	
 	// 류혜지
-	// 회원 정보 조회 수행 getMemberInfo()
+	// 회원 정보 조회
 	public MypageVO getMemberInfo(String id) {
 		return mapper.selectMemberInfo(id);
 	}
@@ -61,13 +61,13 @@ public class MypageService {
 	}
 	
 	//판매내역 갯수 조회
-	public int getMySellListCount(int member_idx) {
-		return mapper.selectMySellListCount(member_idx);
+	public int getMySellListCount(String date1, String date2, int member_idx) {
+		return mapper.selectMySellListCount(date1, date2, member_idx);
 	}
 	
 	//판매내역 목록
-	public List<MypageSellListVO> getMySell(int member_idx, int startRow, int listLimit) {
-		return mapper.selectMySell(member_idx, startRow, listLimit);
+	public List<MypageSellListVO> getMySell(int startRow, int listLimit, String date1, String date2, int member_idx) {
+		return mapper.selectMySell(startRow, listLimit, date1, date2, member_idx);
 	}
 	
 	//위시리스트 갯수 조회

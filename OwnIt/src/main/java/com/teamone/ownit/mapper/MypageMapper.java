@@ -18,7 +18,7 @@ public interface MypageMapper {
 	
 	
 	// 류혜지
-	// 회원 정보 조회에 필요한 selectMemberInfo() 메서드 정의
+	// 회원 정보 조회
 	MypageVO selectMemberInfo(String id);
 	
 	//비밀번호 수정
@@ -40,11 +40,10 @@ public interface MypageMapper {
 	List<MypageMainVO> selectMainWish(int member_idx);	
 	
 	//판매내역 갯수 조회
-	int selectMySellListCount(int member_idx); 
+	int selectMySellListCount(@Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx); 
 	
 	//판매내역 목록
-	List<MypageSellListVO> selectMySell(@Param("member_idx") int member_idx, @Param("startRow") int startRow, 
-										@Param("listLimit") int listLimit);
+	List<MypageSellListVO> selectMySell(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 
 	//위시리스트 목록
 	List<WishlistVO> selectWishlist(@Param("member_idx") int member_idx, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
@@ -97,6 +96,7 @@ public interface MypageMapper {
 	
 
 
+	
 	
 	
 	
