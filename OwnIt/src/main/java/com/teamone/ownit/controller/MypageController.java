@@ -1,7 +1,8 @@
 package com.teamone.ownit.controller;
 
-import java.text.SimpleDateFormat;
+
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.Order_buyMyVO;
 import com.teamone.ownit.vo.PageInfo;
 import com.teamone.ownit.vo.WishlistVO;
 
@@ -495,13 +497,44 @@ public class MypageController {
 	
 	
 	
+	// 정채연 - 300
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	// 정채연 - 500
-	@GetMapping(value = "/mypage_order")
-	public String order() {
-		return "mypage/mypage_order";
-	}
 	
 	// 마이페이지 : 계좌 정보 불러오기
 	@GetMapping(value = "mypage_account")
@@ -582,6 +615,81 @@ public class MypageController {
 		} else {
 			model.addAttribute("msg", "기본 계좌 설정에 실패하였습니다. 다시 시도해주세요.");
 			return "notice/fail_back";
+		}
+	}
+	
+	// 마이페이지 : 구매내역 (기본)
+	@GetMapping(value = "/mypage_order")
+	public String orderList_basic(Model model, int member_idx,
+			@RequestParam(defaultValue = "") String date1,
+			@RequestParam(defaultValue = "") String date2,
+			@RequestParam(defaultValue = "1") int pageNum) {
+		
+		// date1, date2 형식 : 2022-11-01
+		
+		// date1 이 date2 보다 클 수 없도록 설정
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		int compare = 0;
+		try {
+			java.util.Date fmDate1 = fm.parse(date1);
+			java.util.Date fmDate2 = fm.parse(date2);
+			System.out.println(fmDate1 + ", " + fmDate2);
+			
+			compare = fmDate1.compareTo(fmDate2);
+			
+		} catch (ParseException e) {
+			// e.printStackTrace();
+		}
+		
+		if(compare > 0) {
+			// date1 (이전날짜)가 더 큰 상황
+			model.addAttribute("msg", "날짜 설정을 확인해주세요.");
+			return "notice/fail_back";
+		} else {
+			// 페이징 처리를 위한 계산 작업
+			int listLimit = 5; // 한 페이지 당 표시할 게시물 목록 갯수 
+			int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
+			
+			// 조회 시작 게시물 번호(행 번호) 계산
+			int startRow = (pageNum - 1) * listLimit;
+			
+			// 구매내역 목록 조회
+			// => 파라미터 : 시작행번호, 페이지 당 목록 갯수, 검색조건
+			// => 리턴타입 : List<Order_buyVO>(orderList)
+			List<Order_buyMyVO> orderList = service.getOrderList(startRow, listLimit, date1, date2, member_idx);
+			
+			// Service 객체의 getOrderListCount() 메소드를 호출하여 해당 회원의 전체 구매 목록 갯수 조회
+			// => 파라미터 : 검색조건, 리턴타입 : int(listCount)
+			int listCount = service.getOrderListCount(date1, date2, member_idx);
+			
+			// ----------------------------------------------------------------------------------------
+			
+			// 페이지 계산 작업 수행
+			
+			// 전체 페이지 수 계산
+			int maxPage = (int)Math.ceil((double)listCount / listLimit);
+			
+			// 시작 페이지 번호 계산
+			int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+			
+			// 끝 페이지 번호 계산
+			int endPage = startPage + pageListLimit - 1;
+			
+			// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
+			// 끝 페이지 번호를 최대 페이지 번호로 교체
+			if(endPage > maxPage) { endPage = maxPage; }
+			
+			// 페이징 처리 정보 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+			PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+			
+			// ----------------------------------------------------------------------------------------
+			
+			// 게시물 목록(boardList) 과 페이징 처리 정보(pageInfo)를 Model 객체에 저장
+			model.addAttribute("pageInfo", pageInfo);
+			model.addAttribute("orderList", orderList);
+			model.addAttribute("listCount", listCount);
+			
+			return "mypage/mypage_order";
 		}
 	}
 	

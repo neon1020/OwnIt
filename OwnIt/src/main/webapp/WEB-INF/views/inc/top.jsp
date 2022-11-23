@@ -145,7 +145,7 @@ function delFromCart(item) {
                         <li><span class="megamenu-title">MyPage</span></li>
                         <li><a class="dropdown-item" href="member_login">Log In</a></li>
                         <li><a class="dropdown-item" href="mypage">Profile</a></li>
-                        <li><a class="dropdown-item" href="mypage_order">Orders</a></li>
+                        <li><a class="dropdown-item" href="mypage_order?member_idx=${sessionScope.sIdx }">Orders</a></li>
                         <li><a class="dropdown-item" href="address">Addresses</a></li>
                         <li><a class="dropdown-item" href="account">Account</a></li>
                         <li><a class="dropdown-item" href="wishlist">Wishlist</a></li>

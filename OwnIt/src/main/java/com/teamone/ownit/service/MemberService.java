@@ -34,6 +34,11 @@ public class MemberService {
 		System.out.println("MemberService - joinAddress()");
 		return mapper.insertAddress(member, address);
 	}
+	
+	public int joinImage(MemberVO member) {
+		System.out.println("MemberService - joinImage()");
+		return mapper.insertImage(member);
+	}
 
 	public int getMember_idx(String id) {
 		System.out.println("MemberService - getMember_idx()");
@@ -302,6 +307,8 @@ public class MemberService {
 		public MemberVO findEmail(String member_phone) {
 			return mapper.findEmail(member_phone);
 		}
+
+		
 
 
 

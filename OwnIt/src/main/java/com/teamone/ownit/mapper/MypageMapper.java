@@ -10,6 +10,8 @@ import com.teamone.ownit.vo.MemberVO;
 import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.Order_buyMyVO;
+import com.teamone.ownit.vo.Order_buyVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 
@@ -312,17 +314,8 @@ public interface MypageMapper {
 
 	int otherAccount(int member_idx);
 
+	List<Order_buyMyVO> selectOrderList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 
-
-	
-
-	
-
-	
-
-	
-
-
-
+	int selectOrderListCount(@Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 	
 }
