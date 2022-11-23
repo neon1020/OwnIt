@@ -19,10 +19,10 @@
 										<a class="nav-link" href="mypage_order?member_idx=${sessionScope.sIdx }">구매내역</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="mypage_sell?id=${sessionScope.sId }">판매내역</a>
+										<a class="nav-link" href="mypage_sell?member_idx=${sessionScope.sIdx }">판매내역</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="wishlist?id=${sessionScope.sId }">관심상품</a>
+										<a class="nav-link" href="wishlist?member_idx=${sessionScope.sIdx }">관심상품</a>
 									</li>
 								</ul>
 							</div>
@@ -37,7 +37,7 @@
 										<a class="nav-link" href="mypage_revise?id=${sessionScope.sId }">프로필 정보</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="address?id=${sessionScope.sId }">주소록</a>
+										<a class="nav-link" href="address?member_idx=${sessionScope.sIdx }">주소록</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="mypage_account?member_idx=${sessionScope.sIdx }">판매 정산 계좌</a>
