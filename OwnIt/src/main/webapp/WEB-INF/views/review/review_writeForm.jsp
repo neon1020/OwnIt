@@ -116,6 +116,7 @@
 		<form action="review_WritePro" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_idx" value="${product.product_idx }" />
       <input type="hidden" name="member_idx" value="${product.member_idx }" />
+      <input type="hidden" name="order_buy_idx" value="${param.order_buy_idx }" />
       
 			<section id="component-1">
 				<div class="component">

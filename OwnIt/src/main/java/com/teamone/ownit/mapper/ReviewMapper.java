@@ -55,6 +55,8 @@ public interface ReviewMapper {
 
 	void insertLike(Style_like_listVO likeVO);
 
+	void updateOrderGb(int order_buy_idx);
+
 	
 
 
