@@ -380,15 +380,7 @@
             
             <div>
               <div class="col-lg-12">
-              		<!-- 카트 버튼 보류 -->
-<!--                 	<a data-toggle="modal" data-target="#cart" class="btn" style="background: black; color: white; width: 195px;"> -->
-<!--                 		Add to Cart -->
-<!--                 	</a> -->
-                	<!-- 관심상품 버튼 11월 11일 위쪽으로 수정  -->
-<!-- 				<button type="button" class="btn" onclick="location.href=''" style="background: black; color: white; width: 195px;"> -->
-<!-- 					Add to wishlist -->
-<!-- 				</button> -->
-              </div>
+            </div>
               <img src="resources/img/product/productDetailNotice.png">
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
@@ -436,7 +428,7 @@
  			<label id="btntext" for="btnradio1">최신</label>
           	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1(1)">
            	<label id="btntext" for="btnradio3">인기</label>
- 			<!-- 댓글 보류 11-23 -->
+ 			<!-- 댓글순 보류 11-23 -->
 <!--  			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()"> -->
 <!--  			<label id="btntext" for="btnradio2">댓글</label> --> 
           </div>
