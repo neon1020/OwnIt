@@ -11,6 +11,7 @@ import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.Order_buyMyVO;
 import com.teamone.ownit.vo.Order_buyVO;
+import com.teamone.ownit.vo.ReviewVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 
@@ -317,5 +318,9 @@ public interface MypageMapper {
 	List<Order_buyMyVO> selectOrderList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 
 	int selectOrderListCount(@Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
+
+	int updateOrderBuyGb(@Param("member_idx") int member_idx, @Param("order_buy_idx") int order_buy_idx);
+
+	ReviewVO selectReview(@Param("product_idx") int product_idx, @Param("member_idx") int member_idx);
 	
 }
