@@ -31,7 +31,7 @@
 	  		AND product_type = #{category}
 		  </if>
 		  <choose>
-		  	<when test="productListing.equals('product_popular')">
+		  	<when test="productListing.equals('product_popular') or productListing.equals('')">
 		  		ORDER BY wish DESC
 		  	</when>
 		  	<when test="productListing.equals('price_high')">

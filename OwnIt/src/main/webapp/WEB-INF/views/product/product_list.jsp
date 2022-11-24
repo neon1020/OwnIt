@@ -320,7 +320,7 @@ function listByCategory() {
                   <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}"><b>${product.product_brand }</b></a></h3>
                     <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}">${product.product_name } </a></h3>
                     <div class="product-price">
-                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
+                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/>원</span>
                       <span class="product-action" id="${product.product_idx }">
                         <a style="color: #101010;">장바구니에 추가</a>
                       </span>
