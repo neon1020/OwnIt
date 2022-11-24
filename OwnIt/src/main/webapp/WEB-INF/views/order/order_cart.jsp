@@ -6,11 +6,12 @@
 <html>
 <head>
 <style type="text/css">
-	#btn {
+	#btn, #btnAll {
 		background-color: #101010;
 		border-color: #101010;
+		color: white;
 	}
-	#btn:hover {
+	#btn:hover, #btnAll:hover {
 		background-color: #353535;
 		border-color: #353535;
 	}
@@ -35,6 +36,10 @@
 
 // 상품 수량 변경 시 수행되는 함수
 function modifyCartCount(counter) {
+	payTotal = 0;
+	cbArr = [];
+	$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	document.getElementById("cbAll").checked = false;
 	var idx = counter.id.split('_')[1];
 	var plus = counter.className.indexOf('plus') > -1
 	var cntVal = 0;
@@ -58,7 +63,6 @@ function modifyCartCount(counter) {
 		dataType:'json',
 		success:function(result){
 			var html = "";
-			var totalPrice = 0;
 			if(JSON.stringify(result).length > 100) {
 				$.each(result, function(index) {
 					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
@@ -67,7 +71,11 @@ function modifyCartCount(counter) {
 					html += "<div class='row align-items-center'>";
 					html += "<div class='col-12 col-lg-6'>";
 					html += "<div class='media media-product'>";
-					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+// 					if(document.getElementById('cb'+result[index].product_idx).checked) {
+// 						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;' checked='checked'>"
+// 					} else {
+						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+// 					}
 					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
 					html += "<div class='media-body'>";
 					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
@@ -83,12 +91,12 @@ function modifyCartCount(counter) {
 					html += "<div class='col-4 col-lg-2 text-center'>";
 					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
-// 					totalPrice += Number(result[index].countTimesPrice);
 				});
 				$('#myCartItemsInOrder').html(html);
 			} else {
-				$('#cartCount_'+idx).val(Number($('#cartCount_'+idx).val())-1);
+				$('#cartCount_'+idx).val(cntVal-1);
 				alert(result.err);
+				$('input[type=checkbox]').prop("checked", false);
 			}
 		}
 	});
@@ -96,18 +104,21 @@ function modifyCartCount(counter) {
 
 // 장바구니 개별항목 삭제 시 수행되는 함수
 function delFromCartInOrder(item) {
+	payTotal = 0;
+	cbArr = [];
+	$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	document.getElementById("cbAll").checked = false;
 	var delIdx = item.id.split('_')[1];
 	$.ajax({
 		url:'delAndReloadCart',
 		type:'POST',
 		data: {
-			product_idx:delIdx,
+			product_idx:delIdx
 		},
 		dataType:'json',
 		success:function(result) {
 			var html = "";
 			if(result != 0) {
-				var totalPrice = 0;
 				$.each(result, function(index) {
 					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
 					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
@@ -131,7 +142,6 @@ function delFromCartInOrder(item) {
 					html += "<div class='col-4 col-lg-2 text-center'>";
 					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
-					totalPrice += Number(result[index].countTimesPrice);
 				});
 				$('#myCartItemsInOrder').html(html);
 			} else {
@@ -171,6 +181,7 @@ var cbArr = [];
 var payTotal = 0;
 $(document).on("change", 'input[type=checkbox]', function() {
 	var idx = $(this).attr('id').split('cb')[1];
+	// 전체선택
 	if(idx == 'All') {
 		if($(this).is(":checked")){
 			payTotal = 0;
@@ -194,7 +205,7 @@ $(document).on("change", 'input[type=checkbox]', function() {
 			$('.totalPrice').text(payTotal + "원");
 		}
 		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
-	} else {
+	} else { // 개별 선택
 		if($(this).is(":checked")){
 			payTotal += Number(document.getElementById('countTimesPrice_'+idx).innerText.split('원')[0].replaceAll(',',''));
 		} else {
@@ -205,18 +216,33 @@ $(document).on("change", 'input[type=checkbox]', function() {
 	}
 });
 
-// 1. 상품 체크해두고 수량 조절 시 체크 풀리는 문제, 해당 상태에서 결제 정보 총 금액 변동되지 않는 문제
-// 2. 위의 과정 후 체크가 풀린 상태에서 다시 체크하면 결제 정보에 해당 금액들이 추가적으로 합산되는 문제
-// 선택 상품 주문 기능
-// $(document).on("change", 'input[type=checkbox]', function() {
-// 	if($(this).is(":checked")){
-		
-// 	} else {
-		
-// 	}
-// }
-// 전체 상품 주문 기능
- 	
+// 전체, 선택 상품 주문 기능
+function buySelectedItems(btn) {
+	if(btn.id == "btnAll") {
+		var isReal = confirm("장바구니의 모든 상품을 구매하시겠습니까?");
+		if(isReal) {
+			$("input[type=checkbox]").prop("checked", true);
+			document.getElementById("cbAll").checked = false;
+		} else return;
+	}
+	var cbChecked = "";
+	$('input[type=checkbox]:checked').each(function() {
+		let id = $(this).attr('id').split('cb')[1];
+		// cbChecked => product_idx:수량:금액/
+		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
+	});
+	debugger;
+	$.ajax({
+		url:'order_buyAgree',
+		type:'GET',
+		data:{
+			cbChecked:cbChecked
+		}
+	});
+	
+	location.href="order_buyAgree";
+}
+
  </script>
   </head>
   <body>
@@ -321,8 +347,8 @@ $(document).on("change", 'input[type=checkbox]', function() {
               </div>
             </div>
             <a class="btn btn-lg btn-primary btn-block mt-1" id="deleteAllCart">장바구니 비우기</a>
-            <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">선택상품 주문</a>
-            <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">전체상품 주문</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="btn" onclick="buySelectedItems(this)">선택상품 주문</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="btnAll" onclick="buySelectedItems(this)">전체상품 주문</a>
           </div>
 
         </div>

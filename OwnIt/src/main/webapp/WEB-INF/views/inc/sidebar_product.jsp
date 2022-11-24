@@ -20,23 +20,18 @@
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="휴대폰">- 휴대폰</a>
-<!-- 	         							<a class="nav-link" href="listProductByCategory?id=스마트폰" role="category" id="phone">- 휴대폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="태블릿">- 태블릿</a>
-<!-- 	         							<a class="nav-link" href="listProductByCategory?id=태블릿" role="category" id="tablet">- 태블릿</a> -->
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="스마트워치">- 스마트워치</a>
-<!-- 	         							<a class="nav-link" href="listProductByCategory?id=스마트워치" role="category" id="watch">- 스마트워치</a> -->
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="이어폰">- 이어폰</a>
-<!-- 	         							<a class="nav-link" href="listProductByCategory?id=이어폰" role="category" id="earphone">- 이어폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="헤드폰">- 헤드폰</a>
-<!-- 	         							<a class="nav-link" href="listProductByCategory?id=헤드폰" role="category" id="headphone">- 헤드폰</a> -->
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="노트북">- 노트북</a>

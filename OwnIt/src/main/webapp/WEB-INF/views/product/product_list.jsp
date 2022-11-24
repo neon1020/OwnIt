@@ -364,8 +364,6 @@ function listByCategory() {
 
     <!-- footer -->
     <jsp:include page="../inc/footer.jsp"></jsp:include>
-
-
     <script src="resources/js/vendor.min.js"></script>
     <script src="resources/js/app.js"></script>
   </body>
