@@ -432,9 +432,9 @@
       <div class="container">
         <div class="row">
           <div class="col text-center">
-           	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1()">
+           	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1(1)">
  			<label id="btntext" for="btnradio1">최신</label>
-          	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1()">
+          	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1(1)">
            	<label id="btntext" for="btnradio3">인기</label>
  			<!-- 댓글 보류 11-23 -->
 <!--  			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()"> -->
@@ -458,9 +458,8 @@
 	    		}else if($("#btnradio3").is(":checked")){	//인기순
 	    			keyword = "star";
 	    		}
-	    		alert(keyword);
 	    		$.ajax({
-	    			url: 'product_detail',
+	    			url: 'reviewChange',
 	    			type: 'get',
 	    			contentType:'application/json;charset=utf-8',
 	    			dataType:'json',
@@ -471,46 +470,47 @@
 	    				var changeR = "";
 	    				var changePage = "";
 	    				debugger;
-						$.each(review, function(i,review){
-	    				debugger;
-	    				var buyprice = review.product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-							changeR +="<div class='col-md-6 col-lg-4'>\
-										<article class='card card-post'>\
-										<figure class='equal equal-50'>\
-										<a class='image image-fade' href='review_detail?review_idx="+review.review_idx+"'>\
-										<img src='resources/img/review/"+review.review_image1+"'>\
-										</a></figure><div class='card-body'>\
-										<a class='profile' href='review_mystyle?member_idx="+review.member_idx+"&review_idx="+review.review_idx+"'>\
-										<img src='resources/img/member/"+review.member_image+"'>\
-										<span class='eyebrow text-muted'>"+review.member_nickname+"</span></a>\
-										<h3 class='card-content'>"+review.review_content+"</h3>\
-										<div class='like'><img src='resources/img/review/like_none.jpg'>"+review.style_like_count+"&nbsp;&nbsp;\
-										<img src='resources/img/review/reply.jpg'>"+review.review_reply_count+"</div><h4 class='card-title'>\
-										<a href='product_detail?product_idx="+review.product_idx+"'>\
-										<img src='resources/img/product/"+review.product_image+"'>\
-										<div class='subject'>"+review.product_name+"<br>"+ buyprice +"&nbsp;원</div></a>\
-										</h4></div></article></div>";
-							});
-					
-							  		 changePage += "<nav class='d-inline-block'><ul class='pagination'><li class='page-item active'>";
-							  		 if(review.PageNum2 > review.StartPage){
-							  			 changePage += "<input class='page-link' type='button' value='이전' onclick='onclick1("+review.pageNum2 - 1 +")'></li>";
-							  		 } else{
-							  			changePage += "<input class='page-link' type='button' value='이전'></li>";
-							  		 }
-							  for(var i = review.startPage; i >= review.endPage; i++){
-								  if(i == review.pageNum2){
-									  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"</a></li>";									  
-								  }else{
-									  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+i+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-								  }
+	    				var page = review[0].pageNum2;
+	    				var start = review[0].startPage;
+	    				var end = review[0].endPage;
+	    				var max = review[0].maxPage;
+				  		 changePage += "<nav class='d-inline-block'><ul class='pagination'>";
+				  		 if(page > start){
+				  			 changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전' onclick='onclick1("+ (page - 1) +")'></li>";
+				  		 } else{
+				  			changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전'></li>";
+				  		 }
+						  for(var i = start; i < (end + 1); i++){
+							  if(i == page){
+								  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+							  }else{
+								  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
 							  }
-							  	  if(review.PageNum2 < reivew.MaxPage){
-							  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ review.pageNum2 + 1+")'></li>";
-							  	  }else{
-							  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
-							  	  }
-							  	changePage +="</ul></nav>";
+						  }
+					  	  if(page < max	){
+					  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ (page + 1)+")'></li>";
+					  	  }else{
+					  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
+					  	  }
+				  		changePage +="</ul></nav>";
+				  		
+				  		for(var i = 1; i < review.length; i++){
+// 	    				debugger;
+	    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+							changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+							changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
+							changeR +="</a></figure><div class='card-body'>";
+							changeR +="<a class='profile' href='review_mystyle?member_idx="+review[i].member_idx+"&review_idx="+review[i].review_idx+"'>";
+							changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
+							changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
+							changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
+							changeR +="<div class='like'><img src='resources/img/review/like_none.jpg'>"+review[i].style_like_count+"&nbsp;&nbsp;";
+							changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
+							changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
+							changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
+							changeR +="<div class='subject'>"+review[i].product_name+"<br>"+ buyprice +"&nbsp;원</div></a>";
+							changeR +="</h4></div></article></div>";
+				  		}
 						$("#reviewchange").html(changeR);
 						$("#pageChange").html(changePage);
 	    			}  // 데이터 =review
@@ -541,33 +541,11 @@
           <!-- 끝 -->
         </c:forEach>
           
-          
-<!--           			<li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li> -->
-<!--                     <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li> -->
-<!--                     <li class="page-item"><a class="page-link" href="#!">3</a></li> -->
-<!--                     <li class="page-item"><a class="page-link" href="#!">4</a></li> -->
         </div>
         
-        	<!-- 페이징 -->
-<!--         <div class="row"> -->
-<!--           <div class="col"> -->
-<!--             <nav class="d-inline-block"> -->
-<!--               <ul class="pagination"> -->
-<%--               	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %> --%>
-<%--               	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="location.href='product_detail?product_idx=${product.product_idx }&pageNum2=${pageInfo.pageNum2 - 1}#review'"<%} %>></li> --%>
-<%-- 				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }"> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${i eq pageInfo.pageNum2 }"><li class="page-item"><a class="page-link">${i }</a></li></c:when> --%>
-<%-- 						<c:otherwise><li class="page-item active"><a class="page-link" href="product_detail?product_idx=${product.product_idx }&pageNum2=${i }#review">${i }<span class="sr-only">(current)</span></a></li></c:otherwise> --%>
-<%-- 					</c:choose> --%>
-<%-- 				</c:forEach> --%>
-<%-- 				<li class="page-item active"><input class="page-link" type="button" value="다음" <%if(pageInfo.getPageNum2() < pageInfo.getMaxPage()) {%>onclick="location.href='product_detail?product_idx=${product.product_idx }&pageNum2=${pageInfo.pageNum2 + 1}#review'"<%} %>></li> --%>
-<!--               </ul> -->
-<!--             </nav> -->
-<!--           </div> -->
-<!--         </div> -->
-			<!-- ajax 페이징 -->
-			<div class="row">
+        
+        <!-- 페이징 -->
+		<div class="row">
               	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
           <div class="col" id="pageChange">
             <nav class="d-inline-block">
