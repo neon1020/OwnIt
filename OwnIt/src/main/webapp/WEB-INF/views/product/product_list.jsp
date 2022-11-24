@@ -40,7 +40,7 @@ select::-ms-expand {
 	height: 60px;
 }
 .items > .nav-link {
-	margin-right: 41px;
+	margin-right: 35px;
 	color: black;
 	font-size: 0.8em;
 	display: inline-block;
