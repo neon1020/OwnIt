@@ -26,6 +26,7 @@ import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.Order_buyMyVO;
 import com.teamone.ownit.vo.PageInfo;
+import com.teamone.ownit.vo.ReviewVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 
@@ -627,7 +628,7 @@ public class MypageController {
 		
 		// date1, date2 형식 : 2022-11-01
 		
-		// date1 이 date2 보다 클 수 없도록 설정
+		// date1(이전 날짜) 이 date2(이후 날짜) 보다 클 수 없도록 설정
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		int compare = 0;
 		try {
@@ -690,6 +691,35 @@ public class MypageController {
 			model.addAttribute("listCount", listCount);
 			
 			return "mypage/mypage_order";
+		}
+	}
+	
+	// 마이페이지 : 구매확정 진행
+	@PostMapping(value = "buyFix")
+	public String buyFix(int member_idx, int order_buy_idx, Model model) {
+		int updateCount = service.modifyOrderBuyGb(member_idx, order_buy_idx);
+		
+		if(updateCount > 0) {
+			return "redirect:/mypage_order?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "구매확정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}
+	
+	// 마이페이지 : 작성한 리뷰 보기 위해 파라미터 전달 후 리뷰 상세 페이지로 이동
+	@GetMapping(value = "goReview")
+	public String goReview(int product_idx, int member_idx, Model model) {
+		int review_idx = 0;
+		ReviewVO review = service.getReview(product_idx, member_idx);
+		
+		if(review != null) { review_idx = review.getReview_idx(); }
+		
+		if(review_idx != 0) {
+			return "redirect:/review_detail?review_idx=" + review_idx;
+		} else {
+			model.addAttribute("msg", "작성한 리뷰가 없습니다. 다시 확인해주세요.");
+			return "notice/fail_back";
 		}
 	}
 	
