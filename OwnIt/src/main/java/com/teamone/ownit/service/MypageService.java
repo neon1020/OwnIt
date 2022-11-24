@@ -14,6 +14,7 @@ import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.Order_buyMyVO;
 import com.teamone.ownit.vo.Order_buyVO;
+import com.teamone.ownit.vo.ReviewVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 
@@ -343,8 +344,15 @@ public class MypageService {
 		return mapper.selectOrderListCount(date1, date2, member_idx);
 	}
 
+	public int modifyOrderBuyGb(int member_idx, int order_buy_idx) {
+		System.out.println("MypageService - modifyOrderBuyGb()");
+		return mapper.updateOrderBuyGb(member_idx, order_buy_idx);
+	}
 
-
+	public ReviewVO getReview(int product_idx, int member_idx) {
+		System.out.println("MypageService - getReview()");
+		return mapper.selectReview(product_idx, member_idx);
+	}
 
 	
 
