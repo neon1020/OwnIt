@@ -3,8 +3,15 @@
 <mapper namespace="com.teamone.ownit.mapper.ReviewMapper">
 
     <select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
-        SELECT *
-            FROM reviewList
+        SELECT * , 
+          CASE WHEN a.num IS NULL THEN 'like_none.jpg' 
+                                  ELSE 'like.jpg' END AS heartImg
+          FROM reviewList r
+          LEFT JOIN (SELECT review_idx, '1' as num
+                        FROM style_like_list s
+                        WHERE member_idx = #{member_idx}) a
+          ON r.review_idx = a.review_idx
+          ORDER BY review_date DESC
     </select>
     
     <select id="selectReview" resultType="com.teamone.ownit.vo.ReviewListVO">
@@ -106,10 +113,16 @@
     </select>
     
     <select id="selectMystyleList" resultType="com.teamone.ownit.vo.ReviewListVO">
-		    SELECT *
-		       FROM reviewList
-		       WHERE
-		         member_idx = #{member_idx}
+		    SELECT * , 
+          CASE WHEN a.num IS NULL THEN 'like_none.jpg' 
+                                  ELSE 'like.jpg' END AS heartImg
+          FROM reviewList r
+          LEFT JOIN (SELECT review_idx, '1' as num
+                        FROM style_like_list s
+                        WHERE member_idx = #{member_idx2}) a
+          ON r.review_idx = a.review_idx
+					WHERE member_idx = #{member_idx}
+					ORDER BY review_date DESC
     </select>
     
     <select id="selectReviewCount" resultType="integer">
@@ -196,6 +209,20 @@
             review_idx = #{review_idx}
             AND
             member_idx = #{member_idx}
+    </select>
+    
+    <select id="selectListLike" resultType="int">
+        SELECT review_idx
+          FROM style_like_list
+          WHERE 
+            member_idx = #{member_idx}
+    </select>
+    
+    <select id="selectLikeCount" resultType="int">
+        SELECT COUNT(*)
+          FROM style_like_list
+          WHERE
+            review_idx = #{review_idx}
     </select>
     
     <insert id="insertLike">

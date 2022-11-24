@@ -37,8 +37,10 @@
           that.prop('name',data);
           if(data == 1) {
             $("#like_none").prop("src", "resources/img/review/like_b.jpg");
+            location.reload();
           } else {
             $("#like_none").prop("src", "resources/img/review/like_none_b.jpg");
+            location.reload();
           }
         }
       });
@@ -50,14 +52,6 @@
 	var sIdx = "${sessionScope.sIdx }";
 	// 로그인 한 회원만 좋아요 가능
 	function changeLike() {
-// 		var like_none = document.getElementById("like_none");
-// 		if(cnt%2==1) {
-// 		  like_none.src = "resources/img/review/like_b.jpg";
-// 		} else {
-// 		  like_none.src = "resources/img/review/like_none_b.jpg";
-// 		}
-// 		location.href = "review_like?member_idx=${sessionScope.sIdx }&review_idx=${review.review_idx }";
-// 		cnt++;
 	  if(sIdx == "") {
       alert('로그인 후 이용 가능합니다.');
       return;
@@ -143,7 +137,7 @@
 			<div class="card-body">
         <div class="like">
         <!-- ************************* 리뷰 좋아요 *************************** -->
-          <a class="heart"><img src="" id="like_none" onclick="changeLike()"></a>128&nbsp;&nbsp;
+          <a class="heart"><img src="" id="like_none" onclick="changeLike()"></a>${likeCount}&nbsp;&nbsp;
           <img src="resources/img/review/reply_b.jpg">${replyCount}
         </div>
         <h3 class="card-content">${review.review_content }</h3>

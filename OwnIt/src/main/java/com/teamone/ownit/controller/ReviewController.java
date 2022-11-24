@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,9 +33,17 @@ public class ReviewController {
 	private ReviewService service;
 	
 	@GetMapping(value = "/review")
-	public String review(Model model) {
-		List<ReviewListVO> reviewList = service.getReviewList();
-		model.addAttribute("reviewList", reviewList);
+	public String review(Model model, HttpSession session) {
+		
+        if(session.getAttribute("sIdx")!=null) {
+        	int member_idx = (int)session.getAttribute("sIdx");
+        	List<ReviewListVO> reviewList = service.getReviewList(member_idx);
+        	model.addAttribute("reviewList", reviewList);
+        } else {
+        	int member_idx = 0;
+        	List<ReviewListVO> reviewList = service.getReviewList(member_idx);
+        	model.addAttribute("reviewList", reviewList);
+        }
 		
 		return "review/review";
 	}
@@ -66,14 +73,16 @@ public class ReviewController {
         	int member_idx = (int)session.getAttribute("sIdx");
         	like.setMember_idx(member_idx);
         	int reviewlike = service.findLike(like);
-        	System.out.println(reviewlike);
         	model.addAttribute("heart", reviewlike);
         } else {
         	int member_idx = 0;
         	int reviewlike = service.findLike(like);
-        	System.out.println(reviewlike);
         	model.addAttribute("heart", reviewlike);
         }
+        
+        // 좋아요 수 출력
+        int likeCount = service.getLikeCount(review_idx);
+        model.addAttribute("likeCount", likeCount);
         
 		return "review/review_detail";
 	}
@@ -87,7 +96,6 @@ public class ReviewController {
 		
 		likeVO.setMember_idx(member_idx);
 		likeVO.setReview_idx(review_idx);
-		System.out.println(heart);
 		
 		if(heart >= 1) {
             service.removeLike(likeVO);
@@ -101,16 +109,23 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_mystyle")
-	public String reviewMystyle(@RequestParam int member_idx, Model model) {
+	public String reviewMystyle(@RequestParam int member_idx, Model model, HttpSession session) {
 		// 프로필 출력
 		ReviewListVO profile = service.getProfile(member_idx);
 		model.addAttribute("profile", profile);
-		// 작성 리뷰 목록 출력
-		List<ReviewListVO> mystyleList = service.getMystyleList(member_idx);
-		model.addAttribute("mystyleList", mystyleList);
 		// 작성 게시물 수 출력
 		int reviewCount = service.getReviewCount(member_idx);
 		model.addAttribute("reviewCount", reviewCount);
+		// 작성 리뷰 목록 출력
+		if(session.getAttribute("sIdx")!=null) {
+        	int member_idx2 = (int)session.getAttribute("sIdx");
+        	List<ReviewListVO> mystyleList = service.getMystyleList(member_idx, member_idx2);
+        	model.addAttribute("mystyleList", mystyleList);
+        } else {
+        	int member_idx2 = 0;
+        	List<ReviewListVO> mystyleList = service.getMystyleList(member_idx, member_idx2);
+        	model.addAttribute("mystyleList", mystyleList);
+        }
 		
 		return "review/review_mystyle";
 	}

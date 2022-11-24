@@ -11,7 +11,7 @@ import com.teamone.ownit.vo.Style_like_listVO;
 
 public interface ReviewMapper {
 
-	List<ReviewListVO> selectReviewList();
+	List<ReviewListVO> selectReviewList(int member_idx);
 
 	ReviewListVO selectReview(int review_idx);
 
@@ -29,7 +29,7 @@ public interface ReviewMapper {
 	
 	ReviewListVO selectProfile(int member_idx);
 
-	List<ReviewListVO> selectMystyleList(int member_idx);
+	List<ReviewListVO> selectMystyleList(@Param("member_idx") int member_idx, @Param("member_idx2") int member_idx2);
 
 	int selectReviewCount(int member_idx);
 
@@ -47,13 +47,16 @@ public interface ReviewMapper {
 
 	void updateReplycount2(int review_idx);
 
-//	Style_like_listVO selectLike(@Param("member_idx") int member_idx, @Param("review_idx") int review_idx);
-	
 	int selectLike(Style_like_listVO like);
-
+	
+	int selectLikeCount(int review_idx);
+	
 	void deleteLike(Style_like_listVO likeVO);
 
 	void insertLike(Style_like_listVO likeVO);
+
+	
+
 
 
 	

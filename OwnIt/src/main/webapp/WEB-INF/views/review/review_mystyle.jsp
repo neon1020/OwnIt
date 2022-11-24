@@ -11,6 +11,41 @@
 <link rel="stylesheet" href="resources/css/style.css" />
 
 <title>review_mystyle</title>
+
+<script src="resources/js/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+  var sIdx = "${sessionScope.sIdx }";
+  // 로그인 한 회원만 좋아요 가능
+  function changeLike(idx) {
+    if(sIdx == "") {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
+    var that = 1;
+    if(idx.name != 1) {
+      that = 0;
+    }
+    var index = idx.id.split('_')[1];
+    var sendData = {'review_idx' : index, 'heart' : that };
+    console.log(that);
+    $.ajax({
+      url     : 'heart',
+      type    : 'POST',
+      data    : sendData,
+      success : function(data){
+        if(data == 1) {
+          $(".heart").prop("src", "resources/img/review/like.jpg");
+          location.reload();
+//          $("#divLike").load(location.href + " #divLike");
+        } else {
+          $(".heart").prop("src", "resources/img/review/like_none.jpg");
+          location.reload();
+//           $("#divLike").load(location.href + " #divLike");
+        }
+      }
+    });
+  }
+</script>
   
 <style type="text/css">
 	/* 상단 프로필 */
@@ -65,8 +100,10 @@
 			        <img src="resources/img/member/${myStyle.member_image }"><span class="eyebrow text-muted">${myStyle.member_nickname }</span></a>
 			        <!-- ********************** 리뷰 내용 출력 *************************** -->
 			        <h3 class="card-content">${myStyle.review_content }</h3>
-			        <div class="like"><img src="resources/img/review/like_none.jpg">128&nbsp;&nbsp;
-			        <img src="resources/img/review/reply.jpg">${myStyle.review_reply_count }</div>
+			        <div class="like" id="divLike">
+				        <a class="heart"><img src="resources/img/review/${myStyle.heartImg} " id="likeNone_${myStyle.review_idx }" name="${myStyle.num }" onclick="changeLike(this)"></a>${myStyle.likeCount}&nbsp;&nbsp;
+				        <img src="resources/img/review/reply.jpg">${myStyle.review_reply_count }
+			        </div>
 			        <!-- ********************** 상품 정보 출력 *************************** -->
 			        <h4 class="card-title"><a href="product_detail?product_idx=${myStyle.product_idx }">
 			        <img src="resources/img/product/${myStyle.product_image }"><div class="subject">${myStyle.product_name }<br>
