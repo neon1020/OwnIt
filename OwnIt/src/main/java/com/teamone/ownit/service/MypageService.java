@@ -42,6 +42,21 @@ public class MypageService {
 		return mapper.selectPasswd(sId);
 	}
 	
+	//프로필 정보 불러오기
+	public MypageVO getProfile(int member_idx) {
+		return mapper.selectProfile(member_idx);
+	}
+	
+	//프로필 정보 수정하기(사진)
+	public int modifyProfile(MypageVO profile) {
+		return mapper.updateProfile(profile);
+	}
+	
+	//프로필 정보 수정하기(닉네임)
+	public int modifyNickname(MypageVO profile) {
+		return mapper.updateNickname(profile);
+	}
+	
 	//마이페이지 메인 - 프로필
 	public List<MypageMainVO> getMainProfile(int member_idx) {
 		return mapper.selectMainProfile(member_idx);
@@ -282,23 +297,6 @@ public class MypageService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 정채연 - 300
 	public int getAccountCount(int member_idx) {
 		System.out.println("MypageService - getAccountCount()");
@@ -344,6 +342,10 @@ public class MypageService {
 		System.out.println("MypageService - getOrderListCount()");
 		return mapper.selectOrderListCount(date1, date2, member_idx);
 	}
+
+
+
+
 	
 
 

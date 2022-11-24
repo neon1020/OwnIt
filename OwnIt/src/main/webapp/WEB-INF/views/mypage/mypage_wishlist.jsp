@@ -53,7 +53,13 @@
           
           <!-- content -->
 					<div class="col-lg-9">
-						<div class="row gutter-2 gutter-lg-3">       
+						<div class="row">
+							<div class="col-12">
+								<h3 class="mb-0">관심상품</h3>
+									<span class="eyebrow">${listCount }개의 관심상품이 있습니다</span>
+							</div>
+						</div>     
+						<div class="row gutter-2 gutter-lg-3">  
 							<c:forEach var="wishlist" items="${wishlist }" varStatus="vs">
 								<div class="col-6 col-md-4">
 									<article class="card card-post">
