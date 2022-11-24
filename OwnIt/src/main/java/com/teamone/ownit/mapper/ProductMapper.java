@@ -19,10 +19,10 @@ public interface ProductMapper {
 	List<ImageVO> selectImage(List<ProductVO> productList); 
 	
 	// 상품 카테고리에 따른 상품목록 조회(휴대폰, 태블릿...)
-	List<ProductVO> getCategorisedProduct(@Param("id")String id, @Param("sId")String sId); 
+	List<ProductVO> getCategorisedProduct(@Param("sId")String sId, @Param("brands")List<String> brands, @Param("category")String category, @Param("productListing")String productListing); 
 
 	// 상품 카테고리에 따른 상품목록 조회(인기순, 가격순...)
-	List<ProductVO> arrayByCategory(@Param("id")String id, @Param("sId")String sId);
+//	List<ProductVO> arrayByCategory(@Param("id")String id, @Param("sId")String sId);
 
 	// 위시리스트 추가 여부 확인
 	int checkLike(@Param("sId")String sId, @Param("product_idx")int product_idx);
@@ -42,17 +42,17 @@ public interface ProductMapper {
 	// 장바구니 조회
 	List<CartVO> checkCart(@Param("sId")String sId);
 
-	// 장바구니 항목삭제
+	// 장바구니 항목삭제(개별)
 	int deleteCart(@Param("sId")String sId, @Param("product_idx")int product_idx);
 
+	// 장바구니 항목삭제(전체)
+	int deleteAllCart(@Param("sId")String sId);
 
+	// 장바구니 cart_count 수정
+	int updateCartCount(@Param("sId")String sId, @Param("product_idx")int product_idx, @Param("cart_count")int cart_count);
 
-
-
-
-
-
-
+	// 장바구니 cart_count 비교
+	int selectCartCount(@Param("product_idx")int product_idx);
 
 
 
@@ -512,6 +512,12 @@ public interface ProductMapper {
 	
 
 	
+
+	
+
+	
+
+	
 								
 
 	
@@ -889,12 +895,6 @@ public interface ProductMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-
 	
 	
 }
