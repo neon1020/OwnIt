@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,51 +44,53 @@ public class ProductController {
 		return "product/product_list";
 	}
 	
-//	@GetMapping(value = "cart")
-//	public String cart() {
-//		return "order/order_cart";
-//	}
-	
 	@GetMapping(value = "order_complete")
 	public String complete() {
 		return "product/product_order_complete";
 	}
 	
-	@GetMapping(value = "listProductByCategory")
-	public String listProduct(String id, Model model, HttpSession session) {
+	@PostMapping(value = "listProductByCategory")
+	@ResponseBody
+	public void listProduct(String categories, HttpServletResponse response, HttpSession session) {
 //		String sId = (String)session.getAttribute("sId");
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			List<ProductVO> productList = service.getCategorisedProduct(id, sId);
-	//		System.out.println(productList);
-			int cnt = 0;
-			System.out.println(productList);
-			for(ProductVO product : productList) cnt++;
-			model.addAttribute("productList", productList);
-			model.addAttribute("cnt", cnt);
+//			System.out.println(categories);
+			String[] divideCategory = categories.split("/");
+			List<String> brands = new ArrayList<String>();
+			String category = "";
+			String productListing = "";
+			for(String str : divideCategory) {
+				if(str.contains("brand")) {
+					if(str.split(":")[1].equals("ETC")) {
+						System.out.println("들어옴");
+						brands.add("BANG&OLUFSEN");
+						brands.add("LENOVO");
+						brands.add("MARSHALL");
+						brands.add("XIAOMI");
+					} else {
+						brands.add(str.split(":")[1]);
+					}
+				} else if(str.contains("category")) {
+					category = str.split(":")[1];
+				} else if(str.contains("productListing")) {
+					productListing = str.split(":")[1];
+				}
+			}
+//			System.out.println(brands+", "+category+", "+ productListing);
+			List<ProductVO> productList = service.getCategorisedProduct(sId, brands, category, productListing);
+			JSONArray jsonArray = new JSONArray();
+			for(ProductVO product : productList) {
+				JSONObject jsonObject = new JSONObject(product);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return "product/product_list";
-	}
-
-	@GetMapping(value = "arrayByCategory")
-	public String arrayByCategory(String id, Model model, HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-		String sId = "test1@naver.com";
-		if(sId.length() != 0) {
-			List<ProductVO> productList = service.arrayByCategory(id, sId);
-	//		System.out.println(productList);
-			int cnt = 0;
-			for(ProductVO product : productList) cnt++;
-			model.addAttribute("productList", productList);
-			model.addAttribute("cnt", cnt);
-		}
-		return "product/product_list";
-	}
-
-	@GetMapping(value = "arrayByBrand")
-	public String arrayByBrand(String chArr) {
-		System.out.println(chArr);
-		return "";
 	}
 
 	@PostMapping(value = "addAndRemoveLikeList")
@@ -179,76 +182,73 @@ public class ProductController {
 		List<CartVO> cart = null;
 		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
-			int deleteCount = service.deleteCart(sId, product_idx);
-			if(deleteCount > 0) {
-				cart = service.checkCart(sId);
-				JSONArray jsonArray = new JSONArray();
-				
-				for(CartVO c : cart) {
-					JSONObject jsonObject = new JSONObject(c);
-					jsonArray.put(jsonObject);
-				}
+		    service.deleteCart(sId, product_idx);
+			cart = service.checkCart(sId);
+			JSONArray jsonArray = new JSONArray();
+			
+			for(CartVO c : cart) {
+				JSONObject jsonObject = new JSONObject(c);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@PostMapping(value = "deleteAllCart")
+	@ResponseBody
+	public void deleteAllCart(HttpSession session) {
+//		String sId = (String)session.getAttribute("sId");
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			service.deleteAllCart(sId);
+		}
+	}
+	
+	@PostMapping(value = "updateCartCount")
+	@ResponseBody
+	public void updateCartCount(HttpSession session, HttpServletResponse response, int product_idx, int cart_count) {
+//		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+//		System.out.println(product_idx);
+//		System.out.println(cart_count);
+		String sId = "test1@naver.com";
+		if(sId.length() != 0) {
+			int leftCnt = service.selectCartCount(product_idx);
+			if(leftCnt >= cart_count) {
+				int updateCount = service.updateCartCount(sId, product_idx, cart_count);
+				if(updateCount > 0) {
+					cart = service.checkCart(sId);
+					System.out.println(cart);
+					JSONArray jsonArray = new JSONArray();
+					
+					for(CartVO c : cart) {
+						JSONObject jsonObject = new JSONObject(c);
+						jsonArray.put(jsonObject);
+					}
+					try {
+						response.setCharacterEncoding("UTF-8");
+						response.getWriter().print(jsonArray);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} 
+			} else {
 				try {
+					String err = "{\"err\": \"구매가능 갯수초과\"}";
+					JSONObject jsonObject = new JSONObject(err);
 					response.setCharacterEncoding("UTF-8");
-					response.getWriter().print(jsonArray);
+					response.getWriter().print(jsonObject);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-	
-	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

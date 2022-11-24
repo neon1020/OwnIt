@@ -18,6 +18,8 @@ public interface MemberMapper {
 	int insertMember(MemberVO member);
 
 	int insertAddress(@Param("member") MemberVO member, @Param("address") AddressVO address);
+	
+	int insertImage(MemberVO member);
 
 	int selectMember_idx(String id);
 
@@ -300,6 +302,8 @@ public interface MemberMapper {
 	// 류혜지 - 300
 	// 이메일 찾기에 필요한 findEmail() 메서드 정의
 	MemberVO findEmail(String member_phone);
+
+	
 
 	
 

@@ -111,19 +111,17 @@
                                 <table class="table table-hover" style="text-align: center;">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="vertical-align: middle; width: 50px;">No</th>
-                                            <th scope="col" style="vertical-align: middle; width: 100px;">Category</th>
-                                            <th scope="col" style="vertical-align: middle;">Subject</th>
-                                            <th scope="col" style="vertical-align: middle; width: 100px;">Date</th>
-                                            <th scope="col" style="vertical-align: middle; width: 50px;">Read</th>
+                                            <th scope="col" colspan="3" style="vertical-align: middle; width: 600px;">제목</th>
+                                            <th scope="col" style="vertical-align: middle; width: 100px;">작성일</th>
+                                            <th scope="col" style="vertical-align: middle; width: 100px;">조회</th>
                                         </tr>
                                     </thead>
                                     <!-- JSTL 과 EL 활용하여 글목록 표시 -->
                                     <tbody>
                                     <c:forEach var="notice" items="${noticeList }">
                                         <tr>
-                                            <td style="vertical-align: middle;">${notice.notice_idx }</td>
-                                            <td style="vertical-align: middle;">${notice.notice_category }</td>
+                                            <td style="vertical-align: middle; width: 50px;">${notice.notice_idx }</td>
+                                            <td style="vertical-align: middle; width: 100px;">${notice.notice_category }</td>
                                             <td style="vertical-align: middle; text-align: left;"><a href="admin_noticeDetail?notice_idx=${notice.notice_idx }&pageNum=${pageInfo.pageNum}">${notice.notice_subject }</a></td>
                                             <td style="vertical-align: middle;">${notice.notice_date }</td>
                                             <td style="vertical-align: middle;">${notice.notice_readcount }</td>

@@ -30,7 +30,7 @@ public class AdminController {
 	
 	// 상품 목록 조회 productList (검색, 페이징 추가)
 	@GetMapping(value = "admin_productList")
-	public String admin_productList(
+	public String admin_productListAll(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "1") int pageNum, Model model) {
@@ -71,7 +71,7 @@ public class AdminController {
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		
-		System.out.println(pageInfo);
+//		System.out.println(pageInfo);
 		// --------------------------------------------------------------------------------
 		model.addAttribute("productList", productList);
 		model.addAttribute("pageInfo", pageInfo);
@@ -339,7 +339,6 @@ public class AdminController {
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
 		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword);
-		
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 		int listCount = service.getBuyListCount(searchType, keyword);
@@ -353,11 +352,14 @@ public class AdminController {
 		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
-		
-		System.out.println(pageInfo);
+//		System.out.println(pageInfo);
+		//----------------------------------------------------------------------------------
+		List<AdminOrderGroup> orderGroup = service.getOneOrder(startRow, listLimit, searchType, keyword);
+		System.out.println(orderGroup);
 		// --------------------------------------------------------------------------------
 		model.addAttribute("buyList", buyList);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("orderGroup", orderGroup);
 		
 		return "admin/admin_productBuyList";
 	}
@@ -397,7 +399,7 @@ public class AdminController {
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 		
-		System.out.println(pageInfo);
+//		System.out.println(pageInfo);
 		// --------------------------------------------------------------------------------
 		model.addAttribute("sellList", sellList);
 		model.addAttribute("pageInfo", pageInfo);
@@ -405,15 +407,22 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
-	// Order_Sell 상태 변경 (order_sell_gb) + product_sell_count
-	@PostMapping(value = "admin_orderSellModify")
-	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam int pageNum, Model model) {
-		System.out.println(pageNum);
-		System.out.println(adminOrder.getOrder_sell_gb());
-		System.out.println(adminOrder.getOrder_sell_idx());
-		System.out.println(adminOrder.getProduct_sell_count());
-		System.out.println(adminOrder.getProduct_idx());
+	// Order_Buy 상태 변경 (order_buy_gb)
+	@PostMapping(value = "admin_orderBuyModify")
+	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
 		
+		int updateCount = service.updateOrderBuy(adminOrder);
+		
+		if(updateCount > 0) {
+			return "redirect:/admin_productBuyList?pageNum=" + pageNum;
+		}
+		
+		return "";
+	}
+	
+	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
+	@PostMapping(value = "admin_orderSellModify")
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
 		
@@ -424,7 +433,28 @@ public class AdminController {
 		return "";
 	}
 	
+	// ProductList 재고변경
+	@PostMapping(value = "admin_productLeftCountModify")
+	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		int updateCount = service.updateProductLeftCount(product);
+		
+		if(updateCount > 0) {
+			return "redirect:/admin_productList?pageNum=" + pageNum;
+		}
+		
+		return "";
+		
+	}
 	
+	
+	
+	
+	
+
+
+	
+
 
 	
 	
@@ -432,11 +462,6 @@ public class AdminController {
 	
 	
 	
-
-
-	
-
-
 	
 	
 	
@@ -468,31 +493,6 @@ public class AdminController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-
 	
 	
 	
