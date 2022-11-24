@@ -3,7 +3,20 @@
 <!DOCTYPE html>
 <head></head>
 <script src="resources/js/jquery-3.6.1.js"></script>
-
+<style>
+.nav-category .nav-item [data-toggle="collapse"][aria-expanded="true"]::before {
+	position: absolute;
+    content: "\eaf7";
+    width: 1em;
+    line-height: 1em;
+    right: 0;
+    top: 5%;
+    font-family: 'icomoon' !important;
+    font-size: 1.125rem;
+    margin-top: -0.5em;
+    color: #555;
+}
+</style>
  <!-- sidebar -->
 <aside class="col-lg-3 sidebar">
 	<div class="widget">
@@ -14,12 +27,12 @@
    			<div class="widget-content">
       			<ul id="page-nav" class="nav flex-column nav-category">
        				<li class="nav-item">
-   						<a class="nav-link" data-toggle="collapse" href="#menu-2" role="button" aria-expanded="false" aria-controls="menu-2"><span class="widget-title">Categories</span></a>
-         				<div class="collapse" id="menu-2" data-parent="#page-nav">
+   						<a class="nav-link2" data-toggle="collapse" href="#menu-2" role="button" aria-expanded="true" aria-controls="menu-2"><span class="widget-title">Categories</span></a>
+         				<div class="collapse show" id="menu-2" data-parent="#page-nav">
            					<div>
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="휴대폰">- 휴대폰</a>
+	       								<a class="nav-link" name="category" id="스마트폰">- 스마트폰</a>
 	       							</li>
 	       							<li class="nav-item">
 	       								<a class="nav-link" name="category" id="태블릿">- 태블릿</a>
