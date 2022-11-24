@@ -171,7 +171,7 @@ $(function() {
 	});
 	
 	$('.nav-link').click(function() {
-		str = str.replace('category:휴대폰/', '');
+		str = str.replace('category:스마트폰/', '');
 		str = str.replace('category:태블릿/', '');
 		str = str.replace('category:스마트워치/', '');
 		str = str.replace('category:이어폰/', '');
@@ -271,8 +271,8 @@ function listByCategory() {
                 <span class="eyebrow" id="productCnt">${cnt } products</span>
               </div>
               <div class="items">
-			   	<a class="nav-link" id="휴대폰" >
-			   		<img src="./resources/img/product/phone1.png" alt="휴대폰">휴대폰
+			   	<a class="nav-link" id="스마트폰" >
+			   		<img src="./resources/img/product/phone1.png" alt="스마트폰">스마트폰
 			   	</a>
 			   	<a class="nav-link" id="태블릿">
 			   		<img src="./resources/img/product/tablet1.png">태블릿
