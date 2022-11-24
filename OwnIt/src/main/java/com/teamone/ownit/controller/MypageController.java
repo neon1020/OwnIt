@@ -1,9 +1,8 @@
 package com.teamone.ownit.controller;
 
-import java.sql.Date;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List; 
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.teamone.ownit.service.MypageService;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
+import com.teamone.ownit.vo.CartVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
 import com.teamone.ownit.vo.Order_buyMyVO;
-import com.teamone.ownit.vo.Order_buyVO;
 import com.teamone.ownit.vo.PageInfo;
 import com.teamone.ownit.vo.ReviewVO;
 import com.teamone.ownit.vo.WishlistVO;
@@ -63,7 +63,7 @@ public class MypageController {
 	//비밀번호 수정
 	@PostMapping(value = "/mypage_revisePro")
 	public String revise(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
-			Model model, HttpSession session) {
+						Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		
 		if(sId != null && !sId.equals("")) {
@@ -99,30 +99,65 @@ public class MypageController {
 		}		
 	}	
 	
-	//메인 (프로필, 구매내역, 판매내역, 위시리스트 목록)
+	//마이페이지 메인(프로필, 구매, 판매, 위시)
 	@GetMapping(value = "/mypage")
-	public String mypage() {
-		return "mypage/mypage_main";
+	public String myMain(@RequestParam int member_idx, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		System.out.println("아이디:" +  sId);
+		if(sId != null && !sId.equals("")) {			
+			
+			List<MypageMainVO> mainProfile = service.getMainProfile(member_idx);
+			model.addAttribute("mainProfile", mainProfile);
+			System.out.println("mainProfile : " + mainProfile);
+			
+			List<MypageMainVO> mainOrder = service.getMainOrder(member_idx);
+			model.addAttribute("mainOrder", mainOrder);
+			System.out.println("mainOrder : " + mainOrder);	
+			
+			List<MypageMainVO> mainSell = service.getMainSell(member_idx);
+			model.addAttribute("mainSell", mainSell);
+			System.out.println("mainSell : " + mainSell);		
+			
+			List<MypageMainVO> mainWish = service.getMainWish(member_idx);
+			model.addAttribute("mainWish", mainWish);
+			System.out.println("mainWish : " + mainWish);		
+			
+			return "mypage/mypage_main";
+			
+			} else {
+				model.addAttribute("msg", "잘못된 접근입니다!");
+				return "notice/fail_back";
+		}			
 	}
 	
 	//판매내역 목록
 	@GetMapping(value = "/mypage_sell")
-	public String sell(
-			@RequestParam(defaultValue = "") String searchType, 
-			@RequestParam(defaultValue = "") String keyword, 
-			@RequestParam(defaultValue = "1") int pageNum, Model model, 
-			@RequestParam String id, HttpSession session) {
-		String sId = (String)session.getAttribute("sId");
-		System.out.println(id + ", " + sId);
-		
-		if(id == null || sId == null || id.equals("") || (!id.equals(sId) && !sId.equals("admin"))) {
-			model.addAttribute("msg", "잘못된 접근입니다!");
+	public String sell(Model model, int member_idx,
+			@RequestParam(defaultValue = "") String date1,
+			@RequestParam(defaultValue = "") String date2,
+			@RequestParam(defaultValue = "1") int pageNum) {
+			
+		// date1, date2 형식 : 2022-11-01
+		// date1 이 date2 보다 클 수 없도록 설정
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		int compare = 0;
+		try {
+			java.util.Date fmDate1 = fm.parse(date1);
+			java.util.Date fmDate2 = fm.parse(date2);
+			System.out.println(fmDate1 + ", " + fmDate2);
+			compare = fmDate1.compareTo(fmDate2);
+		} catch (ParseException e) {
+			// e.printStackTrace();
+		}
+		if(compare > 0) {
+			// date1 (이전날짜)가 더 큰 상황
+			model.addAttribute("msg", "날짜 설정을 확인해주세요.");
 			return "notice/fail_back";
 		} else {
 			// -------------------------------------------------------------------
 			// 페이징 처리를 위한 계산 작업
-			int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
-			int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+			int listLimit = 5; // 한 페이지 당 표시할 게시물 목록 갯수 
+			int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
 			
 			// 조회 시작 게시물 번호(행 번호) 계산
 			int startRow = (pageNum - 1) * listLimit;
@@ -130,11 +165,12 @@ public class MypageController {
 			// Service 객체의 getNoticeList() 메서드를 호출하여 게시물 목록 조회
 			// => 파라미터 : 시작행번호, 페이지 당 목록 갯수
 			// => 리턴타입 : List<NoticeVO>(noticeList)
-			List<MypageSellListVO> mysell = service.getMySell(startRow, listLimit, searchType, keyword, id);
+			List<MypageSellListVO> mysell = service.getMySell(startRow, listLimit, date1, date2, member_idx);
 			// -------------------------------------------
 			// Service 객체의 getNoticeListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 			// => 파라미터 : 없음, 리턴타입 : int(listCount)
-			int listCount = service.getMySellListCount(searchType, keyword, id);
+			int listCount = service.getMySellListCount(date1, date2, member_idx);
+			System.out.println("글 갯수 : " + listCount);
 			
 			// 페이지 계산 작업 수행
 			// 전체 페이지 수 계산
@@ -164,6 +200,8 @@ public class MypageController {
 			// 게시물 목록(noticeList) 과 페이징 처리 정보(pageInfo)를 Model 객체에 저장
 			model.addAttribute("mysell", mysell);
 			model.addAttribute("pageInfo", pageInfo);
+			model.addAttribute("sellCount", listCount);
+			System.out.println(mysell);
 			
 			return "mypage/mypage_sell";
 		}
@@ -172,7 +210,7 @@ public class MypageController {
 	//위시리스트 목록
 	@GetMapping(value = "wishlist")
 	public String wishlist(@RequestParam int member_idx, Model model, HttpSession session,
-			@RequestParam(defaultValue = "1") int pageNum) {
+						@RequestParam(defaultValue = "1") int pageNum) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {	
 			// -------------------------------------------------------------------
@@ -223,6 +261,29 @@ public class MypageController {
 			return "notice/fail_back";
 		}
 	}
+	
+	//위시리스트 장바구니 담기
+	@GetMapping(value = "mypage_addCart")
+	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
+							Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) {
+			int isContained = service.isContainedInCart(member_idx, product_idx);
+			if(isContained > 0) {
+				model.addAttribute("msg", "이미 장바구니에 존재하는 상품 입니다");
+				return "notice/fail_back";
+			} else {
+				int insertCount = service.addToCart(member_idx, product_idx);
+				if(insertCount > 0) {
+					System.out.println("장바구니에 추가됨");
+				} 
+				return "redirect:/wishlist?member_idx=" + member_idx;
+			}
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		}
+	}	
 	
 	//위시리스트 삭제
 	@GetMapping(value = "deleteWishlist")
@@ -287,14 +348,27 @@ public class MypageController {
 		return "redirect:/address?member_idx=" + member_idx;
 	}	
 	
-	//대표 주소 활성 & 비활성
-	
-	
+	//주소록 대표 배송지 설정
+	@PostMapping(value = "defaultAddress")
+	public String defaultAddress(int address_idx, int member_idx, Model model) {
+		// 계좌 전체 1(나머지 계좌)로 설정
+		int setOther = service.otherAddress(member_idx);
+		
+		// 해당 계좌 0(기본 계좌)으로 설정
+		int setDefault = service.defaultAddress(member_idx, address_idx);
+		
+		if(setOther > 0 && setDefault > 0) {
+			return "redirect:/address?member_idx=" + member_idx;
+		} else {
+			model.addAttribute("msg", "대표 주소록 설정에 실패하였습니다. 다시 시도해주세요.");
+			return "notice/fail_back";
+		}
+	}	
 	
 	//주소록 삭제
 	@GetMapping(value = "deleteAddress")
-	public String delete(@ModelAttribute AddressVO address, @RequestParam int address_idx, @RequestParam int member_idx, Model model) {
-		
+	public String delete(@ModelAttribute AddressVO address, @RequestParam int address_idx, 
+						@RequestParam int member_idx, Model model) {
 		int deleteCount = service.removeAddress(address);
 		if(deleteCount == 0) {
 			model.addAttribute("msg", "주소지 삭제에 실패하였습니다. 다시 시도해주세요.");
@@ -304,11 +378,6 @@ public class MypageController {
 	}	
 	
 
-	
-	
-	
-	
-	
 	
 	
 	
@@ -464,46 +533,7 @@ public class MypageController {
 	
 	
 	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// 정채연 - 500
 	

@@ -1,6 +1,6 @@
 package com.teamone.ownit.vo;
 
-public class Order_buyMyVO { 
+public class Order_buyMyVO {
 	private int order_buy_idx;
 	private int product_idx;
 	private int member_idx;
