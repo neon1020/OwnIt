@@ -25,11 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
-import com.teamone.ownit.vo.AdminOrderGroup;
-import com.teamone.ownit.vo.AdminOrderVO;
-import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.PageInfo;
-import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.*;
 
 @Controller
 public class AdminController {
@@ -178,8 +174,7 @@ public class AdminController {
 		}
 	}
 	
-	
-	// Product 수정 폼으로 이동
+	// Product Modify 폼으로 이동
 	@GetMapping(value = "admin_productModifyForm")
 	public String admin_productModifyForm(@RequestParam int product_idx, Model model) {
 		AdminProductVO product = service.getProduct(product_idx);
@@ -187,7 +182,6 @@ public class AdminController {
 		
 		return "admin/admin_productModify";
 	}
-	
 	
 	// Product Modify 수정 작업 수행
 	@PostMapping(value = "admin_productModify")
@@ -295,8 +289,6 @@ public class AdminController {
 				}
 			}
 		}
-		
-		
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
@@ -331,7 +323,6 @@ public class AdminController {
 		}
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
-	
 	
 	// Order - BuyList(구매목록) 조회
 	@GetMapping(value = "admin_productBuyList")
@@ -369,13 +360,9 @@ public class AdminController {
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
 //		System.out.println(pageInfo);
 		//----------------------------------------------------------------------------------
-		List<AdminOrderGroup> orderGroup = service.getOneOrder(startRow, listLimit, searchType, keyword);
-		System.out.println(orderGroup);
-		// --------------------------------------------------------------------------------
 		model.addAttribute("buyList", buyList);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("orderGroup", orderGroup);
-		
+		System.out.println(buyList);
 		return "admin/admin_productBuyList";
 	}
 
@@ -422,6 +409,7 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
+	// Order - SellList(판매목록) 조회 : Status 0
 	@GetMapping(value = "admin_productSellList_0")
 	public String admin_productSellList_0(
 			@RequestParam(defaultValue = "") String searchType,
@@ -463,7 +451,7 @@ public class AdminController {
 		return "admin/admin_productSellList_0";
 	}
 	
-	
+	// Order - SellList(판매목록) 조회 : Status 1
 	@GetMapping(value = "admin_productSellList_1")
 	public String admin_productSellList_1(
 			@RequestParam(defaultValue = "") String searchType,
@@ -505,7 +493,7 @@ public class AdminController {
 		return "admin/admin_productSellList_1";
 	}
 	
-	
+	// Order - SellList(판매목록) 조회 : Status 2
 	@GetMapping(value = "admin_productSellList_2")
 	public String admin_productSellList_2(
 			@RequestParam(defaultValue = "") String searchType,
@@ -596,8 +584,20 @@ public class AdminController {
 		
 	}
 	
-	
-	
+	// ProductBuy 구매목록 상세조회
+	@GetMapping(value = "admin_productBuyDetail")
+	public String admin_productBuyDetail(@RequestParam int order_group_idx, Model model, HttpSession session) {
+		
+		System.out.println(order_group_idx);
+		
+		List<AdminOrderVO> buyList = service.getProductBuyDetail(order_group_idx);
+		List<AdminOrderVO> memberInfo = service.getMemberInfo(order_group_idx);
+		
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		return "admin/admin_productBuyDetail";
+	}
 	
 	
 

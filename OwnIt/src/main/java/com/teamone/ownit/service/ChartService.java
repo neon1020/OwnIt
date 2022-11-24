@@ -33,5 +33,10 @@ public class ChartService {
 	public List<ChartVO> productTop5() {
 		return mapper.selectproductTop5();
 	}
+
+
+	public List<ChartVO> productTop5_image() {
+		return mapper.selectproductTop5_image();
+	}
 	
 }

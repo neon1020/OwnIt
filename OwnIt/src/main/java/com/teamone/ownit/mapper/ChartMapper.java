@@ -13,5 +13,7 @@ public interface ChartMapper {
 	List<ChartVO> selectmonthlySalesSell();
 
 	List<ChartVO> selectproductTop5();
+
+	List<ChartVO> selectproductTop5_image();
 	
 }

@@ -49,6 +49,19 @@
 			ORDER BY 
 				cnt DESC;
 	</select>
+	
+	<select id="selectproductTop5_image" resultType="com.teamone.ownit.vo.ChartVO">
+		SELECT i.image_real_file1, COUNT(ob.product_idx) AS cnt
+			FROM 
+				order_buy ob left join image i 
+			ON 
+				ob.product_idx = i.product_idx
+			GROUP BY 
+				image_real_file1
+			ORDER BY 
+				cnt DESC
+			LIMIT 5;
+	</select>
 
 
 

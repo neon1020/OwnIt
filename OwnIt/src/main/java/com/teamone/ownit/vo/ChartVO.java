@@ -7,6 +7,8 @@ public class ChartVO {
 
 	private String date;
 	
+	private String image_real_file1;
+	
 	private int cnt;
 	private int sales_buy;
 	private int sales_sell;
@@ -35,6 +37,14 @@ public class ChartVO {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getImage_real_file1() {
+		return image_real_file1;
+	}
+
+	public void setImage_real_file1(String image_real_file1) {
+		this.image_real_file1 = image_real_file1;
 	}
 
 	public int getCnt() {

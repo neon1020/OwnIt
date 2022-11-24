@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.teamone.ownit.vo.AdminOrderGroup;
 import com.teamone.ownit.vo.AdminOrderVO;
 import com.teamone.ownit.vo.AdminProductVO;
+import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface AdminMapper {
@@ -57,31 +57,27 @@ public interface AdminMapper {
 	List<AdminOrderVO> selectSellList(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
-
 	
-	
+	// Order - SellList(판매목록) 조회 : Status 0
 	int selectSellListCount_0(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
-	
 	List<AdminOrderVO> selectSellList_0(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
+	// Order - SellList(판매목록) 조회 : Status 1
 	int selectSellListCount_1(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
-	
 	List<AdminOrderVO> selectSellList_1(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
+	// Order - SellList(판매목록) 조회 : Status 2
 	int selectSellListCount_2(
 			@Param("searchType")String searchType, @Param("keyword") String keyword);
-	
 	List<AdminOrderVO> selectSellList_2(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("searchType") String searchType, @Param("keyword") String keyword);
-	
-	
 	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	int modifyOrderBuy(AdminOrderVO adminOrder);
@@ -89,11 +85,13 @@ public interface AdminMapper {
 	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
 	int modifyOrderSell(AdminOrderVO adminOrder);
 
-	List<AdminOrderGroup> selectOrderGroup(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
-	
 	// ProductList 재고변경
 	int modifyProductLeftCount(ProductVO product);
+
+	// ProductBuy 구매목록 상세조회
+	List<AdminOrderVO> selectProductBuyDetail(int order_group_idx);
+	// ProductBuy 구매목록 상세조회 + Member 정보
+	List<AdminOrderVO> selectMemberInfo(int order_group_idx);
 
 
 

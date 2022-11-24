@@ -20,6 +20,43 @@
 
 </head>
 <script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	
+	$.ajax({
+		type: "GET",
+        url: "orderBuy_productTop5_image",
+        dataType: "json"
+	})
+	.done(function(dataList) { // 요청 성공 시
+//			$("#listForm > table").append(JSON.stringify(dataList.sellList[0]));
+
+		for(let image of dataList) {
+			
+			let result =    "<div style='float: left; width: 20%'>"
+                        	+ "<img src='resources/img/product/" 
+                        	+ image.image_real_file1 
+                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
+                        	+ "</div>"
+                        	;
+            		        
+            				
+			$("#imageDiv").append(result);
+		}
+
+	})
+	.fail(function() { // 요청 실패 시
+		alert("실패!!");
+	});
+});
+	
+	
+	
+	
+
+
+</script>
 <body>
 	
 	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
@@ -169,6 +206,23 @@
                             <div class="card-body">
                                 <h4 class="card-title">Single Bar Chart</h4>
                                 <canvas id="singelBarChart" width="500" height="300"></canvas>
+	                            <div style="padding-left: 50px" id="imageDiv">    
+<!-- 	                            	<div style="float: left; width: 20%"> -->
+<!-- 	                                	<img src="resources/img/product/e_ap1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
+<!-- 	                                </div> -->
+<!-- 	                                <div style="float: left; width: 20%"> -->
+<!-- 	                                	<img src="resources/img/product/p_ap1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
+<!-- 	                                </div> -->
+<!-- 	                                <div style="float: left; width: 20%"> -->
+<!-- 	                                	<img src="resources/img/product/h_so1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
+<!-- 	                                </div> -->
+<!-- 	                                <div style="float: left; width: 20%"> -->
+<!-- 	                                	<img src="resources/img/product/n_sa2_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
+<!-- 	                                </div> -->
+<!-- 	                                <div style="float: left; width: 20%"> -->
+<!-- 	                                	<img src="resources/img/product/w_xi1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
+<!-- 	                                </div> -->
+                            	</div>
                             </div>
                         </div>
                     </div>
