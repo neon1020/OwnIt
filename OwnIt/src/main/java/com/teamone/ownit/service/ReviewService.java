@@ -128,6 +128,11 @@ public class ReviewService {
 		mapper.insertLike(likeVO);
 	}
 
+	// 리뷰 작성 후 GB 업데이트
+	public void modifyOrderGb(int order_buy_idx) {
+		mapper.updateOrderGb(order_buy_idx);
+	}
+
 	
 
 	

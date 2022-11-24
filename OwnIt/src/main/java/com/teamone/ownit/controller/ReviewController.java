@@ -140,7 +140,7 @@ public class ReviewController {
 	@PostMapping(value = "/review_WritePro")
 	public String reviewWritePro(
 			@ModelAttribute ReviewVO review, Model model, HttpSession session, 
-			@RequestParam int product_idx, @RequestParam int member_idx) {
+			@RequestParam int product_idx, @RequestParam int member_idx, @RequestParam int order_buy_idx) {
 		
 		String uploadDir = "/resources/img/review"; 
 		String saveDir = session.getServletContext().getRealPath(uploadDir);
@@ -181,6 +181,7 @@ public class ReviewController {
 				mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
 				mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
 				mFiles.get(2).transferTo(new File(saveDir, review.getImage_real_file3()));
+				service.modifyOrderGb(order_buy_idx);
 			} catch (IllegalStateException e) {
 				System.out.println("IllegalStateException");
 				e.printStackTrace();

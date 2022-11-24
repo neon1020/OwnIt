@@ -242,5 +242,12 @@
             AND
             review_idx = #{review_idx}
     </delete>
+    
+    <update id="updateOrderGb">
+        UPDATE order_buy
+          SET order_buy_gb = 4
+          WHERE
+            order_buy_idx = #{order_buy_idx}
+    </update>
 
 </mapper> 
