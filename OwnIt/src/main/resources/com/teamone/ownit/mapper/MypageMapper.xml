@@ -7,7 +7,7 @@
 	<!-- 회원정보 조회	 -->
 	<select id="selectMemberInfo" resultType="com.teamone.ownit.vo.MypageVO">
 		SELECT 
-			i.image_original_file1, m.member_id, m.member_nickname, m.member_name,
+			i.image_real_file1, m.member_id, m.member_nickname, m.member_name,
 			m.member_image, m.member_phone, a.address_zipcode, a.address1, a.address2   	 
 				FROM member m
 					LEFT JOIN address a
@@ -31,7 +31,36 @@
 				member_passwd = #{secureNewPassword}
 			WHERE 
 				member_id = #{member.member_id}
-	</update>	
+	</update>
+	
+	<!-- 프로필 정보 불러오기	 -->
+	<select id="selectProfile" resultType="com.teamone.ownit.vo.MypageVO">
+		SELECT 
+			i.image_real_file1, m.member_id, m.member_nickname
+				FROM member m
+					LEFT JOIN image i
+						ON m.member_idx = i.member_idx
+				WHERE m.member_idx=#{member_idx}
+	</select>		
+	
+	<!-- 프로필 정보 수정하기(사진)	 -->
+	<update id="updateProfile">
+	   UPDATE image
+	     SET
+	       image_real_file1 = #{image_real_file1}, 
+	       image_original_file1 = #{image_original_file1}
+	     WHERE
+	       member_idx = #{member_idx}            
+	</update>		
+	
+	<!-- 프로필 정보 수정하기(닉네임)	 -->		
+    <update id="updateNickname">
+	    UPDATE member
+	      SET
+	        member_nickname = #{member_nickname}
+	      WHERE
+	        member_idx = #{member_idx}
+    </update>		
 	
 	<!-- 마이페이지 메인 - 프로필 -->	
 	<select id="selectMainProfile" resultType="com.teamone.ownit.vo.MypageMainVO">	
@@ -297,7 +326,81 @@
 
 
 
-<!-- 정채연 300 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 정채연 400 -->
 
 <!-- 계좌 관리 : 해당 회원의 총 계좌 갯수 구하기 -->
 <select id="selectAccountCount" resultType="Integer">

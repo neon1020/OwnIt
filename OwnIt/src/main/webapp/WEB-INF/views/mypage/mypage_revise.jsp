@@ -9,6 +9,10 @@
 	<script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
   <link rel="stylesheet" href="resources/css/vendor.css" />
   <link rel="stylesheet" href="resources/css/style.css" />
+  <style>
+.profileMain { text-align: center;}
+.profileMain img { width: 120px; height: 120px; border-radius: 10em; margin-bottom: 20px; }  
+  </style>
 	<script type="text/javascript">
 		var isCorrectPassword = false;	
 		var isEqualPassword = false;
@@ -110,15 +114,20 @@
 							<div class="tab-content" id="myTabContent">
 
 								<!-- mypage_revise -->
-	              <form action="mypage_reviseProfile" method="post" id="joinForm" enctype="multipart/form-data"> 
-									<div class="col-md-12">
-										<img src="resources/img/member/${mypage.member_image }" width="100" height="100" style="border-radius: 10em; margin-right: 10px">
-										<input type="button" name="member_image" value="이미지 변경" class="btn btn-outline-dark btn-rounded btn-sm">
-										<input type="button" value="삭제" class="btn btn-outline-dark btn-rounded btn-sm">
-										<hr>
-									</div>
-	              </form>
-	              
+<!-- 									<div class="col-md-12"> -->
+<!-- 										<div class="profileMain"> -->
+<%-- 											<img class="profile" src="resources/img/member/${mypage.image_real_file1 }"> --%>
+<!-- 											<input type="button" name="member_image" value="이미지 변경" class="btn btn-outline-dark btn-rounded btn-sm"> -->
+<!-- 											<input type="button" value="삭제" class="btn btn-outline-dark btn-rounded btn-sm"> -->
+<!-- 											<hr> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+                 <div class="row">
+                   <div class="col">
+                     <h3 class="mb-0">비밀번호 변경</h3>
+<%--                      <span class="eyebrow">${addressCount }개의 배송지가 있습니다.</span> --%>
+                   </div>
+                 </div>	              
 								<form action="mypage_revisePro" method="post" id="joinForm"> 
 									<div class="tab-pane fade show active" id="sidebar-1-1" role="tabpanel" aria-labelledby="sidebar-1-1">
 										<div class="row mb-2">
@@ -192,7 +201,7 @@
 	
 										<div class="row">
 											<div class="col" style="text-align: center;">
-												<input type="submit" value="변경" class="btn btn-dark btn-rounded" >
+												<input type="submit" value="적용" class="btn btn-dark btn-rounded" >
 												<input type="button" value="취소" onclick="history.back()" class="btn btn-dark btn-rounded">
 												<input type="button" value="탈퇴" onclick="#" class="btn btn-outline-dark btn-rounded">								
 											</div>

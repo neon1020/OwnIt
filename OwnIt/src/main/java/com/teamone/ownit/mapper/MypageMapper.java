@@ -30,6 +30,15 @@ public interface MypageMapper {
 	//패스워드 조회
 	String selectPasswd(String sId);
 	
+	//프로필 정보 불러오기
+	MypageVO selectProfile(int member_idx);
+	
+	//프로필 정보 수정하기(사진)
+	int updateProfile(MypageVO profile);
+	
+	//프로필 정보 수정하기(닉네임)
+	int updateNickname(MypageVO profile);
+	
 	//마이페이지 메인 - 프로필
 	List<MypageMainVO> selectMainProfile(int member_idx);
 	
@@ -289,17 +298,6 @@ public interface MypageMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 정채연 - 300
 	int selectAccountCount(int member_idx);
 
@@ -319,8 +317,10 @@ public interface MypageMapper {
 
 	int selectOrderListCount(@Param("date1") String date1, @Param("date2") String date2, @Param("member_idx") int member_idx);
 
+
 	int updateOrderBuyGb(@Param("member_idx") int member_idx, @Param("order_buy_idx") int order_buy_idx);
 
 	ReviewVO selectReview(@Param("product_idx") int product_idx, @Param("member_idx") int member_idx);
+
 	
 }

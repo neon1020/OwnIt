@@ -98,7 +98,7 @@
 	                                    <div class="col-sm-2" style="margin-right: 0px; padding-right: 0px;">
 	                                        <select name="notice_category" id="inputState" class="form-control" >
 	                                            <option value="">카테고리</option>
-	                                            <option value="[공지]">공지사항</option>
+	                                            <option value="[공지]">공지</option>
 	                                            <option value="[이벤트]">이벤트</option>
 	                                        </select>
 	                                    </div>

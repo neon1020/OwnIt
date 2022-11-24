@@ -1,9 +1,12 @@
 package com.teamone.ownit.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.MypageService;
 import com.teamone.ownit.vo.AccountVO;
@@ -98,6 +102,105 @@ public class MypageController {
 			return "notice/fail_back";
 		}		
 	}	
+	
+	//프로필 정보 불러오기
+	@GetMapping(value = "mypage_profile")
+	public String reviseProfile(@RequestParam int member_idx, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		System.out.println("아이디:" +  sId);
+		if(sId != null && !sId.equals("")) {	
+			MypageVO profile = service.getProfile(member_idx); // 파라미터는 검색할 아이디 전달
+			// Model 객체에 "member" 속성명으로 MemberVO 객체 저장
+			System.out.println(profile);
+			model.addAttribute("profile", profile);
+			// member/member_info.jsp 페이지로 이동
+			return "mypage/mypage_profile";
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		}
+	}	
+	
+	//프로필 정보 수정하기
+	@PostMapping(value = "/mypage_modifyProfile")
+	public String reviewModifyPro(@ModelAttribute MypageVO profile, @RequestParam int member_idx, Model model, HttpSession session) {
+		// 선택된 수정 업로드 파일명과 기존 파일명 출력
+		
+		// 기존 실제 파일명을 변수에 저장(= 새 파일 업로드 시 삭제하기 위함)
+		String oldRealFile = profile.getImage_real_file1();
+		
+		// 가상 업로드 경로에 대한 실제 업로드 경로 알아내기
+		// => 단, request 객체에 getServletContext() 메서드 대신, session 객체로 동일한 작업 수행
+		//    (request 객체에 해당 메서드 없음)
+		String uploadDir = "/resources/img/member";  // 가상의 업로드 경로
+		// => webapp/resources 폴더 내에 upload 폴더 생성 필요
+		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		System.out.println("실제 업로드 경로 : " + saveDir);
+		
+		File f = new File(saveDir); // 실제 경로를 갖는 File 객체 생성
+		// 만약, 해당 경로 상에 디렉토리(폴더)가 존재하지 않을 경우 생성
+		if(!f.exists()) { // 해당 경로가 존재하지 않을 경우
+			// 경로 상의 존재하지 않는 모든 경로 생성
+			f.mkdirs();
+		}
+		
+		// BoardVO 객체에 전달된 MultipartFile 객체 꺼내기
+		MultipartFile mFile = profile.getFile();
+
+		// 새 파일 업로드 여부와 관계없이 무조건 파일명을 가져와서 BoardVO 객체에 저장
+		String originalFileName = mFile.getOriginalFilename();
+		long fileSize = mFile.getSize();
+		System.out.println("파일명 : " + originalFileName);
+		System.out.println("파일크기 : " + fileSize + " Byte");
+		
+		String uuid = UUID.randomUUID().toString();
+		System.out.println("업로드 될 파일명 : " + uuid + "_" + originalFileName);
+		
+		profile.setImage_original_file1(originalFileName);
+		profile.setImage_real_file1(uuid + "_" + originalFileName);
+		
+		// 새 파일 선택 여부와 관계없이 공통으로 수정 작업 요청
+		// Service - modifyBoard() 메서드 호출하여 수정 작업 요청
+		// => 파라미터 : BoardVO 객체, 리턴타입 : int(updateCount)
+		
+		int updateCount = service.modifyProfile(profile);
+		int updateCount2 = service.modifyNickname(profile);
+		
+		// 수정 실패 시 "패스워드 틀림!" 메세지 저장 후 fail_back.jsp 페이지로 포워딩
+		// 아니면, BoardDetail.bo 서블릿 요청(글번호, 페이지번호 전달)
+		if(updateCount == 0 && updateCount2 == 0) { // 수정 실패 시
+			// 임시 폴더에 업로드 파일이 저장되어 있으며
+			// transferTo() 메서드를 호출하지 않으면 임시 폴더의 파일은 자동 삭제됨
+			model.addAttribute("msg", "패스워드 틀림!");
+			return "member/fail_back";
+		} else { // 수정 성공 시
+			// 수정 작업 성공 시 새 파일이 존재할 경우에만 실제 폴더 위치에 파일 업로드 수행
+			// => 임시 폴더에 있는 업로드 파일을 실제 업로드 경로로 이동
+			// => 새 파일 존재 여부는 업로드 할 파일명이 널스트링("") 이 아닌 것으로 판별
+			if(!originalFileName.equals("")) {
+				try {
+					mFile.transferTo(new File(saveDir, profile.getImage_real_file1()));
+					
+					// 기존 업로드 된 실제 파일 삭제
+					File f2 = new File(saveDir, oldRealFile);
+					if(f2.exists()) {
+						f2.delete();
+					}
+				} catch (IllegalStateException e) {
+					System.out.println("IllegalStateException");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("IOException");
+					e.printStackTrace();
+				}
+			}
+			
+			return "redirect:/mypage_profile?member_idx=" + member_idx;
+		}		
+		
+	}
+	
+	
 	
 	//마이페이지 메인(프로필, 구매, 판매, 위시)
 	@GetMapping(value = "/mypage")
@@ -226,6 +329,7 @@ public class MypageController {
 			// Service 객체의 getNoticeListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
 			// => 파라미터 : 없음, 리턴타입 : int(listCount)
 			int listCount = service.getWishlistCount(member_idx);
+			model.addAttribute("listCount", listCount);
 			
 			// 페이지 계산 작업 수행
 			// 전체 페이지 수 계산
@@ -391,149 +495,8 @@ public class MypageController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 정채연 - 300
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+	
 	
 	// 정채연 - 500
 	
