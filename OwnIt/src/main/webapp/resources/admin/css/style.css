@@ -25,16 +25,16 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 @import url(../plugins/metismenu/css/metisMenu.min.css);
 @import url(../plugins/bootstrap-select/dist/css/bootstrap-select.min.css);
 .gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover, .datamaps-hoverover {
-  background-image: linear-gradient(230deg, #759bff, #843cf6); }
+  background-image: linear-gradient(230deg, #404258, #404258); }
 
 .gradient-2, .dropdown-mega-menu .ext-link.link-3 a {
-  background-image: linear-gradient(230deg, #fc5286, #fbaaa2); }
+  background-image: linear-gradient(230deg, #474E68, #474E68); }
 
 .gradient-3, .dropdown-mega-menu .ext-link.link-2 a, .header-right .icons .user-img .activity {
-  background-image: linear-gradient(230deg, #ffc480, #ff763b); }
+  background-image: linear-gradient(230deg, #50577A, #50577A); }
 
 .gradient-4, .sidebar-right .nav-tabs .nav-item .nav-link.active::after, .sidebar-right .nav-tabs .nav-item .nav-link.active span i::before {
-  background-image: linear-gradient(230deg, #0e4cfd, #6a8eff); }
+  background-image: linear-gradient(230deg, #6B728E, #6B728E); }
 
 .gradient-5 {
   background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%); }
@@ -9692,19 +9692,19 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   color: #ffffff;
   fill: #ffffff;
   font-size: 16px; }
-/* ----------- 11월 23일 김소희 : 차트 색상 변경 ----------- */
+/* ----------- 11월 25일 김소희 : 차트 색상 변경 ----------- */
 .ct-chart .ct-series.ct-series-a .ct-bar,
 .ct-chart .ct-series.ct-series-a .ct-line,
 .ct-chart .ct-series.ct-series-a .ct-point,
 .ct-chart .ct-series.ct-series-a .ct-slice-donut {
-  stroke: #A0E4CB; }
+  stroke: #214A71; }
 
 .ct-chart .ct-series.ct-series-b .ct-bar,
 .ct-chart .ct-series.ct-series-b .ct-line,
 .ct-chart .ct-series.ct-series-b .ct-point,
 .ct-chart .ct-series.ct-series-b .ct-slice-donut {
-  stroke: #CFF5E7; }
-/* ----------- 11월 23일 김소희 : 차트 색상 변경 ----------- */
+  stroke: #38598B; }
+/* ----------- 11월 25일 김소희 : 차트 색상 변경 ----------- */
 .ct-chart .ct-series.ct-series-c .ct-bar,
 .ct-chart .ct-series.ct-series-c .ct-line,
 .ct-chart .ct-series.ct-series-c .ct-point,

@@ -118,6 +118,9 @@
 	                        </div>
 	                        
 	                        <div style="text-align: center;">
+	                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 100%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+                                </div>
 								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_0'">주문접수</button>
 								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_1'" style="margin: 0 5px">배송중</button>
 								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_2'">배송완료</button>
@@ -135,7 +138,6 @@
                                     <option value="all" selected="selected">전체</option>
                                     <option value="order_group_idx">주문번호</option>
                                     <option value="member_name">고객명</option>
-<!--                                     <option value="product_name">상품명</option> -->
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -163,9 +165,6 @@
 	                                            	style="width: 400px; display: block; cursor: pointer; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${buyList.product_name } <c:if test='${buyList.buyCount != 1}'>외 ${buyList.buyCount - 1}건</c:if>">
 	                                            	${buyList.product_name }<c:if test="${buyList.buyCount != 1}">외 ${buyList.buyCount - 1}건</c:if>
 	                                            </td>
-<!-- 	                                            <td > -->
-<%-- 	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원 --%>
-<!-- 	                                            </td> -->
 	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
 	                                            <c:set var="date" value="${buyList.order_buy_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
@@ -173,6 +172,7 @@
 		                                        <input type="hidden" name="product_idx" value="${buyList.product_idx }" />
 	                                            <input type="hidden" name="order_group_idx" value="${buyList.order_group_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+	                                            <input type="hidden" name="status" value="2" />
 		                                            <td>
 		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_buy_gb">
 		                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>

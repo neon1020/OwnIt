@@ -8,12 +8,16 @@ public interface ChartMapper {
 
 	List<ChartVO> selectTypeList();
 
-	List<ChartVO> selectmonthlySalesBuy();
+	List<ChartVO> selectMonthlySalesBuy();
 
-	List<ChartVO> selectmonthlySalesSell();
+	List<ChartVO> selectMonthlySalesSell();
 
-	List<ChartVO> selectproductTop5();
+	List<ChartVO> selectProductBuyTop5();
 
-	List<ChartVO> selectproductTop5_image();
+	List<ChartVO> selectProductBuyTop5_image();
+
+	List<ChartVO> selectProductSellTop5();
+
+	List<ChartVO> selectProductSellTop5_image();
 	
 }

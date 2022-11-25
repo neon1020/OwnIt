@@ -22,39 +22,58 @@
 <script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-$(function() {
+	$(function() {
+		
+		$.ajax({
+			type: "GET",
+	        url: "orderSell_productTop5_image",
+	        dataType: "json"
+		})
+		.done(function(dataList) { // 요청 성공 시
 	
-	$.ajax({
-		type: "GET",
-        url: "orderBuy_productTop5_image",
-        dataType: "json"
-	})
-	.done(function(dataList) { // 요청 성공 시
-//			$("#listForm > table").append(JSON.stringify(dataList.sellList[0]));
-
-		for(let image of dataList) {
-			
-			let result =    "<div style='float: left; width: 20%'>"
-                        	+ "<img src='resources/img/product/" 
-                        	+ image.image_real_file1 
-                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
-                        	+ "</div>"
-                        	;
-            		        
-            				
-			$("#imageDiv").append(result);
-		}
-
-	})
-	.fail(function() { // 요청 실패 시
-		alert("실패!!");
+			for(let image of dataList) {
+				
+				let result =    "<div style='float: left; width: 20%'>"
+	                        	+ "<img src='resources/img/product/" 
+	                        	+ image.image_real_file1 
+	                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
+	                        	+ "</div>"
+	                        	;
+	            				
+				$("#imageDiv1").append(result);
+			}
+		})
+		.fail(function() { // 요청 실패 시
+			alert("orderSelll_productTop5_실패!!");
+		});
+				
+		
+		$.ajax({
+			type: "GET",
+	        url: "orderBuy_productTop5_image",
+	        dataType: "json"
+		})
+		.done(function(dataList) { // 요청 성공 시
+	
+			for(let image of dataList) {
+				
+				let result =    "<div style='float: left; width: 20%'>"
+	                        	+ "<img src='resources/img/product/" 
+	                        	+ image.image_real_file1 
+	                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
+	                        	+ "</div>"
+	                        	;
+	            				
+				$("#imageDiv2").append(result);
+			}
+		})
+		.fail(function() { // 요청 실패 시
+			alert("실패!!");
+		});
+		
+		
 	});
-});
 	
-	
-	
-	
-
 
 </script>
 <body>
@@ -136,13 +155,14 @@ $(function() {
                 </div>
             </div>
             <!-- row -->
+            <br>
             <div class="container-fluid">
 			<!-- !!!!!Content 내용 여기!!!!! -->
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-1">
                             <div class="card-body">
-                                <h3 class="card-title text-white" >판매</h3>
+                                <h3 class="card-title text-white" >거래</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">4565</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -154,7 +174,7 @@ $(function() {
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-2">
                             <div class="card-body">
-                                <h3 class="card-title text-white">판매액</h3>
+                                <h3 class="card-title text-white">매출액</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">￦ 8541</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -166,7 +186,7 @@ $(function() {
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-3">
                             <div class="card-body">
-                                <h3 class="card-title text-white">신규 회원</h3>
+                                <h3 class="card-title text-white">회원</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">4565</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -178,7 +198,7 @@ $(function() {
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-4">
                             <div class="card-body">
-                                <h3 class="card-title text-white">신규 게시글</h3>
+                                <h3 class="card-title text-white">신규 리뷰</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">9999</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -191,12 +211,13 @@ $(function() {
                 
                 
                  <div class="row">
-                    <!-- Pie Chart -->
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Product Type&nbsp;(BUYING)</h4>
-                                <canvas id="pieChart" width="500" height="300"></canvas>
+                                <h4 class="card-title">판매 TOP5 상품</h4>
+                                <canvas id="singelBarChart1" width="500" height="300"></canvas>
+	                            <div style="padding-left: 55px" id="imageDiv1">    
+                            	</div>
                             </div>
                         </div>
                     </div>
@@ -204,24 +225,9 @@ $(function() {
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Single Bar Chart</h4>
-                                <canvas id="singelBarChart" width="500" height="300"></canvas>
-	                            <div style="padding-left: 50px" id="imageDiv">    
-<!-- 	                            	<div style="float: left; width: 20%"> -->
-<!-- 	                                	<img src="resources/img/product/e_ap1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
-<!-- 	                                </div> -->
-<!-- 	                                <div style="float: left; width: 20%"> -->
-<!-- 	                                	<img src="resources/img/product/p_ap1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
-<!-- 	                                </div> -->
-<!-- 	                                <div style="float: left; width: 20%"> -->
-<!-- 	                                	<img src="resources/img/product/h_so1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
-<!-- 	                                </div> -->
-<!-- 	                                <div style="float: left; width: 20%"> -->
-<!-- 	                                	<img src="resources/img/product/n_sa2_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
-<!-- 	                                </div> -->
-<!-- 	                                <div style="float: left; width: 20%"> -->
-<!-- 	                                	<img src="resources/img/product/w_xi1_1.jpg" style="width: 80px; height: 80px; border-radius: 60%;"> -->
-<!-- 	                                </div> -->
+                                <h4 class="card-title">구매 TOP5 상품</h4>
+                                <canvas id="singelBarChart2" width="500" height="300"></canvas>
+	                            <div style="padding-left: 55px" id="imageDiv2">    
                             	</div>
                             </div>
                         </div>
@@ -248,10 +254,18 @@ $(function() {
                             </div>
                         </div>
                     </div>
-                    
-                    
-                
             </div>
+            
+            <div class="row">
+                    <!-- Pie Chart -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Product Type&nbsp;(BUYING)</h4>
+                                <canvas id="pieChart" width="500" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
             <!-- #/ container -->
         </div>
         <!--**********************************

@@ -12,6 +12,8 @@ public class ChartVO {
 	private int cnt;
 	private int sales_buy;
 	private int sales_sell;
+	private int order_buy_idx;
+	private int order_sell_idx;
 
 	public ChartVO() {}
 
@@ -70,8 +72,22 @@ public class ChartVO {
 	public void setSales_sell(int sales_sell) {
 		this.sales_sell = sales_sell;
 	}
-	
-	
+
+	public int getOrder_buy_idx() {
+		return order_buy_idx;
+	}
+
+	public void setOrder_buy_idx(int order_but_idx) {
+		this.order_buy_idx = order_but_idx;
+	}
+
+	public int getOrder_sell_idx() {
+		return order_sell_idx;
+	}
+
+	public void setOrder_sell_idx(int order_sell_idx) {
+		this.order_sell_idx = order_sell_idx;
+	}
 	
 	
 }

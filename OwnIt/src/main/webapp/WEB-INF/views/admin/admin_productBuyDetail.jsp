@@ -37,7 +37,7 @@
                     <h3 class="mb-0">${memberInfo[0].member_name }</h3>
                     <p class="text-muted mb-0">${memberInfo[0].address_zipcode }&nbsp;${memberInfo[0].address1 }&nbsp;${memberInfo[0].address2 }</p>
                     <c:set var="date" value="${memberInfo[0].order_buy_date }" />
-                    <p class="text-muted mb-0">주문일 : ${fn:substring(date, 0, 8 ) }</p>
+                    <p class="text-muted mb-0">주문일&nbsp; ${fn:substring(date, 0, 8 ) }</p>
                 </div>
             </div>
             <hr>
@@ -47,6 +47,7 @@
 						<th style="width: 20px">No.</th>
 						<th style="width: 80px">이미지</th>
 						<th>상품명</th>
+						<th>수량</th>
 						<th style="width: 150px">가격</th>
 						<th>상태</th>
 					</tr>
@@ -60,8 +61,9 @@
 	                   		<img class="mr-3" src="resources/img/product/${buyList.image_real_file1}" style="border-radius: 30%; width: 80px; width: 80px;">
 	                   	</td>
 	                    <td>${buyList.product_name }</td>
+	                    <td>${buyList.order_buy_count }개</td>
 	                    <td>
-                        	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원
+                        	<fmt:formatNumber value="${buyList.order_buy_price }" pattern="#,###"/>원
                        </td>
 	                    <td>
 		                    <c:choose>

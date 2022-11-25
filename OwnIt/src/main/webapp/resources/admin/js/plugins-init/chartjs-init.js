@@ -317,7 +317,6 @@
 			var valueList = new Array();
 				
 			for(let data of dataList) {
-//				alert(data.product_type);
 				labelList.push(data.product_type);
 				valueList.push(data.cnt);
 			}
@@ -432,13 +431,11 @@
 //    });
 
     // single bar chart
-
-	
-	$(function(){
+    $(function(){
 		
 		$.ajax({
 			type: "GET",
-            url: "orderBuy_productTop5",
+            url: "orderSell_productTop5",
             dataType:"json"
             })
             .done(function(dataList) { // 요청 성공 시
@@ -446,11 +443,12 @@
 			var labelList = new Array();
 			var valueList = new Array();
 			
-			for(var i = 0; i < 5; i++) {
-				labelList.push((dataList[i].product_name).substr(0, 12));
-				valueList.push(dataList[i].cnt);
+			for(let data of dataList) {
+				labelList.push((data.product_name).substr(0, 12));
+				valueList.push(data.cnt);
 			}
-		    var ctx = document.getElementById("singelBarChart");
+			
+		    var ctx = document.getElementById("singelBarChart1");
 		    ctx.height = 200;
 		    var myChart = new Chart(ctx, {
 		        type: 'bar',
@@ -460,9 +458,9 @@
 		                {
 		                    label: "판매 TOP5",
 		                    data: valueList,
-		                    borderColor: "rgb(177, 178, 255, 0.9)",
+		                    borderColor: "rgb(50, 64, 123, 0.7)",
 		                    borderWidth: "0",
-		                    backgroundColor: "rgb(177, 178, 255, 0.9)"
+		                    backgroundColor: "rgb(50, 64, 123, 0.7)"
 		                }
 		            ]
 		        },
@@ -479,7 +477,60 @@
 			
 		})
 		.fail(function() { // 요청 실패 시
-			alert("pie chart 요청실패");
+			alert("");
+		});
+		
+	});
+    
+    
+
+	
+	$(function(){
+		
+		$.ajax({
+			type: "GET",
+            url: "orderBuy_productTop5",
+            dataType:"json"
+            })
+            .done(function(dataList) { // 요청 성공 시
+			
+			var labelList = new Array();
+			var valueList = new Array();
+			
+			for(let data of dataList) {
+				labelList.push((data.product_name).substr(0, 12));
+				valueList.push(data.cnt);
+			}
+		    var ctx = document.getElementById("singelBarChart2");
+		    ctx.height = 200;
+		    var myChart = new Chart(ctx, {
+		        type: 'bar',
+		        data: {
+		            labels: labelList,
+		            datasets: [
+		                {
+		                    label: "구매 TOP5",
+		                    data: valueList,
+		                    borderColor: "rgb(50, 64, 123, 0.7)",
+		                    borderWidth: "0",
+		                    backgroundColor: "rgb(50, 64, 123, 0.7)"
+		                }
+		            ]
+		        },
+		        options: {
+		            scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                }]
+		            }
+		        }
+		    });
+			
+		})
+		.fail(function() { // 요청 실패 시
+			alert("Bar chart2 요청실패");
 		});
 		
 	});

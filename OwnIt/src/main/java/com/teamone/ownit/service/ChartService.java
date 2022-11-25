@@ -21,22 +21,32 @@ public class ChartService {
 
 
 	public List<ChartVO> monthlySalesBuy() {
-		return mapper.selectmonthlySalesBuy();
+		return mapper.selectMonthlySalesBuy();
 	}
 
 
 	public List<ChartVO> monthlySalesSell() {
-		return mapper.selectmonthlySalesSell();
+		return mapper.selectMonthlySalesSell();
 	}
 
 
-	public List<ChartVO> productTop5() {
-		return mapper.selectproductTop5();
+	public List<ChartVO> productBuyTop5() {
+		return mapper.selectProductBuyTop5();
 	}
 
 
-	public List<ChartVO> productTop5_image() {
-		return mapper.selectproductTop5_image();
+	public List<ChartVO> productBuyTop5_image() {
+		return mapper.selectProductBuyTop5_image();
+	}
+
+
+	public List<ChartVO> productSellTop5() {
+		return mapper.selectProductSellTop5();
+	}
+
+
+	public List<ChartVO> productSellTop5_image() {
+		return mapper.selectProductSellTop5_image();
 	}
 	
 }

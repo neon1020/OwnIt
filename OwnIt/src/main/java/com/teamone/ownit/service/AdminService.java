@@ -69,6 +69,15 @@ public class AdminService {
 		return mapper.selectBuyList(startRow, listLimit, searchType, keyword);
 	}
 
+	// Order - ProductBuy 구매목록 상세조회
+	public List<AdminOrderVO> getProductBuyDetail(int order_group_idx) {
+		return mapper.selectProductBuyDetail(order_group_idx);
+	}
+	// Order - ProductBuy 구매목록 상세조회 + Member 정보
+	public List<AdminOrderVO> getMemberInfo(int order_group_idx) {
+		return mapper.selectMemberInfo(order_group_idx);
+	}
+	
 	// Order - SellList 갯수 조회
 	public int getSellListCount(String searchType, String keyword) {
 		return mapper.selectSellListCount(searchType, keyword);
@@ -115,27 +124,47 @@ public class AdminService {
 	public int updateProductLeftCount(ProductVO product) {
 		return mapper.modifyProductLeftCount(product);
 	}
+
 	
-	// ProductBuy 구매목록 상세조회
-	public List<AdminOrderVO> getProductBuyDetail(int order_group_idx) {
-		return mapper.selectProductBuyDetail(order_group_idx);
+	
+	public int getBuyListCount_0(String searchType, String keyword) {
+		return mapper.selectBuyListCount_0(searchType, keyword);
 	}
-	// ProductBuy 구매목록 상세조회 + Member 정보
-	public List<AdminOrderVO> getMemberInfo(int order_group_idx) {
-		return mapper.selectMemberInfo(order_group_idx);
+	
+	public List<AdminOrderVO> getBuyList_0(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectBuyList_0(startRow, listLimit, searchType, keyword);
+	}
+
+	public int getBuyListCount_1(String searchType, String keyword) {
+		return mapper.selectBuyListCount_1(searchType, keyword);
+	}
+	
+	public List<AdminOrderVO> getBuyList_1(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectBuyList_1(startRow, listLimit, searchType, keyword);
+	}
+	
+	public int getBuyListCount_2(String searchType, String keyword) {
+		return mapper.selectBuyListCount_2(searchType, keyword);
+	}
+
+	public List<AdminOrderVO> getBuyList_2(int startRow, int listLimit, String searchType, String keyword) {
+		return mapper.selectBuyList_2(startRow, listLimit, searchType, keyword);
 	}
 
 
-
 	
 
 
 
+	
 
 
 
 
 
+
+
+
 	
 	
 	
@@ -463,65 +492,7 @@ public class AdminService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
