@@ -409,11 +409,14 @@
 				                  <label for="cardNumber">은행명</label>
 				                    <select id="account_bank" name="account_bank" class="custom-select">
 				                      <option value="">은행 선택</option>
-				                      <option value="신한">신한</option>
 				                      <option value="국민">국민</option>
+				                      <option value="기업">기업</option>
 				                      <option value="농협">농협</option>
+				                      <option value="신한">신한</option>
 				                      <option value="우리">우리</option>
-				                      <option value="카카오">카카오</option>
+				                      <option value="하나">하나</option>
+				                      <option value="카카오뱅크">카카오뱅크</option>
+				                      <option value="경남">경남</option>
 				                      <option value="부산">부산</option>
 				                    </select>
 				               </div>
