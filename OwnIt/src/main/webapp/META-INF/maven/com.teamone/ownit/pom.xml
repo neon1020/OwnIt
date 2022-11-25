@@ -129,6 +129,14 @@
             <version>2.8.2</version>
         </dependency>
         
+        <!-- JSON 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20220924</version>
+		</dependency>
+        
         <!-- java mail 관련 라이브러리 -->
         <dependency>
 			<groupId>com.sun.mail</groupId>

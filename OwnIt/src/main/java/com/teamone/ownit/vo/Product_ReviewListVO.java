@@ -1,6 +1,6 @@
 package com.teamone.ownit.vo;
 
-public class ReviewListVO {
+public class Product_ReviewListVO {
 
 	private int review_idx;
 	private int member_idx;
@@ -21,16 +21,15 @@ public class ReviewListVO {
 	private String review_content;
 	private String review_date;
 	private int review_reply_count;
-	private int likeCount;
-	private String heartImg;
-	private int num;
 	
-	public ReviewListVO() {}
+	private int style_like_count;
+	
+	public Product_ReviewListVO() {}
 
-	public ReviewListVO(int review_idx, int member_idx, int product_idx, String review_image1, String review_image2,
-			String review_image3, String member_image, String product_image, String member_id, String member_nickname,
-			String product_name, String product_buy_price, String review_content, String review_date,
-			int review_reply_count, int likeCount, String heartImg, int num) {
+	public Product_ReviewListVO(int review_idx, int member_idx, int product_idx, String review_image1,
+			String review_image2, String review_image3, String member_image, String product_image, String member_id,
+			String member_nickname, String product_name, String product_buy_price, String review_content,
+			String review_date, int review_reply_count, int style_like_count) {
 		super();
 		this.review_idx = review_idx;
 		this.member_idx = member_idx;
@@ -47,9 +46,7 @@ public class ReviewListVO {
 		this.review_content = review_content;
 		this.review_date = review_date;
 		this.review_reply_count = review_reply_count;
-		this.likeCount = likeCount;
-		this.heartImg = heartImg;
-		this.num = num;
+		this.style_like_count = style_like_count;
 	}
 
 	public int getReview_idx() {
@@ -171,42 +168,27 @@ public class ReviewListVO {
 	public void setReview_reply_count(int review_reply_count) {
 		this.review_reply_count = review_reply_count;
 	}
-	
-	public int getLikeCount() {
-		return likeCount;
+
+	public int getStyle_like_count() {
+		return style_like_count;
 	}
 
-	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
-	}
-	
-	public String getHeartImg() {
-		return heartImg;
-	}
-
-	public void setHeartImg(String heartImg) {
-		this.heartImg = heartImg;
-	}
-	
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
+	public void setStyle_like_count(int style_like_count) {
+		this.style_like_count = style_like_count;
 	}
 
 	@Override
 	public String toString() {
-		return "ReviewListVO [review_idx=" + review_idx + ", member_idx=" + member_idx + ", product_idx=" + product_idx
-				+ ", review_image1=" + review_image1 + ", review_image2=" + review_image2 + ", review_image3="
-				+ review_image3 + ", member_image=" + member_image + ", product_image=" + product_image + ", member_id="
-				+ member_id + ", member_nickname=" + member_nickname + ", product_name=" + product_name
-				+ ", product_buy_price=" + product_buy_price + ", review_content=" + review_content + ", review_date="
-				+ review_date + ", review_reply_count=" + review_reply_count + ", likeCount=" + likeCount
-				+ ", heartImg=" + heartImg + ", num=" + num + "]";
+		return "Product_ReviewListVO [review_idx=" + review_idx + ", member_idx=" + member_idx + ", product_idx="
+				+ product_idx + ", review_image1=" + review_image1 + ", review_image2=" + review_image2
+				+ ", review_image3=" + review_image3 + ", member_image=" + member_image + ", product_image="
+				+ product_image + ", member_id=" + member_id + ", member_nickname=" + member_nickname
+				+ ", product_name=" + product_name + ", product_buy_price=" + product_buy_price + ", review_content="
+				+ review_content + ", review_date=" + review_date + ", review_reply_count=" + review_reply_count
+				+ ", style_like_count=" + style_like_count + "]";
 	}
 
+	
 	
 
 }

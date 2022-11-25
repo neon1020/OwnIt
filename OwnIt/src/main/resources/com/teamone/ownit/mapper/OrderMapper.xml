@@ -582,21 +582,11 @@
 				#{address_zipcode},
 				#{address1},
 				#{address2},
-				'0',
-				#{address_nickname}
+				'1',
+				#{address_nickname},
+				#{address_recipient}
 			);
 	</insert>
-
-	<!--  주소 업데이트 -->
-	<update id="updateAddress">
-	<selectKey keyProperty="address_idx" order="BEFORE" resultType="integer">
-		select max(address_idx) from address where member_idx=#{member_idx};
-	</selectKey>
-		UPDATE address 
-				   SET address_gb='1'
-				   WHERE member_idx=#{member_idx} AND address_idx !=#{address_idx};
-	</update>
-
 
 	<!--  주소록 가져오는 구문 -->
 	<select id="selectAddressList" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
@@ -606,42 +596,117 @@
 				ORDER BY address_gb *1 asc;
 	</select>
 
+	
+	<!-- 주소록에서 주소 변경 -->
+	<select id="clickChangeAddress" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		 SELECT * 
+			FROM member
+        	LEFT JOIN address 
+        	ON member.member_idx=#{member_idx}
+        	AND address.member_idx=#{member_idx}
+        	AND address.address_idx =#{address_idx}
+	        LEFT JOIN account 
+	        ON member.member_idx=#{member_idx}
+	        AND account.member_idx=#{member_idx}
+	        AND account_gb=(
+	        				SELECT account_gb
+	        				FROM member, account
+	        				WHERE member.member_idx=#{member_idx} 
+	        				AND member.member_idx = account.member_idx
+	        				ORDER BY account_gb *1 asc
+	       				    limit 1
+	       				    )
+                            where address.address_idx=#{address_idx};
+	</select>
 
-	<update id="updateAddressForm">
-		UPDATE address
-				SET address_gb='0'
-				WHERE address_idx=#{address_idx}
-	</update>
+	<!-- 판매폼 계좌 추가 -->
+	<insert id="insertAccountSell" >
+		INSERT INTO account
+			values (
+					null,
+					#{member_idx},
+					#{account_bank},
+					#{account_num},
+					#{account_owner_name},
+					'1',
+					#{account_nickname}
+					);
+	</insert>
+	<!-- 계좌추가 성공시 account_idx 검색 -->
+	<select id="selectAccountSell" resultType="com.teamone.ownit.vo.AccountVO">
+		SELECT max(account_idx) as account_idx
+			FROM account
+			WHERE account.member_idx=#{member_idx};
+	</select>
+	
+	<!-- 계좌 추가 성공시 새로운 계좌로 보이도록 하는 구문 -->
+	<select id="newAccountSellForm" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		SELECT * 
+			FROM member
+        	LEFT JOIN address 
+        	ON member.member_idx=#{member_idx} 
+        	AND address.member_idx=#{member_idx}
+        	AND address_gb = ( 
+        				SELECT address_gb
+					        	FROM member, 
+					        		 address
+					       			 WHERE member.member_idx=#{member_idx}
+									 AND member.member_idx = address.member_idx
+				       				 ORDER BY address_gb *1 asc
+				        			 limit 1
+        			 		 )
+	        LEFT JOIN account 
+	        ON member.member_idx=#{member_idx} 
+	        AND account.member_idx=#{member_idx}
+	        WHERE account.account_idx =#{account_idx}
+	        
+	</select>
 
-	<update id="updateAddressSelect">
-		UPDATE address 
-				   SET address_gb='1'
-				   WHERE member_idx=#{member_idx} AND address_idx !=#{address_idx};
-	</update>
+	<select id="selectAccountAddressSellForm" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		    SELECT * 
+			FROM member
+        	LEFT JOIN address 
+        	ON member.member_idx=#{member_idx}
+        	AND address.member_idx=#{member_idx}
+        	AND address.address_idx=#{address_idx}
+	        LEFT JOIN account 
+	        ON member.member_idx=#{member_idx}
+	        AND account.member_idx=#{member_idx}
+	        WHERE account.account_idx =#{account_idx}
+	</select>
+
+
+	<!--  가장 최근에 insert한 주소 idx 조회 -->
+	<select id="selectAddressIdx" resultType="integer">
+		SELECT max(address_idx) as address_idx 
+		FROM address
+		WHERE member_idx=#{member_idx}
+	</select>
 
 
 
+	<!--  계좌목록 가져오는 구문 -->
+	<select id="selectAccountList" resultType="com.teamone.ownit.vo.Order_SellFormMbAddAccVO">
+		SELECT * FROM account,member
+				WHERE account.member_idx=#{member_idx}
+				AND member.member_idx=#{member_idx}
+				ORDER BY account_gb *1 asc;
+	</select>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!--  회원의 주소 갯수 조회 -->
+	<select id="getCountAddress" resultType="integer">
+		SELECT count(address_idx) as addressCounter 
+		FROM address 
+		WHERE member_idx=#{member_idx};
+	</select>
+	
+	<!--  회원의 계좌 갯수 조회 -->
+	<select id="getCountAccount" resultType="integer">
+		SELECT count(account_idx) as accountCounter 
+		FROM account 
+		WHERE member_idx=#{member_idx};
+	</select>
 
 
 

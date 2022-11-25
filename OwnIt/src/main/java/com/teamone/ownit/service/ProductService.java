@@ -10,6 +10,7 @@ import com.teamone.ownit.mapper.ProductMapper;
 import com.teamone.ownit.vo.CartVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.Product_ReviewListVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.WishlistVO;
 
@@ -497,20 +498,29 @@ public class ProductService {
 	
 	
 	
-	
 // 박주닮 501번
 	public ProductVO productDetail(int product_idx) {
 		return mapper.productDetail(product_idx);
 	}
 	//리뷰 목록
-	public List<ReviewListVO> getReviewList(int product_idx, int startRow, int listLimit) {
-		return mapper.selectReviewList(product_idx, startRow,listLimit);
+	public List<Product_ReviewListVO> getReviewList(int product_idx, int startRow, int listLimit, String keyword) {
+		return mapper.selectReviewList(product_idx, startRow,listLimit,keyword);
 	}
 
 	public int getReviewListCount(int product_idx) {
 		return mapper.selectReviewListCount(product_idx);
 	}
 
+	public int selectWishCount(int product_idx) {
+		return mapper.selectWishCount(product_idx);
+	}
+
+	public int getStyleLike(int review_idx) {
+		return mapper.selectStyleCount(review_idx);
+	}
+
+
+
 	
 
 	
@@ -536,17 +546,6 @@ public class ProductService {
 	
 
 	
-
-
-
-
-
-
-
-
-
-
-
 
 
 

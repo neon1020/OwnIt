@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.teamone.ownit.vo.CartVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.Product_ReviewListVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.WishlistVO;
 
@@ -497,17 +498,22 @@ public interface ProductMapper {
 	
 	
 	
-	
 // 박주닮 501
 
 	// 한 상품에 대한 상세정보
 	ProductVO productDetail(@Param("product_idx") int product_idx);
 	// 상품 상세정보 리뷰리스트
-	List<ReviewListVO> selectReviewList(@Param("product_idx") int product_idx, 
+	List<Product_ReviewListVO> selectReviewList(@Param("product_idx") int product_idx, 
 										@Param("startRow") int startRow,
-										@Param("listLimit") int listLimit);
+										@Param("listLimit") int listLimit, 
+										@Param("keyword") String keyword);
 
 	int selectReviewListCount(@Param("product_idx") int product_idx);
+
+	int selectWishCount(@Param("product_idx") int product_idx);
+
+	int selectStyleCount(int review_idx);
+
 
 	
 
@@ -889,12 +895,5 @@ public interface ProductMapper {
 
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }
