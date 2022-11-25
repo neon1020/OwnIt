@@ -40,7 +40,7 @@ select::-ms-expand {
 	height: 60px;
 }
 .items > .nav-link {
-	margin-right: 41px;
+	margin-right: 35px;
 	color: black;
 	font-size: 0.8em;
 	display: inline-block;
@@ -320,7 +320,7 @@ function listByCategory() {
                   <h3 class="product-title"><a href="product_detail?product_idx=${product.product_idx }"><b>${product.product_brand }</b></a></h3>
                     <h3 class="product-title" style="height: 63px"><a href="product_detail?product_idx=${product.product_idx }">${product.product_name } </a></h3>
                     <div class="product-price">
-                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원</span>
+                      <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/>원</span>
                       <span class="product-action" id="${product.product_idx }">
                         <a style="color: #101010;">장바구니에 추가</a>
                       </span>
