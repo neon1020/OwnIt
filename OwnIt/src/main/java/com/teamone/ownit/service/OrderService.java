@@ -11,6 +11,7 @@ import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.Order_SellFormInsertAccount;
 import com.teamone.ownit.vo.Order_SellFormMbAddAccVO;
 import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
@@ -496,8 +497,7 @@ public class OrderService {
 	
 	
 	
-	
-	
+		
 // 박주닮 101번라인
 		//상품의 정보를 불러오는 메서드
 		public ProductVO productDetail(int product_idx) {
@@ -520,11 +520,8 @@ public class OrderService {
 		}
 		
 		// ordersellfrom - 주소 추가
-		public int insertAddress(AddressVO address) {
+		public int insertAddress(Order_SellFormMbAddAccVO address) {
 			return mapper.insertAddress(address);
-		}
-		public int updateAddress(AddressVO address) {
-			return mapper.updateAddress(address);
 		}
 		public List<Order_SellFormMbAddAccVO> selectAddressList(int member_idx) {
 			return mapper.selectAddressList(member_idx);
@@ -532,11 +529,32 @@ public class OrderService {
 		public MemberVO selectMemberIdx(String sId) {
 			return mapper.selectMemberIdx(sId);
 		}
-		public int updateAddressForm(int address_idx) {
-			return mapper.updateAddressForm(address_idx);
+		public Order_SellFormMbAddAccVO clickAddress(int member_idx, int address_idx) {
+			return mapper.clickChangeAddress(member_idx,address_idx);
 		}
-		public void updateAddressSelect(int address_idx, int member_idx) {
-			mapper.updateAddressSelect(address_idx,member_idx);
+		public int insertAccountSell(Order_SellFormInsertAccount account) {
+			return mapper.insertAccountSell(account);
+		}
+		public AccountVO selectAccountSell(int member_idx) {
+			return mapper.selectAccountSell(member_idx);
+		}
+		public Order_SellFormMbAddAccVO newAccountSellForm(int member_idx, int account_idx) {
+			return mapper.newAccountSellForm(member_idx,account_idx);
+		}
+		public Order_SellFormMbAddAccVO newAccountAddressForm(int member_idx, int account_idx, int address_idx) {
+			return mapper.selectAccountAddressSellForm(member_idx,account_idx,address_idx);
+		}
+		public int selectAddressIdx(int member_idx) {
+			return mapper.selectAddressIdx(member_idx);
+		}
+		public List<Order_SellFormMbAddAccVO> selectAccountList(int member_idx) {
+			return mapper.selectAccountList(member_idx);
+		}
+		public int getCountAddress(int member_idx) {
+			return mapper.getCountAddress(member_idx);
+		}
+		public int getCountAccount(int member_idx) {
+			return mapper.getCountAccount(member_idx);
 		}
 
 
@@ -877,25 +895,7 @@ public class OrderService {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-				
+						
 }//900
 
 

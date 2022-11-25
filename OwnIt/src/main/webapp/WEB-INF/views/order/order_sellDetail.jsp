@@ -19,12 +19,20 @@
 		border-radius: 15px;
 	}
 
-	span{
+	span1{
 		font-size: 22px; 
 		color: black; 
 		font: bold;
 	}
-	span > a[href]{
+	span2{
+		font-size: 22px; 
+		font: bold;
+		float: right;
+		font-size: 15px; 
+		color: #6c757d;
+	}
+	 
+	span1 > a[href]{
 		border: 1px solid #6c757d;
 		color: #6c757d;
 		padding: 5px 10px;
@@ -60,7 +68,7 @@
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px; width: ">
-	          	<h2 align="center"><sapn style="color : #00A5FF;">정산</sapn> 정보</h2>
+	          	<h2 align="center"><span id="span1" style="color : #00A5FF;">정산</span> 정보</h2>
 	          	<table class="table">
 	          		<tr>
 	          			<th>
@@ -69,14 +77,14 @@
 		          				${product.product_brand }
 		          			</span><br>
 		          				${product.product_name }<br>
-		          			 <span style="font: bold; color: black; font-size: 15px;">
+		          			 <span id="span1" style="font: bold; color: black; font-size: 15px;">
 		          			 	${product.product_model_num }
 		          			 </span>
 	          			 </th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>
+	          				<span id="span1">
 	          					진행상황
 	          				</span>
 	          				<div>
@@ -89,58 +97,58 @@
 	          						%>
 		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
 		          				<div style="text-align: center;">
-			          					   <a style="float: left;">① 판매검수</a> 
-			          					   <a>② 판매반려</a> 
-			          					   <a style="float: right">③ 판매완료</a>
+			          					   <a style="float: left;">① 검수대기중</a> 
+			          					   <a>② 검수중</a> 
+			          					   <a style="float: right">③ 검수완료</a>
 			          			</div>
 	          				</div>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span style="font-size: 15px; ">
+	          				<span id="span1" style="font-size: 15px; ">
 	          					판매가
 	          				</span><br>
-		          			정산금액<span style="float: right; font-size: 15px; color: #00A5FF">
+		          			정산금액<span id="span1" style="float: right; font-size: 15px; color: #00A5FF">
 		          						<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/>
 		          					</span><br>
-		          			검수비	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          			검수비	<span id="span2">
 		          						무료
 		          					</span><br>
-		          			수수료	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          			수수료	<span id="span2">
 		          						무료
-		          					</span><br>
-		          			배송비	<span style="float: right;font-size: 15px; color: #6c757d;">
+		          					</span ><br>
+		          			배송비	<span id="span2">
 		          						선불/판매자 부담
 		          					</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>
+	          				<span id="span1">
 	          					정산 금액
 	          				</span><br>
-	          				<span style="float: right;color: #00A5FF;">
+	          				<span id="span1" tyle="float: right;color: #00A5FF;">
 	          					+<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/>
 	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>
+	          				<span id="span1">
 	          					거래 일시
 	          				</span><br>
-	          				<span style="float: right; font-size: 15px;">
+	          				<span id="span1" style="float: right; font-size: 15px;">
 	          					${orderSell.order_sell_date }
 	          				</span>
 	          			</th>
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>
+	          				<span id="span1">
 	          					보내실 곳
 	          				</span><br>
-	          				<span style="font-size: 15px;">
+	          				<span id="span1" style="font-size: 15px;">
 	          					OwnIt 앞
 	          				</span><br>
 	          				부산광역시 해운대구 서면<br>
@@ -149,10 +157,10 @@
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span>
+	          				<span id="span1">
 	          					정산일<span style="font-size: 15px; color: silver;">(약1개월 소요)</span>
 	          				</span>
-	          				<span style="float: right; font-size: 15px;">
+	          				<span id="span1" style="float: right; font-size: 15px;">
 	          					<%
 	          					   SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 	          					   Date date = sdf.parse(orderSell.getOrder_sell_date());
