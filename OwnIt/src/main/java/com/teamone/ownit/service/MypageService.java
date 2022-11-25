@@ -49,13 +49,13 @@ public class MypageService {
 	}
 	
 	//프로필 정보 수정하기(사진)
-	public int modifyProfile(MypageVO profile) {
-		return mapper.updateProfile(profile);
+	public int modifyProfile(MypageVO mypage) {
+		return mapper.updateProfile(mypage);
 	}
 	
 	//프로필 정보 수정하기(닉네임)
-	public int modifyNickname(MypageVO profile) {
-		return mapper.updateNickname(profile);
+	public int modifyNickname(MypageVO mypage) {
+		return mapper.updateNickname(mypage);
 	}
 	
 	//마이페이지 메인 - 프로필
@@ -172,7 +172,6 @@ public class MypageService {
 
 
 
-	
 	
 	
 	
