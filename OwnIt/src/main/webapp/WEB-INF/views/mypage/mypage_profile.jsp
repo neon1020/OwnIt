@@ -12,6 +12,7 @@
   <style>
 	.profileMain { text-align: center;}
 	.profileMain img { width: 120px; height: 120px; border-radius: 10em; margin-bottom: 20px; }  
+	input[type=file]::file-selector-button { display: none; }
   </style>
 </head>
 <body>
@@ -42,21 +43,20 @@
 								<!-- mypage_revise -->
 								
 								<form action="mypage_modifyProfile" method="post" enctype="multipart/form-data"> 
-									<input type="hidden" name="member_idx" value="${profile.member_idx }" />
-									
+									<input type="hidden" name="member_idx" value="${mypage.member_idx }" />
 									<table class="table">
 										<tr>
 											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">프로필 사진</td>
 											<td>
-												<img src="resources/img/member/${profile.image_real_file1 }" style="width: 120px; height: 120px; border-radius: 10em; margin-bottom: 20px; margin-left: 90px;"><br>
-												<input type="file" name="member_image" class="btn btn-outline-secondary btn-sm" style="text-align: center;"><br>
-												<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" style="width: 303px;">
+												<img src="resources/img/member/${mypage.image_real_file1 }" style="width: 120px; height: 120px; border-radius: 10em; margin-bottom: 20px; margin-left: 90px;"><br>
+												<input type="file" name="file" class="btn btn-outline-secondary btn-sm" style="text-align: center;"><br>
+<!-- 												<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" style="width: 303px;"> -->
 											</td>
 										</tr>
 										<tr>
 											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">닉네임</td>
 											<td >
-												<input type="text" class="form-control form-control-sm" name="member_nickname" value="${profile.member_nickname }">
+												<input type="text" class="form-control form-control-sm" name="member_nickname" style="width: 303px;" value="${mypage.member_nickname }">
 											</td>
 										</tr>
 									</table>
