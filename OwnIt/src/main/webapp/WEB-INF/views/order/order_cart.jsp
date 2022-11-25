@@ -24,6 +24,10 @@
 		background-color: #353535;
 		border-color: #353535;
 	}
+	input[type=checkbox] {
+	accent-color: #101010;
+	border-color: #101010;
+	}
 </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -185,7 +189,6 @@ $(document).on("change", 'input[type=checkbox]', function() {
 	if(idx == 'All') {
 		if($(this).is(":checked")){
 			payTotal = 0;
-			debugger;
 			$('input[type=checkbox]:checked').each(function() {
 			    let cbId = $(this).attr('id').split('cb')[1];
 			    cbArr.push(cbId);
@@ -231,7 +234,6 @@ function buySelectedItems(btn) {
 		// cbChecked => product_idx:수량:금액/
 		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
 	});
-	debugger;
 	$.ajax({
 		url:'order_buyAgree',
 		type:'GET',

@@ -44,7 +44,7 @@ function checkCart(){
 				html += "<div class='col-12' id='cartItems'>";
 				html += "<div class='cart-item cart-item-sm'>";
 				html += "<div class='row align-items-center'>";
-				html += "<div class='col-lg-9'>"
+				html += "<div class='col-lg-9'>";
 				html += "<div class='media media-product'>";
 				html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"&pageNum='><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
 				html += "<div class='media-body'>";
@@ -95,7 +95,7 @@ function delFromCart(item) {
 				html += "<div class='col-12' id='cartItems'>";
 				html += "<div class='cart-item cart-item-sm'>";
 				html += "<div class='row align-items-center'>";
-				html += "<div class='col-lg-9'>"
+				html += "<div class='col-lg-9'>";
 				html += "<div class='media media-product'>";
 				html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
 				html += "<div class='media-body'>";
@@ -211,7 +211,7 @@ function delFromCart(item) {
 					</c:otherwise>
 				</c:choose>
                 <li class="nav-item cart">
-                  <a data-toggle="modal" data-target="#cart" class="nav-link" ><span class="cartInTop">Cart</span><span class="cnt"></span></a>
+                  <a data-toggle="modal" data-target="#cart" class="nav-link"><span class="cartInTop">Cart</span><span class="cnt"></span></a>
                 </li>
                 
               </ul>

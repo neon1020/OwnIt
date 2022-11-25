@@ -2498,8 +2498,8 @@ input[type="button"].btn-block {
   opacity: 0; }
   .custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
-    border-color: #4F944F;
-    background-color: #4F944F; }
+    border-color: #101010;
+    background-color: #101010; }
   .custom-control-input:focus ~ .custom-control-label::before {
     box-shadow: 0 0 0 0 rgba(79, 148, 79, 0.25); }
   .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
