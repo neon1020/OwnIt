@@ -129,7 +129,7 @@ function delFromCart(item) {
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="./">Home</a></li>
                 <li class="nav-item dropdown megamenu">
-                  <a class="nav-link dropdown-toggle" href="#!" id="navbarDropdown-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle" href="" id="navbarDropdown-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Pages
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown-4">
@@ -174,7 +174,7 @@ function delFromCart(item) {
                           <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/background-3.jpg)"></span>
                           <div class="promo-footer p-4 text-white">
                             <h3 class="mb-0">New Collection</h3>
-                            <a href="#!" class="eyebrow underline text-white">Shop Now</a>
+                            <a href="" class="eyebrow underline text-white">Shop Now</a>
                           </div>
                         </div>
                       </div>
@@ -213,7 +213,6 @@ function delFromCart(item) {
                 <li class="nav-item cart">
                   <a data-toggle="modal" data-target="#cart" class="nav-link"><span class="cartInTop">Cart</span><span class="cnt"></span></a>
                 </li>
-                
               </ul>
             </div>
           </nav>
@@ -240,7 +239,7 @@ function delFromCart(item) {
                   <div class="row align-items-center">
                     <div class="col-lg-9">
                       <div class="media media-product">
-                        <a href="#!"><img src="#" alt="Image" style="width: 70px; height: 70px;"></a>
+                        <a href=""><img src="" alt="Image" style="width: 70px; height: 70px;"></a>
                         <div class="media-body"	>
                           <h5 class="media-title"></h5>
                           <span class="media-subtitle"></span>
@@ -268,7 +267,7 @@ function delFromCart(item) {
                 </div>
                 
                 <div class="col">
-                  <a href="#" class="btn btn-lg btn-block btn-primary" id="btn-pay">결제하기</a>
+                  <a href="" class="btn btn-lg btn-block btn-primary" id="btn-pay">결제하기</a>
                 </div>
                 
                 

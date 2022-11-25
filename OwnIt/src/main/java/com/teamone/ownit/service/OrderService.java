@@ -21,6 +21,9 @@ public class OrderService {
 	@Autowired
 	private OrderMapper mapper;
 	
+	public ProductVO selectCartCount(String product_idx, int order_count) {
+		return mapper.selectCartCount(product_idx, order_count);
+	}
 	
 	
 	
@@ -495,9 +498,6 @@ public class OrderService {
 	
 	
 	
-	
-	
-		
 // 박주닮 101번라인
 		//상품의 정보를 불러오는 메서드
 		public ProductVO productDetail(int product_idx) {
@@ -556,6 +556,7 @@ public class OrderService {
 		public int getCountAccount(int member_idx) {
 			return mapper.getCountAccount(member_idx);
 		}
+		
 
 
 

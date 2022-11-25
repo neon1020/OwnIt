@@ -39,6 +39,7 @@
  <script type="text/javascript">
 
 // 상품 수량 변경 시 수행되는 함수
+
 function modifyCartCount(counter) {
 	payTotal = 0;
 	cbArr = [];
@@ -227,22 +228,18 @@ function buySelectedItems(btn) {
 			$("input[type=checkbox]").prop("checked", true);
 			document.getElementById("cbAll").checked = false;
 		} else return;
-	}
+	} 
 	var cbChecked = "";
 	$('input[type=checkbox]:checked').each(function() {
 		let id = $(this).attr('id').split('cb')[1];
 		// cbChecked => product_idx:수량:금액/
 		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
 	});
-	$.ajax({
-		url:'order_buyAgree',
-		type:'GET',
-		data:{
-			cbChecked:cbChecked
-		}
-	});
-	
-	location.href="order_buyAgree";
+	if(cbChecked.length != 0) {
+		location.href="order_buyAgree?cbChecked="+cbChecked;
+	} else {
+		alert("최소 1개 이상의 상품만 주문가능합니다");
+	}
 }
 
  </script>
@@ -286,7 +283,7 @@ function buySelectedItems(btn) {
                 <div class="col-12 col-lg-6">
                   <div class="media media-product">
                   <input type="checkbox" id="cb${cart.product_idx }" style="margin-right: 20px;">
-                    <a href="#!"><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
+                    <a href=""><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
                     <div class="media-body">
                       <h5 class="media-title">${cart.product_name }</h5>
                       <span class="small">${cart.product_color }</span>

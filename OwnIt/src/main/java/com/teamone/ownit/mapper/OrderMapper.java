@@ -15,8 +15,8 @@ import com.teamone.ownit.vo.Order_sellVO;
 import com.teamone.ownit.vo.ProductVO;
 
 public interface OrderMapper { 
-	
-	
+	// 구매수량과 잔여수량 비교
+	ProductVO selectCartCount(@Param("product_idx")String product_idx, @Param("order_count")int order_count);
 	
 	
 	
@@ -540,6 +540,8 @@ public interface OrderMapper {
 
 	int getCountAccount(int member_idx);
 
+	
+
 
 
 
@@ -895,7 +897,4 @@ public interface OrderMapper {
 	
 	
 	
-	
-	
-			
 }//200번째라인맞추기

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -94,7 +94,7 @@ $(document).ready(function() {
           	
           	
           	<form action="order_buyForm" name="buyForm" method="get">
-          		<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		<input type="hidden" name="cbChecked" value="${cbChecked }">
 	          	<table class="table">
 	          		<tr>
 	          			<th style="font-size: 30px; font: bold; color: black;">
@@ -103,13 +103,15 @@ $(document).ready(function() {
 	          			</th>
 	          		</tr>
 	          		
-	          		<tr>
+	          		<tr> <!-- 이부분 폼 고치기 -->
+	          			<c:forEach var="product" items="${productList }">
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 	          				<span id="span1">${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
+	          			</c:forEach>
 	          		</tr>
 	          		
 	          		<tr>

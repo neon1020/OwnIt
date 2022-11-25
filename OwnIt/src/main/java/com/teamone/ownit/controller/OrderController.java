@@ -2,12 +2,14 @@ package com.teamone.ownit.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.Request;
@@ -39,17 +41,51 @@ public class OrderController {
 	@Autowired
 	private OrderService service;
 	
+	//상품 구매 동의
+	@GetMapping(value = "order_buyAgree")
+	public String order_buyAgree(Model model, HttpSession session, @RequestParam String cbChecked, HttpServletResponse response) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
+			System.out.println(cbChecked);
+//			17:1:149000/7:2:656000/8:3:3075000/
+			String[] cbArr = cbChecked.split("/");
+			String product_idx = "";
+			int order_count = 0;
+			String countTimesPrice = "";
+			List<ProductVO> productList = new ArrayList<ProductVO>();
+			for(String cb : cbArr) {
+				ProductVO product = new ProductVO();
+				product_idx = cb.split(":")[0];
+				order_count = Integer.parseInt(cb.split(":")[1]);
+				countTimesPrice = cb.split(":")[2];
+				product = service.selectCartCount(product_idx, order_count);
+//				System.out.println(product);
+				if(product.getProduct_model_num() != null) {
+					productList.add(product);
+				} else {
+					model.addAttribute("msg", product.getProduct_name()+" 상품의 구매수량을 조절해주세요");
+					return "order/fail_back";
+				}
+			}
+			model.addAttribute("productList", productList);
+			model.addAttribute("cbChecked", cbChecked);
+			return "order/order_buyAgree";
+		}
+		return "member/member_login";
+	}
+		
 	// 구매주문 폼
 	@GetMapping(value = "order_buyForm")
-	public String order_buyForm(@RequestParam int product_idx, Model model) {
+	public String order_buyForm(@RequestParam String cbChecked, Model model) {
 		//이미지 하나 가져오는 작업 불필요시 삭제
 //		ImageVO image = service.selectDetailImage(product_idx);
 //		model.addAttribute("image", image);
-	
+		System.out.println(cbChecked);
 		//프로덕트 정보 가져오는 작업 불필요시 삭제
-		ProductVO product = service.productDetail(product_idx);
-		model.addAttribute("product", product);
-		return "order/order_buyForm";
+//		ProductVO product = service.productDetail(product_idx);
+//		model.addAttribute("product", product);
+//		return "order/order_buyForm";
+		return "";
 	}
 	
 	
@@ -461,43 +497,7 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-				
+					
 // 박주닮 501번째라인
 	
 	
@@ -671,19 +671,7 @@ public class OrderController {
 	
 	
 	
-	//상품 구매 동의
-	@GetMapping(value = "order_buyAgree")
-	public String order_buyAgree(@RequestParam int product_idx, Model model,HttpSession session) {
-		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
-		String sId = (String)session.getAttribute("sId");
-		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
-		
-			ProductVO product = service.productDetail(product_idx);
-			model.addAttribute("product", product);
-			return "order/order_buyAgree";
-		}
-		return "member/member_login";
-	}
+	
 	
 	
 	//
@@ -896,5 +884,17 @@ public class OrderController {
 	
 	
 	
-			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }//900번라인
