@@ -94,8 +94,9 @@ public class MemberController {
 		// 2. 회원가입 작업 수행 - member 테이블
 		int insertCount = service.joinMember(member);
 		int insertAddress = service.joinAddress(member, address);
+		int insertImage = service.joinImage(member);
 		
-		if(insertCount > 0 && insertAddress > 0) {
+		if(insertCount > 0 && insertAddress > 0 && insertImage > 0) {
 			return "redirect:/MemberSendAuthMail?id=" + member.getMember_id();
 		} else {
 			model.addAttribute("msg", "회원가입 실패");

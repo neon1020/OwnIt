@@ -6,11 +6,21 @@
 <html>
 <head>
 <style type="text/css">
-	#btn {
+	#btn, #btnAll {
 		background-color: #101010;
 		border-color: #101010;
+		color: white;
 	}
-	#btn:hover {
+	#btn:hover, #btnAll:hover {
+		background-color: #353535;
+		border-color: #353535;
+	}
+	#deleteAllCart {
+		background-color: #101010;
+		border-color: #101010;
+		color: white;
+	}
+	#deleteAllCart:hover {
 		background-color: #353535;
 		border-color: #353535;
 	}
@@ -23,62 +33,216 @@
     <title>Cart</title>
  <script src="resources/js/jquery-3.6.1.js"></script> 
  <script type="text/javascript">
- 
- 	function numberWithCommas(n) {
-	    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+// 상품 수량 변경 시 수행되는 함수
+function modifyCartCount(counter) {
+	payTotal = 0;
+	cbArr = [];
+	$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	document.getElementById("cbAll").checked = false;
+	var idx = counter.id.split('_')[1];
+	var plus = counter.className.indexOf('plus') > -1
+	var cntVal = 0;
+	if(plus) {
+		cntVal = Number($('#cartCount_'+idx).val())+1;
+	} else {
+		cntVal = Number($('#cartCount_'+idx).val())-1;
+		if(cntVal <= 0) {
+			alert("구매수량 오류");
+			cntVal = Number($('#cartCount_'+idx).val());
+		}
 	}
- 	$(function() {
- 		$('#cbAll').click(function() {
- 			if($("#cbAll").is(":checked")) {
- 				$("input[type=checkbox]").prop("checked", true);
- 			} else {
- 				$("input[type=checkbox]").prop("checked", false);
- 			}
- 		});
- 	});
- 	
- 	function delFromCartInOrder(item) {
- 		var delIdx = item.id.split('_')[1];
- 		$.ajax({
- 			url:'delAndReloadCart',
- 			type:'POST',
- 			data: {
- 				product_idx:delIdx
- 			},
- 			dataType:'json',
- 			success:function(result) {
- 				var html = "";
-//  				location.reload();
- 				$.each(cart, function(index) {
-// 						alert(JSON.stringify(result[index]));
- 					var buyPrice = numberWithCommas(result[index].product_buy_price);
- 					html += "<div class='cart-item'>";
- 					html += "<div class='row align-items-center'>";
- 					html += "<div class='col-12 col-lg-6'>";
- 					html += "<div class='media media-product'>";
- 					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
- 					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
- 					html += "<div class='media-body'>";
- 					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
- 					html += "<span class='small'>" + result[index].product_color  + "</span>";
- 					html += "<span class='media-subtitle'>" + result[index].product_color + "</span>";
- 					html += "</div></div></div>";
- 					html += "<div class='col-4 col-lg-2 text-center'>";
- 					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
- 					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
- 					html += "<span class='counter-minus icon-minus' field='qty-"+ result[index].product_idx  +"'></span>";
- 					html += "<input type='text' name='qty-"+ result[index].product_idx +"' class='counter-value' value='"+ result[index].cart_count +"' min='1' max='5'>";
- 					html += "<span class='counter-plus icon-plus' field='qty-"+ result[index].product_idx +"'></span>";
- 					html += "</div></div>";
- 					html += "<div class='col-4 col-lg-2 text-center'>";
- 					html += "<span class='cart-item-price'>"+ result[index].countTimesPrice +"원</span>";
- 					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCart(this)''><i class='icon-x'></i></a></div></div>";
- 				});
- 				
- 				$('#myCartItemsInOrder').html(html);
- 			}
- 		});
- 	}
+	
+	$.ajax({
+		url:'updateCartCount',
+		type:'POST',
+		data:{
+			product_idx:idx,
+			cart_count:cntVal
+		},
+		dataType:'json',
+		success:function(result){
+			var html = "";
+			if(JSON.stringify(result).length > 100) {
+				$.each(result, function(index) {
+					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
+					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
+					html += "<div class='cart-item'>";
+					html += "<div class='row align-items-center'>";
+					html += "<div class='col-12 col-lg-6'>";
+					html += "<div class='media media-product'>";
+// 					if(document.getElementById('cb'+result[index].product_idx).checked) {
+// 						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;' checked='checked'>"
+// 					} else {
+						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+// 					}
+					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
+					html += "<div class='media-body'>";
+					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
+					html += "<span class='small'>" + result[index].product_color  + "</span>";
+					html += "</div></div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
+					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
+					html += "<span class='counter-minus icon-minus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx  +"'></span>";
+					html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[index].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"'>";
+					html += "<span class='counter-plus icon-plus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx +"'></span>";
+					html += "</div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
+					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
+				});
+				$('#myCartItemsInOrder').html(html);
+			} else {
+				$('#cartCount_'+idx).val(cntVal-1);
+				alert(result.err);
+				$('input[type=checkbox]').prop("checked", false);
+			}
+		}
+	});
+}
+
+// 장바구니 개별항목 삭제 시 수행되는 함수
+function delFromCartInOrder(item) {
+	payTotal = 0;
+	cbArr = [];
+	$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	document.getElementById("cbAll").checked = false;
+	var delIdx = item.id.split('_')[1];
+	$.ajax({
+		url:'delAndReloadCart',
+		type:'POST',
+		data: {
+			product_idx:delIdx
+		},
+		dataType:'json',
+		success:function(result) {
+			var html = "";
+			if(result != 0) {
+				$.each(result, function(index) {
+					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
+					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
+					html += "<div class='cart-item'>";
+					html += "<div class='row align-items-center'>";
+					html += "<div class='col-12 col-lg-6'>";
+					html += "<div class='media media-product'>";
+					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
+					html += "<div class='media-body'>";
+					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
+					html += "<span class='small'>" + result[index].product_color  + "</span>";
+					html += "</div></div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
+					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
+					html += "<span class='counter-minus icon-minus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx  +"'></span>";
+					html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[index].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"'>";
+					html += "<span class='counter-plus icon-plus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx +"'></span>";
+					html += "</div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
+					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
+				});
+				$('#myCartItemsInOrder').html(html);
+			} else {
+				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
+			}
+		} // success
+	}); // ajax
+}
+
+// 장바구니 전체삭제 시 수행되는 함수
+$(document).on("click", "#deleteAllCart", function() {
+	var isCertain = confirm("장바구니내의 모든 상품을 삭제하시겠습니까?");
+	if(isCertain) {	
+		$.ajax({
+			url:'deleteAllCart',
+			type:'POST',
+			success:function() {
+				$('#myCartItemsInOrder').html("<img src='resources/img/product/empty_cart.png' style='max-width: 70%;'>");
+			}
+		});
+	}
+});
+
+//체크박스 전체선택
+$(function() {
+	$('#cbAll').click(function() {
+		if($("#cbAll").is(":checked")) {
+			$("input[type=checkbox]").prop("checked", true);
+		} else {
+			$("input[type=checkbox]").prop("checked", false);
+		}
+	});
+});
+
+// 체크박스 선택 시 해당 상품 가격의 총 합이 결제 정보에 출력되는 기능
+var cbArr = [];
+var payTotal = 0;
+$(document).on("change", 'input[type=checkbox]', function() {
+	var idx = $(this).attr('id').split('cb')[1];
+	// 전체선택
+	if(idx == 'All') {
+		if($(this).is(":checked")){
+			payTotal = 0;
+			debugger;
+			$('input[type=checkbox]:checked').each(function() {
+			    let cbId = $(this).attr('id').split('cb')[1];
+			    cbArr.push(cbId);
+			});
+			cbArr.shift();
+			for(var i = 0; i < cbArr.length; i++) {
+			   payTotal += Number(document.getElementById('countTimesPrice_'+cbArr[i]).innerText.split('원')[0].replaceAll(',',''));
+			}
+			$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+		} else {
+			$('input[type=checkbox]').each(function() {
+			    let cbId = $(this).attr('id').split('cb')[1];
+			    cbArr.pop();
+			});
+			cbArr.shift();
+			payTotal = 0;
+			$('.totalPrice').text(payTotal + "원");
+		}
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	} else { // 개별 선택
+		if($(this).is(":checked")){
+			payTotal += Number(document.getElementById('countTimesPrice_'+idx).innerText.split('원')[0].replaceAll(',',''));
+		} else {
+			payTotal -= Number(document.getElementById('countTimesPrice_'+idx).innerText.split('원')[0].replaceAll(',',''));
+		}
+// 		document.getElementsByClassName("totalPrice").innerHtml = numberWithCommas(payTotal)+"원";
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	}
+});
+
+// 전체, 선택 상품 주문 기능
+function buySelectedItems(btn) {
+	if(btn.id == "btnAll") {
+		var isReal = confirm("장바구니의 모든 상품을 구매하시겠습니까?");
+		if(isReal) {
+			$("input[type=checkbox]").prop("checked", true);
+			document.getElementById("cbAll").checked = false;
+		} else return;
+	}
+	var cbChecked = "";
+	$('input[type=checkbox]:checked').each(function() {
+		let id = $(this).attr('id').split('cb')[1];
+		// cbChecked => product_idx:수량:금액/
+		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
+	});
+	debugger;
+	$.ajax({
+		url:'order_buyAgree',
+		type:'GET',
+		data:{
+			cbChecked:cbChecked
+		}
+	});
+	
+	location.href="order_buyAgree";
+}
+
  </script>
   </head>
   <body>
@@ -109,10 +273,10 @@
           </div>
         </div>
         <div class="row gutter-2 gutter-lg-4 justify-content-end">
-
           <div class="col-lg-8 cart-item-list" id="myCartItemsInOrder">
-
             <!-- cart item -->
+            <c:choose>
+            <c:when test="${not empty cart }">
             <c:forEach var="cart" items="${cart }">
             <!-- 여기부터 -->
             <div class="cart-item">
@@ -132,19 +296,24 @@
                 </div>
                 <div class="col-4 col-lg-2 text-center">
                   <div class="counter">
-                    <span class="counter-minus icon-minus" field='qty-${cart.product_idx }'></span>
-                    <input type='text' name='qty-${cart.product_idx }' class="counter-value" value="${cart.cart_count }" min="1" max="5">
-                    <span class="counter-plus icon-plus" field='qty-${cart.product_idx }'></span>	
+                    <span class="counter-minus icon-minus" id="counter_${cart.product_idx }" field='qty-${cart.product_idx }' onclick="modifyCartCount(this)"></span>
+                    <input type='text' name='qty-${cart.product_idx }' readonly="readonly" id="cartCount_${cart.product_idx }" class="counter-value" value="${cart.cart_count }">
+                    <span class="counter-plus icon-plus" id="counter_${cart.product_idx }" field='qty-${cart.product_idx }' onclick="modifyCartCount(this)"></span>	
                   </div>
                 </div>
                 <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
+                  <span class="cart-item-price" id="countTimesPrice_${cart.product_idx }"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
                 </div>
                 <a class="cart-item-close" id="delCart_${cart.product_idx }" onclick="delFromCartInOrder(this)"><i class="icon-x"></i></a>
               </div>
             </div>
             <!-- 여기까지 -->
 		   </c:forEach>
+		   </c:when>
+		   <c:otherwise>
+		   <img src="resources/img/product/empty_cart.png" style="max-width: 70%;">
+		   </c:otherwise>
+		   </c:choose>
           </div>
 
           <div class="col-lg-4">
@@ -160,7 +329,7 @@
                 <ul class="list-group list-group-minimal">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     상품 금액
-                    <span></span>
+                    <span class="totalPrice">0원</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     배송비
@@ -172,14 +341,14 @@
                 <ul class="list-group list-group-minimal">
                   <li class="list-group-item d-flex justify-content-between align-items-center text-dark fs-18">
                     총 금액
-                    <span>$418</span>
+                    <span class="totalPrice">0원</span>
                   </li>
                 </ul>
               </div>
             </div>
-            <a href="#" class="btn btn-lg btn-primary btn-block mt-1" id="btn">장바구니 비우기</a>
-            <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">선택상품 주문</a>
-            <a href="member_buy_form" class="btn btn-lg btn-primary btn-block mt-1" id="btn">전체상품 주문</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="deleteAllCart">장바구니 비우기</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="btn" onclick="buySelectedItems(this)">선택상품 주문</a>
+            <a class="btn btn-lg btn-primary btn-block mt-1" id="btnAll" onclick="buySelectedItems(this)">전체상품 주문</a>
           </div>
 
         </div>

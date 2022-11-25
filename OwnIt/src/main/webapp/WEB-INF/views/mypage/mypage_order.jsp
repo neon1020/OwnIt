@@ -1,5 +1,8 @@
+<%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,21 +16,6 @@
     <jsp:include page="../inc/top.jsp"></jsp:include>
 <%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
 	<!-- /header -->  
-
-    <!-- hero -->
-<!-- 	<section class="hero hero-small bg-purple text-white"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<div class="row gutter-2 gutter-md-4 align-items-end"> -->
-<!-- 				<div class="col-md-6 text-center text-md-left"> -->
-<!-- 					<h1 class="mb-0">김뽀얌이</h1> -->
-<!-- 					<span class="text-muted">부산광역시, 대한민국</span> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-md-6 text-center text-md-right"> -->
-<!-- 					<a href="#!" class="btn btn-sm btn-outline-white">Sign out</a> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</section> -->
 
     <!-- listing -->
 	<section class="pt-5" style="margin-top: 100px;">
@@ -49,78 +37,73 @@
 								<div class="row">
 									<div class="col-12">
 										<h3 class="mb-0">구매내역</h3>
-										<span class="eyebrow">8 Items</span>
+										<span class="eyebrow">${listCount }개의 구매내역이 있습니다.</span>
 									</div>
 								</div>
 	
-								<div style="text-align: center;">
-									<ul class="nav nav-tabs lavalamp" id="component-1" role="tablist">
-										<li class="nav-item">
-											<a class="nav-link active" data-toggle="tab" href="#component-1-1" role="tab" aria-controls="component-1-1" aria-selected="true">결제완료</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" data-toggle="tab" href="#component-1-2" role="tab" aria-controls="component-1-2" aria-selected="false">배송중</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" data-toggle="tab" href="#component-1-3" role="tab" aria-controls="component-1-3" aria-selected="false">배송완료</a>
-										</li>  
-										<li class="nav-item">
-											<a class="nav-link" data-toggle="tab" href="#component-1-4" role="tab" aria-controls="component-1-4" aria-selected="false">구매확정</a>
-										</li>  
-									</ul>
-								</div>
-
-								<div class="tab-content" id="component-1-content" style="margin-top: 30px;">
 	
-									<div class="tab-pane fade show active" id="component-1-1" role="tabpanel" aria-labelledby="component-1-1">
-										<table style="margin: auto;">
-											<tr>
-												<td colspan="3">
-													<input type="button" value="최근 2개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="4개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="6개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="month">~<input type="month">
-													<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">
-												</td>
-											</tr>
-										</table>
-										<table style="width: 1000px; text-align: center;" class="table table-hover">
-											<tr>
-												<th colspan="2">상품정보</th>
-												<th>주문일자</th>
-												<th>주문금액</th>
-												<th>주문상태</th>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
-												<td>2022.10.04</td>
-												<td>647,000원</td>
-												<td>배송중</td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-												<td>2022.09.22</td>
-												<td>1,918,000원</td>
-												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#exampleModal-1"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
-											</tr>
-										</table>	
-										
+								<!-- 본문 시작 -->
+<!-- 								<form action="mypage_order" method="get"> -->
+<%-- 									<input type="hidden" name="member_idx" value="${sessionScope.sIdx }"> --%>
+<!-- 									<input type="date" id="date1" name="date1">  ~  <input type="date" id="date2" name="date2"> -->
+<!-- 									<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">					                         -->
+<!-- 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> -->
+<!-- 										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path> -->
+<!-- 										</svg> -->
+<!-- 								</form> -->
+								
+								<form action="mypage_order" method="get" style="float: right;">
+									<input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
+									<input type="date" id="date1" name="date1">  ~  <input type="date" id="date2" name="date2">
+									<button type="submit" class="btn btn-dark btn-rounded btn-sm">					                        
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+										</svg>
+									</button>
+								</form>
+								
+								
+								<table style="text-align: center;" class="table table-hover">
+									<tr>
+										<td>상품명</td>
+										<td style="font-size: 15px; color: black; padding-left: 0px; padding-right: 0px; vertical-align:middle;">구매일</td>
+										<td style="font-size: 15px; color: black; padding-left: 0px; padding-right: 0px; vertical-align:middle;">구매가</td>
+										<td style="font-size: 15px; color: black; padding-left: 0px; padding-right: 0px; vertical-align:middle;">상태</td>
+									</tr>
+									<c:forEach var="order" items="${orderList }">
+										<tr>
+										<td style="text-align:left; font-size: 14px; width: 600px; float: left; padding: 3px 0px 3px 1px; text-overflow: ellipsis; overflow: hidden; white-space:nowrap;">
+											<img src="resources/img/product/${order.image_real_file1 }" width="100" height="100" style="padding: 3px 0px 3px 1px;">
+											<a href="product_detail?product_idx=${order.product_idx }" style="color: black;">${order.product_name }</a>
+										</td>
+										<td style="font-size:14px; color: black; width: 90px; padding: 3px 0px 3px 3px; vertical-align:middle;">${order.order_buy_date }</td>
+										<td style="font-size:14px; color: black; width: 160px; padding: 3px 0px 3px 3px; vertical-align:middle;">
+											<fmt:formatNumber value="${order.product_buy_price }" pattern="#,###"/>원
+										</td>
+										<td style="font-size:14px; color: black; width: 160px; padding: 3px 0px 3px 0px; vertical-align:middle;">
+											<c:choose>
+			                                	<c:when test="${order.order_buy_gb == '0'}">
+			                                		배송 대기
+			                                	</c:when>
+			                                	<c:when test="${order.order_buy_gb == '1'}">
+			                                		배송 중
+			                                	</c:when>
+			                                	<c:when test="${order.order_buy_gb == '2'}">
+			                                		배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#exampleModal-1">
+			                                	</c:when>
+			                                	<c:when test="${order.order_buy_gb == '3'}">
+			                                		구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="">
+			                                	</c:when>
+			                                </c:choose>
+										</td>
+									</c:forEach>
+								</table>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>					
+										<!-- modal 창 시작 -->
 										<div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
@@ -144,184 +127,33 @@
 													</div>
 												</div>
 											</div>
-										</div>	
-									</div>
-		
-									<div class="tab-pane fade" id="component-1-2" role="tabpanel" aria-labelledby="component-1-2">
-										<table style="margin: auto;">
-											<tr>
-												<td colspan="3">
-													<input type="button" value="최근 2개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="4개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="6개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="month">~<input type="month">
-													<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">
-												</td>
-											</tr>
-										</table>
-										<table style="width: 1000px; text-align: center;" class="table table-hover">
-											<tr>
-												<th colspan="2">상품정보</th>
-												<th>주문일자</th>
-												<th>주문금액</th>
-												<th>주문상태</th>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
-												<td>2022.10.04</td>
-												<td>647,000원</td>
-												<td>배송중</td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-												<td>2022.09.22</td>
-												<td>1,918,000원</td>
-												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
-											</tr>
-										</table>			
-									</div>
-		
-									<div class="tab-pane fade" id="component-1-3" role="tabpanel" aria-labelledby="component-1-3">
-									  	<table style="margin: auto;">
-											<tr>
-												<td colspan="3">
-													<input type="button" value="최근 2개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="4개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="6개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="month">~<input type="month">
-													<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">
-												</td>
-											</tr>
-										</table>
-										<table style="width: 1000px; text-align: center;" class="table table-hover">
-											<tr>
-												<th colspan="2">상품정보</th>
-												<th>주문일자</th>
-												<th>주문금액</th>
-												<th>주문상태</th>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
-												<td>2022.10.04</td>
-												<td>647,000원</td>
-												<td>배송중</td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-												<td>2022.09.22</td>
-												<td>1,918,000원</td>
-												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
-											</tr>
-										</table>	
-									</div>
-			  
-									<div class="tab-pane fade" id="component-1-4" role="tabpanel" aria-labelledby="component-1-4">
-									  	<table style="margin: auto;">
-											<tr>
-												<td colspan="3">
-													<input type="button" value="최근 2개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="4개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="button" value="6개월" class="btn btn-outline-dark btn-rounded btn-sm">
-													<input type="month">~<input type="month">
-													<input type="submit" value="조회" class="btn btn-outline-dark btn-rounded btn-sm">
-												</td>
-											</tr>
-										</table>
-										<table style="width: 1000px; text-align: center;" class="table table-hover">
-											<tr>
-												<th colspan="2">상품정보</th>
-												<th>주문일자</th>
-												<th>주문금액</th>
-												<th>주문상태</th>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Max Silver (Korean Ver.)</a></td>
-												<td>2022.10.04</td>
-												<td>647,000원</td>
-												<td>배송중</td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple iPhone 14 Pro Max 256GB Silver (Korean Ver.)</a></td>
-												<td>2022.09.22</td>
-												<td>1,918,000원</td>
-												<td>배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/reviewWriteForm.jsp'"></td>
-											</tr>
-											<tr>
-												<td><img src="resources/img/member/ppoyam.jpg" width="60" height="60"></td>
-												<td style="text-align: left;"><a href="" style="color: black;">Apple AirPods Pro with MagSafe Charging Case (Korean Ver.)</a></td>
-												<td>2022.08.19</td>
-												<td>250,000원</td>
-												<td>구매확정 <input type="button" value="작성한 리뷰" class="btn btn-outline-dark btn-sm" onclick="location.href='../style/style_detail.jsp'"></td>
-											</tr>
-										</table>	
-									</div>	  
-	  
-								</div>                  	
+										</div>
+										<!-- modal 창 끝 -->	
                     
-							<div class="row">
-								<div class="col">
-									<ul class="pagination">
-										<li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li>
-										<li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li>
-										<li class="page-item"><a class="page-link" href="#!">3</a></li>
-										<li class="page-item"><a class="page-link" href="#!">4</a></li>
-									</ul>
-								</div>
-							</div>
-                  
-							</div>
-							<!-- /mypage_order -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /content -->
-
-			</div>
-		</div>
-	</section>
-    <!-- listing -->
+							<!-- 페이징 태그 START -->
+					        <div class="row" style="margin-left: 680px;">
+					          <div class="col">
+					            <nav class="d-inline-block">
+					              <ul class="pagination">
+					              	<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
+					              	<li class="page-item active"><input class="page-link" type="button" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum - 1}'"<%} %>></li>
+									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<c:choose>
+											<c:when test="${i eq pageInfo.pageNum }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
+											<c:otherwise><li class="page-item active"><a class="page-link" href="mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<li class="page-item active"><input class="page-link" type="button" value="&raquo;" <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum + 1}'"<%} %>></li>
+					              </ul>
+					            </nav>
+					          </div>
+					        </div>
+							<!-- 페이징 태그 END -->
+                  		</div>
+                  	</div>
+					<!-- /content -->
+				</section>
+			    <!-- listing -->
 
     <!-- footer -->
     <jsp:include page="../inc/footer.jsp"></jsp:include>
