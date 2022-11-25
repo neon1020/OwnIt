@@ -15,54 +15,48 @@
 	</style>
     <title>Notice List</title>
   </head>
-  <body>
+	<body>
 
+	<!-- header -->
+	<jsp:include page="../inc/top.jsp"></jsp:include>
 
-    <!-- header -->
-    <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
+		<!-- listing -->
+		<div class="py-10">
+			<div class="container">
+				<div class="row justify-content-between">
 
-    <!-- listing -->
-    <div class="py-10">
-      <div class="container">
-        <div class="row justify-content-between">
+				<!-- sidebar -->
+				<jsp:include page="../inc/sidebar_notice.jsp"></jsp:include>
 
-
-          <!-- sidebar -->
-          <jsp:include page="../inc/sidebar_notice.jsp"></jsp:include>
-
-
-          <!-- content -->
-          <article class="col-lg-9 pl-lg-5">
-<!--           	<h1 class="mb-0">Notice</h1> -->
-			<table class="table table-bordered" style="margin-top: 20px; text-align: center; border-left: none; border-right: none;">
-               <tbody>
-                 <tr>
-                   <td style="border-left: none; border-right: none; font-weight:bolder; text-align: left;">${notice.notice_category }&nbsp;&nbsp;&nbsp;${notice.notice_subject }</td>
-                   <th width="200px" style="border-left: none; border-right: none;">Date&nbsp;&nbsp;&nbsp;${notice.notice_date }</th>
-                   <th width="100px" style="border-left: none; border-right: none;">Read&nbsp;&nbsp;&nbsp;${notice.notice_readcount }</th>
-                 </tr>
-                 <tr>
-                   <td colspan="4" style="border-left: none; border-right: none; text-align: left; height: 500px;">
-					${notice.notice_content }
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-				<div style="text-align: center;">
-					<input type="button" value="목록" class="btn btn-dark" onclick="location.href='noticeList?pageNum=${param.pageNum}'">
+				<!-- content -->
+				<article class="col-lg-9 pl-lg-5">
+					<h1 class="mb-0"></h1>
+					<table class="table table-bordered" style="margin-top: 20px; text-align: center; border-left: none; border-right: none;">
+						<tbody>
+							<tr>
+								<td style="border-left: none; border-right: none; font-size: 15px; font-weight: 550; color: black; text-align: left;">${notice.notice_category }&nbsp;&nbsp;&nbsp;${notice.notice_subject }</td>
+								<th width="200px" style="font-size: 15px; color: black; border-left: none; border-right: none;">작성일&nbsp;&nbsp;&nbsp;${notice.notice_date }</th>
+								<th width="150px" style="font-size: 15px; color: black; border-left: none; border-right: none;">조회&nbsp;&nbsp;&nbsp;${notice.notice_readcount }</th>
+							</tr>
+							<tr>
+								<td colspan="4" style="border-left: none; border-right: none; text-align: left; height: 500px;">${notice.notice_content }</td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align: center;">
+						<input type="button" value="목록" class="btn btn-dark" onclick="location.href='noticeList?pageNum=${param.pageNum}'">
+					</div>
+				</article>
+				<!-- content -->
+				
 				</div>
-          </article>
+			</div>
+		</div>
 
-        </div>
-      </div>
-    </div>
+	<!-- footer -->
+	<jsp:include page="../inc/footer.jsp"></jsp:include>
 
-
-    <!-- footer -->
-    <jsp:include page="../inc/footer.jsp"></jsp:include>
-
-    <script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
-    <script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
-  </body>
+	<script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
+	</body>
 </html>

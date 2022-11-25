@@ -7,7 +7,7 @@
 		Filter by Category
 		</span>
 		<div class="d-lg-block collapse" id="collapse-1">
-			<a href="mypage"><span class="widget-title">마이페이지</span></a>
+			<a href="mypage?member_idx=${sessionScope.sIdx }"><span class="widget-title">마이페이지</span></a>
 			<div class="widget-content">
 				<ul id="page-nav" class="nav flex-column nav-category">
 					<li class="nav-item">
@@ -16,7 +16,7 @@
 							<div>
 								<ul class="nav flex-column">
 									<li class="nav-item">
-										<a class="nav-link" href="mypage_order">구매내역</a>
+										<a class="nav-link" href="mypage_order?member_idx=${sessionScope.sIdx }">구매내역</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="mypage_sell?member_idx=${sessionScope.sIdx }">판매내역</a>
@@ -34,7 +34,10 @@
 							<div>
 								<ul class="nav flex-column">
 									<li class="nav-item">
-										<a class="nav-link" href="mypage_revise?id=${sessionScope.sId }">프로필 정보</a>
+										<a class="nav-link" href="mypage_profile?member_idx=${sessionScope.sIdx }">프로필 정보</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="mypage_revise?id=${sessionScope.sId }">비밀번호 변경</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="address?member_idx=${sessionScope.sIdx }">주소록</a>

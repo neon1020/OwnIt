@@ -16,7 +16,7 @@ public class ProductVO {
 	private String image_real_file1;
 	private String image_real_file2;
 	private String image_real_file3;
-	private int myWish;
+	private int my_wish;
 	
 	// 기본 생성자
 	public ProductVO() {}
@@ -25,7 +25,7 @@ public class ProductVO {
 	public ProductVO(int product_idx, String product_type, String product_brand, String product_name,
 			String product_model_num, String product_color, String product_release_price, String product_sell_price,
 			String product_buy_price, int product_left_count, int product_sell_count, String product_date,
-			String image_real_file1, String image_real_file2, String image_real_file3, int myWish) {
+			String image_real_file1, String image_real_file2, String image_real_file3, int my_wish) {
 		super();
 		this.product_idx = product_idx;
 		this.product_type = product_type;
@@ -42,7 +42,7 @@ public class ProductVO {
 		this.image_real_file1 = image_real_file1;
 		this.image_real_file2 = image_real_file2;
 		this.image_real_file3 = image_real_file3;
-		this.myWish = myWish;
+		this.my_wish = my_wish;
 	}
 
 	// Getter & Setter
@@ -166,12 +166,12 @@ public class ProductVO {
 		this.image_real_file3 = image_real_file3;
 	}
 
-	public int getmyWish() {
-		return myWish;
+	public int getMy_wish() {
+		return my_wish;
 	}
 
-	public void setmyWish(int myWish) {
-		this.myWish = myWish;
+	public void setMy_wish(int my_wish) {
+		this.my_wish = my_wish;
 	}
 
 	// toString 오버라이딩
@@ -184,7 +184,7 @@ public class ProductVO {
 				+ ", product_left_count=" + product_left_count + ", product_sell_count=" + product_sell_count
 				+ ", product_date=" + product_date + ", image_real_file1=" + image_real_file1
 				+ ", image_real_file2=" + image_real_file2 + ", image_real_file3=" + image_real_file3
-				+ ", myWish=" + myWish + "]";
+				+ ", my_wish=" + my_wish + "]";
 	}
 	
 	

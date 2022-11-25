@@ -497,8 +497,7 @@ public class OrderService {
 	
 	
 	
-	
-	
+		
 // 박주닮 101번라인
 		//상품의 정보를 불러오는 메서드
 		public ProductVO productDetail(int product_idx) {
@@ -896,25 +895,7 @@ public class OrderService {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-				
+						
 }//900
 
 

@@ -11,8 +11,7 @@
 <body>
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-    <jsp:include page="../inc/cart_inTop.jsp"></jsp:include>
-	<!-- /header -->   
+		<!-- /header -->   
     
 	<!-- listing -->
 	<section class="pt-6">

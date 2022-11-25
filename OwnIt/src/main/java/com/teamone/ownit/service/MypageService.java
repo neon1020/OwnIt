@@ -9,8 +9,12 @@ import com.teamone.ownit.mapper.MypageMapper;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.MemberVO;
+import com.teamone.ownit.vo.MypageMainVO;
 import com.teamone.ownit.vo.MypageSellListVO;
 import com.teamone.ownit.vo.MypageVO;
+import com.teamone.ownit.vo.Order_buyMyVO;
+import com.teamone.ownit.vo.Order_buyVO;
+import com.teamone.ownit.vo.ReviewVO;
 import com.teamone.ownit.vo.WishlistVO;
 
 
@@ -23,7 +27,7 @@ public class MypageService {
 	
 	
 	// 류혜지
-	// 회원 정보 조회 수행 getMemberInfo()
+	// 회원 정보 조회
 	public MypageVO getMemberInfo(String id) {
 		return mapper.selectMemberInfo(id);
 	}
@@ -39,14 +43,49 @@ public class MypageService {
 		return mapper.selectPasswd(sId);
 	}
 	
+	//프로필 정보 불러오기
+	public MypageVO getProfile(int member_idx) {
+		return mapper.selectProfile(member_idx);
+	}
+	
+	//프로필 정보 수정하기(사진)
+	public int modifyProfile(MypageVO profile) {
+		return mapper.updateProfile(profile);
+	}
+	
+	//프로필 정보 수정하기(닉네임)
+	public int modifyNickname(MypageVO profile) {
+		return mapper.updateNickname(profile);
+	}
+	
+	//마이페이지 메인 - 프로필
+	public List<MypageMainVO> getMainProfile(int member_idx) {
+		return mapper.selectMainProfile(member_idx);
+	}
+	
+	//마이페이지 메인 - 구매내역
+	public List<MypageMainVO> getMainOrder(int member_idx) {
+		return mapper.selectMainOrder(member_idx);
+	}
+	
+	//마이페이지 메인 - 판매내역
+	public List<MypageMainVO> getMainSell(int member_idx) {
+		return mapper.selectMainSell(member_idx);
+	}
+	
+	//마이페이지 메인 - 위시리스트	
+	public List<MypageMainVO> getMainWish(int member_idx) {
+		return mapper.selectMainWish(member_idx);
+	}
+	
 	//판매내역 갯수 조회
-	public int getMySellListCount(String searchType, String keyword, String id) {
-		return mapper.selectMySellListCount(searchType, keyword, id);
+	public int getMySellListCount(String date1, String date2, int member_idx) {
+		return mapper.selectMySellListCount(date1, date2, member_idx);
 	}
 	
 	//판매내역 목록
-	public List<MypageSellListVO> getMySell(int startRow, int listLimit, String searchType, String keyword, String id) {
-		return mapper.selectMySell(startRow, listLimit, searchType, keyword, id);
+	public List<MypageSellListVO> getMySell(int startRow, int listLimit, String date1, String date2, int member_idx) {
+		return mapper.selectMySell(startRow, listLimit, date1, date2, member_idx);
 	}
 	
 	//위시리스트 갯수 조회
@@ -57,6 +96,16 @@ public class MypageService {
 	//위시리스트 목록
 	public List<WishlistVO> getWishlist(int member_idx, int startRow, int listLimit) {
 		return mapper.selectWishlist(member_idx,startRow,listLimit);
+	}
+	
+	//장바구니에 존재하는지 확인
+	public int isContainedInCart(int member_idx, int product_idx) {
+		return mapper.isContainedInCart(member_idx, product_idx);
+	}
+	
+	//장바구니 추가
+	public int addToCart(int member_idx, int product_idx) {
+		return mapper.addToCart(member_idx, product_idx);
 	}
 	
 	//위시리스트 삭제
@@ -77,6 +126,19 @@ public class MypageService {
 	//주소록 추가
 	public int addAddress(AddressVO address, int member_idx, int addressCount) {
 		return mapper.insertAddress(address, member_idx, addressCount);
+	}
+	
+	//주소록 수정
+	public int updateAddress(AddressVO address) {
+		return mapper.updateAddress(address);
+	}
+	
+	//주소록 대표 배송지 설정
+	public int otherAddress(int member_idx) {
+		return mapper.otherAddress(member_idx);
+	}
+	public int defaultAddress(int member_idx, int address_idx) {
+		return mapper.defaultAddress(member_idx, address_idx);
 	}
 	
 	//주소록 삭제
@@ -110,67 +172,6 @@ public class MypageService {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -332,7 +333,43 @@ public class MypageService {
 		System.out.println("MypageService - defaultAccount()");
 		return mapper.otherAccount(member_idx);
 	}
+
+	public List<Order_buyMyVO> getOrderList(int startRow, int listLimit, String date1, String date2, int member_idx) {
+		System.out.println("MypageService - getOrderList()");
+		return mapper.selectOrderList(startRow, listLimit, date1, date2, member_idx);
+	}
+
+	public int getOrderListCount(String date1, String date2, int member_idx) {
+		System.out.println("MypageService - getOrderListCount()");
+		return mapper.selectOrderListCount(date1, date2, member_idx);
+	}
+
+	public int modifyOrderBuyGb(int member_idx, int order_buy_idx) {
+		System.out.println("MypageService - modifyOrderBuyGb()");
+		return mapper.updateOrderBuyGb(member_idx, order_buy_idx);
+	}
+
+	public ReviewVO getReview(int product_idx, int member_idx) {
+		System.out.println("MypageService - getReview()");
+		return mapper.selectReview(product_idx, member_idx);
+	}
+
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	
