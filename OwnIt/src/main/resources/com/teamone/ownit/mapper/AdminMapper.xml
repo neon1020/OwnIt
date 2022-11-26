@@ -699,4 +699,111 @@
 
 <!-- 정채연 700 -->
 
+<!-- 관리자 페이지 : 회원 목록 불러오기 -->
+<select id="selectMemberList" resultType="com.teamone.ownit.vo.MemberVO">
+	SELECT * FROM member
+	WHERE member_id NOT IN ('admin')
+	<if test="!keyword.equals('')">
+		<choose>
+			<when test="searchType.equals('all')">
+					AND
+					(
+					member_name LIKE '%${keyword}%'
+					OR
+					member_id LIKE '%${keyword}%'
+					OR
+					member_nickname LIKE '%${keyword}%'
+					OR
+					member_phone LIKE '%${keyword}%'
+					OR
+					member_join_date LIKE '%${keyword}%'
+					)
+			</when>
+			<when test="searchType.equals('name')">
+				AND member_name LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('id')">
+				AND member_id LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('nickname')">
+				AND member_nickname LIKE '%${keyword}%'
+			</when>
+		</choose>
+	</if>
+		ORDER BY member_idx
+		LIMIT #{startRow}, #{listLimit}
+</select>
+
+<!-- 관리자 페이지 : 회원 목록 갯수 불러오기 -->
+<select id="selectMemberListCount2" resultType="Integer">
+	SELECT COUNT(*) FROM member
+	WHERE member_id NOT IN ('admin')
+	<if test="!keyword.equals('')">
+		<choose>
+			<when test="searchType.equals('all')">
+					AND
+					(
+					member_name LIKE '%${keyword}%'
+					OR
+					member_id LIKE '%${keyword}%'
+					OR
+					member_nickname LIKE '%${keyword}%'
+					OR
+					member_phone LIKE '%${keyword}%'
+					OR
+					member_join_date LIKE '%${keyword}%'
+					)
+			</when>
+			<when test="searchType.equals('name')">
+				AND member_name LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('id')">
+				AND member_id LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('nickname')">
+				AND member_nickname LIKE '%${keyword}%'
+			</when>
+		</choose>
+	</if>
+	LIMIT #{startRow}, #{listLimit}
+</select>
+
+<!-- 관리자 페이지 : 회원 목록 갯수 불러오기 -->
+<select id="selectMemberListCount" resultType="Integer">
+	SELECT COUNT(*) FROM member
+	WHERE member_id NOT IN ('admin')
+	<if test="!keyword.equals('')">
+		<choose>
+			<when test="searchType.equals('all')">
+					AND
+					(
+					member_name LIKE '%${keyword}%'
+					OR
+					member_id LIKE '%${keyword}%'
+					OR
+					member_nickname LIKE '%${keyword}%'
+					OR
+					member_phone LIKE '%${keyword}%'
+					OR
+					member_join_date LIKE '%${keyword}%'
+					)
+			</when>
+			<when test="searchType.equals('name')">
+				AND member_name LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('id')">
+				AND member_id LIKE '%${keyword}%'
+			</when>
+			<when test="searchType.equals('nickname')">
+				AND member_nickname LIKE '%${keyword}%'
+			</when>
+		</choose>
+	</if>
+</select>
+
+<delete id="deleteMember">
+	DELETE FROM member
+	WHERE member_idx = #{member_idx}
+</delete>
+
 </mapper> 
