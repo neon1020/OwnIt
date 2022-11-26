@@ -36,7 +36,7 @@
 	<!-- 프로필 정보 불러오기	 -->
 	<select id="selectProfile" resultType="com.teamone.ownit.vo.MypageVO">
 		SELECT 
-			i.image_real_file1, m.member_id, m.member_idx, m.member_nickname
+			i.image_real_file1, m.member_id, m.member_idx, m.member_nickname, m.member_phone
 				FROM member m
 					LEFT JOIN image i
 						ON m.member_idx = i.member_idx
@@ -56,10 +56,11 @@
 	<!-- 프로필 정보 수정하기(닉네임)	 -->		
     <update id="updateNickname">
 	    UPDATE member
-	      SET
-	        member_nickname = #{member_nickname}
-	      WHERE
-	        member_idx = #{member_idx}
+	    	SET
+					member_nickname = #{member_nickname},
+					member_phone = #{member_phone}
+	   		WHERE
+	      	member_idx = #{member_idx}
     </update>		
 	
 	<!-- 마이페이지 메인 - 프로필 -->	
@@ -297,7 +298,6 @@
 			WHERE 
 				address_idx = #{address_idx}
 	</delete>
-
 
 
 

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script type="text/javascript">
     
 	 	// 이메일 저장 체크 여부
@@ -30,7 +31,6 @@
 	 		let data = $("#member_phone").val();
 	 		location.href = "member_findEmail?member_phone=" + data;
 	 	}	 	
-	 	
     </script>
 </head>
 <body>
@@ -137,7 +137,9 @@
 							</div>									
 						</div>
 						<div style="text-align: center;">              
-							<a href="#"><img src="resources/img/member/kakao.jpg"></a>
+							<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=ee04e57ce1c4f35a3eafd3052e7156e0&redirect_uri=http://localhost:8081/ownit/kakaoLogin&response_type=code">
+								<img src="resources/img/member/kakao.jpg" alt="카카오계정 로그인">
+							</a>
 							<a href="#"><img src="resources/img/member/naver.jpg"></a>
 						</div>              
 					</div>

@@ -88,6 +88,9 @@
 								<div class="modal fade" id="exampleModal-1${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								  <div class="modal-dialog" role="document">
 								    <div class="modal-content">
+				            <form action="mypage_addCart" method="post"> 
+				            <input type="hidden" name="member_idx" value="${wishlist.member_idx }" />
+				            <input type="hidden" name="product_idx" value="${wishlist.product_idx }" />
 								      <div class="modal-header">
 								        <h5 class="modal-title" id="exampleModalLabel"></h5>
 								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -101,7 +104,7 @@
 								        <div class="container-fluid">
 								          <div class="row gutter-0">
 								            <div class="col">
-								              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
+								              <button type="submit" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
 								            </div>
 								            <div class="col">
 								              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
@@ -109,6 +112,7 @@
 								          </div>
 								        </div>
 								      </div>
+				            </form>
 								    </div>
 								  </div>
 								</div>				          

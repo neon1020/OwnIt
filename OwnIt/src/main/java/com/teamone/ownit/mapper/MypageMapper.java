@@ -36,7 +36,7 @@ public interface MypageMapper {
 	//프로필 정보 수정하기(사진)
 	int updateProfile(MypageVO mypage);
 	
-	//프로필 정보 수정하기(닉네임)
+	//프로필 정보 수정하기(닉네임, 휴대전화)
 	int updateNickname(MypageVO mypage);
 	
 	//마이페이지 메인 - 프로필

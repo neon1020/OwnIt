@@ -59,6 +59,12 @@
 												<input type="text" class="form-control form-control-sm" name="member_nickname" style="width: 303px;" value="${mypage.member_nickname }">
 											</td>
 										</tr>
+										<tr>
+											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">휴대전화</td>
+											<td >
+												<input type="text" class="form-control form-control-sm" name="member_phone" style="width: 303px;" value="${mypage.member_phone }">
+											</td>
+										</tr>
 									</table>
 									
 									<div class="row">
