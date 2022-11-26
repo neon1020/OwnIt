@@ -362,7 +362,7 @@ public class MypageController {
 	}
 	
 	//위시리스트 장바구니 담기
-	@GetMapping(value = "mypage_addCart")
+	@PostMapping(value = "mypage_addCart")
 	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
 							Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
@@ -404,7 +404,7 @@ public class MypageController {
 			List<AddressVO> address = service.getAddress(member_idx);
 			model.addAttribute("address", address);
 			System.out.println(address);
-			// 계좌 갯수 불러와서 model 객체에 저장
+			// 주소록 갯수 불러와서 model 객체에 저장
 			int addressCount = service.getAddressCount(member_idx);
 			model.addAttribute("addressCount", addressCount);
 			// member/member_info.jsp 페이지로 이동
@@ -450,10 +450,10 @@ public class MypageController {
 	//주소록 대표 배송지 설정
 	@PostMapping(value = "defaultAddress")
 	public String defaultAddress(int address_idx, int member_idx, Model model) {
-		// 계좌 전체 1(나머지 계좌)로 설정
+		// 주소록 전체 1(나머지 주소록)로 설정
 		int setOther = service.otherAddress(member_idx);
 		
-		// 해당 계좌 0(기본 계좌)으로 설정
+		// 주소록 계좌 0(기본 주소록)으로 설정
 		int setDefault = service.defaultAddress(member_idx, address_idx);
 		
 		if(setOther > 0 && setDefault > 0) {
@@ -684,5 +684,5 @@ public class MypageController {
 			return "notice/fail_back";
 		}
 	}
-	
+
 } // controller 끝

@@ -65,7 +65,8 @@
 								
 									<!-- 프로필 시작-->
 									  <div class="profileMain">
-										  <c:forEach var="mainProfile" items="${mainProfile }">
+<%-- 									  <input type="hidden" name="member_idx" value="${mainProfile.member_idx }" /> --%>
+										  <c:forEach var="mainProfile" items="${mainProfile }" begin="0" end="0">
 										  	<img class="profile" src="resources/img/member/${mainProfile.image_real_file1 }">
 										  	
 										  	<h5 style="font-size: 18px;">${mainProfile.member_nickname }님

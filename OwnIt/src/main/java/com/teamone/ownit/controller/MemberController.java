@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -25,13 +24,6 @@ import com.teamone.ownit.auth.SendMail;
 import com.teamone.ownit.service.MemberService;
 import com.teamone.ownit.vo.AddressVO;
 import com.teamone.ownit.vo.Auth_infoVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import com.teamone.ownit.service.MemberService;
 import com.teamone.ownit.vo.MemberVO;
 
 @Controller
@@ -505,25 +497,9 @@ public class MemberController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 류혜지 - 500
 	
-	
-    // 아이디 찾기 실행
+    // 아이디 찾기
 	@GetMapping(value="member_findEmail")
 	public String findEmailPro(@RequestParam String member_phone, Model model) {
 		System.out.println(member_phone + ", " + member_phone);
@@ -534,8 +510,27 @@ public class MemberController {
 		return "member/member_findEmail";
 	}
 	
-	
-	
+	// 카카오 로그인
+	@GetMapping(value="/kakaoLogin")
+	public String kakaoLogin(HttpSession session, @RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+		
+		String access_Token = service.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+		
+		MemberVO userInfo = service.getUserInfo(access_Token);
+		
+		System.out.println("###access_Token#### : " + access_Token);
+		// System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		// System.out.println("###email#### : " + userInfo.get("email"));
+		
+		// session.invalidate();
+		session.setAttribute("sNick", userInfo.getMember_nickname());
+		session.setAttribute("sIdx", userInfo.getMember_idx());
+		session.setAttribute("sId", userInfo.getMember_id());
+		
+		return "redirect:/";
+    	}	
 	
 	
 	
