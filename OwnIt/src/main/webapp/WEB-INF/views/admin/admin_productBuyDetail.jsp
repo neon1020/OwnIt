@@ -28,6 +28,14 @@
 </script>
 
 <body>
+	
+	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
+		<script>
+// 			alert("잘못된 접근입니다!");
+// 			location.href = "./";
+		</script>
+	</c:if>
+
 
 	<div class="card">
         <div class="card-body">

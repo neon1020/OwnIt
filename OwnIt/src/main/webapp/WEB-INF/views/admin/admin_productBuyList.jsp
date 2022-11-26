@@ -33,8 +33,8 @@
 
 	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
 		<script>
-			alert("잘못된 접근입니다!");
-			location.href = "./";
+// 			alert("잘못된 접근입니다!");
+// 			location.href = "./";
 		</script>
 	</c:if>
 
@@ -118,9 +118,24 @@
 	                        </div>
 	                        
 	                        <div style="text-align: center;">
-								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_0'">주문접수</button>
-								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_1'" style="margin: 0 5px">배송중</button>
-								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList_2'">배송완료</button>
+								<c:if test="${param.status eq 0 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 20%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<c:if test="${param.status eq 1 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 55%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<c:if test="${param.status eq 2 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 100%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList?status=0'">주문접수</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList?status=1'" style="margin: 0 5px">배송중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productBuyList?status=2'">배송완료</button>
 		          			</div>
 	                        
                             <!-- 검색기능 Start -->
@@ -135,7 +150,6 @@
                                     <option value="all" selected="selected">전체</option>
                                     <option value="order_group_idx">주문번호</option>
                                     <option value="member_name">고객명</option>
-<!--                                     <option value="product_name">상품명</option> -->
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
@@ -163,9 +177,6 @@
 	                                            	style="width: 400px; display: block; cursor: pointer; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${buyList.product_name } <c:if test='${buyList.buyCount != 1}'>외 ${buyList.buyCount - 1}건</c:if>">
 	                                            	${buyList.product_name }<c:if test="${buyList.buyCount != 1}">외 ${buyList.buyCount - 1}건</c:if>
 	                                            </td>
-<!-- 	                                            <td > -->
-<%-- 	                                             	<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/>원 --%>
-<!-- 	                                            </td> -->
 	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
 	                                            <c:set var="date" value="${buyList.order_buy_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
@@ -173,6 +184,7 @@
 		                                        <input type="hidden" name="product_idx" value="${buyList.product_idx }" />
 	                                            <input type="hidden" name="order_group_idx" value="${buyList.order_group_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+	                                            <input type="hidden" name="status" value="${param.status }" />
 		                                            <td>
 		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_buy_gb">
 		                                                    <option value="0" ${buyList.order_buy_gb == '0' ? 'selected="selected"' : ''}>주문접수</option>
@@ -200,7 +212,7 @@
 										
 									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productBuyList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+											<a class="page-link" href="admin_productBuyList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum - 1}">Previous</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
@@ -217,7 +229,7 @@
 											</c:when>
 											<c:otherwise>
 												<li class="page-item">
-													<a class="page-link" href="admin_productBuyList?pageNum=${i }">${i }</a>
+													<a class="page-link" href="admin_productBuyList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${i }">${i }</a>
 												</li>
 											</c:otherwise>
 										</c:choose>
@@ -225,7 +237,7 @@
 									
 									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productBuyList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+											<a class="page-link" href="admin_productBuyList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum + 1}">Next</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">

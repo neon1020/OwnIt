@@ -50,21 +50,14 @@ public interface AdminMapper {
 	
 	// Order - BuyList 갯수 조회
 	int selectBuyListCount(
-			@Param("searchType")String searchType, @Param("keyword") String keyword);
+			@Param("searchType")String searchType, @Param("keyword") String keyword, @Param("status")String status);
 
 	
 	// Order - BuyList(구매 목록) 조회
 	List<AdminOrderVO> selectBuyList(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
+			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("status")String status);
 	
-	
-	int selectBuyListCount_0(
-			@Param("searchType")String searchType, @Param("keyword") String keyword);
-	
-	List<AdminOrderVO> selectBuyList_0(
-			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
 	
 	// Order - ProductBuy 구매목록 상세조회
@@ -75,13 +68,13 @@ public interface AdminMapper {
 	
 	// Order - SellList 갯수 조회
 	int selectSellListCount(
-			@Param("searchType")String searchType, @Param("keyword") String keyword);
+			@Param("searchType")String searchType, @Param("keyword") String keyword, @Param("status") String status);
 
 	
 	// Order- SellList(구매 목록) 조회
 	List<AdminOrderVO> selectSellList(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
+			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("status") String status);
 	
 	
 	// Order - SellList(판매목록) 조회 : Status 0
@@ -120,22 +113,6 @@ public interface AdminMapper {
 	int modifyProductLeftCount(ProductVO product);
 
 
-	int selectBuyListCount_1(
-			@Param("searchType")String searchType, @Param("keyword") String keyword);
-
-
-	List<AdminOrderVO> selectBuyList_1(
-			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
-
-
-	int selectBuyListCount_2(
-			@Param("searchType")String searchType, @Param("keyword") String keyword);
-
-
-	List<AdminOrderVO> selectBuyList_2(
-			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
 
 
 
@@ -309,194 +286,17 @@ public interface AdminMapper {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 	
 	
 
-	
+
 
 	
 	
-	// 정채연 - 500
+	// 정채연 - 300
 	
 }

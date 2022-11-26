@@ -60,13 +60,13 @@ public class AdminService {
 	}
 
 	// Order - BuyList 갯수 조회
-	public int getBuyListCount(String searchType, String keyword) {
-		return mapper.selectBuyListCount(searchType, keyword);
+	public int getBuyListCount(String searchType, String keyword, String status) {
+		return mapper.selectBuyListCount(searchType, keyword, status);
 	}
 	
 	// Order - BuyList(구매목록) 조회
-	public List<AdminOrderVO> getBuyList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectBuyList(startRow, listLimit, searchType, keyword);
+	public List<AdminOrderVO> getBuyList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectBuyList(startRow, listLimit, searchType, keyword, status);
 	}
 
 	// Order - ProductBuy 구매목록 상세조회
@@ -79,37 +79,15 @@ public class AdminService {
 	}
 	
 	// Order - SellList 갯수 조회
-	public int getSellListCount(String searchType, String keyword) {
-		return mapper.selectSellListCount(searchType, keyword);
+	public int getSellListCount(String searchType, String keyword, String status) {
+		return mapper.selectSellListCount(searchType, keyword, status);
 	}
 
 	// Order - SellList(판매목록) 조회
-	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
+	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectSellList(startRow, listLimit, searchType, keyword, status);
 	}
 
-	// Order - SellList(판매목록) 조회 : Status 0
-	public int getSellListCount_0(String searchType, String keyword) {
-		return mapper.selectSellListCount_0(searchType, keyword);
-	}
-	public List<AdminOrderVO> getSellList_0(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectSellList_0(startRow, listLimit, searchType, keyword);
-	}
-	// Order - SellList(판매목록) 조회 : Status 1
-	public int getSellListCount_1(String searchType, String keyword) {
-		return mapper.selectSellListCount_1(searchType, keyword);
-	}
-	public List<AdminOrderVO> getSellList_1(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectSellList_1(startRow, listLimit, searchType, keyword);
-	}
-	// Order - SellList(판매목록) 조회 : Status 2
-	public int getSellListCount_2(String searchType, String keyword) {
-		return mapper.selectSellListCount_2(searchType, keyword);
-	}
-	public List<AdminOrderVO> getSellList_2(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectSellList_2(startRow, listLimit, searchType, keyword);
-	}
-	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	public int updateOrderBuy(AdminOrderVO adminOrder) {
 		return mapper.modifyOrderBuy(adminOrder);
@@ -125,31 +103,6 @@ public class AdminService {
 		return mapper.modifyProductLeftCount(product);
 	}
 
-	
-	
-	public int getBuyListCount_0(String searchType, String keyword) {
-		return mapper.selectBuyListCount_0(searchType, keyword);
-	}
-	
-	public List<AdminOrderVO> getBuyList_0(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectBuyList_0(startRow, listLimit, searchType, keyword);
-	}
-
-	public int getBuyListCount_1(String searchType, String keyword) {
-		return mapper.selectBuyListCount_1(searchType, keyword);
-	}
-	
-	public List<AdminOrderVO> getBuyList_1(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectBuyList_1(startRow, listLimit, searchType, keyword);
-	}
-	
-	public int getBuyListCount_2(String searchType, String keyword) {
-		return mapper.selectBuyListCount_2(searchType, keyword);
-	}
-
-	public List<AdminOrderVO> getBuyList_2(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectBuyList_2(startRow, listLimit, searchType, keyword);
-	}
 
 
 	
@@ -344,159 +297,6 @@ public class AdminService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	// 정채연 - 500
+	// 정채연 - 300
 	
 }

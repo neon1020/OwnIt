@@ -51,7 +51,7 @@
 			GROUP BY 
 				image_real_file1
 			ORDER BY 
-				cnt DESC
+				cnt DESC, order_buy_idx
 			LIMIT 5;
 	</select>
 	
@@ -64,7 +64,6 @@
 			GROUP BY 
 				p.product_type;	
 	</select>
-	
 	
 	<select id="selectMonthlySalesBuy" resultType="com.teamone.ownit.vo.ChartVO">
 		SELECT DATE_FORMAT(order_buy_date,'%y-%m') date, sum(order_buy_price) * 0.02 as sales_buy
