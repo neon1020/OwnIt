@@ -53,6 +53,7 @@ public class OrderController {
 			int order_count = 0;
 			String countTimesPrice = "";
 			List<ProductVO> productList = new ArrayList<ProductVO>();
+			int cnt = 0;
 			for(String cb : cbArr) {
 				ProductVO product = new ProductVO();
 				product_idx = cb.split(":")[0];
@@ -62,6 +63,7 @@ public class OrderController {
 //				System.out.println(product);
 				if(product.getProduct_model_num() != null) {
 					productList.add(product);
+					cnt++;
 				} else {
 					model.addAttribute("msg", product.getProduct_name()+" 상품의 구매수량을 조절해주세요");
 					return "order/fail_back";
@@ -69,6 +71,7 @@ public class OrderController {
 			}
 			model.addAttribute("productList", productList);
 			model.addAttribute("cbChecked", cbChecked);
+			model.addAttribute("cnt", cnt);
 			return "order/order_buyAgree";
 		}
 		return "member/member_login";
@@ -77,15 +80,26 @@ public class OrderController {
 	// 구매주문 폼
 	@GetMapping(value = "order_buyForm")
 	public String order_buyForm(@RequestParam String cbChecked, Model model) {
-		//이미지 하나 가져오는 작업 불필요시 삭제
-//		ImageVO image = service.selectDetailImage(product_idx);
-//		model.addAttribute("image", image);
-		System.out.println(cbChecked);
-		//프로덕트 정보 가져오는 작업 불필요시 삭제
-//		ProductVO product = service.productDetail(product_idx);
-//		model.addAttribute("product", product);
-//		return "order/order_buyForm";
-		return "";
+		String[] cbArr = cbChecked.split("/");
+		String product_idx = "";
+		int order_count = 0;
+		int countTimesPrice = 0;
+		List<ProductVO> productList = new ArrayList<ProductVO>();
+		int cnt = 0;
+		for(String cb : cbArr) {
+			ProductVO product = new ProductVO();
+			product_idx = cb.split(":")[0];
+			order_count = Integer.parseInt(cb.split(":")[1]);
+			countTimesPrice += Integer.parseInt(cb.split(":")[2]);
+			product = service.selectCartCount(product_idx, order_count);
+			productList.add(product);
+			cnt++;
+		}
+		model.addAttribute("productList", productList);
+		model.addAttribute("cbChecked", cbChecked);
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("countTimesPrice", countTimesPrice);
+		return "order/order_buyForm";
 	}
 	
 	

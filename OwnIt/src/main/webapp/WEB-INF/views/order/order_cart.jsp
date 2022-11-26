@@ -237,6 +237,9 @@ function buySelectedItems(btn) {
 	});
 	if(cbChecked.length != 0) {
 		location.href="order_buyAgree?cbChecked="+cbChecked;
+		$("input[type=checkbox]").prop("checked", false);
+		payTotal = 0;
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
 	} else {
 		alert("최소 1개 이상의 상품만 주문가능합니다");
 	}
