@@ -28,9 +28,16 @@ public class AdminOrderVO {
 	
 	private String order_buy_gb;
 	private String order_buy_date;
+	private int order_buy_count;
+	private String order_buy_price;
+
 	
 	private String order_sell_gb;
 	private String order_sell_date;
+	
+	private String image_real_file1;
+	
+	private int buyCount;
 	
 	public AdminOrderVO() {}
 	
@@ -175,6 +182,22 @@ public class AdminOrderVO {
 	public void setOrder_buy_date(String order_buy_date) {
 		this.order_buy_date = order_buy_date;
 	}
+	public int getOrder_buy_count() {
+		return order_buy_count;
+	}
+
+	public void setOrder_buy_count(int order_buy_count) {
+		this.order_buy_count = order_buy_count;
+	}
+
+	public String getOrder_buy_price() {
+		return order_buy_price;
+	}
+
+	public void setOrder_buy_price(String order_buy_price) {
+		this.order_buy_price = order_buy_price;
+	}
+
 	public String getOrder_sell_gb() {
 		return order_sell_gb;
 	}
@@ -186,6 +209,21 @@ public class AdminOrderVO {
 	}
 	public void setOrder_sell_date(String order_sell_date) {
 		this.order_sell_date = order_sell_date;
+	}
+
+	public String getImage_real_file1() {
+		return image_real_file1;
+	}
+
+	public void setImage_real_file1(String image_real_file1) {
+		this.image_real_file1 = image_real_file1;
+	}
+
+	public int getBuyCount() {
+		return buyCount;
+	}
+	public void setBuyCount(int buyCount) {
+		this.buyCount = buyCount;
 	}
 	
 

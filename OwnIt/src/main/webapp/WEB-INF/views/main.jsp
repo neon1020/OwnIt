@@ -3,14 +3,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/vendor.css" />
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/vendor.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style.css" />
 
-    <title>Home - Minimal</title>
-  </head>
-  <body>
+<title>OwnIt</title>
+</head>
+
+
+<body>
 
 
     <!-- header -->
@@ -21,23 +23,23 @@
     <div class="swiper-container swiper-container-alt">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <div class="image image-overlay image-zoom" style="background-image:url(<%=request.getContextPath() %>/resources/img/background-4.jpg)"></div>
+          <div class="image image-overlay image-zoom" id="slides" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_1.jpg')"></div>
           <div class="container">
             <div class="row align-items-center justify-content-center vh-80">
               <div class="col-lg-8 text-white text-center" data-swiper-parallax-y="-100%">
-                <h1 class="display-2 mb-2">Your <b>perfect workspace</b> is waiting for you.</h1>
-                <a href="" class="btn btn-white">Shop Now</a>
+<!--                 <h1 class="display-2 mb-2">Your <b>perfect workspace</b> is waiting for you.</h1> -->
+<!--                 <a href="" class="btn btn-white">Shop Now</a> -->
               </div>
             </div>
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="image image-overlay image-zoom" style="background-image:url(<%=request.getContextPath() %>/resources/img/background-5.jpg)"></div>
+          <div class="image image-overlay image-zoom" id="slides" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_2.jpg')"></div>
           <div class="container">
             <div class="row align-items-center justify-content-center vh-80">
               <div class="col-lg-6 text-white text-center" data-swiper-parallax-y="-100%">
-                <h1 class="display-2 mb-2">Transform your home with us.</h1>
-                <a href="" class="btn btn-outline-white">Shop Now</a>
+<!--                 <h1 class="display-2 mb-2">Transform your home with us.</h1> -->
+<!--                 <a href="" class="btn btn-outline-white">Shop Now</a> -->
               </div>
             </div>
           </div>
