@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
-import com.teamone.ownit.vo.AdminOrderVO;
-import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.MypageSellListVO;
-import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.*;
 
 @Service
 public class AdminService {
@@ -111,6 +108,7 @@ public class AdminService {
 
 	
 
+	
 
 
 
@@ -118,6 +116,7 @@ public class AdminService {
 
 
 
+
 	
 	
 	
@@ -297,6 +296,29 @@ public class AdminService {
 	
 	
 	
+
 	// 정채연 - 300
+	public List<MemberVO> getMemberList(int startRow, int listLimit, String searchType, String keyword) {
+		System.out.println("AdminService - getMemberList()");
+		return mapper.selectMemberList(startRow, listLimit, searchType, keyword);
+	}
+	
+	public int getMemberListCount(String searchType, String keyword) {
+		System.out.println("AdminService - getMemberListCount()");
+		return mapper.selectMemberListCount(searchType, keyword);
+	}
+	
+	// 오버로딩
+	public Integer getMemberListCount2(int startRow, int listLimit, String searchType, String keyword) {
+		System.out.println("AdminService - getMemberListCount2()");
+		return mapper.selectMemberListCount2(startRow, listLimit, searchType, keyword);
+	}
+
+	public int removeMember(int member_idx) {
+		System.out.println("AdminService - removeMember()");
+		return mapper.deleteMember(member_idx);
+	}
+	
+
 	
 }
