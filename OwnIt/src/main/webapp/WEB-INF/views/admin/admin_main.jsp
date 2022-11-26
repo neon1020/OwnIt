@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +20,73 @@
 
 </head>
 <script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
-<body>
+<script type="text/javascript">
 
+	$(function() {
+		
+		$.ajax({
+			type: "GET",
+	        url: "orderSell_productTop5_image",
+	        dataType: "json"
+		})
+		.done(function(dataList) { // 요청 성공 시
+	
+			for(let image of dataList) {
+				
+				let result =    "<div style='float: left; width: 20%'>"
+	                        	+ "<img src='resources/img/product/" 
+	                        	+ image.image_real_file1 
+	                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
+	                        	+ "</div>"
+	                        	;
+	            				
+				$("#imageDiv1").append(result);
+			}
+		})
+		.fail(function() { // 요청 실패 시
+			alert("orderSelll_productTop5_실패!!");
+		});
+				
+		
+		$.ajax({
+			type: "GET",
+	        url: "orderBuy_productTop5_image",
+	        dataType: "json"
+		})
+		.done(function(dataList) { // 요청 성공 시
+	
+			for(let image of dataList) {
+				
+				let result =    "<div style='float: left; width: 20%'>"
+	                        	+ "<img src='resources/img/product/" 
+	                        	+ image.image_real_file1 
+	                        	+ "' style='width: 80px; height: 80px; border-radius: 60%;'>" 
+	                        	+ "</div>"
+	                        	;
+	            				
+				$("#imageDiv2").append(result);
+			}
+		})
+		.fail(function() { // 요청 실패 시
+			alert("실패!!");
+		});
+		
+		
+	});
+	
+
+</script>
+<body>
+	
+	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
+		<script>
+// 			alert("잘못된 접근입니다!");
+// 			location.href = "./";
+		</script>
+	</c:if>
+	
+	
+	
     <!--*******************
         Preloader start
     ********************-->
@@ -89,13 +155,14 @@
                 </div>
             </div>
             <!-- row -->
+            <br>
             <div class="container-fluid">
 			<!-- !!!!!Content 내용 여기!!!!! -->
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-1">
                             <div class="card-body">
-                                <h3 class="card-title text-white" >판매</h3>
+                                <h3 class="card-title text-white" >거래</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">4565</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -107,7 +174,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-2">
                             <div class="card-body">
-                                <h3 class="card-title text-white">판매액</h3>
+                                <h3 class="card-title text-white">매출액</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">￦ 8541</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -119,7 +186,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-3">
                             <div class="card-body">
-                                <h3 class="card-title text-white">신규 회원</h3>
+                                <h3 class="card-title text-white">회원</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">4565</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -131,7 +198,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-4">
                             <div class="card-body">
-                                <h3 class="card-title text-white">신규 게시글</h3>
+                                <h3 class="card-title text-white">신규 리뷰</h3>
                                 <div class="d-inline-block">
                                     <h2 class="text-white">9999</h2>
                                     <p class="text-white mb-0">Jan - March 2019</p>
@@ -144,19 +211,61 @@
                 
                 
                  <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">판매 TOP5 상품</h4>
+                                <canvas id="singelBarChart1" width="500" height="300"></canvas>
+	                            <div style="padding-left: 55px" id="imageDiv1">    
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">구매 TOP5 상품</h4>
+                                <canvas id="singelBarChart2" width="500" height="300"></canvas>
+	                            <div style="padding-left: 55px" id="imageDiv2">    
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="row">
+                
+                	<div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Line chart with area</h4>
+                                <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Stacked bar chart</h4>
+                                <div id="stacked-bar-chart" class="ct-chart ct-golden-section"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+            <div class="row">
                     <!-- Pie Chart -->
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Pie chart</h4>
+                                <h4 class="card-title">Product Type&nbsp;(BUYING)</h4>
                                 <canvas id="pieChart" width="500" height="300"></canvas>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                
-            </div>
             <!-- #/ container -->
         </div>
         <!--**********************************
@@ -210,7 +319,8 @@
     <script src="<%=request.getContextPath() %>/resources/admin/plugins/chartist/js/chartist.min.js"></script>
     <script src="<%=request.getContextPath() %>/resources/admin/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="<%=request.getContextPath() %>/resources/admin/js/plugins-init/chartjs-init.js"></script>
-
+	<script src="<%=request.getContextPath() %>/resources/admin/js/plugins-init/chartist.init.js"></script>
+	
     <script src="<%=request.getContextPath() %>/resources/admin/js/dashboard/dashboard-1.js"></script>
     
     <script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>

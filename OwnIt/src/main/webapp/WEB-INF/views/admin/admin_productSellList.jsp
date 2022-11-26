@@ -18,16 +18,22 @@
 
 </head>
 <script type="text/javascript">
-	
+
 	function func1() {
 		confirm('변경하시겠습니까?');
 	}
-	
-// 	var status = $("#inlineFormCustomSelect option:selected").val();
-// 	alert(status);
 
 </script>
 <body>
+
+	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
+		<script>
+// 			alert("잘못된 접근입니다!");
+// 			location.href = "./";
+		</script>
+	</c:if>
+	
+
 
     <!--*******************
         Preloader start
@@ -107,6 +113,28 @@
                             <div class="card-title">
 	                            <h2>Sell Product</h2>
 	                        </div>
+	                        
+	                        <div style="text-align: center;">
+	                        	<c:if test="${param.status eq 0 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 20%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<c:if test="${param.status eq 1 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 55%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<c:if test="${param.status eq 2 }">
+		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
+	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 100%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
+	                                </div>
+								</c:if>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList?status=0'">검수대기중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList?status=1'" style="margin: 0 5px">검수중</button>
+								<button type="button" class="btn mb-1 btn-rounded btn-outline-primary" onclick="location.href='admin_productSellList?status=2'">검수완료</button>
+		          			</div>
+	                        
                             <!-- 검색기능 Start -->
 	                        <form action="admin_productSellList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
@@ -122,6 +150,8 @@
                                      <option value="account_owner_name">예금주명</option>
                                     <option value="product_name">상품명</option>
                                 </select>
+<%--                                 <input type="hidden" name="status" value="${param.status }"> --%>
+<%--                                 <input type="hidden" name="pageNum" value="${pageInfo.pageNum }"> --%>
 	                        </form>
 	                        <!-- 검색기능 End -->
                             <div class="table-responsive">
@@ -147,9 +177,7 @@
 	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${sellList.product_name }">
 	                                            	${sellList.product_name }
 	                                            </td>
-<%-- 	                                            <td>${sellList.product_name }</td> --%>
 	                                            <td>
-<%-- 	                                             	￦<fmt:formatNumber value="${buyList.product_buy_price }" pattern="#,###"/><br> --%>
 	                                             	<fmt:formatNumber value="${sellList.product_sell_price }" pattern="#,###"/>원
 	                                            </td>
 	                                            <td>${sellList.account_bank }&nbsp;${sellList.account_owner_name }<br>${sellList.account_num }</td>
@@ -158,7 +186,8 @@
 	                                            <form action="admin_orderSellModify" method="post">
 	                                            <input type="hidden" name="product_idx" value="${sellList.product_idx }" />
 	                                            <input type="hidden" name="order_sell_idx" value="${sellList.order_sell_idx }" />
-	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
+	                                            <input type="hidden" name="pageNum" value="${pageInfo.pageNum }" />
+	                                            <input type="hidden" name="status" value="${param.status }" />
 		                                            <td>
 		                                            	<select class="custom-select col-9" id="inlineFormCustomSelect" name="order_sell_gb">
 		                                                    <option value="0" ${sellList.order_sell_gb == '0' ? 'selected="selected"' : ''}>검수대기중</option>
@@ -186,7 +215,7 @@
 										
 									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productSellList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+											<a class="page-link" href="admin_productSellList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum - 1}">Previous</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
@@ -203,7 +232,7 @@
 											</c:when>
 											<c:otherwise>
 												<li class="page-item">
-													<a class="page-link" href="admin_productSellList?pageNum=${i }">${i }</a>
+													<a class="page-link" href="admin_productSellList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${i }">${i }</a>
 												</li>
 											</c:otherwise>
 										</c:choose>
@@ -211,7 +240,7 @@
 									
 									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productSellList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+											<a class="page-link" href="admin_productSellList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum + 1}">Next</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
