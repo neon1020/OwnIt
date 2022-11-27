@@ -302,8 +302,7 @@
 
     //pie chart
     
-	var labelList = new Array();
-	var valueList = new Array();
+	
 	
 	$(function(){
 		
@@ -314,8 +313,10 @@
             })
             .done(function(dataList) { // 요청 성공 시
 			
+			var labelList = new Array();
+			var valueList = new Array();
+				
 			for(let data of dataList) {
-//				alert(data.product_type);
 				labelList.push(data.product_type);
 				valueList.push(data.cnt);
 			}
@@ -429,33 +430,118 @@
 //        }
 //    });
 
-//    // single bar chart
-//    var ctx = document.getElementById("singelBarChart");
-//    ctx.height = 150;
-//    var myChart = new Chart(ctx, {
-//        type: 'bar',
-//        data: {
-//            labels: ["Sun", "Mon", "Tu", "Wed", "Th", "Fri", "Sat"],
-//            datasets: [
-//                {
-//                    label: "My First dataset",
-//                    data: [40, 55, 75, 81, 56, 55, 40],
-//                    borderColor: "rgba(117, 113, 249, 0.9)",
-//                    borderWidth: "0",
-//                    backgroundColor: "rgba(117, 113, 249, 0.5)"
-//                }
-//            ]
-//        },
-//        options: {
-//            scales: {
-//                yAxes: [{
-//                    ticks: {
-//                        beginAtZero: true
-//                    }
-//                }]
-//            }
-//        }
-//    });
+    // single bar chart
+    $(function(){
+		
+		$.ajax({
+			type: "GET",
+            url: "orderSell_productTop5",
+            dataType:"json"
+            })
+            .done(function(dataList) { // 요청 성공 시
+			
+			var labelList = new Array();
+			var valueList = new Array();
+			
+			for(let data of dataList) {
+				labelList.push((data.product_name).substr(0, 12));
+				valueList.push(data.cnt);
+			}
+			
+		    var ctx = document.getElementById("singelBarChart1");
+		    ctx.height = 200;
+		    var myChart = new Chart(ctx, {
+		        type: 'bar',
+		        data: {
+		            labels: labelList,
+		            datasets: [
+		                {
+		                    label: "판매 TOP5",
+		                    data: valueList,
+		                    borderColor: "rgb(50, 64, 123, 0.7)",
+		                    borderWidth: "0",
+		                    backgroundColor: "rgb(50, 64, 123, 0.7)"
+		                }
+		            ]
+		        },
+		        options: {
+		            scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                }]
+		            }
+		        }
+		    });
+			
+		})
+		.fail(function() { // 요청 실패 시
+			alert("");
+		});
+		
+	});
+    
+    
+
+	
+	$(function(){
+		
+		$.ajax({
+			type: "GET",
+            url: "orderBuy_productTop5",
+            dataType:"json"
+            })
+            .done(function(dataList) { // 요청 성공 시
+			
+			var labelList = new Array();
+			var valueList = new Array();
+			
+			for(let data of dataList) {
+				labelList.push((data.product_name).substr(0, 12));
+				valueList.push(data.cnt);
+			}
+		    var ctx = document.getElementById("singelBarChart2");
+		    ctx.height = 200;
+		    var myChart = new Chart(ctx, {
+		        type: 'bar',
+		        data: {
+		            labels: labelList,
+		            datasets: [
+		                {
+		                    label: "구매 TOP5",
+		                    data: valueList,
+		                    borderColor: "rgb(50, 64, 123, 0.7)",
+		                    borderWidth: "0",
+		                    backgroundColor: "rgb(50, 64, 123, 0.7)"
+		                }
+		            ]
+		        },
+		        options: {
+		            scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                }]
+		            }
+		        }
+		    });
+			
+		})
+		.fail(function() { // 요청 실패 시
+			alert("Bar chart2 요청실패");
+		});
+		
+	});
+
+
+
+
+
+
+
+
 
 
 

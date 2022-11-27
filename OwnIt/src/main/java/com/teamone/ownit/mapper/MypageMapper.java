@@ -34,10 +34,10 @@ public interface MypageMapper {
 	MypageVO selectProfile(int member_idx);
 	
 	//프로필 정보 수정하기(사진)
-	int updateProfile(MypageVO profile);
+	int updateProfile(MypageVO mypage);
 	
-	//프로필 정보 수정하기(닉네임)
-	int updateNickname(MypageVO profile);
+	//프로필 정보 수정하기(닉네임, 휴대전화)
+	int updateNickname(MypageVO mypage);
 	
 	//마이페이지 메인 - 프로필
 	List<MypageMainVO> selectMainProfile(int member_idx);
@@ -108,7 +108,6 @@ public interface MypageMapper {
 	
 
 
-	
 	
 	
 	
