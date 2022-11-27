@@ -377,21 +377,20 @@
               </div>
             </div>
             
-            
+         
             <div>
               <div class="col-lg-12">
             </div>
-              <img src="resources/img/product/productDetailNotice.png">
+              <img src="resources/img/product/productDetailNotice.png"><hr>
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    	<span style="color:black;">
+                  <li class="nav-item">
+                    	<span id="title1" style="color:black;">
                     		상품 공유하기
                     	</span>
-                    </a>
-                    <ul class="dropdown-menu" style="width: 150px;">
+                    <ul style="width: 150px;">
                       <li>
+                      	<br>
                         <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn">
                         <img id="btnimg" src="resources/img/product/detailKakao.png"></a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

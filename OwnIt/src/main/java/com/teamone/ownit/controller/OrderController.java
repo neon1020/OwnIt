@@ -509,7 +509,7 @@ public class OrderController {
 	@GetMapping(value = "order_sellAgree")
 	public String order_sellAgree(@RequestParam int product_idx, Model model,HttpSession session) {
 		//상품 판매 버튼 클릭시 세션아이디가 없으면 로그인화면으로
-		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
+//		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
 			System.out.println(sId);
@@ -557,7 +557,6 @@ public class OrderController {
 		
 		int product_idx = account.getProduct_idx();
 		int member_idx = account.getMember_idx();
-		System.out.println(member_idx + "member_idx");
 		// 계좌가 4개 미만일 경우에만 등록
 		int accountCounter = service.getCountAccount(member_idx);
 		if(accountCounter > 3 ) { // 주소가 3개보다 많을 경우(4개이상일경우)
@@ -567,7 +566,6 @@ public class OrderController {
 		int account_idx = 0;
 		int insertCount = service.insertAccountSell(account);
 		if(insertCount > 0) {
-			System.out.println("계좌 추가 성공");
 			AccountVO accountVO = service.selectAccountSell(member_idx);
 			account_idx = accountVO.getAccount_idx();
 			System.out.println("account_idx : " + account_idx);
@@ -582,7 +580,6 @@ public class OrderController {
 	public String order_sellForm(@RequestParam int product_idx,
 								 @RequestParam(defaultValue = "0") int address_idx ,
 								 @RequestParam(defaultValue = "0") int account_idx, Model model, HttpSession session) {
-		System.out.println("Get방식 호출");
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		String sId = (String)session.getAttribute("sId");
@@ -594,26 +591,19 @@ public class OrderController {
 		List<Order_SellFormMbAddAccVO> accountList = service.selectAccountList(member_idx);
 		model.addAttribute("accountList", accountList);
 		
-		System.out.println("account_idx"+account_idx);
-		System.out.println("member_idx"+member_idx);
-		System.out.println("address_idx"+address_idx);
-		
-		if(account_idx > 0 && address_idx > 0) {
+		if(account_idx > 0 && address_idx > 0) { // 계좌 추가 후 주소 변경
 			Order_SellFormMbAddAccVO memeber = service.newAccountAddressForm(member_idx,account_idx,address_idx);
 			model.addAttribute("member", memeber);
-			System.out.println("계좌 추가 후 주소 변경");
 			return "order/order_sellForm";
 		}
 		if(account_idx > 0) { // 계좌 추가시에 추가된 계좌로 보이게 하는 구문
 			Order_SellFormMbAddAccVO member = service.newAccountSellForm(member_idx,account_idx);
 			model.addAttribute("member", member);
-			System.out.println("계좌만 추가");
 			return "order/order_sellForm";
 		}
 		if(address_idx > 0) { // 주소 변경시에 변경된 주소로 보이게 하는 구문
 			Order_SellFormMbAddAccVO member = service.clickAddress(member_idx,address_idx);
 			model.addAttribute("member", member);
-			System.out.println("주소만 변경");
 			return "order/order_sellForm";
 		} else {
 			Order_SellFormMbAddAccVO member = service.selectMember(member_idx);
@@ -629,7 +619,6 @@ public class OrderController {
 	// 상품 판매 (판매자 정보 INSERT작업)
 	@PostMapping(value = "/order_sellDetail")
 	public String order_sellDetail(@ModelAttribute Order_sellVO order_sell) {
-		System.out.println("post방식 호출됨");
 		int product_idx = order_sell.getProduct_idx();
 		int member_idx = order_sell.getMember_idx();
 		
@@ -652,7 +641,6 @@ public class OrderController {
 	//상품 판매 성공시 redirect방식 호출(새로고침 중복 INSERT 방지)
 	@GetMapping(value = "/order_sellDetail")
 	public String order_sellDetail(Model model,@RequestParam int product_idx, @RequestParam int member_idx) {
-		System.out.println("get방식 호출됨");
 		ProductVO product = service.productDetail(product_idx);
 		model.addAttribute("product", product);
 		
@@ -674,7 +662,6 @@ public class OrderController {
 	//상품 구매 동의
 	@GetMapping(value = "order_buyAgree")
 	public String order_buyAgree(@RequestParam int product_idx, Model model,HttpSession session) {
-		session.setAttribute("sId", "test2@naver.com"); // 세션아이디 임시 테스트용
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
 		
@@ -686,7 +673,6 @@ public class OrderController {
 	}
 	
 	
-	//
 	
 
 	
