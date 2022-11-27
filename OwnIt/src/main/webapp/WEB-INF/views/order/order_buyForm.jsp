@@ -42,12 +42,12 @@
 		padding: 10px 10px;
 	}
 </style>
-<script src="resources/js/jquery-3.6.1.js"></script>
-<script  type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript">
-document.cookie = "safeCookie1=foo; SameSite=Lax"; 
-document.cookie = "safeCookie2=foo";  
-document.cookie = "crossCookie=bar; SameSite=None; Secure";
+// document.cookie = "safeCookie1=foo; SameSite=Lax"; 
+// document.cookie = "safeCookie2=foo";  
+// document.cookie = "crossCookie=bar; SameSite=None; Secure";
 
 // $(document).ready(function(){
 var IMP = window.IMP;
@@ -55,7 +55,7 @@ IMP.init("imp51126383");
 
 function requestPay() {
 	IMP.request_pay({ // param
-	pg: "kakaopay",
+	pg: "kcp",
 	pay_method: "card",
 	merchant_uid: 'merchant_' + new Date().getTime(),
 	name: "노르웨이 회전 의자",
@@ -64,8 +64,8 @@ function requestPay() {
 	buyer_name: "홍길동",
 	buyer_tel: "010-4242-4242",
 	buyer_addr: "서울특별시 강남구 신사동",
-	buyer_postcode: "01181",
-	m_redirect_url :'https://localhost:8080/order/order_sellComplete.jsp'
+	buyer_postcode: "01181"
+// 	m_redirect_url :'https://localhost:8080/order/order_sellComplete.jsp'
 	}, function (rsp) { // callback
 		console.log(rsp);
 		if (rsp.success) {
