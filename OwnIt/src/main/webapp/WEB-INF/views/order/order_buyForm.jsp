@@ -45,31 +45,38 @@
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script  type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 <script type="text/javascript">
+document.cookie = "safeCookie1=foo; SameSite=Lax"; 
+document.cookie = "safeCookie2=foo";  
+document.cookie = "crossCookie=bar; SameSite=None; Secure";
+
+// $(document).ready(function(){
 var IMP = window.IMP;
 IMP.init("imp51126383");
-	
+
 function requestPay() {
 	IMP.request_pay({ // param
-	pg: "html5_inicis",
+	pg: "kakaopay",
 	pay_method: "card",
-	merchant_uid: "ORD20180131-0000011",
+	merchant_uid: 'merchant_' + new Date().getTime(),
 	name: "노르웨이 회전 의자",
 	amount: 64900,
 	buyer_email: "gildong@gmail.com",
 	buyer_name: "홍길동",
 	buyer_tel: "010-4242-4242",
 	buyer_addr: "서울특별시 강남구 신사동",
-	buyer_postcode: "01181"
+	buyer_postcode: "01181",
+	m_redirect_url :'https://localhost:8080/order/order_sellComplete.jsp'
 	}, function (rsp) { // callback
-          if (rsp.success) {
-             alert("성공");
-          } else {
-             alert("실패");
-          }
+		console.log(rsp);
+		if (rsp.success) {
+		   alert("성공");
+		} else {
+		   alert(rsp.error_msg);
+		}
 // 	$("#btn-payment").submit();
     });
 }
-		
+// });		
 </script>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
