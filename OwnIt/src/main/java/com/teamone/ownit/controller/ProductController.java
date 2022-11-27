@@ -586,8 +586,9 @@ public class ProductController {
 
 	@GetMapping(value = "product_detail")
 	public ModelAndView product_detail(@RequestParam(defaultValue = "0") int product_idx,
-									   @RequestParam(defaultValue = "1") int pageNum2,
-									   @RequestParam(defaultValue = "") String keyword) {
+            @RequestParam(defaultValue = "1") int pageNum2,
+            @RequestParam(defaultValue = "") String keyword) {
+		
 		ModelAndView mav = new ModelAndView("product/product_detail");
 		int listLimit = 8, pageListLimit = 10, startRow = (pageNum2 - 1) * listLimit;
 		// 상품 정보
@@ -605,7 +606,7 @@ public class ProductController {
 				styleLikeCount = service.getStyleLike(style.getReview_idx()); 
 				style.setStyle_like_count(styleLikeCount);
 			}
-			System.out.println("styleLikeCountstyleLikeCount : " + styleLikeCount);
+//			System.out.println("styleLikeCountstyleLikeCount : " + styleLikeCount);
 		}
 		int maxPage = (int) Math.ceil((double) listCount / listLimit);
 		int startPage = (pageNum2 - 1) / pageListLimit * pageListLimit + 1;
@@ -627,9 +628,11 @@ public class ProductController {
 	
 	// 상품 상세 하단 리뷰 Ajax 리스트&페이징 처리
 	@GetMapping(value = "reviewChange", produces = "application/json; charset=utf8")
-	public void reviewChange(Model model, HttpServletResponse response,@RequestParam(defaultValue = "0") int product_idx, 
-																	   @RequestParam(defaultValue = "1") int pageNum2,
-																	   @RequestParam(defaultValue = "") String keyword) {
+	public void reviewChange(Model model, HttpServletResponse response,
+			@RequestParam(defaultValue = "0") int product_idx, 
+	        @RequestParam(defaultValue = "1") int pageNum2,
+	        @RequestParam(defaultValue = "") String keyword) {
+		
 		int listLimit = 8, pageListLimit = 10, startRow = (pageNum2 - 1) * listLimit;
 		
 		// 상품에 대한 리뷰 목록
