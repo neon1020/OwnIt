@@ -63,6 +63,12 @@ public interface MypageMapper {
 	//위시리스트 갯수 조회
 	int selectWishlistCount(int member_idx);
 	
+	//위시리스트에 존재하는지 확인
+	int isContainedInWish(@Param("member_idx") int member_idx, @Param("product_idx") int product_idx);
+	
+	//위시리스트 추가
+	int addToWish(@Param("member_idx") int member_idx, @Param("product_idx") int product_idx);
+	
 	//장바구니에 존재하는지 확인
 	int isContainedInCart(@Param("member_idx") int member_idx, @Param("product_idx")int product_idx);
 	
@@ -320,6 +326,10 @@ public interface MypageMapper {
 	int updateOrderBuyGb(@Param("member_idx") int member_idx, @Param("order_buy_idx") int order_buy_idx);
 
 	ReviewVO selectReview(@Param("product_idx") int product_idx, @Param("member_idx") int member_idx);
+
+	
+
+	
 
 	
 }

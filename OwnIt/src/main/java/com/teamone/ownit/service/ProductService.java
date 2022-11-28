@@ -531,6 +531,11 @@ public class ProductService {
 		mapper.insertReviewLike(member_idx,review_idx);
 	}
 
+	// 관심상품에 존재유무(혜지)
+	public int isContainedInWish(int member_idx, int product_idx) {
+		return mapper.isContainedInWish(member_idx, product_idx);
+	}
+
 
 
 	

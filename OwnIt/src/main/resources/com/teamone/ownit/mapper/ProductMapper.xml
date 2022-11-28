@@ -598,8 +598,15 @@
 		VALUES (#{member_idx},#{review_idx})
 	</insert>
 
-
-
+	<!-- 관심상품에 존재유무(혜지) -->
+	<select id="isContainedInWish" resultType="int">
+		SELECT COUNT(*)
+			FROM wishlist 
+			WHERE 
+				member_idx = #{member_idx} 
+				AND 
+				product_idx = #{product_idx}
+	</select>
 
 
 
