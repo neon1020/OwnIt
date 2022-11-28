@@ -519,6 +519,18 @@ public class ProductService {
 		return mapper.selectStyleCount(review_idx);
 	}
 
+	public List<Integer> getLikeMemberList(int review_idx) {
+		return mapper.getLikeMemberList(review_idx);
+	}
+
+	public void deleteReviewLike(int member_idx, int review_idx) {
+		mapper.deleteReviewLike(member_idx,review_idx);
+	}
+
+	public void insertReviewLike(int member_idx, int review_idx) {
+		mapper.insertReviewLike(member_idx,review_idx);
+	}
+
 
 
 	
@@ -546,17 +558,6 @@ public class ProductService {
 	
 
 	
-
-
-
-
-
-
-
-
-
-
-
 
 
 
