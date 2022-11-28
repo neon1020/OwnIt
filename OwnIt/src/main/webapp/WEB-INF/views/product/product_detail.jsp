@@ -273,7 +273,10 @@
 				</button>
 				<!-- 위시리스트 추가 버튼(혜지) -->
 				<form action="mypage_addWish" method="post">
-				<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+				<c:if test="${not empty sessionScope.sId }">
+					<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+				</c:if>
+			  <input type="hidden" name="member_idx" value="0" />	
 			  <input type="hidden" name="product_idx" value="${product.product_idx }" />
 					<button id="btn3" type="submit" class="btn">
 						<p>
