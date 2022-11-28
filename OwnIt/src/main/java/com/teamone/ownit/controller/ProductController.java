@@ -37,8 +37,8 @@ public class ProductController {
 
 	@GetMapping(value = "product_list")
 	public String product_list(Model model, HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-		String sId = "test1@naver.com";
+		String sId = (String)session.getAttribute("sId");
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			List<ProductVO> productList = service.getProductList(sId);
 	//		System.out.println(productList);
@@ -58,8 +58,8 @@ public class ProductController {
 	@PostMapping(value = "listProductByCategory")
 	@ResponseBody
 	public void listProduct(String categories, HttpServletResponse response, HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-		String sId = "test1@naver.com";
+		String sId = (String)session.getAttribute("sId");
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 //			System.out.println(categories);
 			String[] divideCategory = categories.split("/");
@@ -102,9 +102,9 @@ public class ProductController {
 	@PostMapping(value = "addAndRemoveLikeList")
 	@ResponseBody
 	public String addLikeList(HttpSession session, int product_idx) {
-//		String sId = (String)session.getAttribute("sId");
-		System.out.println(product_idx);
-		String sId = "test1@naver.com";
+		String sId = (String)session.getAttribute("sId");
+//		System.out.println(product_idx);
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			int ischecked = service.checkLike(sId, product_idx);
 			if(ischecked == 0) {
@@ -126,9 +126,9 @@ public class ProductController {
 	@GetMapping(value = "addCart", produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String addCart(HttpSession session, int product_idx) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		System.out.println(product_idx);
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			int isContained = service.isContainedInCart(sId, product_idx);
 			if(isContained > 0) {
@@ -147,9 +147,9 @@ public class ProductController {
 	@PostMapping(value = "checkCart", produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public void checkCart(HttpSession session, HttpServletResponse response) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		List<CartVO> cart = null;
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			cart = service.checkCart(sId);
 			JSONArray jsonArray = new JSONArray();
@@ -170,9 +170,9 @@ public class ProductController {
 	
 	@GetMapping(value = "viewMyCart")
 	public String viewMyCart(HttpSession session, Model model) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		List<CartVO> cart = null;
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			cart = service.checkCart(sId);
 			model.addAttribute("cart", cart);
@@ -184,9 +184,9 @@ public class ProductController {
 	@PostMapping(value = "delAndReloadCart")
 	@ResponseBody
 	public void deleteCart(HttpSession session, HttpServletResponse response, int product_idx) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		List<CartVO> cart = null;
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 		    service.deleteCart(sId, product_idx);
 			cart = service.checkCart(sId);
@@ -208,8 +208,8 @@ public class ProductController {
 	@PostMapping(value = "deleteAllCart")
 	@ResponseBody
 	public void deleteAllCart(HttpSession session) {
-//		String sId = (String)session.getAttribute("sId");
-		String sId = "test1@naver.com";
+		String sId = (String)session.getAttribute("sId");
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			service.deleteAllCart(sId);
 		}
@@ -218,18 +218,18 @@ public class ProductController {
 	@PostMapping(value = "updateCartCount")
 	@ResponseBody
 	public void updateCartCount(HttpSession session, HttpServletResponse response, int product_idx, int cart_count) {
-//		String sId = (String)session.getAttribute("sId");
+		String sId = (String)session.getAttribute("sId");
 		List<CartVO> cart = null;
 //		System.out.println(product_idx);
 //		System.out.println(cart_count);
-		String sId = "test1@naver.com";
+//		String sId = "test1@naver.com";
 		if(sId.length() != 0) {
 			int leftCnt = service.selectCartCount(product_idx);
 			if(leftCnt >= cart_count) {
 				int updateCount = service.updateCartCount(sId, product_idx, cart_count);
 				if(updateCount > 0) {
 					cart = service.checkCart(sId);
-					System.out.println(cart);
+//					System.out.println(cart);
 					JSONArray jsonArray = new JSONArray();
 					
 					for(CartVO c : cart) {
@@ -865,39 +865,36 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

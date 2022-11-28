@@ -24,6 +24,10 @@
 		background-color: #353535;
 		border-color: #353535;
 	}
+	input[type=checkbox] {
+	accent-color: #101010;
+	border-color: #101010;
+	}
 </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -35,6 +39,7 @@
  <script type="text/javascript">
 
 // 상품 수량 변경 시 수행되는 함수
+
 function modifyCartCount(counter) {
 	payTotal = 0;
 	cbArr = [];
@@ -185,7 +190,6 @@ $(document).on("change", 'input[type=checkbox]', function() {
 	if(idx == 'All') {
 		if($(this).is(":checked")){
 			payTotal = 0;
-			debugger;
 			$('input[type=checkbox]:checked').each(function() {
 			    let cbId = $(this).attr('id').split('cb')[1];
 			    cbArr.push(cbId);
@@ -224,23 +228,21 @@ function buySelectedItems(btn) {
 			$("input[type=checkbox]").prop("checked", true);
 			document.getElementById("cbAll").checked = false;
 		} else return;
-	}
+	} 
 	var cbChecked = "";
 	$('input[type=checkbox]:checked').each(function() {
 		let id = $(this).attr('id').split('cb')[1];
 		// cbChecked => product_idx:수량:금액/
 		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
 	});
-	debugger;
-	$.ajax({
-		url:'order_buyAgree',
-		type:'GET',
-		data:{
-			cbChecked:cbChecked
-		}
-	});
-	
-	location.href="order_buyAgree";
+	if(cbChecked.length != 0) {
+		location.href="order_buyAgree?cbChecked="+cbChecked;
+		$("input[type=checkbox]").prop("checked", false);
+		payTotal = 0;
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	} else {
+		alert("최소 1개 이상의 상품만 주문가능합니다");
+	}
 }
 
  </script>
@@ -284,7 +286,7 @@ function buySelectedItems(btn) {
                 <div class="col-12 col-lg-6">
                   <div class="media media-product">
                   <input type="checkbox" id="cb${cart.product_idx }" style="margin-right: 20px;">
-                    <a href="#!"><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
+                    <a href=""><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
                     <div class="media-body">
                       <h5 class="media-title">${cart.product_name }</h5>
                       <span class="small">${cart.product_color }</span>

@@ -16,6 +16,11 @@
     margin-top: -0.5em;
     color: #555;
 }
+.nav-link3 {
+	font-size: 0.875rem;
+    cursor: pointer;
+}
+
 </style>
  <!-- sidebar -->
 <aside class="col-lg-3 sidebar">
@@ -32,22 +37,22 @@
            					<div>
      							<ul class="nav flex-column">
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="스마트폰">- 스마트폰</a>
+	       								<a class="nav-link3" name="category" id="스마트폰">- 스마트폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="태블릿">- 태블릿</a>
+	       								<a class="nav-link3" name="category" id="태블릿">- 태블릿</a>
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="스마트워치">- 스마트워치</a>
+	       								<a class="nav-link3" name="category" id="스마트워치">- 스마트워치</a>
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="이어폰">- 이어폰</a>
+	       								<a class="nav-link3" name="category" id="이어폰">- 이어폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="헤드폰">- 헤드폰</a>
+	       								<a class="nav-link3" name="category" id="헤드폰">- 헤드폰</a>
 	       							</li>
 	       							<li class="nav-item">
-	       								<a class="nav-link" name="category" id="노트북">- 노트북</a>
+	       								<a class="nav-link3" name="category" id="노트북">- 노트북</a>
 <!-- 	         							<a class="nav-link" href="listProductByCategory?id=노트북" role="category" id="laptop">- 노트북</a> -->
 	       							</li>
 	     						</ul>

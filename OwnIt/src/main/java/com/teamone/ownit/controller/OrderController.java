@@ -2,12 +2,15 @@ package com.teamone.ownit.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.Request;
@@ -39,17 +42,104 @@ public class OrderController {
 	@Autowired
 	private OrderService service;
 	
+	//상품 구매 동의
+	@GetMapping(value = "order_buyAgree")
+	public String order_buyAgree(Model model, HttpSession session, @RequestParam String cbChecked, HttpServletResponse response) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
+			System.out.println(cbChecked);
+//			17:1:149000/7:2:656000/8:3:3075000/
+			String[] cbArr = cbChecked.split("/");
+			String product_idx = "";
+			int order_count = 0;
+			String countTimesPrice = "";
+			List<ProductVO> productList = new ArrayList<ProductVO>();
+			int cnt = 0;
+			for(String cb : cbArr) {
+				ProductVO product = new ProductVO();
+				product_idx = cb.split(":")[0];
+				order_count = Integer.parseInt(cb.split(":")[1]);
+				countTimesPrice = cb.split(":")[2];
+				product = service.selectCartCount(product_idx, order_count);
+//				System.out.println(product);
+				if(product.getProduct_model_num() != null) {
+					productList.add(product);
+					cnt++;
+				} else {
+					model.addAttribute("msg", product.getProduct_name()+" 상품의 구매수량을 조절해주세요");
+					return "order/fail_back";
+				}
+			}
+			model.addAttribute("productList", productList);
+			model.addAttribute("cbChecked", cbChecked);
+			model.addAttribute("cnt", cnt);
+			return "order/order_buyAgree";
+		}
+		return "member/member_login";
+	}
+		
 	// 구매주문 폼
 	@GetMapping(value = "order_buyForm")
-	public String order_buyForm(@RequestParam int product_idx, Model model) {
-		//이미지 하나 가져오는 작업 불필요시 삭제
-//		ImageVO image = service.selectDetailImage(product_idx);
-//		model.addAttribute("image", image);
-	
-		//프로덕트 정보 가져오는 작업 불필요시 삭제
-		ProductVO product = service.productDetail(product_idx);
-		model.addAttribute("product", product);
+	public String order_buyForm(@RequestParam String cbChecked, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		String[] cbArr = cbChecked.split("/");
+		String product_idx = "";
+		int order_count = 0;
+		int countTimesPrice = 0;
+		List<ProductVO> productList = new ArrayList<ProductVO>();
+		Map<String, String> member = service.getMemberInfo(sId);
+		int maxGroupIdx = service.getMaxGroupIdx();
+		int cnt = 0;
+		for(String cb : cbArr) {
+			ProductVO product = new ProductVO();
+			product_idx = cb.split(":")[0];
+			order_count = Integer.parseInt(cb.split(":")[1]);
+			countTimesPrice += Integer.parseInt(cb.split(":")[2]);
+			product = service.selectCartCount(product_idx, order_count);
+			productList.add(product);
+			cnt++;
+		}
+		model.addAttribute("productList", productList);
+		model.addAttribute("cbChecked", cbChecked);
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("countTimesPrice", countTimesPrice);
+		model.addAttribute("member", member);
+		model.addAttribute("maxGroupIdx", maxGroupIdx);
 		return "order/order_buyForm";
+	}
+	
+	// 구매완료 시 상품 잔여 수량 조정 및 구매 이력 남기기
+	@PostMapping(value = "successOrder")
+	@ResponseBody
+	public void successOrder(HttpSession session, @RequestParam String cbChecked, @RequestParam int maxGroupIdx) {
+		System.out.println(cbChecked);
+		String sId = (String)session.getAttribute("sId");
+		String[] cbArr = cbChecked.split("/");
+		String product_idx = "";
+		int order_count = 0;
+		int countTimesPrice = 0;
+		// 1. product 테이블에 product_left_count, product_sell_count 조정
+		for(String cb : cbArr) {
+			product_idx = cb.split(":")[0];
+			order_count = Integer.parseInt(cb.split(":")[1]);
+			countTimesPrice = Integer.parseInt(cb.split(":")[2]);
+			int updateCount = service.updateProductCount(product_idx, order_count);
+			if(updateCount > 0) {
+				// 2. order_buy 테이블에 판매내역 기재
+				int insertCount = service.insertOrderBuy(maxGroupIdx, product_idx, sId, order_count, countTimesPrice);
+				if(insertCount > 0) {
+					// 3. 장바구니에서 해당 상품 삭제
+					int deleteCount = service.deleteCart(sId, product_idx);
+				}
+			}
+		}
+	
+	}
+	
+	@GetMapping(value = "orderComplete")
+	public String orderComplete() {
+		System.out.println("orderComplete()");
+		return "order/order_buyComplete";
 	}
 	
 	
@@ -407,97 +497,7 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-				
+						
 // 박주닮 501번째라인
 	
 	
@@ -659,18 +659,6 @@ public class OrderController {
 	
 	
 	
-	//상품 구매 동의
-	@GetMapping(value = "order_buyAgree")
-	public String order_buyAgree(@RequestParam int product_idx, Model model,HttpSession session) {
-		String sId = (String)session.getAttribute("sId");
-		if(sId != null && !sId.equals("")) { // 로그인 중일경우 실행
-		
-			ProductVO product = service.productDetail(product_idx);
-			model.addAttribute("product", product);
-			return "order/order_buyAgree";
-		}
-		return "member/member_login";
-	}
 	
 	
 	
@@ -881,13 +869,25 @@ public class OrderController {
 	
 	
 	
-	
 
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	
