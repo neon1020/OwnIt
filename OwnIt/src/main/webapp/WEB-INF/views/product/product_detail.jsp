@@ -273,7 +273,10 @@
 				</button>
 				<!-- 위시리스트 추가 버튼(혜지) -->
 				<form action="mypage_addWish" method="post">
-				<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+				<c:if test="${not empty sessionScope.sId }">
+					<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+				</c:if>
+			  <input type="hidden" name="member_idx" value="0" />	
 			  <input type="hidden" name="product_idx" value="${product.product_idx }" />
 					<button id="btn3" type="submit" class="btn">
 						<p>
@@ -431,75 +434,71 @@
 
     <script type="text/javascript">
 //     상품 상세페이지 하단의 인기 / 최신 버튼 누를시 keyword 파라미터 ajax 호출
-//     $(function(){
     	function onclick1(pageNum){ // 버튼이 변경됐을때
-    		$(function(){
-	    		let keyword = ""; // string 타입 변수용
-	    		if($("#btnradio1").is(":checked")){ 		// 최신순
-	    			keyword = "new";
-	    		}else if($("#btnradio2").is(":checked")){	//댓글순
-	    			keyword = "reply";
-	    		}else if($("#btnradio3").is(":checked")){	//인기순
-	    			keyword = "star";
-	    		}
-	    		$.ajax({
-	    			url: 'reviewChange',
-	    			type: 'get',
-	    			contentType:'application/json;charset=utf-8',
-	    			dataType:'json',
-	    			data: {'keyword' : keyword,
-	    				   'product_idx' : ${product.product_idx},
-	    				   'pageNum2' : pageNum },
-	    			success : function(review) { // 갔다온 다음 결과값
-	    				var changeR = "";
-	    				var changePage = "";
-	    				var page = review[0].pageNum2;
-	    				var start = review[0].startPage;
-	    				var end = review[0].endPage;
-	    				var max = review[0].maxPage;
-				  		 changePage += "<nav class='d-inline-block'><ul class='pagination'>";
-				  		 if(page > start){
-				  			 changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전' onclick='onclick1("+ (page - 1) +")'></li>";
-				  		 } else{
-				  			changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전'></li>";
-				  		 }
-						  for(var i = start; i < (end + 1); i++){
-							  if(i == page){
-								  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-							  }else{
-								  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-							  }
+    		let keyword = ""; // string 타입 변수용
+    		if($("#btnradio1").is(":checked")){ 		// 최신순
+    			keyword = "new";
+    		}else if($("#btnradio2").is(":checked")){	//댓글순
+    			keyword = "reply";
+    		}else if($("#btnradio3").is(":checked")){	//인기순
+    			keyword = "star";
+    		}
+    		$.ajax({
+    			url: 'reviewChange',
+    			type: 'get',
+    			contentType:'application/json;charset=utf-8',
+    			dataType:'json',
+    			data: {'keyword' : keyword,
+    				   'product_idx' : ${product.product_idx},
+    				   'pageNum2' : pageNum },
+    			success : function(review) { // 갔다온 다음 결과값
+    				var changeR = "";
+    				var changePage = "";
+    				var page = review[0].pageNum2;
+    				var start = review[0].startPage;
+    				var end = review[0].endPage;
+    				var max = review[0].maxPage;
+			  		 changePage += "<nav class='d-inline-block'><ul class='pagination'>";
+			  		 if(page > start){
+			  			 changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전' onclick='onclick1("+ (page - 1) +")'></li>";
+			  		 } else{
+			  			changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전'></li>";
+			  		 }
+					  for(var i = start; i < (end + 1); i++){
+						  if(i == page){
+							  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+						  }else{
+							  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
 						  }
-					  	  if(page < max	){
-					  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ (page + 1)+")'></li>";
-					  	  }else{
-					  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
-					  	  }
-				  		changePage +="</ul></nav>";
-				  		
-				  		for(var i = 1; i < review.length; i++){
-// 	    				debugger;
-						let link = "javascript:onclick2('"+ review[i].review_idx + "," + review[i].heartImg + "," + review[i].style_like_count +","+page+"')";
-	    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-							changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
-							changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
-							changeR +="</a></figure><div class='card-body'>";
-							changeR +="<a class='profile' href='review_mystyle?member_idx="+review[i].member_idx+"&review_idx="+review[i].review_idx+"'>";
-							changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
-							changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
-							changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
-							changeR += "<div class='like'id='change"+review[i].review_idx+"'><a href="+link+"><img src='resources/img/review/" + review[i].heartImg + "'>" + review[i].style_like_count + "&nbsp;&nbsp;</a>";
-							changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
-							changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
-							changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
-							changeR +="<div class='subject'>"+review[i].product_name+"<br>"+ buyprice +"&nbsp;원</div></a>";
-							changeR +="</h4></div></article></div>";
-				  		}
-						$("#reviewchange").html(changeR);
-						$("#pageChange").html(changePage);
-	    			}  // 데이터 =review
-	    		});// ajax
-    		});
+					  }
+				  	  if(page < max	){
+				  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ (page + 1)+")'></li>";
+				  	  }else{
+				  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
+				  	  }
+			  		changePage +="</ul></nav>";
+			  		
+			  		for(var i = 1; i < review.length; i++){
+					let link = "javascript:onclick2('"+ review[i].review_idx + "," + review[i].heartImg + "," + review[i].style_like_count +","+page+"')";
+    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+						changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+						changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
+						changeR +="</a></figure><div class='card-body'>";
+						changeR +="<a class='profile' href='review_mystyle?member_idx="+review[i].member_idx+"&review_idx="+review[i].review_idx+"'>";
+						changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
+						changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
+						changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
+						changeR += "<div class='like'id='change"+review[i].review_idx+"'><a href="+link+"><img src='resources/img/review/" + review[i].heartImg + "'>" + review[i].style_like_count + "&nbsp;&nbsp;</a>";
+						changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
+						changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
+						changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
+						changeR +="<div class='subject'>"+review[i].product_name+"<br>"+ buyprice +"&nbsp;원</div></a>";
+						changeR +="</h4></div></article></div>";
+			  		}
+					$("#reviewchange").html(changeR);
+					$("#pageChange").html(changePage);
+    			}  // 데이터 =review
+    		});// ajax
     	}
     	
     	// 리뷰 좋아요 클릭시
@@ -528,6 +527,7 @@
 			});
 			
     	}
+    	
     </script>
     <c:if test="${not empty reviewList}">
     <!-- STYLE 시작 -->
