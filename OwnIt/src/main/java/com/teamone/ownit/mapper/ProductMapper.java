@@ -520,6 +520,9 @@ public interface ProductMapper {
 
 	void insertReviewLike(@Param("member_idx") int member_idx,@Param("review_idx") int review_idx);
 
+	// 관심상품에 존재유무(혜지)
+	int isContainedInWish(@Param("member_idx") int member_idx, @Param("product_idx") int product_idx);
+
 
 	
 

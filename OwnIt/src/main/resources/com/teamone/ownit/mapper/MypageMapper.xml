@@ -195,6 +195,25 @@
 			WHERE w.member_idx=#{member_idx}
 	</select>
 	
+	<!-- 위시리스트에 존재하는지 확인 -->	 
+	<select id="isContainedInWish" resultType="int">
+		SELECT COUNT(*)
+			FROM wishlist 
+			WHERE 
+				member_idx = #{member_idx} 
+				AND 
+				product_idx = #{product_idx}
+	</select>
+	
+	<!-- 위시리스트 추가 -->	 
+	<insert id="addToWish">
+		INSERT INTO wishlist
+			VALUES(
+				#{member_idx}, 
+				#{product_idx}
+				)
+	</insert>		
+	
 	<!-- 장바구니에 존재하는지 확인 -->	 
 	<select id="isContainedInCart" resultType="int">
 		SELECT COUNT(*)
