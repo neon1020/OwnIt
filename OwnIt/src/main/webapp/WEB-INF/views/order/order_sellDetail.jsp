@@ -177,7 +177,7 @@
 		          	<a href="product_list" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		SHOP 바로가기
 		          	</a>
-		          	<a href="" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
+		          	<a href="mypage_sell?member_idx=${orderSell.member_idx }" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		판매 목록보기
 		          	</a>
 	          	</div>
