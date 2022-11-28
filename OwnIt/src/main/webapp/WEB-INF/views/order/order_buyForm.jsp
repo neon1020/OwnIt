@@ -52,8 +52,8 @@ function requestPay() {
 	var obj = { // param
 		pg: 'kcp',
 		pay_method: 'card',
-// 		merchant_uid: "${maxGroupIdx}",
-		merchant_uid: "13",
+		merchant_uid: "${maxGroupIdx}",
+// 		merchant_uid: "15",
 		name: "${productList[0].product_name}",
 		amount: ${countTimesPrice },
 		buyer_email: "${member.member_id}",
@@ -71,7 +71,7 @@ function requestPay() {
 					cbChecked:"${cbChecked}",
 					maxGroupIdx:"${maxGroupIdx}"
 				},
-				success:function(result){
+				success:function(){
 					console.log("ajax통신 성공");
 					location.href="orderComplete";
 				}

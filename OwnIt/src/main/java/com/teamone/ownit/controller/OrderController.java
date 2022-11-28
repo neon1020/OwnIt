@@ -110,6 +110,7 @@ public class OrderController {
 	
 	// 구매완료 시 상품 잔여 수량 조정 및 구매 이력 남기기
 	@PostMapping(value = "successOrder")
+	@ResponseBody
 	public void successOrder(HttpSession session, @RequestParam String cbChecked, @RequestParam int maxGroupIdx) {
 		System.out.println(cbChecked);
 		String sId = (String)session.getAttribute("sId");
@@ -138,10 +139,8 @@ public class OrderController {
 	@GetMapping(value = "orderComplete")
 	public String orderComplete() {
 		System.out.println("orderComplete()");
-		return "redirect:/order/order_buyComplete";
+		return "order/order_buyComplete";
 	}
-	
-	
 	
 	
 	
