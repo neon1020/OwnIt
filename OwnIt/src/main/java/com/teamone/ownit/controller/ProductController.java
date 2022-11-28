@@ -505,7 +505,10 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int pageNum2,
             @RequestParam(defaultValue = "") String keyword) {
 		String heartImg = "like_none.jpg";
-		int member_idx = (int)session.getAttribute("sIdx");
+		int member_idx = 0;
+		if(session.getAttribute("sId") != null) {
+			member_idx = (int)session.getAttribute("sIdx");
+		}
 		ModelAndView mav = new ModelAndView("product/product_detail");
 		int listLimit = 8, pageListLimit = 10, startRow = (pageNum2 - 1) * listLimit;
 		// 상품 정보
@@ -556,7 +559,10 @@ public class ProductController {
 			@RequestParam(defaultValue = "0") int product_idx, 
 	        @RequestParam(defaultValue = "1") int pageNum2,
 	        @RequestParam(defaultValue = "") String keyword) {
-		int member_idx = (int)session.getAttribute("sIdx");
+		int member_idx = 0;
+		if(session.getAttribute("sId") != null) {
+			member_idx = (int)session.getAttribute("sIdx");
+		}
 		int listLimit = 8, pageListLimit = 10, startRow = (pageNum2 - 1) * listLimit;
 		
 		// 상품에 대한 리뷰 목록
@@ -606,24 +612,30 @@ public class ProductController {
 	@ResponseBody
 	@GetMapping(value = "heartChange" ,produces = "application/json")
 	public Product_ReviewListVO heartChange(@RequestParam int review_idx,@RequestParam String heartImg, @RequestParam int style_like_count, HttpSession session, HttpServletResponse response) {
-		int member_idx = (int)session.getAttribute("sIdx");
-		
-		
-		// 좋아요를 누른 member일시
-		if(heartImg.equals("like.jpg")) {
-			service.deleteReviewLike(member_idx,review_idx);
-			style_like_count -= 1;
-			heartImg = "like_none.jpg";
-		} else {//안누른 member일시
-			service.insertReviewLike(member_idx,review_idx);
-			style_like_count += 1;
-			heartImg = "like.jpg";
+		int member_idx = 0;
+		if(session.getAttribute("sId") != null) {
+			member_idx = (int)session.getAttribute("sIdx");
 		}
-		Product_ReviewListVO review = new Product_ReviewListVO();
-		review.setHeartImg(heartImg);
-		review.setStyle_like_count(style_like_count);
 		
-		return review;
+		if(member_idx > 0) { // 로그인 중일경우에만 실행
+			// 좋아요를 누른 member일시
+			if(heartImg.equals("like.jpg")) {
+				service.deleteReviewLike(member_idx,review_idx);
+				style_like_count -= 1;
+				heartImg = "like_none.jpg";
+			} else {//안누른 member일시
+				service.insertReviewLike(member_idx,review_idx);
+				style_like_count += 1;
+				heartImg = "like.jpg";
+			}
+			Product_ReviewListVO review = new Product_ReviewListVO();
+			review.setHeartImg(heartImg);
+			review.setStyle_like_count(style_like_count);
+			
+			return review;
+		}
+		
+		return null;
 	}
 
 

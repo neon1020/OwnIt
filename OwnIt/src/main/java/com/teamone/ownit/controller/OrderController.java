@@ -517,7 +517,8 @@ public class OrderController {
 			model.addAttribute("product", product);
 			return "order/order_sellAgree";
 		}
-		return "member/member_login";
+		model.addAttribute("msg", "로그인 후 이용 가능합니다.");
+		return "order/fail_back";
 	}
 	
 	// 상품판매폼 주소 추가
@@ -630,7 +631,6 @@ public class OrderController {
 				
 				return "redirect:/order_sellDetail?product_idx="+product_idx+"&member_idx="+member_idx;
 			}else {
-				System.out.println("판매실패");
 				return "order/order_sellForm";
 			}
 			

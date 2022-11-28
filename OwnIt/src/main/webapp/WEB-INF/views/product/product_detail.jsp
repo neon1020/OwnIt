@@ -14,6 +14,9 @@
     <script src="resources/js/jquery-3.6.1.js"></script>
     <title>Product</title>
     <style type="text/css">
+    	.like > a {
+    		color : black;
+    	}
     	#btntext{
     		font-size: 15px;
     	}
@@ -486,6 +489,11 @@
     	
     	// 리뷰 좋아요 클릭시
     	function onclick2(heartImgReviewIdx){
+    		var sIdx = "${sessionScope.sIdx }";
+    		if(sIdx == "") {
+    		      alert('로그인 후 이용 가능합니다.');
+    		      return;
+    		}
 			var review_idx = heartImgReviewIdx.split(',')[0];
 			var heartImg = heartImgReviewIdx.split(',')[1];
 			var style_like_count = heartImgReviewIdx.split(',')[2];
