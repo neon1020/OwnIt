@@ -513,6 +513,7 @@
 			});
 			
     	}
+    	
     </script>
     <c:if test="${not empty reviewList}">
     <!-- STYLE 시작 -->
