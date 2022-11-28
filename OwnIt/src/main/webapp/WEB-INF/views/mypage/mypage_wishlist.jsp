@@ -70,12 +70,12 @@
 			                <h3 class="card-content">${wishlist.product_name }</h3>
 			                <div class="like" style="text-align: right;">
 										  	<button class="btn btn-outline-dark btn-sm btn-rounded" data-toggle="modal" data-target="#exampleModal-1${vs.index}">
-											  	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+											  	<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
 							  					<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 											  	</svg>
 										  	</button>
 										  	<button class="btn btn-outline-dark btn-sm btn-rounded" data-toggle="modal" data-target="#exampleModal-2${vs.index}">
-											  	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+											  	<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
 												  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
 												  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 													</svg>
@@ -88,6 +88,9 @@
 								<div class="modal fade" id="exampleModal-1${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								  <div class="modal-dialog" role="document">
 								    <div class="modal-content">
+				            <form action="mypage_addCart" method="post"> 
+				            <input type="hidden" name="member_idx" value="${wishlist.member_idx }" />
+				            <input type="hidden" name="product_idx" value="${wishlist.product_idx }" />
 								      <div class="modal-header">
 								        <h5 class="modal-title" id="exampleModalLabel"></h5>
 								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -101,7 +104,7 @@
 								        <div class="container-fluid">
 								          <div class="row gutter-0">
 								            <div class="col">
-								              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
+								              <button type="submit" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
 								            </div>
 								            <div class="col">
 								              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
@@ -109,6 +112,7 @@
 								          </div>
 								        </div>
 								      </div>
+				            </form>
 								    </div>
 								  </div>
 								</div>				          

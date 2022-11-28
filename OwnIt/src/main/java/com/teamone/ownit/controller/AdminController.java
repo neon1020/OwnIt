@@ -2,6 +2,8 @@ package com.teamone.ownit.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -10,7 +12,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
@@ -163,8 +168,7 @@ public class AdminController {
 		}
 	}
 	
-	
-	// Product 수정 폼으로 이동
+	// Product Modify 폼으로 이동
 	@GetMapping(value = "admin_productModifyForm")
 	public String admin_productModifyForm(@RequestParam int product_idx, Model model) {
 		AdminProductVO product = service.getProduct(product_idx);
@@ -172,7 +176,6 @@ public class AdminController {
 		
 		return "admin/admin_productModify";
 	}
-	
 	
 	// Product Modify 수정 작업 수행
 	@PostMapping(value = "admin_productModify")
@@ -280,8 +283,6 @@ public class AdminController {
 				}
 			}
 		}
-		
-		
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
@@ -317,13 +318,13 @@ public class AdminController {
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
-	
 	// Order - BuyList(구매목록) 조회
 	@GetMapping(value = "admin_productBuyList")
 	public String admin_productBuyList(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status, Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -335,13 +336,12 @@ public class AdminController {
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
-//		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
-		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword);
+		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword, status);
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
-		int listCount = service.getBuyListCount(searchType, keyword);
+		int listCount = service.getBuyListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
@@ -352,24 +352,37 @@ public class AdminController {
 		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
-//		System.out.println(pageInfo);
 		//----------------------------------------------------------------------------------
-		List<AdminOrderGroup> orderGroup = service.getOneOrder(startRow, listLimit, searchType, keyword);
-		System.out.println(orderGroup);
-		// --------------------------------------------------------------------------------
 		model.addAttribute("buyList", buyList);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("orderGroup", orderGroup);
 		
 		return "admin/admin_productBuyList";
 	}
+	
+	
+	// ProductBuy 구매목록 상세조회
+	@GetMapping(value = "admin_productBuyDetail")
+	public String admin_productBuyDetail(@RequestParam int order_group_idx, Model model, HttpSession session) {
+		
+		System.out.println(order_group_idx);
+		
+		List<AdminOrderVO> buyList = service.getProductBuyDetail(order_group_idx);
+		List<AdminOrderVO> memberInfo = service.getMemberInfo(order_group_idx);
+		
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		return "admin/admin_productBuyDetail";
+	}
+	
 
 	// Order - SellList(판매목록) 조회
 	@GetMapping(value = "admin_productSellList")
 	public String admin_productSellList(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status, Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -383,11 +396,11 @@ public class AdminController {
 		int startRow = (pageNum - 1) * listLimit;
 
 		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
-		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword);
+		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword, status);
 		
 		// -------------------------------------------
 		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
-		int listCount = service.getSellListCount(searchType, keyword);
+		int listCount = service.getSellListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
@@ -407,32 +420,43 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
+	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	@PostMapping(value = "admin_orderBuyModify")
-	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, String status, Model model) {
 		
 		int updateCount = service.updateOrderBuy(adminOrder);
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productBuyList?pageNum=" + pageNum;
+			return "redirect:/admin_productBuyList?status=" + adminOrder.getOrder_buy_gb() + "&pageNum=" + pageNum;
 		}
 		
-		return "";
+		return "";	
 	}
 	
 	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
 	@PostMapping(value = "admin_orderSellModify")
-	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum,  @RequestParam(defaultValue = "") String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
+		String page = "";
+		
+		switch (adminOrder.getOrder_sell_gb()) {
+		case "0": page += "0"; break;
+		case "1": page += "1"; break;
+		case "2": page += "2"; break;
+		case "3": page += ""; break;
+		default:
+			break;
+		}
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productSellList?pageNum=" + pageNum;
+			return "redirect:/admin_productSellList?status=" + page + "&pageNum=" + pageNum;
 		}
 		
 		return "";
 	}
-	
+
 	// ProductList 재고변경
 	@PostMapping(value = "admin_productLeftCountModify")
 	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model) {
@@ -450,7 +474,6 @@ public class AdminController {
 	
 	
 	
-	
 
 
 	
@@ -497,11 +520,276 @@ public class AdminController {
 	
 	
 	
-	// 정채연 - 500
-	@GetMapping(value = "admin_memberList")
-	public String admin7() {
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 700
+	@GetMapping(value = "/admin_memberList")
+	public String memberList(Model model,
+			@RequestParam(defaultValue = "all") String searchType,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum) {
+		
+		// 페이징 처리를 위한 계산 작업
+		int listLimit = 15; // 한 페이지 당 표시할 게시물 목록 갯수 
+		int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
+		
+		// 조회 시작 게시물 번호(행 번호) 계산
+		int startRow = (pageNum - 1) * listLimit;
+		
+		// 전체 회원 목록 조회
+		// => 파라미터 : 시작행번호, 페이지 당 목록 갯수, 검색조건
+		// => 리턴타입 : List<MemberVO> (memberList)
+		List<MemberVO> memberList = service.getMemberList(startRow, listLimit, searchType, keyword);
+		
+		// Service 객체의 getOrderListCount() 메소드를 호출하여 해당 회원의 전체 구매 목록 갯수 조회
+		// => 파라미터 : 검색조건, 리턴타입 : int(listCount)
+		int listCount = service.getMemberListCount(searchType, keyword);
+		
+		// ----------------------------------------------------------------------------------------
+		
+		// 페이지 계산 작업 수행
+		
+		// 전체 페이지 수 계산
+		int maxPage = (int)Math.ceil((double)listCount / listLimit);
+		
+		// 시작 페이지 번호 계산
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		
+		// 끝 페이지 번호 계산
+		int endPage = startPage + pageListLimit - 1;
+		
+		// 만약, 끝 페이지 번호(endPage)가 최대 페이지 번호(maxPage)보다 클 경우 
+		// 끝 페이지 번호를 최대 페이지 번호로 교체
+		if(endPage > maxPage) { endPage = maxPage; }
+		
+		// 페이징 처리 정보 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
+		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		// ----------------------------------------------------------------------------------------
+		
+		// 회원 목록(memberList) 과 페이징 처리 정보(pageInfo)를 Model 객체에 저장
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("keyword", keyword);
 		
 		return "admin/admin_memberList";
+	}
+	
+	@GetMapping(value = "removeMember")
+	public String removeMember(int member_idx, int pageNum, String searchType, String keyword, Model model) {
+		int deleteCount = service.removeMember(member_idx);
+		
+		try {
+			keyword = URLEncoder.encode(keyword, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		if(deleteCount > 0) {
+			// 페이징 처리를 위한 계산 작업
+			int listLimit = 15; // 한 페이지 당 표시할 게시물 목록 갯수 
+			
+			// 조회 시작 게시물 번호(행 번호) 계산
+			int startRow = (pageNum - 1) * listLimit;
+			
+			// 해당 페이지 회원 목록 수 조회
+			// => 파라미터 : 시작행번호, 페이지 당 목록 갯수, 검색조건
+			// => 리턴타입 : int
+			Integer memberListCount = service.getMemberListCount2(startRow, listLimit, searchType, keyword);
+			
+			// TODO memberListCount 리턴값 확인하고 nullpointerException 수정
+			System.out.println(memberListCount);
+			
+			// 삭제 후 해당 pageNum 에 아무 목록 없을 경우 앞 페이지로 이동
+			if(memberListCount == null) {
+				if(pageNum != 1) {
+					pageNum -= 1;
+				}
+			}
+			
+			return "redirect:/admin_memberList?searchType=" + searchType + "&keyword=" + keyword + "&pageNum=" + pageNum;
+			
+		} else {
+			model.addAttribute("msg", "회원 탈퇴 실패!");
+			return "notice/fail_back";
+		}
 	}
 	
 

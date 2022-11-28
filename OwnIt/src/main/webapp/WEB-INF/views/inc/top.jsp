@@ -7,19 +7,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	#btn-pay {
-		background-color: #101010;
-		border-color: #101010;
-	}
-	#btn-pay:hover {
-		background-color: #353535;
-		border-color: #353535;
-	}
-	.media-title {
-		font-size: 1.2em;
-		line-height: 1.2;
-		-webkit-line-clamp: 2;
-	}
+   #btn-pay {
+      background-color: #101010;
+      border-color: #101010;
+   }
+   #btn-pay:hover {
+      background-color: #353535;
+      border-color: #353535;
+   }
+   .media-title {
+      font-size: 1.2em;
+      line-height: 1.2;
+      -webkit-line-clamp: 2;
+   }
 </style>
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
@@ -63,18 +63,18 @@ function checkCart(){
 }
 
 $(function() {
-	checkCart();
-	$('.cartInTop').click(checkCart);
+   checkCart();
+   $('.cartInTop').click(checkCart);
 });
-	
-	// 로그아웃 수행
-	function logout() {
-		let result = confirm("로그아웃 하시겠습니까?");
-		
-		if(result) {
-			location.href = "member_logout";
-		}
-	}
+   
+   // 로그아웃 수행
+   function logout() {
+      let result = confirm("로그아웃 하시겠습니까?");
+      
+      if(result) {
+         location.href = "member_logout";
+      }
+   }
 function delFromCart(item) {
 	var delIdx = item.id.split('_')[1];
 	$.ajax({
@@ -116,111 +116,75 @@ function delFromCart(item) {
 </script>
 </head>
 <body>
-<header class="header header-dark bg-dark header-sticky">
-      <div class="container">
-        <div class="row">
-          <nav class="navbar navbar-expand-lg navbar-dark">
-            <a href="./" class="navbar-brand order-1 order-lg-2"><img src="<%=request.getContextPath() %>/resources/img/ownit_logo.png" alt="Logo"></a>
-            <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse order-3 order-lg-1" id="navbarMenu">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="./">Home</a></li>
-                <li class="nav-item dropdown megamenu">
-                  <a class="nav-link dropdown-toggle" href="" id="navbarDropdown-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Pages
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown-4">
-                    <div class="row">
-                    
-                    <!-- PAGES -->
-                      <ul class="col-6 col-md-3 col-lg-2">
-                        <li><span class="megamenu-title">Home</span></li>
-                        <li><a class="dropdown-item" href="./">Home</a></li>
-                        <li><span class="megamenu-title">Shop</span></li>
-                        <li><a class="dropdown-item" href="product_list">Listing</a></li>
-                      </ul>
-                      <ul class="col-6 col-md-3 col-lg-2">
-                        <li><span class="megamenu-title">Product</span></li>
-                        <li><a class="dropdown-item" href="product_detail">Product</a></li>
-                        <li><span class="megamenu-title">Order</span></li>
-                        <li><a class="dropdown-item" href="viewMyCart">Cart</a></li>
-                      </ul>
-                      <ul class="col-6 col-md-3 col-lg-2">
-                        <li><span class="megamenu-title">MyPage</span></li>
-                        <li><a class="dropdown-item" href="member_login">Log In</a></li>
-                        <li><a class="dropdown-item" href="mypage">Profile</a></li>
-                        <li><a class="dropdown-item" href="mypage_order?member_idx=${sessionScope.sIdx }">Orders</a></li>
-                        <li><a class="dropdown-item" href="address">Addresses</a></li>
-                        <li><a class="dropdown-item" href="account">Account</a></li>
-                        <li><a class="dropdown-item" href="wishlist">Wishlist</a></li>
-                        <li><a class="dropdown-item" href="mypage_sell">Sell</a></li>
-                        <li><a class="dropdown-item" href="mypage_revise">Revise</a></li>
-                        
-                      </ul>
-                      <ul class="col-6 col-md-3 col-lg-2">
-                        <li><span class="megamenu-title">Review</span></li>
-                        <li><a class="dropdown-item" href="review">Review</a></li>
-                        <li><a class="dropdown-item" href="review_writeForm">Review Write</a></li>
-                        <li><span class="megamenu-title">Customer Center</span></li>
-                        <li><a class="dropdown-item" href="noticeList">Customer Center</a></li>
-                        <li><span class="megamenu-title">Admin</span></li>
-                        <li><a class="dropdown-item" href="admin">Admin</a></li>
-                      </ul>
-                      <div class="col-lg-4">
-                        <div class="promo">
-                          <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/background-3.jpg)"></span>
-                          <div class="promo-footer p-4 text-white">
-                            <h3 class="mb-0">New Collection</h3>
-                            <a href="" class="eyebrow underline text-white">Shop Now</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-<!--                 <li class="nav-item"> -->
-<!--                   <a class="nav-link" href="#">Docs</a> -->
-<!--                 </li> -->
-              </ul>
-            </div>
-
-            <div class="collapse navbar-collapse order-4 order-lg-3" id="navbarMenu2">
-              <ul class="navbar-nav ml-auto">
-              
-              	<c:choose>
-					<c:when test="${empty sessionScope.sId}">
-						<li class="nav-item">
-		                  <a class="nav-link" href="member_login">Log In</a>
-		                </li>
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item">
-		                  <a class="nav-link" href="mypage?member_idx=${sessionScope.sIdx }">${sessionScope.sNick} 님</a>
-		                </li>
-		                <li class="nav-item">
-		                  <a class="nav-link" href="javascript:logout()">Log Out</a>
-		                </li>
-						<c:if test="${sessionScope.sId eq 'admin' }">
+	<!-- 수정 11-25 -->
+	<header class="header header-dark bg-dark header-sticky">
+	      <div class="container">
+	        <div class="row">
+	          <nav class="navbar navbar-expand-lg navbar-dark">
+	            <a href="./" class="navbar-brand order-1 order-lg-2"><img src="<%=request.getContextPath() %>/resources/img/ownit_logo.png" alt="Logo"></a>
+	            <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+	              <span class="navbar-toggler-icon"></span>
+	            </button>
+	
+	            <div class="collapse navbar-collapse order-3 order-lg-1" id="navbarMenu">
+	              <ul class="navbar-nav mr-auto">
+	              
+	                <li class="nav-item"><a class="nav-link" href="noticeList">Customer Center</a></li>
+	                <li class="nav-item"><a class="nav-link" href="./">About</a></li>
+	<!--                 <li class="nav-item"> -->
+	<!--                   <a class="nav-link" href="#">Docs</a> -->
+	<!--                 </li> -->
+	              </ul>
+	            </div>
+	
+	            <div class="collapse navbar-collapse order-4 order-lg-3" id="navbarMenu2">
+	              <ul class="navbar-nav ml-auto">
+	              
+	              	<c:choose>
+						<c:when test="${empty sessionScope.sId}">
 							<li class="nav-item">
-			                  <a class="nav-link" href="admin">Admin Page</a>
+			                  <a class="nav-link" href="member_login">LOG IN</a>
+			        </li>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${sessionScope.sId eq 'admin' }">
+									<li class="nav-item">
+					                  <a class="nav-link" href="admin">${sessionScope.sNick} 님</a>
+					                </li>
+								</c:when>
+							<c:otherwise>
+								<li class="nav-item">
+				                  <a class="nav-link" href="mypage?member_idx=${sessionScope.sIdx }">${sessionScope.sNick} 님</a>
+				                </li>
+							</c:otherwise>
+							</c:choose>
+			                <li class="nav-item">
+			                  <a class="nav-link" href="javascript:logout()">LOG OUT</a>
 			                </li>
-						</c:if>
-					</c:otherwise>
-				</c:choose>
-                <li class="nav-item cart">
-                  <a data-toggle="modal" data-target="#cart" class="nav-link"><span class="cartInTop">Cart</span><span class="cnt"></span></a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </div>
+						</c:otherwise>
+					</c:choose>
+	                <li class="nav-item"><a class="nav-link" href="product_list">SHOP</a></li>
+				    <li class="nav-item"><a class="nav-link" href="review">STYLE</a></li>
+	                <c:choose>
+	               		<c:when test="${sessionScope.sId eq 'admin' }"></c:when>
+	               		<c:when test="${empty sessionScope.sId}"></c:when>
+	                	<c:otherwise>
+	                		  <li class="nav-item cart">
+		                		 <a data-toggle="modal" data-target="#cart" class="nav-link" ><span class="cartInTop">CART</span><span class="cnt"></span></a>
+		              		 </li>
+	                	</c:otherwise>
+	                	
+	                </c:choose>
+	              </ul>
+	            </div>
+	          </nav>
+	        </div>
+	      </div>
     </header>
+    <!-- 수정 11-25 끝-->
     
-    	<!-- Cart -->
+       <!-- Cart -->
      <div class="modal fade sidebar" id="cart" tabindex="-1" role="dialog" aria-labelledby="cartLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -231,8 +195,8 @@ function delFromCart(item) {
             </button>
           </div>
           <div class="modal-body">
-			<div class="myCartItems">
-			<!-- 여기부터 데이터 쌓기 -->
+         <div class="myCartItems">
+         <!-- 여기부터 데이터 쌓기 -->
             <div class="row gutter-3">
               <div class="col-12" id="cartItems">
                 <div class="cart-item cart-item-sm">
@@ -240,7 +204,7 @@ function delFromCart(item) {
                     <div class="col-lg-9">
                       <div class="media media-product">
                         <a href=""><img src="" alt="Image" style="width: 70px; height: 70px;"></a>
-                        <div class="media-body"	>
+                        <div class="media-body"   >
                           <h5 class="media-title"></h5>
                           <span class="media-subtitle"></span>
                         </div>
