@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,12 +80,15 @@ public class OrderController {
 		
 	// 구매주문 폼
 	@GetMapping(value = "order_buyForm")
-	public String order_buyForm(@RequestParam String cbChecked, Model model) {
+	public String order_buyForm(@RequestParam String cbChecked, Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
 		String[] cbArr = cbChecked.split("/");
 		String product_idx = "";
 		int order_count = 0;
 		int countTimesPrice = 0;
 		List<ProductVO> productList = new ArrayList<ProductVO>();
+		Map<String, String> member = service.getMemberInfo(sId);
+		int maxGroupIdx = service.getMaxGroupIdx();
 		int cnt = 0;
 		for(String cb : cbArr) {
 			ProductVO product = new ProductVO();
@@ -99,7 +103,42 @@ public class OrderController {
 		model.addAttribute("cbChecked", cbChecked);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("countTimesPrice", countTimesPrice);
+		model.addAttribute("member", member);
+		model.addAttribute("maxGroupIdx", maxGroupIdx);
 		return "order/order_buyForm";
+	}
+	
+	// 구매완료 시 상품 잔여 수량 조정 및 구매 이력 남기기
+	@PostMapping(value = "successOrder")
+	public void successOrder(HttpSession session, @RequestParam String cbChecked, @RequestParam int maxGroupIdx) {
+		System.out.println(cbChecked);
+		String sId = (String)session.getAttribute("sId");
+		String[] cbArr = cbChecked.split("/");
+		String product_idx = "";
+		int order_count = 0;
+		int countTimesPrice = 0;
+		// 1. product 테이블에 product_left_count, product_sell_count 조정
+		for(String cb : cbArr) {
+			product_idx = cb.split(":")[0];
+			order_count = Integer.parseInt(cb.split(":")[1]);
+			countTimesPrice = Integer.parseInt(cb.split(":")[2]);
+			int updateCount = service.updateProductCount(product_idx, order_count);
+			if(updateCount > 0) {
+				// 2. order_buy 테이블에 판매내역 기재
+				int insertCount = service.insertOrderBuy(maxGroupIdx, product_idx, sId, order_count, countTimesPrice);
+				if(insertCount > 0) {
+					// 3. 장바구니에서 해당 상품 삭제
+					int deleteCount = service.deleteCart(sId, product_idx);
+				}
+			}
+		}
+	
+	}
+	
+	@GetMapping(value = "orderComplete")
+	public String orderComplete() {
+		System.out.println("orderComplete()");
+		return "redirect:/order/order_buyComplete";
 	}
 	
 	
@@ -459,59 +498,7 @@ public class OrderController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-					
+						
 // 박주닮 501번째라인
 	
 	

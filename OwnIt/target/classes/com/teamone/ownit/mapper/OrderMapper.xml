@@ -14,47 +14,47 @@ SELECT
 	WHERE product_idx = #{product_idx}
 </select>
 
+<select id="getMemberInfo" resultType="map">
+select m.member_idx, member_id, member_name, member_phone, addr from member m
+JOIN (select member_idx,
+	CASE
+		when address_gb = 0
+        then address1
+        when address_gb = 0
+        then address2
+        end addr
+from address WHERE address_gb = 0) addr ON m.member_idx = addr.member_idx WHERE m.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
+</select>
 
+<select id="getMaxGroupIdx" resultType="int">
+SELECT MAX(order_group_idx)+1 from order_buy;
+</select>
 
+<update id="updateProductCount">
+UPDATE product
+SET product_left_count = product_left_count - #{order_count}, product_sell_count = product_sell_count + #{order_count}
+WHERE product_idx = #{product_idx}
+</update>
 
+<insert id="insertOrderBuy">
+INSERT INTO order_buy (order_group_idx, product_idx, member_idx, address_idx, order_buy_gb, order_buy_date, order_buy_count, order_buy_price)
+VALUES (#{maxGroupIdx},
+		#{product_idx},
+		(SELECT member_idx FROM member WHERE member_id = #{sId}),
+		(SELECT address_idx FROM address WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId}) AND address_gb = 0),
+		0,
+		date_format(now(),"%y-%m-%d"),
+		#{order_count},
+		#{countTimesPrice}
+		)
+</insert>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<delete id="deleteCart">
+DELETE FROM cart
+WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
+	  AND
+	  product_idx = #{product_idx}
+</delete>
 
 
 

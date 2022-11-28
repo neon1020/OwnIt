@@ -45,36 +45,37 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
-
-// document.cookie = "safeCookie1=foo; SameSite=Lax"; 
-// document.cookie = "safeCookie2=foo";  
-// document.cookie = "crossCookie=bar; SameSite=None; Secure";
-$(document).ready(function(){
-	
-	debugger;
-// 	var IMP = window.IMP;
-	IMP.init("imp51126383");
-});
+var IMP = window.IMP;
+IMP.init("imp51126383");
 
 function requestPay() {
 	var obj = { // param
 		pg: 'kcp',
 		pay_method: 'card',
-		merchant_uid: "202012154648",
-		name: '결제 테스트',
-		amount: 64900,
-		buyer_email: 'blussm@kakao.com',
-		buyer_name: '홍길동',
-		buyer_tel: '010-4242-4242',
-		buyer_addr: '서울특별시 강남구 신사동',
-		buyer_postcode: '01181'
-// 	 	m_redirect_url :'https://localhost:8080/order/order_sellComplete.jsp'
+// 		merchant_uid: "${maxGroupIdx}",
+		merchant_uid: "13",
+		name: "${productList[0].product_name}",
+		amount: ${countTimesPrice },
+		buyer_email: "${member.member_id}",
+		buyer_name: "${member.member_name}",
+		buyer_tel: "${member.member_phone}",
+		buyer_addr: "${member.addr}",
 	};
 	IMP.request_pay(obj, function (rsp) { // callback
-		debugger;
 		console.log(rsp);
 		if (rsp.success) {
-		   alert("성공");
+			$.ajax({
+				url:'successOrder',
+				type:'POST',
+				data:{
+					cbChecked:"${cbChecked}",
+					maxGroupIdx:"${maxGroupIdx}"
+				},
+				success:function(result){
+					console.log("ajax통신 성공");
+					location.href="orderComplete";
+				}
+			});
 		} else {
 		   console.log(rsp.error_msg);
 		}
@@ -166,7 +167,7 @@ function requestPay() {
 	          	</table>
 	          	<br>
 	          	<div align="center">
-		          	<a href="" class="btn btn-primary" id="btn-payment" onclick="requestPay()">결제하기</a>
+		          	<input type="button" class="btn btn-primary" id="btn-payment" onclick="requestPay()" value="결제하기">
 	          	</div>
 	         </div>
           </div>
@@ -176,7 +177,7 @@ function requestPay() {
     </section>
 	
 	<jsp:include page="../inc/footer.jsp"></jsp:include>
-	 <script src="resources/js/vendor.min.js"></script>
+	<script src="resources/js/vendor.min.js"></script>
     <script src="resources/js/app.js"></script>
 </body>
 </html>
