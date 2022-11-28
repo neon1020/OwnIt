@@ -517,6 +517,8 @@ public class ProductController {
 		int wishCount = service.selectWishCount(product_idx);
 		// 상품에 대한 리뷰 목록
 		List<Product_ReviewListVO> reviewList = service.getReviewList(product_idx, startRow, listLimit,keyword);
+		// 관심상품에 존재유무(혜지)
+		int isContainedInWish = service.isContainedInWish(member_idx, product_idx);
 		int listCount = service.getReviewListCount(product_idx);
 		int maxPage = (int) Math.ceil((double) listCount / listLimit);
 		int startPage = (pageNum2 - 1) / pageListLimit * pageListLimit + 1;
@@ -548,6 +550,7 @@ public class ProductController {
 		
 		mav.addObject("listCount", listCount);   //상품리뷰갯수
 		mav.addObject("wishCount", wishCount);	 //상품관심갯수
+		mav.addObject("isContainedInWish", isContainedInWish);	 //관심상품에 존재유무(혜지)
 		mav.addObject("product", product);		 //상품정보
 		return mav;
 	}
