@@ -409,32 +409,7 @@
 	
 	<hr>
 	
-	<!-- STYLE 시작 -->
-	 <section class="hero hero-small">
-      <div class="container">
-        <div class="row">
-          <div class="col text-center">
-            <h3>&nbsp;&nbsp; review<span style="font-size: 15px;">(${listCount })</span></h3>
-          </div>
-        </div>
-      </div>
-      <br>
-    <!-- 인기 최신 -->
-      <div class="container">
-        <div class="row">
-          <div class="col text-center">
-           	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1(1)">
- 			<label id="btntext" for="btnradio1">최신</label>
-          	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1(1)">
-           	<label id="btntext" for="btnradio3">인기</label>
- 			<!-- 댓글순 보류 11-23 -->
-<!--  			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()"> -->
-<!--  			<label id="btntext" for="btnradio2">댓글</label> --> 
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--  인기 최신 끝 -->
+	
 
     <script type="text/javascript">
 //     상품 상세페이지 하단의 인기 / 최신 버튼 누를시 keyword 파라미터 ajax 호출
@@ -460,7 +435,6 @@
 	    			success : function(review) { // 갔다온 다음 결과값
 	    				var changeR = "";
 	    				var changePage = "";
-	    				debugger;
 	    				var page = review[0].pageNum2;
 	    				var start = review[0].startPage;
 	    				var end = review[0].endPage;
@@ -487,6 +461,7 @@
 				  		
 				  		for(var i = 1; i < review.length; i++){
 // 	    				debugger;
+						let link = "javascript:onclick2('"+ review[i].review_idx + "," + review[i].heartImg + "," + review[i].style_like_count +","+page+"')";
 	    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 							changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
 							changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
@@ -495,7 +470,7 @@
 							changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
 							changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
 							changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
-							changeR +="<div class='like'><img src='resources/img/review/like_none.jpg'>"+review[i].style_like_count+"&nbsp;&nbsp;";
+							changeR += "<div class='like'id='change"+review[i].review_idx+"'><a href="+link+"><img src='resources/img/review/" + review[i].heartImg + "'>" + review[i].style_like_count + "&nbsp;&nbsp;</a>";
 							changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
 							changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
 							changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
@@ -508,27 +483,76 @@
 	    		});// ajax
     		});
     	}
+    	
+    	// 리뷰 좋아요 클릭시
+    	function onclick2(heartImgReviewIdx){
+			var review_idx = heartImgReviewIdx.split(',')[0];
+			var heartImg = heartImgReviewIdx.split(',')[1];
+			var style_like_count = heartImgReviewIdx.split(',')[2];
+			var page = heartImgReviewIdx.split(',')[3];
+			$.ajax({
+				url: 'heartChange',
+    			type: 'get',
+    			contentType:'application/json;charset=utf-8',
+    			dataType:'json',
+    			data: {'heartImg' : heartImg,
+    				   'review_idx' : review_idx,
+    				   'style_like_count' : style_like_count},
+    			success : function(review) {
+					debugger;    		
+					onclick1(page)
+    			}
+			});
+			
+    	}
     </script>
-    
+    <c:if test="${not empty reviewList}">
+    <!-- STYLE 시작 -->
+	 <section class="hero hero-small">
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <h3>&nbsp;&nbsp; review<span style="font-size: 15px;">(${listCount })</span></h3>
+          </div>
+        </div>
+      </div>
+      <br>
+    <!-- 인기 최신 -->
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+           	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1(1)">
+ 			<label id="btntext" for="btnradio1">최신</label>
+          	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" onclick="onclick1(1)">
+           	<label id="btntext" for="btnradio3">인기</label>
+ 			<!-- 댓글순 보류 11-23 -->
+<!--  			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="onclick1()"> -->
+<!--  			<label id="btntext" for="btnradio2">댓글</label> --> 
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--  인기 최신 끝 -->
+    <%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
     
     <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
       <div class="container">
         <div class="row masonry gutter-3" id="reviewchange">
           <c:forEach var="review" items="${reviewList }">
           <!-- ajax 인기순 처리 시작 -->
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
-              </figure>
-              <div class="card-body">
-              	<a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
-                <h3 class="card-content">${review.review_content }</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">${review.style_like_count }&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
-                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
-              </div>
-            </article>
-          </div>
+	          <div class="col-md-6 col-lg-4">
+	            <article class="card card-post">
+	              <figure class="equal equal-50">
+	                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
+	              </figure>
+	              <div class="card-body">
+	              	<a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+	                <h3 class="card-content">${review.review_content }</h3>
+	                <div class="like" id="change${review_idx }"><a href="javascript:onclick2('${review.review_idx },${review.heartImg },${review.style_like_count },${pageInfo.pageNum2 }')"><img src="resources/img/review/${review.heartImg }">${review.style_like_count }&nbsp;&nbsp;</a><img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
+	                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
+	              </div>
+	            </article>
+	          </div>
           <!-- 끝 -->
         </c:forEach>
           
@@ -536,8 +560,9 @@
         
         
         <!-- 페이징 -->
+        
 		<div class="row">
-              	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
+              	
           <div class="col" id="pageChange">
             <nav class="d-inline-block">
               <ul class="pagination">
@@ -557,7 +582,7 @@
       </div>
       
     </section>
-
+	</c:if>
 
    <jsp:include page="../inc/footer.jsp"></jsp:include>
 

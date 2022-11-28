@@ -514,6 +514,12 @@ public interface ProductMapper {
 
 	int selectStyleCount(int review_idx);
 
+	List<Integer> getLikeMemberList(int review_idx);
+
+	void deleteReviewLike(@Param("member_idx") int member_idx,@Param("review_idx") int review_idx);
+
+	void insertReviewLike(@Param("member_idx") int member_idx,@Param("review_idx") int review_idx);
+
 
 	
 

@@ -23,13 +23,14 @@ public class Product_ReviewListVO {
 	private int review_reply_count;
 	
 	private int style_like_count;
+	private String heartImg;
 	
 	public Product_ReviewListVO() {}
 
 	public Product_ReviewListVO(int review_idx, int member_idx, int product_idx, String review_image1,
 			String review_image2, String review_image3, String member_image, String product_image, String member_id,
 			String member_nickname, String product_name, String product_buy_price, String review_content,
-			String review_date, int review_reply_count, int style_like_count) {
+			String review_date, int review_reply_count, int style_like_count, String heartImg) {
 		super();
 		this.review_idx = review_idx;
 		this.member_idx = member_idx;
@@ -47,6 +48,7 @@ public class Product_ReviewListVO {
 		this.review_date = review_date;
 		this.review_reply_count = review_reply_count;
 		this.style_like_count = style_like_count;
+		this.heartImg = heartImg;
 	}
 
 	public int getReview_idx() {
@@ -177,6 +179,14 @@ public class Product_ReviewListVO {
 		this.style_like_count = style_like_count;
 	}
 
+	public String getHeartImg() {
+		return heartImg;
+	}
+
+	public void setHeartImg(String heartImg) {
+		this.heartImg = heartImg;
+	}
+
 	@Override
 	public String toString() {
 		return "Product_ReviewListVO [review_idx=" + review_idx + ", member_idx=" + member_idx + ", product_idx="
@@ -185,9 +195,10 @@ public class Product_ReviewListVO {
 				+ product_image + ", member_id=" + member_id + ", member_nickname=" + member_nickname
 				+ ", product_name=" + product_name + ", product_buy_price=" + product_buy_price + ", review_content="
 				+ review_content + ", review_date=" + review_date + ", review_reply_count=" + review_reply_count
-				+ ", style_like_count=" + style_like_count + "]";
+				+ ", style_like_count=" + style_like_count + ", heartImg=" + heartImg + "]";
 	}
 
+	
 	
 	
 
