@@ -46,7 +46,65 @@
     });
   }
 </script>
+
+<script type="text/javascript">
+  // 무한스크롤
+  let pageNum = 1;
+  var keyword = ""; 
+    load_list();
   
+  $(function() {
+    $(window).scroll(function() {
+      let scrollTop = $(window).scrollTop(); 
+      let windowHeight = $(window).height(); 
+      let documentHeight = $(document).height(); 
+      
+      if(scrollTop + windowHeight + 0.5 >= documentHeight) {
+        pageNum++;
+        load_list();
+      }
+    });
+  });
+  // 리뷰 목록 호출
+  function load_list() {
+	  $("#btnradio1").on("click", function() { // 최신순
+    	pageNum = 1;
+      keyword = "new";
+      $("#reviewList").html("");
+	  });
+	  $("#btnradio2").on("click", function() { // 인기순
+      pageNum = 1;
+      keyword = "pop";
+      $("#reviewList").html("");
+    });
+    $.ajax({
+      type     : "GET",
+      url      : "listChange?pageNum=" + pageNum,
+      dataType : "json",
+   	  data     : { 'keyword' : keyword },
+      success  : function(reviewList) { // 요청 성공 시
+    	  let result = "";
+    	  for(var i = 0; i < reviewList.length; i++){
+        let productPrice = reviewList[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
+       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
+	       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
+	       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
+	       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
+	       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
+	       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
+	       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
+	       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
+	       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
+	       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
+    	  }
+      $("#reviewList").append(result);
+      }
+    });
+  }  
+</script>
+
 <style type="text/css">
 	.col-lg-4 { flex: 0 0 25%; max-width: 25%; padding: 10px; }
 	.card-post { height: 500px; }
@@ -81,9 +139,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
-				  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
+				  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="load_list()" checked>
 				  <label for="btnradio1">최신</label>
-				  <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
+				  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="load_list()">
 				  <label for="btnradio2">인기</label>
 				</div>
 			</div>
@@ -93,7 +151,7 @@
   <!-- ******************************* 리뷰 목록 ******************************* -->
 	<section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;">
 		<div class="container">
-			<div class="row masonry gutter-3">
+			<div class="row masonry gutter-3" id="reviewList">
 			<!-- *************************** 데이터 넣을 부분 *************************** -->
 			<c:forEach var="review" items="${reviewList }">
 			  <div class="col-md-6 col-lg-4">
@@ -111,7 +169,7 @@
 			        <h3 class="card-content">${review.review_content }</h3>
 			        <div class="like" id="divLike">
                 <a class="heart"><img src="resources/img/review/${review.heartImg} " id="likeNone_${review.review_idx }" name="${review.num }" onclick="changeLike(this)"></a>${review.likeCount}&nbsp;&nbsp;
-                <img src="resources/img/review/reply.jpg">${review.review_reply_count }
+                <img src="resources/img/review/reply.jpg">${review.replyCount }
 			        </div>
 			        <!-- ********************** 상품 정보 출력 *************************** -->
 			        <h4 class="card-title"><a href="product_detail?product_idx=${review.product_idx }">
@@ -122,23 +180,11 @@
 			  </div>
 			</c:forEach>
 			</div>
-		  <div class="row">
-		    <div class="col">
-		      <nav class="d-inline-block">
-		        <ul class="pagination">
-		          <li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li>
-		          <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li>
-		          <li class="page-item"><a class="page-link" href="#!">3</a></li>
-		          <li class="page-item"><a class="page-link" href="#!">4</a></li>
-		        </ul>
-		      </nav>
-		    </div>
-		  </div>
 		</div>
 	</section>
 
   <!-- footer -->
-  <jsp:include page="../inc/footer.jsp"></jsp:include>
+<%--     <jsp:include page="../inc/footer.jsp"></jsp:include> --%>
   
   <script src="resources/js/vendor.min.js"></script>
   <script src="resources/js/app.js"></script>

@@ -13,7 +13,6 @@
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script>
 	$(function(){
-	  var fileNum = 0;
     // 업로드 이미지 미리보기
 		$("#AddImgs").change(function(e){
 		  $('#Preview').empty();
@@ -45,6 +44,7 @@
 		  }
 		  // 미리보기 구현
 			function preview(arr){
+				var fileNum = 0;
 				arr.forEach(function(f){
 					// div에 이미지 추가
 					var str = '<li class="ui-state-default">';
@@ -54,9 +54,8 @@
 						arr.push(f);
 						reader.onload = function(e){ 
 						// 파일 읽어들이기 성공시 호출되는 이벤트 핸들러
-						  str += '<img src="'+e.target.result+'" title="'+f.name+'" width=80 height=80>';
-// 						  str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
-						  str += '<span class="delBtn" id="file' + fileNum + '">x</span>';
+						  str += '<img src="'+e.target.result+'" id="img' + fileNum +'" title="'+f.name+'" width=80 height=80>';
+						  str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
 						  str += '</li>';
 						  $(str).appendTo('#Preview');
 						  fileNum++;
@@ -64,25 +63,21 @@
 					reader.readAsDataURL(f);
 					} 
 				});
-				console.log(arr);
 			}
-			// 이미지 삭제
-// 			function delImg(fileNum){
-// 				var no = fileNum.replace(/[^0-9]/g, "");
-// 				arr[no].is_delete = true;
-// 				$('#' + fileNum).remove();
-// 				fileCount--;
-// 			};
-			$(".delBtn").on("click", function() {
-				var fileNum = $("#file' + fileNum + '").val;
-				console.log(fileNum);
-				var no = fileNum.replace(/[^0-9]/g, "");
-		        arr[no].is_delete = true;
-		        $('#' + fileNum).remove();
-		        fileCount--;
-			});
 		});
 	});
+	//이미지 삭제
+	function delImg(fileNum){
+		var dataTransfer = new DataTransfer();
+		var no = fileNum.replace(/[^0-9]/g, "");
+    var files = $('#AddImgs')[0].files;
+    var arr = Array.prototype.slice.call(files);
+    arr.splice(fileNum, 1);
+    arr.forEach(files => { dataTransfer.items.add(files); });
+    $('#AddImgs')[0].files = dataTransfer.files;
+    $('#' + fileNum).remove();
+    $('#img' + no).remove();
+	};
 </script>
   
 <style type="text/css">

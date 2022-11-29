@@ -48,7 +48,6 @@
   });
 </script>
 <script type="text/javascript">
-	var cnt = 1;
 	var sIdx = "${sessionScope.sIdx }";
 	// 로그인 한 회원만 좋아요 가능
 	function changeLike() {
@@ -59,13 +58,103 @@
 	}
 	// 회원만 댓글 작성 가능한 유효성 검사 & 회원이 댓글 등록 시 댓글 insert
 	function forwardReply() {
+		var content = $("#reply_content").val();
 		if(sIdx == "") {
 			alert('로그인 후 이용 가능합니다.');
 			return;
+		} else {
+			if(content.length > 0) {
+				$.ajax({
+					url       : 'review_reply',
+					data      : {
+						'member_idx' : '${sessionScope.sIdx }',
+						'review_idx' : '${review.review_idx }',
+						'reply_content' : content
+					},success : function(status) {
+						if(status == "success") {
+							selelctReplyList();
+							$("#reply_content").val("");
+						}
+					}
+				})
+			}
 		}
-		var content = document.getElementById("reply_content").value;
-		location.href = "review_reply?member_idx=${sessionScope.sIdx }&review_idx=${review.review_idx }&reply_content=" + content;
 	}
+	// 대댓글 입력창
+	function reReply(ref) {
+		var index = ref.id.split('_')[1];
+    $("#reReply_"+index).css('display', 'table-cell');
+  }
+	// 대댓글 
+	function reComment(ref) {
+		var index = ref.id.split('_')[1];
+		var content = $("#exampleInputEmail1_"+index).val();
+    if(sIdx == "") {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    } else {
+      if(content.length > 0) {
+        $.ajax({
+          url       : 'review_replies',
+          data      : {
+            'member_idx'    : '${sessionScope.sIdx }',
+            'review_idx'    : '${review.review_idx }',
+            'reply_content' : content,
+            'reply_re_ref'  : index
+          },success : function(status) {
+            if(status == "success") {
+              selelctReplyList();
+              $("#reply_content").val("");
+            }
+          }
+        })
+      }
+    }
+  }
+	// 댓글 목록 조회
+	function selelctReplyList() {
+		$.ajax({
+			type    : "GET",
+      url     : 'replyList',
+      dataType: "json",
+      data    : { review_idx : ${review.review_idx } },
+      success : function(reply) {
+    	  let result = "";
+        for(var i = 0; i < reply.length; i++){
+       	  if((reply[i].reply_re_lev) > 0) {
+       		  result += "<img id='replyImage' src='resources/img/review/reply-ico.png'>";
+       		  result += "<tr><td style='width: 180px;'><a class='profile_reply' href='review_mystyle'>";
+            result += "<img src='resources/img/member/"+reply[i].image_real_file1+"'><span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
+            result += "</a></td><td style='width: 300px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
+       	  } else {
+	        	result += "<tr><td style='width: 180px;'><a class='profile_reply' href='review_mystyle'>";
+	        	result += "<img src='resources/img/member/"+reply[i].image_real_file1+"'><span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
+	          result += "</a></td><td style='width: 450px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
+       	  }
+          if((sIdx == reply[i].member_idx) && sIdx.length > 0) {
+        	  result += "<button type='button' class='btn btn-primary btn-rounded btn-reply' data-toggle='modal' data-target='#exampleModal-2"+reply[i].reply_re_ref+"'>삭제</button>";
+          } 
+          result += "<button type='button' id='reComment_"+reply[i].reply_re_ref+"' class='btn btn-primary btn-rounded btn-reply' onclick='reReply(this)'>답글</button>";
+          result += "<div class='modal fade' id='exampleModal-2"+reply[i].reply_re_ref+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
+          result += "<div class='modal-dialog' role='document'><div class='modal-content' style='text-align: center;'>";
+          result += "<div class='modal-header'><h5 class='modal-title' id='exampleModalLabel'>댓글 삭제</h5>";
+         	result += "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span></button></div>";
+         	result += "<div class='modal-body' style='font-size: 16px; font-weight: 700;'><p>댓글을 삭제 하시겠습니까?</p></div>";
+         	result += "<div class='modal-footer'><div class='container-fluid'><div class='row gutter-0'><div class='col'>";
+         	result += "<button type='button' class='btn btn-primary btn-modal1' data-dismiss='modal'>취소</button></div>";
+         	result += "<div class='col'><button type='button' class='btn btn-primary btn-modal2'";
+         	result += "onclick='location.href='review_replyDelete?review_idx="+reply[i].review_idx+'&reply_re_ref='+reply[i].reply_re_ref+"''>삭제</button>";
+         	result += "</div></div></div></div></div></div></div></td></tr>";
+         	result += "<tr><td id='reReply_"+reply[i].reply_re_ref+"' colspan='3' style='padding-left: 180px; display: none;'><div class='form-group'>";
+         	result += "<input type='text' class='form-control' id='exampleInputEmail1_"+reply[i].reply_re_ref+"' name='reReplyContent' style='width: 500px; float: left;' aria-describedby='emailHelp' placeholder='댓글을 남겨주세요.'>";
+         	result += "<button type='button' class='btn btn-primary btn-rounded btn-reply' id='reComment"+reply[i].reply_re_ref+"' style='float: left; margin: 7px auto;'>답글등록</button></div></td></tr>";
+        }
+        $("#replyList").html(result);
+      }
+    });
+	}
+// 		var content = document.getElementById("reply_content").value;
+// 		location.href = "review_reply?member_idx=${sessionScope.sIdx }&review_idx=${review.review_idx }&reply_content=" + content;
 </script>
 
 <style type="text/css">
@@ -97,8 +186,9 @@
 	#component-1 { width: 800px; padding-top: 10px; margin-bottom: 50px; }
 	.profile_reply img { width: 40px; height: 40px; border-radius: 10em; margin: 10px 5px; }
 	.profile_reply .eyebrow { text-transform: none; margin: 0 10px; font-size: 15px; font-weight: 800; letter-spacing: 0; }
-	.btn-reply { background-color: #FFF; border-color: #101010; color: #101010; font-size: 14px; margin-left: 0;  }
+	.btn-reply { background-color: #FFF; border-color: #101010; color: #101010; font-size: 14px; margin-left: 0; margin: 7px auto; }
 	.form-control:focus { border-color: #101010; }
+	#replyImage { width: 40px; height: 40px; }
 	/* ****************************** 삭제 모달창 ****************************** */
 	.btn-modal1 { width: 100%; background-color: #A6A6A6; border-color: #A6A6A6; color: #101010; 
                 border-radius: 0; padding: 0.9375rem 2.5rem; font-size: 14px; }
@@ -148,21 +238,36 @@
 	<!-- ********************************* 댓글 ********************************* -->
 	<section id="component-1">
 		<div class="component">
-			<table style="width: 780px;">
+			<table style="width: 780px;" id="replyList">
 			<!-- *************************** 댓글 목록 출력 **************************** -->
-			<c:forEach var="re" items="${reply }">
+			<c:forEach var="re" items="${reply }" varStatus="vs">
 				<tr>
-				  <td style="width: 180px;">
-				    <a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }">
-				    <span class="eyebrow text-muted">${re.member_nickname }</span></a>
-				  </td>
-				  <td style="width: 530px;">${re.reply_content }</td>
-				  <td> <!-- ******************* 댓글쓴이에게만 보이는 버튼 ******************* -->
+<%-- 				  <c:if test="${re.reply_re_lev > 0 }"> --%>
+        <c:choose>
+          <c:when test="${re.reply_re_lev > 0 }">
+            <img id="replyImage" src="resources/img/review/reply-ico.png">
+					  <td style="width: 180px;">
+					    <a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }">
+					    <span class="eyebrow text-muted">${re.member_nickname }</span></a>
+					  </td>
+					  <td style="width: 300px;">${re.reply_content }</td>
+				  </c:when>
+				  <c:otherwise>
+					  <td style="width: 180px;">
+	            <a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }">
+	            <span class="eyebrow text-muted">${re.member_nickname }</span></a>
+	          </td>
+	          <td style="width: 450px;">${re.reply_content }</td>
+				  </c:otherwise>
+			  </c:choose>
+<%-- 				  </c:if> --%>
+				  <td style="float: right;"> <!-- ******************* 댓글쓴이에게만 보이는 버튼 ******************* -->
 				  <c:if test="${(sessionScope.sIdx == re.member_idx) && not empty sessionScope.sIdx }">
-				    <button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2">삭제</button>
+				    <button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2${vs.index}">삭제</button>
 				  </c:if>
+				    <button type="button" id="reComment_${re.reply_re_ref }" class="btn btn-primary btn-rounded btn-reply" onclick="reReply(this)">답글</button>
 				    <!-- ********************************* 댓글 삭제 모달 ********************************* -->
-						<div class="modal fade" id="exampleModal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal fade" id="exampleModal-2${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  <div class="modal-dialog" role="document">
 						    <div class="modal-content" style="text-align: center;">
 						      <div class="modal-header">
@@ -190,6 +295,12 @@
 						</div>
 				  </td>
 				</tr>
+				<tr><td id="reReply_${re.reply_re_ref }" colspan="3" style="padding-left: 180px; display: none;">
+				  <div class="form-group">
+		        <input type="text" class="form-control" id="exampleInputEmail1_${re.reply_re_ref }" name="reReplyContent" style="width: 500px; float: left;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
+		        <button type="button" class="btn btn-primary btn-rounded btn-reply" id="reComment_${re.reply_re_ref }" onclick="reComment(this)" style="float: left; margin: 7px auto;">답글등록</button>
+		      </div>
+				</td></tr>
 			</c:forEach>
 			<!-- **************************** 댓글 작성 ****************************** -->
 			</table>

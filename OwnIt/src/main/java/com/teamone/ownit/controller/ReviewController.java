@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,23 +36,51 @@ public class ReviewController {
 	private ReviewService service;
 	
 	@GetMapping(value = "/review")
-	public String review(Model model, HttpSession session) {
+	public String review() {
 		
-        if(session.getAttribute("sIdx")!=null) {
-        	int member_idx = (int)session.getAttribute("sIdx");
-        	List<ReviewListVO> reviewList = service.getReviewList(member_idx);
-        	model.addAttribute("reviewList", reviewList);
-        } else {
-        	int member_idx = 0;
-        	List<ReviewListVO> reviewList = service.getReviewList(member_idx);
-        	model.addAttribute("reviewList", reviewList);
-        }
+//		int member_idx = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+//		
+//    	List<ReviewListVO> reviewList = service.getReviewList(member_idx);
+//    	model.addAttribute("reviewList", reviewList);
 		
 		return "review/review";
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/listChange")
+	public void reviewSwicth(
+			@RequestParam(defaultValue = "") String keyword, 
+			@RequestParam(defaultValue = "1") int pageNum, 
+			Model model, HttpServletResponse response, HttpSession session) {
+		System.out.println("keyword : " + keyword);
+		int listLimit = 12; 
+		int startRow = (pageNum - 1) * listLimit;
+		
+		// 리뷰 목록 조회
+		int member_idx = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+		
+    	List<ReviewListVO> reviewList = service.getReviewList(startRow, listLimit, member_idx, keyword);
+    	model.addAttribute("reviewList", reviewList);
+		
+		JSONArray jsonArray = new JSONArray();
+
+		for(ReviewListVO review : reviewList) {
+			JSONObject jsonObject = new JSONObject(review);
+			jsonArray.put(jsonObject);
+		}
+		
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(jsonArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@GetMapping(value = "/review_detail")
-	public String reviewDetail(@RequestParam int review_idx, Model model, HttpSession session) {
+	public String reviewDetail(@RequestParam int review_idx, Model model, HttpSession session, HttpServletResponse response) {
+		
 		// 리뷰 출력
 		ReviewListVO review = service.getReview(review_idx);
 		model.addAttribute("review", review);
@@ -68,23 +99,39 @@ public class ReviewController {
         
         // 좋아요
         Style_like_listVO like = new Style_like_listVO();
+        int member_idx = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
         like.setReview_idx(review_idx);
-        if(session.getAttribute("sIdx")!=null) {
-        	int member_idx = (int)session.getAttribute("sIdx");
-        	like.setMember_idx(member_idx);
-        	int reviewlike = service.findLike(like);
-        	model.addAttribute("heart", reviewlike);
-        } else {
-        	int member_idx = 0;
-        	int reviewlike = service.findLike(like);
-        	model.addAttribute("heart", reviewlike);
-        }
+        like.setMember_idx(member_idx);
+        int reviewlike = service.findLike(like);
+    	model.addAttribute("heart", reviewlike);
         
         // 좋아요 수 출력
         int likeCount = service.getLikeCount(review_idx);
         model.addAttribute("likeCount", likeCount);
         
 		return "review/review_detail";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/replyList")
+	public void replyList(@RequestParam int review_idx, Model model, HttpServletResponse response) {
+		
+		List<ReplyVO> replyList = service.getReply(review_idx);
+        model.addAttribute("reply", replyList);
+
+        JSONArray jsonArray = new JSONArray();
+        
+        for(ReplyVO reply : replyList) {
+        	JSONObject jsonObject = new JSONObject(reply);
+        	jsonArray.put(jsonObject);
+        }
+		
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(jsonArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@ResponseBody 
@@ -154,33 +201,63 @@ public class ReviewController {
 		List<MultipartFile> mFiles = review.getFiles();
 		Map<String, String> map = new HashMap<>();
 		
-		for(int i = 0; i < mFiles.size(); i++) {
-			String originalFileName = mFiles.get(i).getOriginalFilename();
-			String uuid = UUID.randomUUID().toString();
-			String realFileName = uuid + "_" + originalFileName;
-			
-			map.put("originalFileName" + i, originalFileName);
-			map.put("realFileName" + i, realFileName);
-			
-			fileList.add(map);
-			
-		}
+		String uuid = UUID.randomUUID().toString();
 		
-		review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
-		review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
-		review.setImage_original_file3(fileList.get(2).get("originalFileName2").toString());
-		review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
-		review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
-		review.setImage_real_file3(fileList.get(2).get("realFileName2").toString());
+		if(mFiles.size() == 1) { // 이미지가 1개일 때
+			String originalFileName = mFiles.get(0).getOriginalFilename();
+			String realFileName = uuid + "_" + originalFileName;
+					 
+			map.put("originalFileName" + 0, originalFileName);
+			map.put("realFileName" + 0, realFileName);
+			fileList.add(map);
+					 
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+		} else if(mFiles.size() == 2) { // 이미지가 2개일 때
+			for(int i = 0; i < mFiles.size(); i++) {
+			    String originalFileName = mFiles.get(i).getOriginalFilename();
+			    String realFileName = uuid + "_" + originalFileName;
+			
+				map.put("originalFileName" + i, originalFileName);
+				map.put("realFileName" + i, realFileName);
+			    fileList.add(map);
+			}
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+			review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
+		} else if(mFiles.size() == 3) { // 이미지가 3개일 때
+			for(int i = 0; i < mFiles.size(); i++) {
+			    String originalFileName = mFiles.get(i).getOriginalFilename();
+			    String realFileName = uuid + "_" + originalFileName;
+			
+				map.put("originalFileName" + i, originalFileName);
+				map.put("realFileName" + i, realFileName);
+			    fileList.add(map);
+			}
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
+			review.setImage_original_file3(fileList.get(2).get("originalFileName2").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+			review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
+			review.setImage_real_file3(fileList.get(2).get("realFileName2").toString());
+		}
 		
 		int insertCount = service.registReview(review);
 		int insertCount2 = service.registReviewImage(review);
 		
 		if(insertCount > 0 && insertCount2 > 0) {
 			try {
-				mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
-				mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
-				mFiles.get(2).transferTo(new File(saveDir, review.getImage_real_file3()));
+				if(mFiles.size() == 1) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+				} else if(mFiles.size() == 2) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+					mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
+			    } else if(mFiles.size() == 3 ) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+					mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
+					mFiles.get(2).transferTo(new File(saveDir, review.getImage_real_file3()));
+			    }
 				service.modifyOrderGb(order_buy_idx);
 			} catch (IllegalStateException e) {
 				System.out.println("IllegalStateException");
@@ -222,33 +299,63 @@ public class ReviewController {
 		List<MultipartFile> mFiles = review.getFiles();
 		Map<String, String> map = new HashMap<>();
 		
-		for(int i = 0; i < mFiles.size(); i++) {
-			String originalFileName = mFiles.get(i).getOriginalFilename();
-			String uuid = UUID.randomUUID().toString();
-			String realFileName = uuid + "_" + originalFileName;
-			
-			map.put("originalFileName" + i, originalFileName);
-			map.put("realFileName" + i, realFileName);
-			
-			fileList.add(map);
-			
-		}
+String uuid = UUID.randomUUID().toString();
 		
-		review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
-		review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
-		review.setImage_original_file3(fileList.get(2).get("originalFileName2").toString());
-		review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
-		review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
-		review.setImage_real_file3(fileList.get(2).get("realFileName2").toString());
+		if(mFiles.size() == 1) { // 이미지가 1개일 때
+			String originalFileName = mFiles.get(0).getOriginalFilename();
+			String realFileName = uuid + "_" + originalFileName;
+					 
+			map.put("originalFileName" + 0, originalFileName);
+			map.put("realFileName" + 0, realFileName);
+			fileList.add(map);
+					 
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+		} else if(mFiles.size() == 2) { // 이미지가 2개일 때
+			for(int i = 0; i < mFiles.size(); i++) {
+			    String originalFileName = mFiles.get(i).getOriginalFilename();
+			    String realFileName = uuid + "_" + originalFileName;
+			
+				map.put("originalFileName" + i, originalFileName);
+				map.put("realFileName" + i, realFileName);
+			    fileList.add(map);
+			}
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+			review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
+		} else if(mFiles.size() == 3) { // 이미지가 3개일 때
+			for(int i = 0; i < mFiles.size(); i++) {
+			    String originalFileName = mFiles.get(i).getOriginalFilename();
+			    String realFileName = uuid + "_" + originalFileName;
+			
+				map.put("originalFileName" + i, originalFileName);
+				map.put("realFileName" + i, realFileName);
+			    fileList.add(map);
+			}
+			review.setImage_original_file1(fileList.get(0).get("originalFileName0").toString());
+			review.setImage_original_file2(fileList.get(1).get("originalFileName1").toString());
+			review.setImage_original_file3(fileList.get(2).get("originalFileName2").toString());
+			review.setImage_real_file1(fileList.get(0).get("realFileName0").toString());
+			review.setImage_real_file2(fileList.get(1).get("realFileName1").toString());
+			review.setImage_real_file3(fileList.get(2).get("realFileName2").toString());
+		}
 		
 		int updateCount = service.modifyReview(review);
 		int updateCount2 = service.modifyReviewImage(review);
 		
 		if(updateCount > 0 && updateCount2 > 0) {
 			try {
-				mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
-				mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
-				mFiles.get(2).transferTo(new File(saveDir, review.getImage_real_file3()));
+				if(mFiles.size() == 1) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+				} else if(mFiles.size() == 2) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+					mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
+			    } else if(mFiles.size() == 3 ) {
+					mFiles.get(0).transferTo(new File(saveDir, review.getImage_real_file1()));
+					mFiles.get(1).transferTo(new File(saveDir, review.getImage_real_file2()));
+					mFiles.get(2).transferTo(new File(saveDir, review.getImage_real_file3()));
+			    }
 			} catch (IllegalStateException e) {
 				System.out.println("IllegalStateException");
 				e.printStackTrace();
@@ -275,13 +382,29 @@ public class ReviewController {
 		return "redirect:/review";
 	}
 	
+	@ResponseBody
 	@GetMapping(value = "/review_reply")
 	public String reviewReply(Model model, @ModelAttribute ReplyVO reply, @RequestParam int review_idx, HttpSession session) {
 		int insertCount = service.registReply(reply);
 		
 		if(insertCount > 0) { 
 			service.increaseReplycount(review_idx);
-			return "redirect:/review_detail?review_idx=" + reply.getReview_idx();
+			return "success";
+		} else { 
+			model.addAttribute("msg", "등록 실패!");
+			return "notice/fail_back";
+		}
+		
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/review_replies")
+	public String reviewReplies(Model model, @ModelAttribute ReplyVO reply, @RequestParam int review_idx, HttpSession session) {
+		int insertCount = service.registReplies(reply);
+		
+		if(insertCount > 0) { 
+			service.increaseReplycount(review_idx);
+			return "success";
 		} else { 
 			model.addAttribute("msg", "등록 실패!");
 			return "notice/fail_back";

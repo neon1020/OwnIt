@@ -19,8 +19,8 @@ public class ReviewService {
 	private ReviewMapper mapper;
 	
     // 리뷰 목록
-	public List<ReviewListVO> getReviewList(int member_idx) {
-		return mapper.selectReviewList(member_idx);
+	public List<ReviewListVO> getReviewList(int startRow, int listLimit, int member_idx, String keyword) {
+		return mapper.selectReviewList(startRow, listLimit, member_idx, keyword);
 	}
 
     // 리뷰 상세페이지
@@ -92,6 +92,11 @@ public class ReviewService {
 	public int registReply(ReplyVO reply) {
 		return mapper.insertReply(reply);
 	}
+	
+	// 리뷰 대댓글 등록
+	public int registReplies(ReplyVO reply) {
+		return mapper.insertReplies(reply);
+	}
 
 	// 리뷰 댓글 수 출력
 	public int getReplyCount(int review_idx) {
@@ -132,6 +137,8 @@ public class ReviewService {
 	public void modifyOrderGb(int order_buy_idx) {
 		mapper.updateOrderGb(order_buy_idx);
 	}
+
+	
 
 	
 
