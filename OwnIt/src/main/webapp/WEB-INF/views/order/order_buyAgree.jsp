@@ -117,7 +117,7 @@ $(document).ready(function() {
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
 	          			</c:forEach>
-	          			<td><div style="margin:0 auto; padding-top: 35px;">외 ${cnt } 상품</div></td>
+	          			<td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt } 상품</div></td>
 	          		</tr>
 	          		
 	          		<tr>
@@ -148,12 +148,20 @@ $(document).ready(function() {
 	          		<tr>
 	          			<th colspan="2">
 		          			<span>OwnIt의 최신 이용정책을 모두 확인하였으며, 구매를 계속합니다.</span><br>
-		          			<input type="checkbox" id="check4"  name="check-box" onchange="checkForm()">건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을 확인했습니다.<hr>
-		          			<input type="checkbox" id="checkAll" onchange="checkForm()">
-			          			<span id="sell_span" style="font-size: 13px; color: gray;">
-			          				전체동의
-			          			</span>
+		          			<input type="checkbox" id="check4"  name="check-box" onchange="checkForm()">건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을<br> 확인했습니다.
+		          		</th>
+	          		</tr>
+	          		<tr>
+	          			<th colspan="2">
+	          				<div style="margin-top: 30px;">
+		          			<input type="checkbox" id="checkAll" onchange="checkForm()" >
+		          			<span id="sell_span" style="font-size: 13px; color: gray;">
+		          				전체동의
+		          			</span>
+		          			</div>
+		          			<div style="margin-top: 20px;">
 		          			<input type="submit" value="구매 계속" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
+		          			</div>
 		          		</th>
 	          		</tr>
 	          	</table>
