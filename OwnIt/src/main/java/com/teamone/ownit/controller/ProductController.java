@@ -269,6 +269,25 @@ public class ProductController {
 		}
 	}
 	
+	@PostMapping(value = "loadCart")
+	public void loadCart(HttpSession session, HttpServletResponse response) {
+		String sId = (String)session.getAttribute("sId");
+		List<CartVO> cart = null;
+		if(sId.length() != 0) {
+			cart = service.checkCart(sId);
+			JSONArray jsonArray = new JSONArray();
+			for(CartVO c : cart) {
+				JSONObject jsonObject = new JSONObject(c);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(jsonArray);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 	
@@ -478,26 +497,7 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
+		
 // 박주닮
 
 	@GetMapping(value = "product_detail")

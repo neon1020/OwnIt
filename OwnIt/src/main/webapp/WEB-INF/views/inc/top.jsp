@@ -7,19 +7,26 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-   #btn-pay {
-      background-color: #101010;
-      border-color: #101010;
-   }
-   #btn-pay:hover {
-      background-color: #353535;
-      border-color: #353535;
-   }
-   .media-title {
-      font-size: 1.2em;
-      line-height: 1.2;
-      -webkit-line-clamp: 2;
-   }
+	#btn-pay {
+	   background-color: #101010;
+	   border-color: #101010;
+	}
+	#btn-pay:hover {
+	   background-color: #353535;
+	   border-color: #353535;
+	}
+	.media-title {
+	   font-size: 1.2em;
+	   line-height: 1.2;
+	   -webkit-line-clamp: 2;
+	}
+	.btn-secondary {
+		background-color: #101010; color: white;
+	}
+	.btn-secondary:hover {
+		background-color: #353535; color: white;
+	}
+   
 </style>
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
@@ -232,12 +239,6 @@ function delFromCart(item) {
                 <div class="col d-none d-md-block">
                   <a href="viewMyCart" class="btn btn-lg btn-block btn-secondary">장바구니 이동</a>
                 </div>
-                
-                <div class="col">
-                  <a href="" class="btn btn-lg btn-block btn-primary" id="btn-pay">결제하기</a>
-                </div>
-                
-                
               </div>
             </div>
           </div>

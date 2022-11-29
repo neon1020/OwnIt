@@ -12,6 +12,28 @@
 <title>OwnIt</title>
 <script src="resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+$(document).on("click", ".product-action", function() {
+	if(${not empty sessionScope.sId}) {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addCart',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success:function(result){
+				if(result == 'Added') {
+					$('#'+index+' > a').html(result).css('color', 'blue');
+				} else {
+					$('#'+index+' > a').html(result).css('color', 'red');
+				}
+			checkCart();
+			}
+		});
+	} else alert("로그인 후 이용가능합니다");
+});
+
 // 메인에 인기 상품 4개 보여주는 코드
 $(function() {
 	$.ajax({
@@ -31,6 +53,8 @@ $(function() {
 				html += "<h3 class='product-title' style='height: 63px'><a href='product_detail?product_idx="+ prd[index].product_idx +"'>"+prd[index].product_name+" </a></h3>";
 				html += "<div class='product-price'>";
 				html += "<span>"+ buyPrice+"원</span>";
+				html += "<span class='product-action' id='"+ prd[index].product_idx +"' style='cursor: pointer;'>"
+                html += "<a style='color: #101010;'>장바구니에 추가</a></span>"
 				html += "</div></div></div></div>";
 			});
 			$('#prdList').html(html);
@@ -111,7 +135,7 @@ $(function() {
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <h2>인기 상품</h2>
+            <h2>Most Popular</h2>
           </div>
         </div>
 		<!-- 서성민 - 인기상품 4개  -->

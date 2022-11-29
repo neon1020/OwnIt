@@ -137,15 +137,10 @@ function checkForm(){
 	          		<tr>
 	          			<th colspan="2">
 	          			<span id="sell_span" style="float: right; font-size: 11px;">
-		          			<a href="" data-toggle="modal" data-target="#exampleModal-1" style="color: black; border: 0px;"><b>
+		          			<a href="address?member_idx=${sessionScope.sIdx }" target="_blank" style="color: black; border: 0px;"><b>
 								+ 새 주소 추가
 							</b></a>
 		          		</span><br>
-		          		<span id="sell_span2" style="float: right; font-size: 13px;">
-		          			<a id="address2" href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black; ">
-								변경
-							</a>
-			          	</span>
 			          	</th>
 	          		</tr>
 	          		<tr>
