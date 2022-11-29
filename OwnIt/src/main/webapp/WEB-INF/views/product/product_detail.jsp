@@ -8,12 +8,15 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
       <!-- meta -->
-      <link rel="shortcut icon" href="#">
+      <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
     <script src="resources/js/jquery-3.6.1.js"></script>
     <title>Product</title>
     <style type="text/css">
+    	.like > a {
+    		color : black;
+    	}
     	#btntext{
     		font-size: 15px;
     	}
@@ -134,6 +137,7 @@
 
 
 <script type="text/javascript">
+  var cbChecked = "${product.product_idx}:1:${product.product_buy_price}/";
   // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('1782262d4bfba22efdc59a399005f94e');
 
@@ -256,7 +260,7 @@
 		                </button>
                 	</c:when>
                 	<c:otherwise>
-	                	<button id="btn1" type="button" class="btn" onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
+	                	<button id="btn1" type="button" class="btn" onclick="location.href='order_buyAgree?cbChecked=${product.product_idx}:1:${product.product_buy_price}/'" >
 		                	<p>
 		                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
 		                	</p>
@@ -268,11 +272,29 @@
 						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
 					</p>
 				</button>
-				<button id="btn3" type="button" class="btn" onclick="location.href=''" >
-					<p>
-						∑관심상품 | <fmt:formatNumber value="${wishCount }" pattern="#,###"/>
-					</p>
-				</button>
+				<!-- 위시리스트 추가 버튼(혜지) -->
+				<form action="mypage_addWish" method="post">
+				<c:if test="${not empty sessionScope.sId }">
+					<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+				</c:if>
+			  <input type="hidden" name="member_idx" value="0" />	
+			  <input type="hidden" name="product_idx" value="${product.product_idx }" />
+					<button id="btn3" type="submit" class="btn">
+						<p>
+							<c:choose>
+								<c:when test="${isContainedInWish eq 0 }">
+									<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+			  					<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/></svg>
+								</c:when>
+								<c:otherwise>
+									<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/></svg>							
+								</c:otherwise>
+							</c:choose>
+							관심상품 | <fmt:formatNumber value="${wishCount }" pattern="#,###"/>
+						</p>
+					</button>
+				</form>
               </div>
             </div>
 				
@@ -377,21 +399,20 @@
               </div>
             </div>
             
-            
+         
             <div>
               <div class="col-lg-12">
             </div>
-              <img src="resources/img/product/productDetailNotice.png">
+              <img src="resources/img/product/productDetailNotice.png"><hr>
               <div class="col-12 mt-1">
                 <ul class="nav nav-actions">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    	<span style="color:black;">
+                  <li class="nav-item">
+                    	<span id="title1" style="color:black;">
                     		상품 공유하기
                     	</span>
-                    </a>
-                    <ul class="dropdown-menu" style="width: 150px;">
+                    <ul style="width: 150px;">
                       <li>
+                      	<br>
                         <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn">
                         <img id="btnimg" src="resources/img/product/detailKakao.png"></a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -410,7 +431,106 @@
 	
 	<hr>
 	
-	<!-- STYLE 시작 -->
+	
+
+    <script type="text/javascript">
+//     상품 상세페이지 하단의 인기 / 최신 버튼 누를시 keyword 파라미터 ajax 호출
+    	function onclick1(pageNum){ // 버튼이 변경됐을때
+    		let keyword = ""; // string 타입 변수용
+    		if($("#btnradio1").is(":checked")){ 		// 최신순
+    			keyword = "new";
+    		}else if($("#btnradio2").is(":checked")){	//댓글순
+    			keyword = "reply";
+    		}else if($("#btnradio3").is(":checked")){	//인기순
+    			keyword = "star";
+    		}
+    		$.ajax({
+    			url: 'reviewChange',
+    			type: 'get',
+    			contentType:'application/json;charset=utf-8',
+    			dataType:'json',
+    			data: {'keyword' : keyword,
+    				   'product_idx' : ${product.product_idx},
+    				   'pageNum2' : pageNum },
+    			success : function(review) { // 갔다온 다음 결과값
+    				var changeR = "";
+    				var changePage = "";
+    				var page = review[0].pageNum2;
+    				var start = review[0].startPage;
+    				var end = review[0].endPage;
+    				var max = review[0].maxPage;
+			  		 changePage += "<nav class='d-inline-block'><ul class='pagination'>";
+			  		 if(page > start){
+			  			 changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전' onclick='onclick1("+ (page - 1) +")'></li>";
+			  		 } else{
+			  			changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전'></li>";
+			  		 }
+					  for(var i = start; i < (end + 1); i++){
+						  if(i == page){
+							  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+						  }else{
+							  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+						  }
+					  }
+				  	  if(page < max	){
+				  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ (page + 1)+")'></li>";
+				  	  }else{
+				  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
+				  	  }
+			  		changePage +="</ul></nav>";
+			  		
+			  		for(var i = 1; i < review.length; i++){
+					let link = "javascript:onclick2('"+ review[i].review_idx + "," + review[i].heartImg + "," + review[i].style_like_count +","+page+"')";
+    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+						changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+						changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
+						changeR +="</a></figure><div class='card-body'>";
+						changeR +="<a class='profile' href='review_mystyle?member_idx="+review[i].member_idx+"&review_idx="+review[i].review_idx+"'>";
+						changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
+						changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
+						changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
+						changeR += "<div class='like'id='change"+review[i].review_idx+"'><a href="+link+"><img src='resources/img/review/" + review[i].heartImg + "'>" + review[i].style_like_count + "&nbsp;&nbsp;</a>";
+						changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
+						changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
+						changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
+						changeR +="<div class='subject'>"+review[i].product_name+"<br>"+ buyprice +"&nbsp;원</div></a>";
+						changeR +="</h4></div></article></div>";
+			  		}
+					$("#reviewchange").html(changeR);
+					$("#pageChange").html(changePage);
+    			}  // 데이터 =review
+    		});// ajax
+    	}
+    	
+    	// 리뷰 좋아요 클릭시
+    	function onclick2(heartImgReviewIdx){
+    		var sIdx = "${sessionScope.sIdx }";
+    		if(sIdx == "") {
+    		      alert('로그인 후 이용 가능합니다.');
+    		      return;
+    		}
+			var review_idx = heartImgReviewIdx.split(',')[0];
+			var heartImg = heartImgReviewIdx.split(',')[1];
+			var style_like_count = heartImgReviewIdx.split(',')[2];
+			var page = heartImgReviewIdx.split(',')[3];
+			$.ajax({
+				url: 'heartChange',
+    			type: 'get',
+    			contentType:'application/json;charset=utf-8',
+    			dataType:'json',
+    			data: {'heartImg' : heartImg,
+    				   'review_idx' : review_idx,
+    				   'style_like_count' : style_like_count},
+    			success : function(review) {
+					onclick1(page)
+    			}
+			});
+			
+    	}
+    	
+    </script>
+    <c:if test="${not empty reviewList}">
+    <!-- STYLE 시작 -->
 	 <section class="hero hero-small">
       <div class="container">
         <div class="row">
@@ -436,100 +556,26 @@
       </div>
     </section>
     <!--  인기 최신 끝 -->
-
-    <script type="text/javascript">
-//     상품 상세페이지 하단의 인기 / 최신 버튼 누를시 keyword 파라미터 ajax 호출
-//     $(function(){
-    	function onclick1(pageNum){ // 버튼이 변경됐을때
-    		$(function(){
-	    		let keyword = ""; // string 타입 변수용
-	    		if($("#btnradio1").is(":checked")){ 		// 최신순
-	    			keyword = "new";
-	    		}else if($("#btnradio2").is(":checked")){	//댓글순
-	    			keyword = "reply";
-	    		}else if($("#btnradio3").is(":checked")){	//인기순
-	    			keyword = "star";
-	    		}
-	    		$.ajax({
-	    			url: 'reviewChange',
-	    			type: 'get',
-	    			contentType:'application/json;charset=utf-8',
-	    			dataType:'json',
-	    			data: {'keyword' : keyword,
-	    				   'product_idx' : ${product.product_idx},
-	    				   'pageNum2' : pageNum },
-	    			success : function(review) { // 갔다온 다음 결과값
-	    				var changeR = "";
-	    				var changePage = "";
-	    				debugger;
-	    				var page = review[0].pageNum2;
-	    				var start = review[0].startPage;
-	    				var end = review[0].endPage;
-	    				var max = review[0].maxPage;
-				  		 changePage += "<nav class='d-inline-block'><ul class='pagination'>";
-				  		 if(page > start){
-				  			 changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전' onclick='onclick1("+ (page - 1) +")'></li>";
-				  		 } else{
-				  			changePage += "<li class='page-item active'><input class='page-link' type='button' value='이전'></li>";
-				  		 }
-						  for(var i = start; i < (end + 1); i++){
-							  if(i == page){
-								  changePage +=	"<li class='page-item'><a class='page-link'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-							  }else{
-								  changePage +=	"<li class='page-item active'><a class='page-link' href='javascript:onclick1("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-							  }
-						  }
-					  	  if(page < max	){
-					  		  changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음' onclick='onclick1("+ (page + 1)+")'></li>";
-					  	  }else{
-					  		changePage += "<li class='page-item active'><input class='page-link' type='button' value='다음'></li>";
-					  	  }
-				  		changePage +="</ul></nav>";
-				  		
-				  		for(var i = 1; i < review.length; i++){
-// 	    				debugger;
-	    				var buyprice = review[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-							changeR +="<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
-							changeR +="<a class='image image-fade' href='review_detail?review_idx="+review[i].review_idx+"'><img src='resources/img/review/"+review[i].review_image1+"'>";
-							changeR +="</a></figure><div class='card-body'>";
-							changeR +="<a class='profile' href='review_mystyle?member_idx="+review[i].member_idx+"&review_idx="+review[i].review_idx+"'>";
-							changeR +="<img src='resources/img/member/"+review[i].member_image+"'>";
-							changeR +="<span class='eyebrow text-muted'>"+review[i].member_nickname+"</span></a>";
-							changeR +="<h3 class='card-content'>"+review[i].review_content+"</h3>";
-							changeR +="<div class='like'><img src='resources/img/review/like_none.jpg'>"+review[i].style_like_count+"&nbsp;&nbsp;";
-							changeR +="<img src='resources/img/review/reply.jpg'>"+review[i].review_reply_count+"</div><h4 class='card-title'>";
-							changeR +="<a href='product_detail?product_idx="+review[i].product_idx+"'>";
-							changeR +="<img src='resources/img/product/"+review[i].product_image+"'>";
-							changeR +="<div class='subject'>"+review[i].product_name+"<br>"+ buyprice +"&nbsp;원</div></a>";
-							changeR +="</h4></div></article></div>";
-				  		}
-						$("#reviewchange").html(changeR);
-						$("#pageChange").html(changePage);
-	    			}  // 데이터 =review
-	    		});// ajax
-    		});
-    	}
-    </script>
-    
+    <%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
     
     <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
       <div class="container">
         <div class="row masonry gutter-3" id="reviewchange">
           <c:forEach var="review" items="${reviewList }">
           <!-- ajax 인기순 처리 시작 -->
-          <div class="col-md-6 col-lg-4">
-            <article class="card card-post">
-              <figure class="equal equal-50">
-                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
-              </figure>
-              <div class="card-body">
-              	<a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
-                <h3 class="card-content">${review.review_content }</h3>
-                <div class="like"><img src="resources/img/review/like_none.jpg">${review.style_like_count }&nbsp;&nbsp;<img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
-                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
-              </div>
-            </article>
-          </div>
+	          <div class="col-md-6 col-lg-4">
+	            <article class="card card-post">
+	              <figure class="equal equal-50">
+	                <a class="image image-fade" href="review_detail?review_idx=${review.review_idx }"><img src="resources/img/review/${review.review_image1 }"></a>
+	              </figure>
+	              <div class="card-body">
+	              	<a class="profile" href="review_mystyle?member_idx=${review.member_idx }&review_idx=${review.review_idx }"><img src="resources/img/member/${review.member_image }"><span class="eyebrow text-muted">${review.member_nickname }</span></a>
+	                <h3 class="card-content">${review.review_content }</h3>
+	                <div class="like" id="change${review_idx }"><a href="javascript:onclick2('${review.review_idx },${review.heartImg },${review.style_like_count },${pageInfo.pageNum2 }')"><img src="resources/img/review/${review.heartImg }">${review.style_like_count }&nbsp;&nbsp;</a><img src="resources/img/review/reply.jpg">${review.review_reply_count }</div>
+	                <h4 class="card-title"><a href="product_detail?product_idx=${product.product_idx }"><img src="resources/img/product/${review.product_image }"><div class="subject">${review.product_name }<br><fmt:formatNumber value="${review.product_buy_price}" pattern="#,###"/>&nbsp;원</div></a></h4>
+	              </div>
+	            </article>
+	          </div>
           <!-- 끝 -->
         </c:forEach>
           
@@ -537,8 +583,9 @@
         
         
         <!-- 페이징 -->
+        
 		<div class="row">
-              	<%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
+              	
           <div class="col" id="pageChange">
             <nav class="d-inline-block">
               <ul class="pagination">
@@ -554,11 +601,11 @@
             </nav>
           </div>
         </div>
-
+ 
       </div>
       
     </section>
-
+	</c:if>
 
    <jsp:include page="../inc/footer.jsp"></jsp:include>
 

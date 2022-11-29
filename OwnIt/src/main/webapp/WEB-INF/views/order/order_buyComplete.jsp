@@ -66,8 +66,8 @@
 	          	<h1>Order Complete!</h1>
 	         </div>
 	         <div align="center">
-		         <a href="" class="btn btn-primary" id="home">홈으로</a>&nbsp;&nbsp;&nbsp;
-	          	 <a href="order_complete" class="btn btn-primary" id="myPage">마이페이지</a>
+		         <a href="./" class="btn btn-primary" id="home">홈으로</a>&nbsp;&nbsp;&nbsp;
+	          	 <a href="mypage?member_idx=${sessionScope.sIdx }" class="btn btn-primary" id="myPage">마이페이지</a>
           	 </div>
           </div>
         </div>

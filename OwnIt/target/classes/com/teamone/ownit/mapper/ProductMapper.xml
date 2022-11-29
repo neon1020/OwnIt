@@ -110,14 +110,14 @@
 		WHERE product_idx = #{product_idx}
 	</select>
 
-
-
-
-
-
-
-
-
+	<select id="getListToMain" resultType="com.teamone.ownit.vo.ProductVO">
+		SELECT p.product_idx, product_brand, product_name, product_buy_price, i.image_real_file1, i.image_real_file2,
+      		(SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx) AS my_wish
+		  FROM product p 
+		  INNER JOIN (SELECT product_idx, image_real_file1, image_real_file2 FROM image) i
+		    ON p.product_idx = i.product_idx
+		  ORDER BY my_wish DESC LIMIT 4;
+	</select>
 
 
 
@@ -574,39 +574,39 @@
 		WHERE product_idx=#{product_idx};
 	</select>
 
+	
 	<select id="selectStyleCount" resultType="integer">
 		SELECT count(s.review_idx) styleLikeCount 
 		FROM style_like_list s 
 		WHERE s.review_idx=#{review_idx};
 	</select>
 
+	<select id="getLikeMemberList" resultType="integer">
+		SELECT s.member_idx 
+			FROM style_like_list s 
+			WHERE s.review_idx=#{review_idx};
+	</select>
 
+	<delete id="deleteReviewLike">
+	 	DELETE FROM style_like_list 
+	 	WHERE member_idx=#{member_idx}
+ 		AND   review_idx=#{review_idx}
+	</delete>
+	
+	<insert id="insertReviewLike">
+		INSERT INTO style_like_list
+		VALUES (#{member_idx},#{review_idx})
+	</insert>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 관심상품에 존재유무(혜지) -->
+	<select id="isContainedInWish" resultType="int">
+		SELECT COUNT(*)
+			FROM wishlist 
+			WHERE 
+				member_idx = #{member_idx} 
+				AND 
+				product_idx = #{product_idx}
+	</select>
 
 
 

@@ -49,13 +49,13 @@ public class MypageService {
 	}
 	
 	//프로필 정보 수정하기(사진)
-	public int modifyProfile(MypageVO profile) {
-		return mapper.updateProfile(profile);
+	public int modifyProfile(MypageVO mypage) {
+		return mapper.updateProfile(mypage);
 	}
 	
 	//프로필 정보 수정하기(닉네임)
-	public int modifyNickname(MypageVO profile) {
-		return mapper.updateNickname(profile);
+	public int modifyNickname(MypageVO mypage) {
+		return mapper.updateNickname(mypage);
 	}
 	
 	//마이페이지 메인 - 프로필
@@ -96,6 +96,16 @@ public class MypageService {
 	//위시리스트 목록
 	public List<WishlistVO> getWishlist(int member_idx, int startRow, int listLimit) {
 		return mapper.selectWishlist(member_idx,startRow,listLimit);
+	}
+	
+	//위시리스트에 존재하는지 확인
+	public int isContainedInWish(int member_idx, int product_idx) {
+		return mapper.isContainedInWish(member_idx, product_idx);
+	}
+	
+	//위시리스트 추가
+	public int addToWish(int member_idx, int product_idx) {
+		return mapper.addToWish(member_idx, product_idx);
 	}
 	
 	//장바구니에 존재하는지 확인
@@ -297,7 +307,6 @@ public class MypageService {
 	
 	
 	
-	
 	// 정채연 - 300
 	public int getAccountCount(int member_idx) {
 		System.out.println("MypageService - getAccountCount()");
@@ -353,6 +362,10 @@ public class MypageService {
 		System.out.println("MypageService - getReview()");
 		return mapper.selectReview(product_idx, member_idx);
 	}
+
+
+
+
 
 	
 

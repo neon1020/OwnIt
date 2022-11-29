@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.AdminMapper;
-import com.teamone.ownit.vo.AdminOrderGroup;
-import com.teamone.ownit.vo.AdminOrderVO;
-import com.teamone.ownit.vo.AdminProductVO;
-import com.teamone.ownit.vo.ProductVO;
+import com.teamone.ownit.vo.*;
 
 @Service
 public class AdminService {
@@ -20,13 +17,13 @@ public class AdminService {
 	// 김소희
 	
 	// 전체 상품 목록 갯수 조회
-	public int getProductListCount(String searchType, String keyword) {
-		return mapper.selectProductListCount(searchType, keyword);
+	public int getProductListCount(String searchType, String keyword, String status) {
+		return mapper.selectProductListCount(searchType, keyword, status);
 	}
 	
 	// 상품 목록 조회 productList (검색, 페이징 추가)
-	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectProductList(startRow, listLimit, searchType, keyword);
+	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectProductList(startRow, listLimit, searchType, keyword, status);
 	}
 	
 	// Product 등록 (글쓰기)
@@ -60,25 +57,34 @@ public class AdminService {
 	}
 
 	// Order - BuyList 갯수 조회
-	public int getBuyListCount(String searchType, String keyword) {
-		return mapper.selectBuyListCount(searchType, keyword);
+	public int getBuyListCount(String searchType, String keyword, String status) {
+		return mapper.selectBuyListCount(searchType, keyword, status);
 	}
 	
 	// Order - BuyList(구매목록) 조회
-	public List<AdminOrderVO> getBuyList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectBuyList(startRow, listLimit, searchType, keyword);
+	public List<AdminOrderVO> getBuyList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectBuyList(startRow, listLimit, searchType, keyword, status);
 	}
 
+	// Order - ProductBuy 구매목록 상세조회
+	public List<AdminOrderVO> getProductBuyDetail(int order_group_idx) {
+		return mapper.selectProductBuyDetail(order_group_idx);
+	}
+	// Order - ProductBuy 구매목록 상세조회 + Member 정보
+	public List<AdminOrderVO> getMemberInfo(int order_group_idx) {
+		return mapper.selectMemberInfo(order_group_idx);
+	}
+	
 	// Order - SellList 갯수 조회
-	public int getSellListCount(String searchType, String keyword) {
-		return mapper.selectSellListCount(searchType, keyword);
+	public int getSellListCount(String searchType, String keyword, String status) {
+		return mapper.selectSellListCount(searchType, keyword, status);
 	}
 
 	// Order - SellList(판매목록) 조회
-	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectSellList(startRow, listLimit, searchType, keyword);
+	public List<AdminOrderVO> getSellList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectSellList(startRow, listLimit, searchType, keyword, status);
 	}
-	
+
 	// Order_Buy 상태 변경 (order_buy_gb)
 	public int updateOrderBuy(AdminOrderVO adminOrder) {
 		return mapper.modifyOrderBuy(adminOrder);
@@ -89,17 +95,36 @@ public class AdminService {
 		return mapper.modifyOrderSell(adminOrder);
 	}
 
-	public List<AdminOrderGroup> getOneOrder(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectOrderGroup(startRow, listLimit, searchType, keyword);
-	}
-
 	// ProductList 재고변경
 	public int updateProductLeftCount(ProductVO product) {
 		return mapper.modifyProductLeftCount(product);
 	}
+	
+	// Main - 거래량
+	public int getSalesCount() {
+		return mapper.selectSalesCount();
+	}
+	
+	// Main - 매출액
+	public int getSalesMoeny() {
+		return mapper.selectSalesMoeny();
+	}
+
+	// Main - 회원수
+	public int getMemberCount() {
+		return mapper.selectMemberCount();
+	}
+
+	// Main - 리뷰수
+	public int getReviewCount() {
+		return mapper.selectReviewCount();
+	}
+
+
 
 	
 
+	
 
 
 
@@ -107,6 +132,7 @@ public class AdminService {
 
 
 
+
 	
 	
 	
@@ -286,217 +312,33 @@ public class AdminService {
 	
 	
 	
+
+	// 정채연 - 300
+	public List<MemberVO> getMemberList(int startRow, int listLimit, String searchType, String keyword) {
+		System.out.println("AdminService - getMemberList()");
+		return mapper.selectMemberList(startRow, listLimit, searchType, keyword);
+	}
 	
+	public int getMemberListCount(String searchType, String keyword) {
+		System.out.println("AdminService - getMemberListCount()");
+		return mapper.selectMemberListCount(searchType, keyword);
+	}
 	
+	// 오버로딩
+	public Integer getMemberListCount2(int startRow, int listLimit, String searchType, String keyword) {
+		System.out.println("AdminService - getMemberListCount2()");
+		return mapper.selectMemberListCount2(startRow, listLimit, searchType, keyword);
+	}
+
+	public int removeMember(int member_idx) {
+		System.out.println("AdminService - removeMember()");
+		return mapper.deleteMember(member_idx);
+	}
+
 	
+
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 정채연 - 500
+
 	
 }

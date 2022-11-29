@@ -27,6 +27,7 @@ select::-ms-expand {
   padding: 5px 30px 5px 10px;
   border-radius: 4px;
   outline: 0 none;
+  font-size: 0.875rem;
 }
 .select option {
   color: black;
@@ -39,16 +40,14 @@ select::-ms-expand {
 	padding-left: 5px;
 	height: 60px;
 }
-.items > .nav-link {
+.items > .nav-link3 {
 	margin-right: 35px;
-	color: black;
 	font-size: 0.8em;
 	display: inline-block;
 	padding: 0;
 }
 .items > a#노트북 {
 	margin-right: 0px;
-	color: black;
 	font-size: 0.8em;
 }
 .items > a > img {
@@ -118,44 +117,48 @@ select::-ms-expand {
 <script type="text/javascript">
 
 function changeHeart(heart) {
-	var index = heart.id.split('_')[1];
-	var full = heart.className.indexOf('full') > -1
-	$.ajax({
-		url:'addAndRemoveLikeList',
-		type:'POST',
-		data:{product_idx:index},
-		success:function(result){
-			if(!full) { // 빈하트 -> 채움
-				var a = $('#heart_' + result);
-				a.removeClass('product-like');
-				a.addClass('product-like-full');
-			} else if(full) { // 채워진 -> 빈하트
-				var b = $('#heart_' + result);
-				b.removeClass('product-like-full');
-				b.addClass('product-like');
+	if(${not empty sessionScope.sId}) {
+		var index = heart.id.split('_')[1];
+		var full = heart.className.indexOf('full') > -1
+		$.ajax({
+			url:'addAndRemoveLikeList',
+			type:'POST',
+			data:{product_idx:index},
+			success:function(result){
+				if(!full) { // 빈하트 -> 채움
+					var a = $('#heart_' + result);
+					a.removeClass('product-like');
+					a.addClass('product-like-full');
+				} else if(full) { // 채워진 -> 빈하트
+					var b = $('#heart_' + result);
+					b.removeClass('product-like-full');
+					b.addClass('product-like');
+				}
 			}
-		}
-	});
+		});
+	} else alert("로그인 후 이용가능합니다");
 }
 
 $(document).on("click", ".product-action", function() {
-	var index = $(this).attr('id');
-	$.ajax({
-		url:'addCart',
-		type:'GET',
-		data:{
-			product_idx:index
-		},
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		success:function(result){
-			if(result == 'Added') {
-				$('#'+index+' > a').html(result).css('color', 'blue');
-			} else {
-				$('#'+index+' > a').html(result).css('color', 'red');
+	if(${not empty sessionScope.sId}) {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addCart',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success:function(result){
+				if(result == 'Added') {
+					$('#'+index+' > a').html(result).css('color', 'blue');
+				} else {
+					$('#'+index+' > a').html(result).css('color', 'red');
+				}
+			checkCart();
 			}
-		checkCart();
-		}
-	});
+		});
+	} else alert("로그인 후 이용가능합니다");
 });
 
 var str = "";
@@ -170,7 +173,7 @@ $(function() {
 		listByCategory();
 	});
 	
-	$('.nav-link').click(function() {
+	$('.nav-link3').click(function() {
 		str = str.replace('category:스마트폰/', '');
 		str = str.replace('category:태블릿/', '');
 		str = str.replace('category:스마트워치/', '');
@@ -195,7 +198,7 @@ $(function() {
 });
 
 function listByCategory() {
-	$(function() {
+// 	$(function() {
 		$.ajax({
 			url:'listProductByCategory',
 			type:'POST',
@@ -238,7 +241,7 @@ function listByCategory() {
 				$('#productCnt').html(cnt +" products");
 			}
 		});
-	});
+// 	});
 }
 
 </script>
@@ -271,22 +274,22 @@ function listByCategory() {
                 <span class="eyebrow" id="productCnt">${cnt } products</span>
               </div>
               <div class="items">
-			   	<a class="nav-link" id="스마트폰" >
+			   	<a class="nav-link3" id="스마트폰" >
 			   		<img src="./resources/img/product/phone1.png" alt="스마트폰">스마트폰
 			   	</a>
-			   	<a class="nav-link" id="태블릿">
+			   	<a class="nav-link3" id="태블릿">
 			   		<img src="./resources/img/product/tablet1.png">태블릿
 			   	</a>
-			   	<a class="nav-link" id="스마트워치">
+			   	<a class="nav-link3" id="스마트워치">
 			   		<img src="./resources/img/product/watch1.png">스마트워치
 			   	</a>
-		   		<a class="nav-link" id="이어폰">
+		   		<a class="nav-link3" id="이어폰">
 			   		<img src="./resources/img/product/earphone1.jpeg">이어폰
 			   	</a>
-			   	<a class="nav-link" id="헤드폰">
+			   	<a class="nav-link3" id="헤드폰">
 			   		<img src="./resources/img/product/head1.png">헤드폰
 			   	</a>
-			   	<a class="nav-link" id="노트북">
+			   	<a class="nav-link3" id="노트북">
 			   		<img src="./resources/img/product/mac1.png">노트북
 			   	</a>
 		     </div>

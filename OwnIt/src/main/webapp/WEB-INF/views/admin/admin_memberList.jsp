@@ -1,5 +1,7 @@
+<%@page import="com.teamone.ownit.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,8 +17,12 @@
 </head>
 <script type="text/javascript">
 	
-	function func1() {
-		confirm('탈퇴시키시겠습니까?');
+	function removeMember(member_idx, pageNum, searchType, keyword) {
+		let isRemove = confirm("해당 회원을 탈퇴처리 하시겠습니까?");
+		
+		if(isRemove) {
+			location.href = "removeMember?member_idx=" + member_idx + "&pageNum=" + pageNum + "&searchType=" + searchType + "&keyword=" + keyword;
+		}
 	}
 
 </script>
@@ -100,76 +106,118 @@
                             <div class="card-title">
 	                            <h2>Member List</h2>
 	                        </div>
+	                        
                             <!-- 검색기능 Start -->
-	                        <form>
+	                        <form action="admin_memberList" method="get">
+	                        	<input type="hidden" name="pageNum" value="1">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="keyword" class="form-control" value="${keyword }">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-dark" type="button">Search</button>
+                                        <button class="btn btn-outline-dark" type="submit">Search</button>
                                     </div>
                                 </div>
-                                <select class="form-control" style="float: right; width: 100px">
-                                    <option selected="selected">전체</option>
-                                    <option>이름</option>
-                                    <option>ID</option>
-                                    <option>닉네임</option>
+                                <select name="searchType" class="form-control" style="float: right; width: 100px">
+                                    <option value="all" <c:if test="${searchType eq 'all'}">selected</c:if>>전체</option>
+                                    <option value="name" <c:if test="${searchType eq 'name'}">selected</c:if>>이름</option>
+                                    <option value="id" <c:if test="${searchType eq 'id'}">selected</c:if>>아이디</option>
+                                    <option value="nickname" <c:if test="${searchType eq 'nickname'}">selected</c:if>>닉네임</option>
                                 </select>
 	                        </form>
 	                        <!-- 검색기능 End -->
+	                        
                             <div class="table-responsive">
                             <hr>
-                                <table class="table header-border">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Nickname</th>
-                                            <th scope="col">Phone</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Agree</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>김소희</td>
-                                            <td>hiyaeah@gmail.com</td>
-                                            <td>희소</td>
-                                            <td>010-5136-5088</td>
-                                            <td>22-11-01</td>
-                                            <td>Y</td>
-                                            <td>
-                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Remove</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>최서우</td>
-                                            <td>seowoo@naver.com</td>
-                                            <td>서우서우</td>
-                                            <td>010-1111-1111</td>
-                                            <td>22-11-03</td>
-                                            <td>N</td>
-                                            <td>
-                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="func1()">Remove</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                <table class="table header-border" style="text-align: center;">
+                                	<c:if test="${listCount ne 0 }">
+	                                    <thead>
+	                                        <tr>
+	                                            <th scope="col">No</th>
+	                                            <th scope="col">Name</th>
+	                                            <th scope="col">ID</th>
+	                                            <th scope="col">Nickname</th>
+	                                            <th scope="col">Phone</th>
+	                                            <th scope="col">Join Date</th>
+	                                            <th scope="col">Ad Agree</th>
+	                                            <th scope="col"></th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                    	<c:forEach var="member" items="${memberList }" >
+		                                        <tr>
+		                                            <td>${member.member_idx }</td>
+		                                            <td>${member.member_name }</td>
+		                                            <td>${member.member_id }</td>
+		                                            <td>${member.member_nickname }</td>
+		                                            <td>${member.member_phone }</td>
+		                                            <td>${member.member_join_date }</td>
+		                                            <td>
+		                                            	<c:choose>
+		                                            		<c:when test="${member.member_agree == '0' }">
+		                                            			No
+		                                            		</c:when>
+		                                            		<c:when test="${member.member_agree == '1' }">
+		                                            			Yes
+		                                            		</c:when>
+		                                            	</c:choose>
+		                                            </td>
+		                                            <td>
+		                                            	<button type="button" class="btn mb-1 btn-outline-dark" onclick="removeMember('${member.member_idx}', '${pageInfo.pageNum }', '${searchType }', '${keyword }')">Remove</button>
+		                                            </td>
+		                                        </tr>
+	                                        </c:forEach>
+	                                    </tbody>
+                                    </c:if>
+                                    
+                                    <c:if test="${listCount eq 0 }">
+                                   		<tr height="100px">
+                                   			<td>
+                                   				<h3>조회 결과가 없습니다.</h3>
+                                   			</td>
+                                   		</tr>
+                                    </c:if>
                                 </table>
-	                            <hr>
 	                        </div>
 	                        
 							<!-- 페이징 태그 START -->
 							<div class="bootstrap-pagination">
+							<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
 								<nav>
 									<ul class="pagination justify-content-center">
-	                                       <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                                       <li class="page-item"><a class="page-link" href="#">Next</a></li>
+										
+									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_memberList?searchType=${searchType }&keyword=${keyword }&pageNum=${pageInfo.pageNum - 1}">Previous</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Previous</a>
+										</li>
+									<%} %>
+									
+									<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+										<c:choose>
+											<c:when test="${i eq pageInfo.pageNum }">
+												<li class="page-item active">
+													<a class="page-link" href="javascript:void(0)">${i } <span class="sr-only">(current)</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item">
+													<a class="page-link" href="admin_memberList?searchType=${searchType }&keyword=${keyword }&pageNum=${i }">${i }</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									
+									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
+										<li class="page-item">
+											<a class="page-link" href="admin_memberList?searchType=${searchType }&keyword=${keyword }&pageNum=${pageInfo.pageNum + 1}">Next</a>
+										</li>
+									<%} else{ %>
+										<li class="page-item disabled">
+											<a class="page-link" href="javascript:void(0)">Next</a>
+										</li>
+									<%} %>
 									</ul>
 								</nav>
 							</div>

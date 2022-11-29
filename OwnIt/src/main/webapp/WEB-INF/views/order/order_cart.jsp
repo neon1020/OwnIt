@@ -24,6 +24,10 @@
 		background-color: #353535;
 		border-color: #353535;
 	}
+	input[type=checkbox] {
+	accent-color: #101010;
+	border-color: #101010;
+	}
 </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
@@ -33,8 +37,47 @@
     <title>Cart</title>
  <script src="resources/js/jquery-3.6.1.js"></script> 
  <script type="text/javascript">
-
+// 템플릿과 중복으로 인한 오류해결을 위해 페이지 로드 시 실행되는 코드 
+$(document).ready(function(){
+	$.ajax({
+		url:'loadCart',
+		type:'POST',
+		dataType:'json',
+		success:function(result){
+			var html = "";
+				$.each(result, function(index) {
+					var buyPrice = numberWithCommas(Number(result[index].product_buy_price));
+					var countTimesPrice = numberWithCommas(Number(result[index].countTimesPrice));
+					html += "<div class='cart-item'>";
+					html += "<div class='row align-items-center'>";
+					html += "<div class='col-12 col-lg-6'>";
+					html += "<div class='media media-product'>";
+					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
+					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
+					html += "<div class='media-body'>";
+					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
+					html += "<span class='small'>" + result[index].product_color  + "</span>";
+					html += "</div></div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price'>"+ buyPrice +"원</span>";
+					html += "</div><div class='col-4 col-lg-2 text-center'><div class='counter'>";
+					html += "<span class='counter-minus icon-minus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx  +"'></span>";
+					html += "<input type='text' name='qty-"+ result[index].product_idx +"' id='cartCount_"+ result[index].product_idx +"' readonly='readonly' class='counter-value' value='"+ result[index].cart_count +"'>";
+					html += "<span class='counter-plus icon-plus' id='counter_"+ result[index].product_idx +"' onclick='modifyCartCount(this)' field='qty-"+ result[index].product_idx +"'></span>";
+					html += "</div></div>";
+					html += "<div class='col-4 col-lg-2 text-center'>";
+					html += "<span class='cart-item-price' id='countTimesPrice_"+ result[index].product_idx +"'>"+ countTimesPrice +"원</span>";
+					html += "</div><a class='cart-item-close' id='delCart_"+ result[index].product_idx +"' onclick='delFromCartInOrder(this)''><i class='icon-x'></i></a></div></div>";
+				});
+			$('#myCartItemsInOrder').html(html);
+		}
+	});
+});
+ 
+ 
+ 
 // 상품 수량 변경 시 수행되는 함수
+
 function modifyCartCount(counter) {
 	payTotal = 0;
 	cbArr = [];
@@ -62,6 +105,7 @@ function modifyCartCount(counter) {
 		},
 		dataType:'json',
 		success:function(result){
+			debugger;
 			var html = "";
 			if(JSON.stringify(result).length > 100) {
 				$.each(result, function(index) {
@@ -71,11 +115,7 @@ function modifyCartCount(counter) {
 					html += "<div class='row align-items-center'>";
 					html += "<div class='col-12 col-lg-6'>";
 					html += "<div class='media media-product'>";
-// 					if(document.getElementById('cb'+result[index].product_idx).checked) {
-// 						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;' checked='checked'>"
-// 					} else {
-						html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
-// 					}
+					html += "<input type='checkbox' id='cb"+ result[index].product_idx +"' style='margin-right: 20px;'>"
 					html += "<a><img src='resources/img/product/"+ result[index].image_real_file1 +"' alt='Image'></a>";
 					html += "<div class='media-body'>";
 					html += "<h5 class='media-title'>" + result[index].product_name + "</h5>";
@@ -185,7 +225,6 @@ $(document).on("change", 'input[type=checkbox]', function() {
 	if(idx == 'All') {
 		if($(this).is(":checked")){
 			payTotal = 0;
-			debugger;
 			$('input[type=checkbox]:checked').each(function() {
 			    let cbId = $(this).attr('id').split('cb')[1];
 			    cbArr.push(cbId);
@@ -224,23 +263,23 @@ function buySelectedItems(btn) {
 			$("input[type=checkbox]").prop("checked", true);
 			document.getElementById("cbAll").checked = false;
 		} else return;
-	}
+	} 
 	var cbChecked = "";
 	$('input[type=checkbox]:checked').each(function() {
 		let id = $(this).attr('id').split('cb')[1];
 		// cbChecked => product_idx:수량:금액/
+		debugger;
+		if(id == 'All') return true;
 		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
 	});
-	debugger;
-	$.ajax({
-		url:'order_buyAgree',
-		type:'GET',
-		data:{
-			cbChecked:cbChecked
-		}
-	});
-	
-	location.href="order_buyAgree";
+	if(cbChecked.length != 0) {
+		location.href="order_buyAgree?cbChecked="+cbChecked;
+		$("input[type=checkbox]").prop("checked", false);
+		payTotal = 0;
+		$('.totalPrice').text(numberWithCommas(payTotal)+"원");
+	} else {
+		alert("최소 1개 이상의 상품만 주문가능합니다");
+	}
 }
 
  </script>
@@ -274,46 +313,6 @@ function buySelectedItems(btn) {
         </div>
         <div class="row gutter-2 gutter-lg-4 justify-content-end">
           <div class="col-lg-8 cart-item-list" id="myCartItemsInOrder">
-            <!-- cart item -->
-            <c:choose>
-            <c:when test="${not empty cart }">
-            <c:forEach var="cart" items="${cart }">
-            <!-- 여기부터 -->
-            <div class="cart-item">
-              <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                  <div class="media media-product">
-                  <input type="checkbox" id="cb${cart.product_idx }" style="margin-right: 20px;">
-                    <a href="#!"><img src="resources/img/product/${cart.image_real_file1 }" alt="Image"></a>
-                    <div class="media-body">
-                      <h5 class="media-title">${cart.product_name }</h5>
-                      <span class="small">${cart.product_color }</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price"><fmt:formatNumber value="${cart.product_buy_price }" pattern="#,###"/>원</span>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <div class="counter">
-                    <span class="counter-minus icon-minus" id="counter_${cart.product_idx }" field='qty-${cart.product_idx }' onclick="modifyCartCount(this)"></span>
-                    <input type='text' name='qty-${cart.product_idx }' readonly="readonly" id="cartCount_${cart.product_idx }" class="counter-value" value="${cart.cart_count }">
-                    <span class="counter-plus icon-plus" id="counter_${cart.product_idx }" field='qty-${cart.product_idx }' onclick="modifyCartCount(this)"></span>	
-                  </div>
-                </div>
-                <div class="col-4 col-lg-2 text-center">
-                  <span class="cart-item-price" id="countTimesPrice_${cart.product_idx }"><fmt:formatNumber value="${cart.countTimesPrice }" pattern="#,###"/>원</span>
-                </div>
-                <a class="cart-item-close" id="delCart_${cart.product_idx }" onclick="delFromCartInOrder(this)"><i class="icon-x"></i></a>
-              </div>
-            </div>
-            <!-- 여기까지 -->
-		   </c:forEach>
-		   </c:when>
-		   <c:otherwise>
-		   <img src="resources/img/product/empty_cart.png" style="max-width: 70%;">
-		   </c:otherwise>
-		   </c:choose>
           </div>
 
           <div class="col-lg-4">

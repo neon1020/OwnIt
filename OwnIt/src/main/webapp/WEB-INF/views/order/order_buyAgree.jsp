@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +19,8 @@
 	float: right; 
 	width: 20px; 
 	height: 20px;
+	accent-color: #101010;
+	border-color: #101010;
 	}
 	
 	span1{
@@ -28,6 +30,7 @@
 	
 </style>
 <script src="resources/js/jquery-3.6.1.js"></script>
+
 <script type="text/javascript">
 
 //윈도우오픈
@@ -74,6 +77,8 @@ $(document).ready(function() {
 		else $("#checkAll").prop("checked", true); 
 	});
 });
+
+
 </script>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
@@ -94,26 +99,29 @@ $(document).ready(function() {
           	
           	
           	<form action="order_buyForm" name="buyForm" method="get">
-          		<input type="hidden" name="product_idx" value="${product.product_idx }">
+          		<input type="hidden" name="cbChecked" value="${cbChecked }">
 	          	<table class="table">
 	          		<tr>
-	          			<th style="font-size: 30px; font: bold; color: black;">
+	          			<th style="font-size: 30px; font: bold; color: black;" colspan="2">
 		          			<span id="span1" style="color: red;">구매</span>
 		          			하시기 전에 꼭 확인하세요.
 	          			</th>
 	          		</tr>
 	          		
-	          		<tr>
+	          		<tr> <!-- 이부분 폼 고치기 -->
+	          			<c:forEach var="product" items="${productList }" begin="0" end="0">
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 	          				<span id="span1">${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
+	          			</c:forEach>
+	          			<td><div style="margin:0 auto; padding-top: 35px;">외 ${cnt } 상품</div></td>
 	          		</tr>
 	          		
 	          		<tr>
-	          			<th>
+	          			<th colspan="2">
 	          				<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
 		          			<span id="span1">구매하려는 상품이 맞습니다.</span><br>
 		          			상품 이미지, 모델번호, 출시일, 상품명, 사이즈를 한 번 더 확인했습니다.
@@ -121,7 +129,7 @@ $(document).ready(function() {
 	          		</tr>
 	          		
 	          		<tr>
-	          			<th>
+	          			<th colspan="2">
 	          				<input type="checkbox" id="check2" name="check-box" onchange="checkForm()">
 		          				<span id="span1">국내에서 발매한 정품 · 새상품입니다.</span><br>
 		          				모든 구성품이 그대로이며, 한 번도 착용하지 않은 정품・새상품입니다.<br>
@@ -130,7 +138,7 @@ $(document).ready(function() {
 	          		</tr>
 	          		
 	          		<tr>
-	          			<th>
+	          			<th colspan="2">
 	          				<span id="span1">제조사에서 불량으로 인정하지 않는 기준은 하자로 판단하지 않습니다.</span><br>
 	          				<input type="checkbox" id="check3" name="check-box" onchange="checkForm()">박스/패키지와 상품 컨디션에 민감하시다면 검수 기준을 반드시 확인하시기 바랍니다.<br>
 	          				<a href="javascript:func1()"><span style="color: skyblue;">검수기준 보기</span></a>
@@ -138,7 +146,7 @@ $(document).ready(function() {
 	          		</tr>
 	          		
 	          		<tr>
-	          			<th>
+	          			<th colspan="2">
 		          			<span>OwnIt의 최신 이용정책을 모두 확인하였으며, 구매를 계속합니다.</span><br>
 		          			<input type="checkbox" id="check4"  name="check-box" onchange="checkForm()">건전하고 안전한 거래를 위해 반드시 숙지해야 할 미입고, 페널티, 부정거래 등의 이용정책을 확인했습니다.<hr>
 		          			<input type="checkbox" id="checkAll" onchange="checkForm()">
