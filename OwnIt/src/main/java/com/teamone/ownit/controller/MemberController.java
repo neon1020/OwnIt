@@ -195,6 +195,9 @@ public class MemberController {
 				// Session 객체에 sNick 저장
 				session.setAttribute("sNick", se_member.getMember_nickname());
 				
+				// Session 객체에 sPhone 저장
+				session.setAttribute("sPhone", se_member.getMember_phone());
+				
 				// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
 				if(save_email != null) {
 					Cookie cookie = new Cookie("cookieId", member.getMember_id());
@@ -528,6 +531,7 @@ public class MemberController {
 		session.setAttribute("sNick", userInfo.getMember_nickname());
 		session.setAttribute("sIdx", userInfo.getMember_idx());
 		session.setAttribute("sId", userInfo.getMember_id());
+		session.setAttribute("sPhone", userInfo.getMember_phone());
 		
 		return "redirect:/";
     	}	

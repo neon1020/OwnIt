@@ -98,6 +98,16 @@ public class MypageService {
 		return mapper.selectWishlist(member_idx,startRow,listLimit);
 	}
 	
+	//위시리스트에 존재하는지 확인
+	public int isContainedInWish(int member_idx, int product_idx) {
+		return mapper.isContainedInWish(member_idx, product_idx);
+	}
+	
+	//위시리스트 추가
+	public int addToWish(int member_idx, int product_idx) {
+		return mapper.addToWish(member_idx, product_idx);
+	}
+	
 	//장바구니에 존재하는지 확인
 	public int isContainedInCart(int member_idx, int product_idx) {
 		return mapper.isContainedInCart(member_idx, product_idx);
@@ -352,6 +362,10 @@ public class MypageService {
 		System.out.println("MypageService - getReview()");
 		return mapper.selectReview(product_idx, member_idx);
 	}
+
+
+
+
 
 	
 

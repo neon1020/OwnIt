@@ -28,38 +28,38 @@ function numberWithCommas(n) {
 }
 
 function checkCart(){
-   $.ajax({
-      url:'checkCart',
-      type:'POST',
-      dataType:'json',
-      success:function(cart) {
-//            alert(JSON.stringify(cart));
-            var html = "";
-            var cnt = 0;
-         $.each(cart, function(index) {
-//               alert(JSON.stringify(cart[index]));
-            var buyPrice = numberWithCommas(cart[index].product_buy_price);
-            cnt+=1;
-            html += "<div class='row gutter-3'>";
-            html += "<div class='col-12' id='cartItems'>";
-            html += "<div class='cart-item cart-item-sm'>";
-            html += "<div class='row align-items-center'>";
-            html += "<div class='col-lg-9'>";
-            html += "<div class='media media-product'>";
-            html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"&pageNum='><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
-            html += "<div class='media-body'>";
-            html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
-            html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
-            html += "</div></div></div>";
-            html += "<div class='col-lg-3 text-center text-lg-right'>";
-            html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
-            html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
-         });
-         
-         $('.myCartItems').html(html);
-         $('.cnt').html(cnt);
-      }
-   });
+	$.ajax({
+		url:'checkCart',
+		type:'POST',
+		dataType:'json',
+		success:function(cart) {
+//				alert(JSON.stringify(cart));
+				var html = "";
+				var cnt = 0;
+			$.each(cart, function(index) {
+//					alert(JSON.stringify(cart[index]));
+				var buyPrice = numberWithCommas(cart[index].product_buy_price);
+				cnt+=1;
+				html += "<div class='row gutter-3'>";
+				html += "<div class='col-12' id='cartItems'>";
+				html += "<div class='cart-item cart-item-sm'>";
+				html += "<div class='row align-items-center'>";
+				html += "<div class='col-lg-9'>";
+				html += "<div class='media media-product'>";
+				html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"&pageNum='><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
+				html += "<div class='media-body'>";
+				html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
+				html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
+				html += "</div></div></div>";
+				html += "<div class='col-lg-3 text-center text-lg-right'>";
+				html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
+				html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
+			});
+			
+			$('.myCartItems').html(html);
+			$('.cnt').html(cnt);
+		}
+	});
 }
 
 $(function() {
@@ -76,41 +76,41 @@ $(function() {
       }
    }
 function delFromCart(item) {
-   var delIdx = item.id.split('_')[1];
-   $.ajax({
-      url:'delAndReloadCart',
-      type:'POST',
-      data: {
-         product_idx:delIdx
-      },
-      dataType:'json',
-      success:function(cart) {
-         var html = "";
-         var cnt = 0;
-         $.each(cart, function(index) {
-//               alert(JSON.stringify(cart[index]));
-            var buyPrice = numberWithCommas(cart[index].product_buy_price);
-            cnt+= 1;
-            html += "<div class='row gutter-3'>";
-            html += "<div class='col-12' id='cartItems'>";
-            html += "<div class='cart-item cart-item-sm'>";
-            html += "<div class='row align-items-center'>";
-            html += "<div class='col-lg-9'>";
-            html += "<div class='media media-product'>";
-            html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
-            html += "<div class='media-body'>";
-            html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
-            html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
-            html += "</div></div></div>";
-            html += "<div class='col-lg-3 text-center text-lg-right'>";
-            html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
-            html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
-         });
-         
-         $('.myCartItems').html(html);
-         $('.cnt').html(cnt);
-      }
-   });
+	var delIdx = item.id.split('_')[1];
+	$.ajax({
+		url:'delAndReloadCart',
+		type:'POST',
+		data: {
+			product_idx:delIdx
+		},
+		dataType:'json',
+		success:function(cart) {
+			var html = "";
+			var cnt = 0;
+			$.each(cart, function(index) {
+//					alert(JSON.stringify(cart[index]));
+				var buyPrice = numberWithCommas(cart[index].product_buy_price);
+				cnt+= 1;
+				html += "<div class='row gutter-3'>";
+				html += "<div class='col-12' id='cartItems'>";
+				html += "<div class='cart-item cart-item-sm'>";
+				html += "<div class='row align-items-center'>";
+				html += "<div class='col-lg-9'>";
+				html += "<div class='media media-product'>";
+				html += "<a href='product_detail?product_idx="+ cart[index].product_idx +"'><img src='resources/img/product/"+ cart[index].image_real_file1+"' alt='Image' style='width: 70px; height: 70px;'></a>";
+				html += "<div class='media-body'>";
+				html += "<h5 class='media-title' style='font-size: 0.9em;'>" + cart[index].product_name + "</h5>";
+				html += "<span class='media-subtitle'>" + cart[index].product_color + "</span>";
+				html += "</div></div></div>";
+				html += "<div class='col-lg-3 text-center text-lg-right'>";
+				html += "<span class='cart-item-price' style='font-size: 0.75em;'>"+ buyPrice +"원</span>";
+				html += "</div><a class='cart-item-close' id='delCart_"+ cart[index].product_idx +"' onclick='delFromCart(this)'><i class='icon-x'></i></a></div></div></div></div>";
+			});
+			
+			$('.myCartItems').html(html);
+			$('.cnt').html(cnt);
+		}
+	});
 }
 
 </script>
@@ -144,7 +144,7 @@ function delFromCart(item) {
 						<c:when test="${empty sessionScope.sId}">
 							<li class="nav-item">
 			                  <a class="nav-link" href="member_login">LOG IN</a>
-			                </li>
+			        </li>
 						</c:when>
 						<c:otherwise>
 							<c:choose>

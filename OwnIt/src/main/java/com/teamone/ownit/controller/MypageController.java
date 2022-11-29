@@ -361,6 +361,30 @@ public class MypageController {
 		}
 	}
 	
+	//위시리스트 추가
+	@PostMapping(value = "mypage_addWish")
+	public String addAddress(@ModelAttribute WishlistVO wishlist, @RequestParam int member_idx, @RequestParam int product_idx, 
+							Model model, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId != null && !sId.equals("")) {
+			int isContained = service.isContainedInWish(member_idx, product_idx);
+			if(isContained > 0) {
+				model.addAttribute("msg", "이미 관심상품에 존재하는 상품 입니다");
+				return "notice/fail_back";
+			} else {
+				int insertCount = service.addToWish(member_idx, product_idx);
+				if(insertCount > 0) {
+					System.out.println("관심상품에 추가됨");
+				} 
+				return "redirect:/product_detail?product_idx=" + product_idx; 
+			}
+		} else {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "notice/fail_back";
+		}
+	}		
+	
+	
 	//위시리스트 장바구니 담기
 	@PostMapping(value = "mypage_addCart")
 	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
@@ -494,7 +518,7 @@ public class MypageController {
 	
 	
 	
-
+	
 	
 	
 	// 정채연 - 500
