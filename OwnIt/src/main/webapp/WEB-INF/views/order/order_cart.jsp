@@ -268,6 +268,8 @@ function buySelectedItems(btn) {
 	$('input[type=checkbox]:checked').each(function() {
 		let id = $(this).attr('id').split('cb')[1];
 		// cbChecked => product_idx:수량:금액/
+		debugger;
+		if(id == 'All') return true;
 		cbChecked += id+":"+ $('#cartCount_'+id).val() + ":"+ document.getElementById('countTimesPrice_'+id).innerText.split('원')[0].replaceAll(',','') + "/";
 	});
 	if(cbChecked.length != 0) {
