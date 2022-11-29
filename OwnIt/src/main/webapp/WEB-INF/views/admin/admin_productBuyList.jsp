@@ -20,9 +20,13 @@
 </head>
 <script type="text/javascript">
 	
-	function func1() {
-		confirm('변경하시겠습니까?');
+	function finalCheck() {
+		if(confirm('변경하시겠습니까?')) {
+			return true;
+		}
+		return false;
 	}
+	
 	
 	function windowOpen(URL) {
 		window.open(URL, "_blank", "width=1000,height=600");
@@ -180,7 +184,7 @@
 	                                            <td>${buyList.address1 }&nbsp;${buyList.address2 }</td>
 	                                            <c:set var="date" value="${buyList.order_buy_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
-		                                        <form action="admin_orderBuyModify" method="post">  
+		                                        <form action="admin_orderBuyModify" method="post" onsubmit="return finalCheck();">  
 		                                        <input type="hidden" name="product_idx" value="${buyList.product_idx }" />
 	                                            <input type="hidden" name="order_group_idx" value="${buyList.order_group_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />

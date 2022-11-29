@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,8 +165,8 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white" >거래</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">4565</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
+                                    <h2 class="text-white">${salesCount }건</h2>
+                                    <p class="text-white mb-0">Jan - Dec 2022</p>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                             </div>
@@ -176,8 +177,8 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">매출액</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">￦ 8541</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
+                                    <h2 class="text-white">￦<fmt:formatNumber value="${salesMoney }" pattern="#,###"/></h2>
+                                    <p class="text-white mb-0">Jan - Dec 2022</p>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                             </div>
@@ -188,8 +189,8 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">회원</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">4565</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
+                                    <h2 class="text-white">${memberCount }명</h2>
+                                    <p class="text-white mb-0">Jan - Dec 2022</p>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                             </div>
@@ -198,10 +199,10 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-4">
                             <div class="card-body">
-                                <h3 class="card-title text-white">신규 리뷰</h3>
+                                <h3 class="card-title text-white">리뷰</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">9999</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
+                                    <h2 class="text-white">${reviewCount }건</h2>
+                                    <p class="text-white mb-0">Jan - Dec 2022</p>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
                             </div>
@@ -237,37 +238,39 @@
                 
                 <div class="row">
                 
-                	<div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Line chart with area</h4>
-                                <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Stacked bar chart</h4>
+                                <h4 class="card-title">월별 매출액</h4>
                                 <div id="stacked-bar-chart" class="ct-chart ct-golden-section"></div>
                             </div>
                         </div>
                     </div>
-            </div>
-            
-            <div class="row">
-                    <!-- Pie Chart -->
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Product Type&nbsp;(BUYING)</h4>
-                                <canvas id="pieChart" width="500" height="300"></canvas>
-                            </div>
-                        </div>
+                    
+	                <div class="col-lg-6">
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <h4 class="card-title">구매 제품 비중</h4>
+	                            <canvas id="pieChart" width="500" height="350"></canvas>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+				</div>
+           
+        	
+        	
+        	
+        	
+        	<div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Line chart with area</h4>
+                        <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
                     </div>
+                </div>
+            </div>
             <!-- #/ container -->
-        </div>
         <!--**********************************
             Content body end
         ***********************************-->

@@ -17,13 +17,13 @@ public class AdminService {
 	// 김소희
 	
 	// 전체 상품 목록 갯수 조회
-	public int getProductListCount(String searchType, String keyword) {
-		return mapper.selectProductListCount(searchType, keyword);
+	public int getProductListCount(String searchType, String keyword, String status) {
+		return mapper.selectProductListCount(searchType, keyword, status);
 	}
 	
 	// 상품 목록 조회 productList (검색, 페이징 추가)
-	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword) {
-		return mapper.selectProductList(startRow, listLimit, searchType, keyword);
+	public List<AdminProductVO> getProductList(int startRow, int listLimit, String searchType, String keyword, String status) {
+		return mapper.selectProductList(startRow, listLimit, searchType, keyword, status);
 	}
 	
 	// Product 등록 (글쓰기)
@@ -99,10 +99,26 @@ public class AdminService {
 	public int updateProductLeftCount(ProductVO product) {
 		return mapper.modifyProductLeftCount(product);
 	}
-
-
-
 	
+	// Main - 거래량
+	public int getSalesCount() {
+		return mapper.selectSalesCount();
+	}
+	
+	// Main - 매출액
+	public int getSalesMoeny() {
+		return mapper.selectSalesMoeny();
+	}
+
+	// Main - 회원수
+	public int getMemberCount() {
+		return mapper.selectMemberCount();
+	}
+
+	// Main - 리뷰수
+	public int getReviewCount() {
+		return mapper.selectReviewCount();
+	}
 
 
 
@@ -318,6 +334,10 @@ public class AdminService {
 		System.out.println("AdminService - removeMember()");
 		return mapper.deleteMember(member_idx);
 	}
+
+	
+
+	
 	
 
 	

@@ -22,7 +22,7 @@ public class ChartController {
 	@Autowired
 	private ChartService service;
 	
-	
+	// 구매 제품 비중
 	@GetMapping(value = "orderBuy_ProductType_Ratio")
 	public void orderBuy_ProductType_Ratio(Model model, HttpServletResponse response) {
 		
@@ -55,7 +55,7 @@ public class ChartController {
 	}
 	
 	
-	
+	// 월별 매출액(구매)
 	@GetMapping(value = "orderBuy_monthly_salesBuy")
 	public void orderBuy_monthly_salesBuy(Model model, HttpServletResponse response) {
 		
@@ -88,9 +88,9 @@ public class ChartController {
 	}
 	
 	
-	
-	@GetMapping(value = "orderBuy_monthly_sales")
-	public void orderBuy_monthly_sales(Model model, HttpServletResponse response) {
+	// 월별 매출액 (구매 + 판매)
+	@GetMapping(value = "order_monthly_sales")
+	public void order_monthly_sales(Model model, HttpServletResponse response) {
 		
 		List<ChartVO> monthlySalesBuy = service.monthlySalesBuy();
 		List<ChartVO> monthlySalesSell = service.monthlySalesSell();
@@ -131,6 +131,7 @@ public class ChartController {
 	}
 	
 	
+	// 구매 TOP5 제품
 	@GetMapping(value = "orderBuy_productTop5")
 	public void orderBuy_productTop5(Model model, HttpServletResponse response) {
 		
@@ -161,6 +162,7 @@ public class ChartController {
 	}
 	
 	
+	// 구매 TOP5 제품 이미지
 	@ResponseBody
 	@GetMapping(value = "orderBuy_productTop5_image")
 	public void orderBuy_productTop5_image(Model model, HttpServletResponse response) {
@@ -192,8 +194,7 @@ public class ChartController {
 	}
 	
 	
-	
-	
+	// 판매 TOP5 제품
 	@GetMapping(value = "orderSell_productTop5")
 	public void orderSell_productTop5(Model model, HttpServletResponse response) {
 		
@@ -224,6 +225,7 @@ public class ChartController {
 	}
 	
 	
+	// 판매 TOP5 제품 이미지
 	@ResponseBody
 	@GetMapping(value = "orderSell_productTop5_image")
 	public void orderSell_productTop5_image(Model model, HttpServletResponse response) {
