@@ -67,7 +67,7 @@
 	         </div>
 	         <div align="center">
 		         <a href="./" class="btn btn-primary" id="home">홈으로</a>&nbsp;&nbsp;&nbsp;
-	          	 <a href="mypage" class="btn btn-primary" id="myPage">마이페이지</a>
+	          	 <a href="mypage?member_idx=${sessionScope.sIdx }" class="btn btn-primary" id="myPage">마이페이지</a>
           	 </div>
           </div>
         </div>

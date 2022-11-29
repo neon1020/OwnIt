@@ -39,14 +39,12 @@ public class ProductController {
 	public String product_list(Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 //		String sId = "test1@naver.com";
-		if(sId.length() != 0) {
-			List<ProductVO> productList = service.getProductList(sId);
-	//		System.out.println(productList);
-			int cnt = 0;
-			for(ProductVO product : productList) cnt++;
-			model.addAttribute("productList", productList);
-			model.addAttribute("cnt", cnt);
-		}
+		List<ProductVO> productList = service.getProductList(sId);
+//		System.out.println(productList);
+		int cnt = 0;
+		for(ProductVO product : productList) cnt++;
+		model.addAttribute("productList", productList);
+		model.addAttribute("cnt", cnt);
 		return "product/product_list";
 	}
 	
@@ -60,42 +58,40 @@ public class ProductController {
 	public void listProduct(String categories, HttpServletResponse response, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 //		String sId = "test1@naver.com";
-		if(sId.length() != 0) {
-//			System.out.println(categories);
-			String[] divideCategory = categories.split("/");
-			List<String> brands = new ArrayList<String>();
-			String category = "";
-			String productListing = "";
-			for(String str : divideCategory) {
-				if(str.contains("brand")) {
-					if(str.split(":")[1].equals("ETC")) {
-						System.out.println("들어옴");
-						brands.add("BANG&OLUFSEN");
-						brands.add("LENOVO");
-						brands.add("MARSHALL");
-						brands.add("XIAOMI");
-					} else {
-						brands.add(str.split(":")[1]);
-					}
-				} else if(str.contains("category")) {
-					category = str.split(":")[1];
-				} else if(str.contains("productListing")) {
-					productListing = str.split(":")[1];
+//		System.out.println(categories);
+		String[] divideCategory = categories.split("/");
+		List<String> brands = new ArrayList<String>();
+		String category = "";
+		String productListing = "";
+		for(String str : divideCategory) {
+			if(str.contains("brand")) {
+				if(str.split(":")[1].equals("ETC")) {
+					System.out.println("들어옴");
+					brands.add("BANG&OLUFSEN");
+					brands.add("LENOVO");
+					brands.add("MARSHALL");
+					brands.add("XIAOMI");
+				} else {
+					brands.add(str.split(":")[1]);
 				}
+			} else if(str.contains("category")) {
+				category = str.split(":")[1];
+			} else if(str.contains("productListing")) {
+				productListing = str.split(":")[1];
 			}
+		}
 //			System.out.println(brands+", "+category+", "+ productListing);
-			List<ProductVO> productList = service.getCategorisedProduct(sId, brands, category, productListing);
-			JSONArray jsonArray = new JSONArray();
-			for(ProductVO product : productList) {
-				JSONObject jsonObject = new JSONObject(product);
-				jsonArray.put(jsonObject);
-			}
-			try {
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().print(jsonArray);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		List<ProductVO> productList = service.getCategorisedProduct(sId, brands, category, productListing);
+		JSONArray jsonArray = new JSONArray();
+		for(ProductVO product : productList) {
+			JSONObject jsonObject = new JSONObject(product);
+			jsonArray.put(jsonObject);
+		}
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(jsonArray);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -497,7 +493,11 @@ public class ProductController {
 	
 	
 	
-		
+
+	
+	
+	
+	
 // 박주닮
 
 	@GetMapping(value = "product_detail")
@@ -541,12 +541,8 @@ public class ProductController {
 				}else {
 					reviewList.get(i).setHeartImg(heartImg);
 				}
-				System.out.println(reviewList.get(i).getHeartImg());
 			}
 		}
-		
-		
-		
 		
 		mav.addObject("listCount", listCount);   //상품리뷰갯수
 		mav.addObject("wishCount", wishCount);	 //상품관심갯수
@@ -897,4 +893,8 @@ public class ProductController {
 
 
 
+	
+	
+	
+	
 }
