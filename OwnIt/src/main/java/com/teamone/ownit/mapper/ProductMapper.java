@@ -55,8 +55,8 @@ public interface ProductMapper {
 	// 장바구니 cart_count 비교
 	int selectCartCount(@Param("product_idx")int product_idx);
 
-
-
+	// 메인에 인기상품 4개 데이터 주기
+	List<ProductVO> getListToMain();
 
 
 
@@ -523,6 +523,8 @@ public interface ProductMapper {
 	// 관심상품에 존재유무(혜지)
 	int isContainedInWish(@Param("member_idx") int member_idx, @Param("product_idx") int product_idx);
 
+	
+
 
 	
 
@@ -847,11 +849,6 @@ public interface ProductMapper {
 	
 	
 		
-
-
-
-
-
 
 
 

@@ -256,6 +256,22 @@ public class ProductController {
 		}
 	}
 	
+	@PostMapping(value = "listToMain")
+	@ResponseBody
+	public void listToMain(HttpServletResponse response) {
+		List<ProductVO> productList = service.getListToMain();
+		JSONArray jsonArray = new JSONArray();
+		for(ProductVO product : productList) {
+			JSONObject jsonObject = new JSONObject(product);
+			jsonArray.put(jsonObject);
+		}
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(jsonArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -481,23 +497,7 @@ public class ProductController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 // 박주닮
 
 	@GetMapping(value = "product_detail")
