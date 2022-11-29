@@ -19,8 +19,11 @@
 </head>
 <script type="text/javascript">
 
-	function func1() {
-		confirm('변경하시겠습니까?');
+	function finalCheck() {
+		if(confirm('변경하시겠습니까?')) {
+			return true;
+		}
+		return false;
 	}
 
 </script>
@@ -174,7 +177,8 @@
 	                                        <tr>
 	                                            <td>${sellList.order_sell_idx }</td>
 	                                            <td>${sellList.member_name }</td>
-	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden;" title="${sellList.product_name }">
+	                                            <td style="width: 400px; display: block; line-height:3em; text-overflow:ellipsis; white-space: nowrap; overflow:hidden; cursor: pointer;" title="${sellList.product_name }"
+	                                            	onclick="location.href='product_detail?product_idx=${sellList.product_idx }'">
 	                                            	${sellList.product_name }
 	                                            </td>
 	                                            <td>
@@ -183,7 +187,7 @@
 	                                            <td>${sellList.account_bank }&nbsp;${sellList.account_owner_name }<br>${sellList.account_num }</td>
 	                                            <c:set var="date" value="${sellList.order_sell_date }" />
 	                                            <td>${fn:substring(date, 0, 8 ) }</td>
-	                                            <form action="admin_orderSellModify" method="post">
+	                                            <form action="admin_orderSellModify" method="post" onsubmit="return finalCheck();">
 	                                            <input type="hidden" name="product_idx" value="${sellList.product_idx }" />
 	                                            <input type="hidden" name="order_sell_idx" value="${sellList.order_sell_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${pageInfo.pageNum }" />

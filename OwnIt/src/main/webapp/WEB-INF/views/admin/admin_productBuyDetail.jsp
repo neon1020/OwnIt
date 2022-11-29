@@ -64,11 +64,13 @@
 <%-- 	           	<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }"> --%>
 	           	<c:forEach var="buyList" items="${buyList }">
 	                <tr>
-	                	<td>${buyList.order_group_idx}</td>
-	                   	<td>
+	                	<td>${buyList.num}</td>
+	                   	<td onclick="location.href='product_detail?product_idx=${buyList.product_idx }'" style="cursor: pointer;">
 	                   		<img class="mr-3" src="resources/img/product/${buyList.image_real_file1}" style="border-radius: 30%; width: 80px; width: 80px;">
 	                   	</td>
-	                    <td>${buyList.product_name }</td>
+	                    <td onclick="location.href='product_detail?product_idx=${buyList.product_idx }'" style="cursor: pointer;">
+	                    	${buyList.product_name }
+	                    </td>
 	                    <td>${buyList.order_buy_count }개</td>
 	                    <td>
                         	<fmt:formatNumber value="${buyList.order_buy_price }" pattern="#,###"/>원

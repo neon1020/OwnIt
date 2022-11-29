@@ -29,7 +29,24 @@ public class AdminController {
 	
 	// 관리자 메인으로 이동
 	@GetMapping(value = "admin")
-	public String admin() {
+	public String admin(Model model) {
+		
+		// Main - 거래
+		int salesCount = service.getSalesCount();
+		
+		// Main - 매출액
+		String salesMoney = service.getSalesMoeny() + "";
+		
+		// Main - 회원
+		int memberCount = service.getMemberCount();
+		
+		// Main - 리뷰
+		int reviewCount = service.getReviewCount();
+		
+		model.addAttribute("salesCount", salesCount);
+		model.addAttribute("salesMoney", salesMoney);
+		model.addAttribute("memberCount", memberCount);
+		model.addAttribute("reviewCount", reviewCount);
 		return "admin/admin_main";
 	}
 	
@@ -38,7 +55,9 @@ public class AdminController {
 	public String admin_productListAll(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status,
+			Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -53,11 +72,11 @@ public class AdminController {
 //		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
-		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword);
+		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword, status);
 		
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 상품 목록 갯수 조회
-		int listCount = service.getProductListCount(searchType, keyword);
+		int listCount = service.getProductListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행
 		// 전체 페이지 수 계산
@@ -164,7 +183,8 @@ public class AdminController {
 			
 			return "redirect:/admin_productList";
 		} else {
-			return "";
+			model.addAttribute("msg", "상품 등록 실패!");
+			return "notice/fail_back";
 		}
 	}
 	
@@ -282,8 +302,11 @@ public class AdminController {
 					e.printStackTrace();
 				}
 			}
+			return "redirect:/admin_productList?pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상품 수정 실패!");
+			return "notice/fail_back";
 		}
-		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
 	
@@ -294,7 +317,6 @@ public class AdminController {
 		System.out.println("삭제할 상품번호 목록 : " + deleteList);
         int[] deleteNum = Stream.of(deleteList.split(",")).mapToInt(Integer::parseInt).toArray();
 		
-        
 		for(int product_idx : deleteNum) {
 			String realFiles = service.getRealFiles(product_idx);
 			
@@ -311,11 +333,17 @@ public class AdminController {
 					File f = new File(saveDir, realFileList[i]);	
 					if(f.exists())  {f.delete();}
 				}
+				
+			return "redirect:/admin_productList?pageNum=" + pageNum;
+			
 			} else {
-				System.out.println(product_idx + "번 삭제 실패!");
+				model.addAttribute("msg", "상품 삭제 실패!");
+				return "notice/fail_back";
 			}
 		}
-		return "redirect:/admin_productList?pageNum=" + pageNum;
+		model.addAttribute("msg", "상품 삭제 실패!");
+		return "notice/fail_back";
+		
 	}
 	
 	// Order - BuyList(구매목록) 조회
@@ -423,20 +451,22 @@ public class AdminController {
 	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	@PostMapping(value = "admin_orderBuyModify")
-	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, String status, Model model) {
+	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "")String status, Model model) {
 		
 		int updateCount = service.updateOrderBuy(adminOrder);
 		
 		if(updateCount > 0) {
 			return "redirect:/admin_productBuyList?status=" + adminOrder.getOrder_buy_gb() + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상태 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";	
 	}
 	
 	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
 	@PostMapping(value = "admin_orderSellModify")
-	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum,  @RequestParam(defaultValue = "") String status, Model model) {
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
 		String page = "";
@@ -452,28 +482,29 @@ public class AdminController {
 		
 		if(updateCount > 0) {
 			return "redirect:/admin_productSellList?status=" + page + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상태 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";
 	}
 
 	// ProductList 재고변경
 	@PostMapping(value = "admin_productLeftCountModify")
-	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model, @RequestParam(defaultValue = "") String status) {
 		
 		int updateCount = service.updateProductLeftCount(product);
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productList?pageNum=" + pageNum;
+			return "redirect:/admin_productList?status=" + status + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "재고 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";
 		
 	}
 	
-	
-	
-	
 
 
 	
@@ -521,35 +552,6 @@ public class AdminController {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

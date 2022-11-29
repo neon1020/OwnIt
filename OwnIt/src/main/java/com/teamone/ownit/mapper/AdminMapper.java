@@ -12,13 +12,13 @@ public interface AdminMapper {
 	
 	// 전체 상품 목록 갯수 조회
 	int selectProductListCount(
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
+			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("status") String status);
 
 	
 	// 상품 목록 조회 productList (검색, 페이징 추가)
 	List<AdminProductVO> selectProductList(
 			@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("searchType") String searchType, @Param("keyword") String keyword);
+			@Param("searchType") String searchType, @Param("keyword") String keyword, @Param("status") String status);
 	
 	
 	// Product 등록 (글쓰기)
@@ -109,9 +109,17 @@ public interface AdminMapper {
 	// ProductList 재고변경
 	int modifyProductLeftCount(ProductVO product);
 
+	// Main - 거래량
+	int selectSalesCount();
 
+	// Main - 매출액
+	int selectSalesMoeny();
 
-
+	// Main - 회원수
+	int selectMemberCount();
+	
+	// Main - 리뷰수
+	int selectReviewCount();
 
 	
 	
@@ -306,5 +314,11 @@ public interface AdminMapper {
 	Integer selectMemberListCount2(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType, @Param("keyword") String keyword);
 
 	int deleteMember(int member_idx);
+
+
+	
+
+
+	
 
 }

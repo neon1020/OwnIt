@@ -38,6 +38,7 @@ public class AdminOrderVO {
 	private String image_real_file1;
 	
 	private int buyCount;
+	private int num;
 	
 	public AdminOrderVO() {}
 	
@@ -224,6 +225,14 @@ public class AdminOrderVO {
 	}
 	public void setBuyCount(int buyCount) {
 		this.buyCount = buyCount;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 

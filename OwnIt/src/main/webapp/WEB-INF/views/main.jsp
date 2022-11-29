@@ -7,13 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/vendor.css" />
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style.css" />
-
 <title>OwnIt</title>
 </head>
-
-
+<script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.js"></script>
 <body>
-
 
     <!-- header -->
 	<jsp:include page="inc/top.jsp"></jsp:include>
@@ -23,7 +20,7 @@
     <div class="swiper-container swiper-container-alt">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <div class="image image-overlay image-zoom" id="slides" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_1.jpg')"></div>
+          <div class="image image-overlay image-zoom" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_1.jpg')"></div>
           <div class="container">
             <div class="row align-items-center justify-content-center vh-80">
               <div class="col-lg-8 text-white text-center" data-swiper-parallax-y="-100%">
@@ -34,7 +31,7 @@
           </div>
         </div>
         <div class="swiper-slide">
-          <div class="image image-overlay image-zoom" id="slides" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_2.jpg')"></div>
+          <div class="image image-overlay image-zoom" id="main2" style="background-image:url('<%=request.getContextPath() %>/resources/img/main_2.jpg')"></div>
           <div class="container">
             <div class="row align-items-center justify-content-center vh-80">
               <div class="col-lg-6 text-white text-center" data-swiper-parallax-y="-100%">
@@ -45,11 +42,11 @@
           </div>
         </div>
       </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+	    <div class="swiper-button-prev"></div>
+	    <div class="swiper-button-next"></div>
     </div>
 
-
+	
     <!-- categories -->
     <section class="pt-1">
       <div class="container-full">
