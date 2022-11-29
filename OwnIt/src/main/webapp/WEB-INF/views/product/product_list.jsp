@@ -117,44 +117,48 @@ select::-ms-expand {
 <script type="text/javascript">
 
 function changeHeart(heart) {
-	var index = heart.id.split('_')[1];
-	var full = heart.className.indexOf('full') > -1
-	$.ajax({
-		url:'addAndRemoveLikeList',
-		type:'POST',
-		data:{product_idx:index},
-		success:function(result){
-			if(!full) { // 빈하트 -> 채움
-				var a = $('#heart_' + result);
-				a.removeClass('product-like');
-				a.addClass('product-like-full');
-			} else if(full) { // 채워진 -> 빈하트
-				var b = $('#heart_' + result);
-				b.removeClass('product-like-full');
-				b.addClass('product-like');
+	if(${not empty sessionScope.sId}) {
+		var index = heart.id.split('_')[1];
+		var full = heart.className.indexOf('full') > -1
+		$.ajax({
+			url:'addAndRemoveLikeList',
+			type:'POST',
+			data:{product_idx:index},
+			success:function(result){
+				if(!full) { // 빈하트 -> 채움
+					var a = $('#heart_' + result);
+					a.removeClass('product-like');
+					a.addClass('product-like-full');
+				} else if(full) { // 채워진 -> 빈하트
+					var b = $('#heart_' + result);
+					b.removeClass('product-like-full');
+					b.addClass('product-like');
+				}
 			}
-		}
-	});
+		});
+	} else alert("로그인 후 이용가능합니다");
 }
 
 $(document).on("click", ".product-action", function() {
-	var index = $(this).attr('id');
-	$.ajax({
-		url:'addCart',
-		type:'GET',
-		data:{
-			product_idx:index
-		},
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		success:function(result){
-			if(result == 'Added') {
-				$('#'+index+' > a').html(result).css('color', 'blue');
-			} else {
-				$('#'+index+' > a').html(result).css('color', 'red');
+	if(${not empty sessionScope.sId}) {
+		var index = $(this).attr('id');
+		$.ajax({
+			url:'addCart',
+			type:'GET',
+			data:{
+				product_idx:index
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success:function(result){
+				if(result == 'Added') {
+					$('#'+index+' > a').html(result).css('color', 'blue');
+				} else {
+					$('#'+index+' > a').html(result).css('color', 'red');
+				}
+			checkCart();
 			}
-		checkCart();
-		}
-	});
+		});
+	} else alert("로그인 후 이용가능합니다");
 });
 
 var str = "";
