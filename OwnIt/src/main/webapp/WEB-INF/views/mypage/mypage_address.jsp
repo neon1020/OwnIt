@@ -256,31 +256,31 @@
 	                      <div class="col-6 col-md-3">
 	                        <div class="form-group">
 	                          <label for="cardNumber">Zipcode</label>
-	                          <input id="zipCode" type="text" class="form-control" name="address_zipcode" onclick="execDaumPostcode()" placeholder="우편번호 검색">
+	                          <input id="zipCode" type="text" class="form-control" name="address_zipcode" onclick="execDaumPostcode()" placeholder="우편번호 검색" required="required">
 	                        </div>
 	                      </div>
 	                      <div class="col-md-6">
 	                        <div class="form-group">
 	                          <label for="cardNumber">Address</label>
-	                          <input id="address1" type="text" class="form-control" name="address1" placeholder="우편번호 검색 후, 자동 입력 됩니다">
+	                          <input id="address1" type="text" class="form-control" name="address1" placeholder="우편번호 검색 후, 자동 입력 됩니다" required="required">
 	                        </div>
 	                      </div>
 	                      <div class="col-6 col-md-3">
 	                        <div class="form-group">
 	                          <label for="cardNumber2">Detail Address</label>
-	                          <input id="address2" type="text" class="form-control" name="address2" placeholder="건물/아파트/동호수 입력">
+	                          <input id="address2" type="text" class="form-control" name="address2" placeholder="건물/아파트/동호수 입력" required="required">
 	                        </div>
 	                      </div>
 	                      <div class="col-md-6">
 	                        <div class="form-group">
 	                          <label for="cardNumber2">Address Nickname</label>
-	                          <input id="cardNumber2" type="text" class="form-control" name="address_nickname" placeholder="주소 이름">
+	                          <input id="cardNumber2" type="text" class="form-control" name="address_nickname" placeholder="주소 이름" required="required">
 	                        </div>
 	                      </div>
 	                      <div class="col-md-6">
 	                        <div class="form-group">
 	                          <label for="cardNumber3">Name</label>
-		                          <input id="cardNumber3" type="text" class="form-control" name="address_recipient" placeholder="수령인">
+		                          <input id="cardNumber3" type="text" class="form-control" name="address_recipient" placeholder="수령인" required="required">
 		                        </div>
 		                      </div>
 		                      <div class="col-12" style="text-align: center;">
