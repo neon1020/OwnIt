@@ -76,6 +76,9 @@ public class ProductService {
 		return mapper.selectCartCount(product_idx);
 	}
 
+	public List<ProductVO> getListToMain() {
+		return mapper.getListToMain();
+	}
 
 
 
@@ -115,9 +118,6 @@ public class ProductService {
 
 
 
-
-	
-	
 	
 	
 	
@@ -536,6 +536,8 @@ public class ProductService {
 		return mapper.isContainedInWish(member_idx, product_idx);
 	}
 
+	
+
 
 
 	
@@ -563,13 +565,6 @@ public class ProductService {
 	
 
 	
-
-
-
-
-
-
-
 
 
 

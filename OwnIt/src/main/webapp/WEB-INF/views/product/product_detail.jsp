@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
       <!-- meta -->
-      <link rel="shortcut icon" href="#">
+      <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="resources/css/vendor.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
     <script src="resources/js/jquery-3.6.1.js"></script>
@@ -137,6 +137,7 @@
 
 
 <script type="text/javascript">
+  var cbChecked = "${product.product_idx}:1:${product.product_buy_price}/";
   // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('1782262d4bfba22efdc59a399005f94e');
 
@@ -259,7 +260,7 @@
 		                </button>
                 	</c:when>
                 	<c:otherwise>
-	                	<button id="btn1" type="button" class="btn" onclick="location.href='order_buyAgree?product_idx=${product.product_idx}'" >
+	                	<button id="btn1" type="button" class="btn" onclick="location.href='order_buyAgree?cbChecked=${product.product_idx}:1:${product.product_buy_price}/'" >
 		                	<p>
 		                		구매 | <fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/> 원
 		                	</p>
@@ -521,7 +522,6 @@
     				   'review_idx' : review_idx,
     				   'style_like_count' : style_like_count},
     			success : function(review) {
-					debugger;    		
 					onclick1(page)
     			}
 			});
