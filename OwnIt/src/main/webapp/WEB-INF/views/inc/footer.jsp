@@ -113,5 +113,3 @@
 		</div>
 	</div>
 </footer>
-	<script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
