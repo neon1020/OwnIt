@@ -334,16 +334,12 @@ public class AdminController {
 					if(f.exists())  {f.delete();}
 				}
 				
-			return "redirect:/admin_productList?pageNum=" + pageNum;
-			
 			} else {
 				model.addAttribute("msg", "상품 삭제 실패!");
 				return "notice/fail_back";
 			}
 		}
-		model.addAttribute("msg", "상품 삭제 실패!");
-		return "notice/fail_back";
-		
+		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
 	// Order - BuyList(구매목록) 조회
@@ -469,19 +465,19 @@ public class AdminController {
 	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
-		String page = "";
-		
-		switch (adminOrder.getOrder_sell_gb()) {
-		case "0": page += "0"; break;
-		case "1": page += "1"; break;
-		case "2": page += "2"; break;
-		case "3": page += ""; break;
-		default:
-			break;
-		}
+//		String page = "";
+//		
+//		switch (adminOrder.getOrder_sell_gb()) {
+//		case "0": page += "0"; break;
+//		case "1": page += "1"; break;
+//		case "2": page += "2"; break;
+//		case "3": page += ""; break;
+//		default:
+//			break;
+//		}
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productSellList?status=" + page + "&pageNum=" + pageNum;
+			return "redirect:/admin_productSellList?status=" + adminOrder.getOrder_sell_gb() + "&pageNum=" + pageNum;
 		} else {
 			model.addAttribute("msg", "상태 변경 실패!");
 			return "notice/fail_back";

@@ -358,6 +358,9 @@
 					<when test='status.equals("2")'>
 						AND os.order_sell_gb = '2'
 					</when>
+					<when test='status.equals("3")'>
+						AND os.order_sell_gb = '3'
+					</when>
 				</choose>
 			</if>	
 			<if test="!keyword.equals('')">
@@ -410,6 +413,9 @@
 					</when>
 					<when test='status.equals("2")'>
 						AND os.order_sell_gb = '2'
+					</when>
+					<when test='status.equals("3")'>
+						AND os.order_sell_gb = '3'
 					</when>
 				</choose>
 			</if>	

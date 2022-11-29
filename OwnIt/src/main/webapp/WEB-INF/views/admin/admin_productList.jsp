@@ -53,9 +53,7 @@
 		}
 		
 		if(confirm("상품을 삭제 하시겠습니까?")){
-			alert(deleteList);
-		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + ${param.pageNum};
-// 		    return deleteList;
+		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + '${param.pageNum}'
 		}
 	}
 	

@@ -255,7 +255,7 @@
 								</nav>
 							</div>
 							<!-- 페이징 처리 End -->
-							
+							<button type="button" style="float: right;" class="btn mb-1 btn-danger btn-sm" onclick="location.href='admin_productSellList?status=3'">반려리스트</button>
 	                    </div>
 	                </div>
 	            </div>
