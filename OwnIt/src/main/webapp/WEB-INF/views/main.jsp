@@ -77,34 +77,34 @@ $(function() {
 
 	
     <!-- categories -->
-    <section class="pt-1">
-      <div class="container-full">
-        <div class="row masonry gutter-1">
-          <div class="col-md-4">
-            <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-1.jpg)"></span>
-            <div class="card-body text-center text-white">
-              <h3>Kitchen &amp; Dining</h3>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-2.jpg)"></span>
-            <div class="card-body text-center text-white">
-              <h3>Living Room</h3>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-3.jpg)"></span>
-            <div class="card-body text-center text-white">
-              <h3>Bathroom</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<!--     <section class="pt-1"> -->
+<!--       <div class="container-full"> -->
+<!--         <div class="row masonry gutter-1"> -->
+<!--           <div class="col-md-4"> -->
+<%--             <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-1.jpg)"></span> --%>
+<!--             <div class="card-body text-center text-white"> -->
+<!--               <h3>Kitchen &amp; Dining</h3> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="col-md-4"> -->
+<%--             <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-2.jpg)"></span> --%>
+<!--             <div class="card-body text-center text-white"> -->
+<!--               <h3>Living Room</h3> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="col-md-4"> -->
+<%--             <span class="image image-overlay" style="background-image: url(<%=request.getContextPath() %>/resources/img/card-3.jpg)"></span> --%>
+<!--             <div class="card-body text-center text-white"> -->
+<!--               <h3>Bathroom</h3> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </section> -->
 
 
     <!-- latest products -->
-    <section class="pt-0">
+    <section class="pt-0" style="margin-top: 200px;">
       <div class="container">
         <div class="row">
           <div class="col text-center">
