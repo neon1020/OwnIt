@@ -147,9 +147,23 @@
 	                            <h2>Product List</h2>
 	                        </div>
 							<div style="text-align: center;">
-								<a href="admin_productList?status=0" style="cursor: pointer;"><i class="fa fa-circle-o text-info  mr-2"></i>판매중</a>
+								<a href="admin_productList?status=0" style="cursor: pointer;"><i class="fa fa-circle-o text-info  mr-2"></i>
+									<c:choose>
+										<c:when test="${param.status eq 0 }">
+											<button type="button" class="btn mb-1 btn-outline-primary btn-sm">판매중</button>
+										</c:when>
+										<c:otherwise>판매중</c:otherwise>
+									</c:choose>
+								</a>
 									&nbsp;|&nbsp;
-								<a href="admin_productList?status=1" style="cursor: pointer;"><i class="fa fa-close text-danger mr-2"></i>판매중단</a>
+								<a href="admin_productList?status=1" style="cursor: pointer;"><i class="fa fa-close text-danger mr-2"></i>
+									<c:choose>
+										<c:when test="${param.status eq 1 }">
+											<button type="button" class="btn mb-1 btn-outline-danger btn-sm">판매중단</button>
+										</c:when>
+										<c:otherwise>판매중단</c:otherwise>
+									</c:choose>
+								</a>
 							</div>
 	                        <!-- 검색기능 Start -->
 	                        <form action="admin_productList" method="get">

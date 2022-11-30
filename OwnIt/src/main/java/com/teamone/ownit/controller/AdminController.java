@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
@@ -501,12 +504,32 @@ public class AdminController {
 		
 	}
 	
+	// 제품 등록폼 - 상품명 중복확인
+	@RequestMapping("/checkProductName")
+	@ResponseBody
+	public Map<Object, Object> checkProductName(@RequestBody String productName) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkProductName(productName);
+		map.put("cnt", count);
+		
+		return map;
+	}
+
+	// 제품 등록폼 - 제품 번호 중복확인
+	@RequestMapping("/checkModelNum")
+	@ResponseBody
+	public Map<Object, Object> checkModelNum(@RequestBody String modelNum) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkModelNum(modelNum);
+		map.put("cnt", count);
+		
+		return map;
+	}
 
 
 	
-
-
-	
 	
 	
 	
@@ -548,27 +571,6 @@ public class AdminController {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
