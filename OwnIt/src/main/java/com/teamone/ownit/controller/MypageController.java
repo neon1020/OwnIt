@@ -66,7 +66,7 @@ public class MypageController {
 	
 	//비밀번호 수정
 	@PostMapping(value = "/mypage_revisePro")
-	public String revise(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
+	public String revisePasswd(@ModelAttribute MemberVO member, @RequestParam String newPasswd, 
 						Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		
@@ -363,7 +363,7 @@ public class MypageController {
 	
 	//위시리스트 추가
 	@PostMapping(value = "mypage_addWish")
-	public String addAddress(@ModelAttribute WishlistVO wishlist, @RequestParam int member_idx, @RequestParam int product_idx, 
+	public String addWish(@ModelAttribute WishlistVO wishlist, @RequestParam int member_idx, @RequestParam int product_idx, 
 							Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {
@@ -387,7 +387,7 @@ public class MypageController {
 	
 	//위시리스트 장바구니 담기
 	@PostMapping(value = "mypage_addCart")
-	public String addAddress(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
+	public String addCart(@ModelAttribute CartVO cart, @RequestParam int member_idx, @RequestParam int product_idx, 
 							Model model, HttpSession session) {
 		String sId = (String)session.getAttribute("sId");
 		if(sId != null && !sId.equals("")) {
@@ -410,7 +410,7 @@ public class MypageController {
 	
 	//위시리스트 삭제
 	@GetMapping(value = "deleteWishlist")
-	public String delete(@RequestParam int member_idx, @RequestParam int product_idx, Model model, HttpSession session) {
+	public String deleteWish(@RequestParam int member_idx, @RequestParam int product_idx, Model model, HttpSession session) {
 		System.out.println("상품번호" + product_idx);
 		int deleteCount = service.deleteWishlist(member_idx, product_idx);
 		if(deleteCount == 0) {
@@ -490,7 +490,7 @@ public class MypageController {
 	
 	//주소록 삭제
 	@GetMapping(value = "deleteAddress")
-	public String delete(@ModelAttribute AddressVO address, @RequestParam int address_idx, 
+	public String deleteAddress(@ModelAttribute AddressVO address, @RequestParam int address_idx, 
 						@RequestParam int member_idx, Model model) {
 		int deleteCount = service.removeAddress(address);
 		if(deleteCount == 0) {
