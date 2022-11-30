@@ -9,24 +9,35 @@
 		SELECT 
 			COUNT(*) 
 			FROM product
+		WHERE 1=1
+			<if test="!status.equals('')">
+				<choose>
+					<when test='status.equals("0")'>
+						AND product_left_count != 0
+					</when>				
+					<when test='status.equals("1")'>
+						AND product_left_count = 0
+					</when>
+				</choose>
+			</if>
 			<if test="!keyword.equals('')">
 				<!-- 2. 검색타입(search)에 따른 WHERE 변경 -->
 				<choose>
 					<when test="searchType.equals('all')">
-						WHERE product_brand LIKE '%${keyword}%' 
-							OR product_type LIKE '%${keyword}%' 
-							OR product_name LIKE '%${keyword}%'
-							OR product_model_num LIKE '%${keyword}%'
-							OR product_color LIKE '%${keyword}%'
+						AND product_brand LIKE '%${keyword}%' 
+						OR product_type LIKE '%${keyword}%' 
+						OR product_name LIKE '%${keyword}%'
+						OR product_model_num LIKE '%${keyword}%'
+						OR product_color LIKE '%${keyword}%'
 					</when>
 					<when test="searchType.equals('brand')">
-						WHERE product_brand LIKE '%${keyword}%' 
+						AND product_brand LIKE '%${keyword}%' 
 					</when>
 					<when test="searchType.equals('type')">
-						WHERE product_type LIKE '%${keyword}%'
+						AND product_type LIKE '%${keyword}%'
 					</when>
 					<when test="searchType.equals('name')">
-						WHERE product_name LIKE '%${keyword}%'
+						AND product_name LIKE '%${keyword}%'
 					</when>
 				</choose>
 			</if>
@@ -37,24 +48,34 @@
 		SELECT * 
 			FROM product p LEFT OUTER JOIN image i
 			ON p.product_idx = i.product_idx
-			
+			WHERE 1=1
+			<if test="!status.equals('')">
+				<choose>
+					<when test='status.equals("0")'>
+						AND product_left_count != 0
+					</when>				
+					<when test='status.equals("1")'>
+						AND product_left_count = 0
+					</when>
+				</choose>
+			</if>
 			<if test="!keyword.equals('')">
 			<choose>
 					<when test="searchType.equals('all')">
-						WHERE p.product_brand LIKE '%${keyword}%' 
-							OR p.product_type LIKE '%${keyword}%' 
-							OR p.product_name LIKE '%${keyword}%'
-							OR p.product_model_num LIKE '%${keyword}%'
-							OR p.product_color LIKE '%${keyword}%'
+						AND p.product_brand LIKE '%${keyword}%' 
+						OR p.product_type LIKE '%${keyword}%' 
+						OR p.product_name LIKE '%${keyword}%'
+						OR p.product_model_num LIKE '%${keyword}%'
+						OR p.product_color LIKE '%${keyword}%'
 					</when>
 					<when test="searchType.equals('brand')">
-						WHERE p.product_brand LIKE '%${keyword}%' 
+						AND p.product_brand LIKE '%${keyword}%' 
 					</when>
 					<when test="searchType.equals('type')">
-						WHERE p.product_type LIKE '%${keyword}%'
+						AND p.product_type LIKE '%${keyword}%'
 					</when>
 					<when test="searchType.equals('name')">
-						WHERE p.product_name LIKE '%${keyword}%'
+						AND p.product_name LIKE '%${keyword}%'
 					</when>
 				</choose>
 			</if>
@@ -274,15 +295,13 @@
 	</select>
 	
 	
-	
-	
-	
 	<!-- ProductBuy 구매 목록 상세보기 -->
 	<select id="selectProductBuyDetail" resultType="com.teamone.ownit.vo.AdminOrderVO">
 		SELECT 
 				ob.order_buy_idx, ob.order_group_idx, ob.order_buy_gb, ob.order_buy_date, ob.order_buy_count, ob.order_buy_price,
-		        p.product_name, p.product_buy_price,
-		        i.image_real_file1
+		        p.product_name, p.product_buy_price, p.product_idx,
+		        i.image_real_file1,
+		        row_number() over (order by order_buy_idx) as num
 		FROM 	
 				order_buy ob 
 			    LEFT JOIN product p
@@ -461,13 +480,45 @@
 				product_idx = #{product_idx}
 	</update>
 	
+	<!-- Main - 거래량 -->
+	<select id="selectSalesCount" resultType="integer">
+		SELECT 
+			(SELECT COUNT(*) 
+				FROM ORDER_SELL 
+		        WHERE order_sell_date LIKE '22%')
+		    +
+		    (SELECT SUM(ORDER_BUY_COUNT) 
+				FROM ORDER_BUY 
+		        WHERE order_buy_date LIKE '22%');
+	</select>
+
+	<!-- Main - 매출액 -->
+	<select id="selectSalesMoeny" resultType="integer">
+		SELECT 
+			(SELECT sum(p.product_sell_price) * 0.02
+				FROM order_sell os
+					LEFT JOIN product p
+                    ON os.product_idx = p.product_idx
+		        WHERE order_sell_date LIKE '22%')
+		    +
+		    (SELECT SUM(ORDER_BUY_price) * 0.02
+				FROM ORDER_BUY 
+		        WHERE order_buy_date LIKE '22%');
+	</select>
 	
-
-
-
-
-
-
+	<!-- Main - 회원수 -->
+	<select id="selectMemberCount" resultType="integer">
+		SELECT COUNT(*) 
+			FROM member
+		    where member_join_date LIKE '22%';
+	</select>
+	
+	<!-- Main - 리뷰수 -->
+	<select id="selectReviewCount" resultType="integer">
+		SELECT COUNT(*) 
+			FROM review
+		    where review_date LIKE '22%';
+	</select>
 
 
 
