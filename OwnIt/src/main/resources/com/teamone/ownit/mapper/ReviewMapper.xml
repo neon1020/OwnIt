@@ -11,6 +11,7 @@
                         FROM style_like_list s
                         WHERE member_idx = #{member_idx}) a
           ON r.review_idx = a.review_idx
+          GROUP BY r.review_idx
           <choose>
               <when test="keyword.equals('new')">
                 ORDER BY review_date DESC
@@ -34,16 +35,19 @@
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file1 IS NOT NULL
             UNION ALL 
         SELECT review_idx, image_real_file2 as review_image1
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file2 IS NOT NULL
             UNION ALL
         SELECT review_idx, image_real_file3 as review_image1
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file3 IS NOT NULL
     </select>
         
     <select id="selectReply" resultType="com.teamone.ownit.vo.ReplyVO">
@@ -56,8 +60,8 @@
           WHERE 
             r.review_idx = #{review_idx}
           ORDER BY 
-            r.reply_idx ASC,
-            r.reply_re_seq DESC
+            r.reply_re_ref DESC,
+            r.reply_re_seq ASC
     </select>
     
     <select id="selectProduct" resultType="com.teamone.ownit.vo.ReviewListVO">
@@ -116,7 +120,7 @@
     
     <select id="selectProfile" resultType="com.teamone.ownit.vo.ReviewListVO">
          SELECT DISTINCT member_nickname, member_image
-          FROM reviewList
+          FROM member
           WHERE
             member_idx = #{member_idx}
     </select>

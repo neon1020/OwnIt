@@ -50,10 +50,23 @@
 <script type="text/javascript">
   // 무한스크롤
   let pageNum = 1;
-  var keyword = ""; 
-    load_list();
+  var keyword = "new"; 
   
   $(function() {
+	  load_list();
+	  $("#btnradio1").on("click", function() { // 최신순
+      pageNum = 1;
+      keyword = "new";
+      $("#reviewList").html("");
+      load_list();
+	  });
+    $("#btnradio2").on("click", function() { // 인기순
+      pageNum = 1;
+      keyword = "pop";
+      $("#reviewList").html("");
+      load_list();
+    });
+	  
     $(window).scroll(function() {
       let scrollTop = $(window).scrollTop(); 
       let windowHeight = $(window).height(); 
@@ -64,42 +77,37 @@
         load_list();
       }
     });
+    
   });
+  
   // 리뷰 목록 호출
   function load_list() {
-	  $("#btnradio1").on("click", function() { // 최신순
-    	pageNum = 1;
-      keyword = "new";
-      $("#reviewList").html("");
-	  });
-	  $("#btnradio2").on("click", function() { // 인기순
-      pageNum = 1;
-      keyword = "pop";
-      $("#reviewList").html("");
-    });
     $.ajax({
       type     : "GET",
-      url      : "listChange?pageNum=" + pageNum,
+      url      : "listChange",
       dataType : "json",
-   	  data     : { 'keyword' : keyword },
+   	  data     : { 
+   		  'pageNum' : pageNum,
+   		  'keyword' : keyword 
+ 		  },
       success  : function(reviewList) { // 요청 성공 시
     	  let result = "";
     	  for(var i = 0; i < reviewList.length; i++){
-        let productPrice = reviewList[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
-       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
-       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
-	       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
-	       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
-	       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
-	       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
-	       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
-	       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
-	       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
-	       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
-	       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
+	        let productPrice = reviewList[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+	       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
+	       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
+		       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
+		       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
+		       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
+		       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
+		       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
+		       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
+		       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
+		       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
+		       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
     	  }
-      $("#reviewList").append(result);
+    	  $("#reviewList").append(result);
       }
     });
   }  
@@ -139,9 +147,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
-				  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="load_list()" checked>
+				  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
 				  <label for="btnradio1">최신</label>
-				  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="load_list()">
+				  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" >
 				  <label for="btnradio2">인기</label>
 				</div>
 			</div>

@@ -299,7 +299,7 @@ public class ReviewController {
 		List<MultipartFile> mFiles = review.getFiles();
 		Map<String, String> map = new HashMap<>();
 		
-String uuid = UUID.randomUUID().toString();
+		String uuid = UUID.randomUUID().toString();
 		
 		if(mFiles.size() == 1) { // 이미지가 1개일 때
 			String originalFileName = mFiles.get(0).getOriginalFilename();

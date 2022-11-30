@@ -103,8 +103,8 @@
             'reply_re_ref'  : index
           },success : function(status) {
             if(status == "success") {
-              selelctReplyList();
               $("#reply_content").val("");
+              selelctReplyList();
             }
           }
         })
@@ -122,19 +122,19 @@
     	  let result = "";
         for(var i = 0; i < reply.length; i++){
        	  if((reply[i].reply_re_lev) > 0) {
-       		  result += "<img id='replyImage' src='resources/img/review/reply-ico.png'>";
-       		  result += "<tr><td style='width: 180px;'><a class='profile_reply' href='review_mystyle'>";
-            result += "<img src='resources/img/member/"+reply[i].image_real_file1+"'><span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
-            result += "</a></td><td style='width: 300px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
+       		  result += "<tr><td style='width: 230px;'><img id='replyImage' src='resources/img/review/reply-ico.png'>";
+            result += "<a class='profile_reply' href='review_mystyle?member_idx="+reply[i].member_idx+"'><img src='resources/img/member/"+reply[i].image_real_file1+"'>";
+            result += "<span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
+            result += "</a></td><td style='width: 400px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
        	  } else {
-	        	result += "<tr><td style='width: 180px;'><a class='profile_reply' href='review_mystyle'>";
+	        	result += "<tr><td style='width: 230px;'><a class='profile_reply' href='review_mystyle?member_idx="+reply[i].member_idx+"'>";
 	        	result += "<img src='resources/img/member/"+reply[i].image_real_file1+"'><span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
-	          result += "</a></td><td style='width: 450px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
+	          result += "</a></td><td style='width: 400px;'>"+reply[i].reply_content+"</td>";
+	          result += "<td style='float: right;'><button type='button' id='reComment_"+reply[i].reply_re_ref+"' class='btn btn-primary btn-rounded btn-reply' onclick='reReply(this)'>답글</button></td>";
        	  }
           if((sIdx == reply[i].member_idx) && sIdx.length > 0) {
-        	  result += "<button type='button' class='btn btn-primary btn-rounded btn-reply' data-toggle='modal' data-target='#exampleModal-2"+reply[i].reply_re_ref+"'>삭제</button>";
+        	  result += "<td style='float: right;'><button type='button' class='btn btn-primary btn-rounded btn-reply' data-toggle='modal' data-target='#exampleModal-2"+reply[i].reply_re_ref+"'>삭제</button>";
           } 
-          result += "<button type='button' id='reComment_"+reply[i].reply_re_ref+"' class='btn btn-primary btn-rounded btn-reply' onclick='reReply(this)'>답글</button>";
           result += "<div class='modal fade' id='exampleModal-2"+reply[i].reply_re_ref+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
           result += "<div class='modal-dialog' role='document'><div class='modal-content' style='text-align: center;'>";
           result += "<div class='modal-header'><h5 class='modal-title' id='exampleModalLabel'>댓글 삭제</h5>";
@@ -242,30 +242,30 @@
 			<!-- *************************** 댓글 목록 출력 **************************** -->
 			<c:forEach var="re" items="${reply }" varStatus="vs">
 				<tr>
-<%-- 				  <c:if test="${re.reply_re_lev > 0 }"> --%>
         <c:choose>
           <c:when test="${re.reply_re_lev > 0 }">
-            <img id="replyImage" src="resources/img/review/reply-ico.png">
-					  <td style="width: 180px;">
-					    <a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }">
+					  <td style="width: 230px;">
+	            <img id="replyImage" src="resources/img/review/reply-ico.png">
+					    <a class="profile_reply" href="review_mystyle?member_idx=${re.member_idx }"><img src="resources/img/member/${re.image_real_file1 }">
 					    <span class="eyebrow text-muted">${re.member_nickname }</span></a>
 					  </td>
-					  <td style="width: 300px;">${re.reply_content }</td>
+					  <td style="width: 400px;">${re.reply_content }</td>
 				  </c:when>
 				  <c:otherwise>
-					  <td style="width: 180px;">
-	            <a class="profile_reply" href="review_mystyle"><img src="resources/img/member/${re.image_real_file1 }">
+					  <td style="width: 230px;">
+	            <a class="profile_reply" href="review_mystyle?member_idx=${re.member_idx }"><img src="resources/img/member/${re.image_real_file1 }">
 	            <span class="eyebrow text-muted">${re.member_nickname }</span></a>
 	          </td>
-	          <td style="width: 450px;">${re.reply_content }</td>
+	          <td style="width: 400px;">${re.reply_content }</td>
+	          <td style="float: right;">
+              <button type="button" id="reComment_${re.reply_re_ref }" class="btn btn-primary btn-rounded btn-reply" onclick="reReply(this)">답글</button>
+            </td>
 				  </c:otherwise>
 			  </c:choose>
-<%-- 				  </c:if> --%>
 				  <td style="float: right;"> <!-- ******************* 댓글쓴이에게만 보이는 버튼 ******************* -->
 				  <c:if test="${(sessionScope.sIdx == re.member_idx) && not empty sessionScope.sIdx }">
 				    <button type="button" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal-2${vs.index}">삭제</button>
 				  </c:if>
-				    <button type="button" id="reComment_${re.reply_re_ref }" class="btn btn-primary btn-rounded btn-reply" onclick="reReply(this)">답글</button>
 				    <!-- ********************************* 댓글 삭제 모달 ********************************* -->
 						<div class="modal fade" id="exampleModal-2${vs.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  <div class="modal-dialog" role="document">
