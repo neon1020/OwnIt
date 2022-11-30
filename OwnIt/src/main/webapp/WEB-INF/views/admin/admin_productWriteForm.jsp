@@ -20,8 +20,85 @@
 
 </head>
 
-<!-- <script src="resources/js/jquery-3.6.1.js"></script> -->
+<script src="resources/js/jquery-3.6.1.js"></script>
 <script>
+	var isDuplicateProductName = true;
+	var isDuplicateModelNum = true;
+
+	
+	// 제품명 중복확인
+	function checkProductName() {
+		var productName = $('#productName').val();
+		
+		if(productName === '') {
+			$('#productNameResult').html('');
+		} else {
+			$.ajax({
+				async: true,
+    			type: 'POST',
+    			data: productName,
+    			url: 'checkProductName',
+    			dataType: 'json',
+    			contentType: 'application/json; charset=UTF-8',
+    			success : function(data){
+    				if(data.cnt > 0) {
+    					$('#productNameResult').html("이미 등록된 제품명입니다.");
+    					$('#productNameResult').css("color", "red");
+    					$('#productName').focus();
+    					isDuplicateProductName = false;
+    				}
+    			}
+			});
+			
+		}
+	}
+	
+	
+	// 제품 번호 중복확인
+	function checkModelNum() {
+		var modelNum = $('#modelNum').val();
+		
+		if(modelNum === '') {
+			$('#modelNumResult').html('');
+		} else {
+			$.ajax({
+				async: true,
+    			type: 'POST',
+    			data: modelNum,
+    			url: 'checkModelNum',
+    			dataType: 'json',
+    			contentType: 'application/json; charset=UTF-8',
+    			success : function(data){
+    				if(data.cnt > 0) {
+    					$('#modelNumResult').html("이미 등록된 제품번호입니다.");
+    					$('#modelNumResult').css("color", "red");
+    					$('#modelNum').focus();
+    					isDuplicateModelNum = false;
+    				}
+    			}
+			});
+			
+		}
+	}
+	
+	
+	// 폼 제출 시 전체 확인
+	function checkAll() {
+		if(!isDuplicateProductName) {
+			alert("제품명 중복 확인 필수");
+			$("#productName").select();
+			return false;
+		} else if(!isDuplicateModelNum) {
+			alert("제품번호 중복 확인 필수");
+			$("#modelNum").select();
+			return false;
+		}
+		return true;
+	}
+	
+	
+
+	// 이미지 갯수 확인
     $(document).ready(function (e){
 	    $("#imageFile").on("change", function(event) {
 	        var file = event.target.files[0];
@@ -29,7 +106,7 @@
 	        var reader = new FileReader();
 	        
 	        if(files.length != 3){
-        	    alert('이미지 갯수 확인! (3장 업로드 필수)');
+        	  alert('이미지 갯수 확인! (3장 업로드 필수)');
               $("#imageFile").val("");  //파일 초기화
               $("#preview").attr("src", "resources/img/review/blank.jpg");
               return false;
@@ -157,7 +234,7 @@
                             <h2>Product Write Form</h2>
                             <br>
                             <div class="basic-form">
-                                <form action="admin_productWritePro" method="post" name="productWriteForm" enctype="multipart/form-data">
+                                <form action="admin_productWritePro" method="post" name="productWriteForm" onsubmit="return checkAll()" enctype="multipart/form-data">
                                 	<!-- Start Col -->
                                 	<div class="row">
 			                            <div class="col-md-6 col-lg-3">
@@ -219,14 +296,14 @@
                                     
                                    	<div class="form-row">
                                    		<div class="form-group col-md-8">
-	                                        <label>Name<span class="text-danger"> *</span></label>	
-	                                        <input type="text" class="form-control" name="product_name" required>
+	                                        <label>Name<span class="text-danger"> *</span></label><span id="productNameResult" style="margin-left: 20px;"></span>	
+	                                        <input type="text" class="form-control" id="productName" name="product_name" oninput="checkProductName()" required>
 										</div>
                                    	</div>
                                     <div class="form-row">
                                    		<div class="form-group col-md-6">
-                                            <label>Model Number<span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="product_model_num" required>
+                                            <label>Model Number<span class="text-danger"> *</span></label><span id="modelNumResult" style="margin-left: 20px;"></span>
+                                            <input type="text" class="form-control" id="modelNum" name="product_model_num" oninput="checkModelNum()" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Color<span class="text-danger"> *</span></label>
