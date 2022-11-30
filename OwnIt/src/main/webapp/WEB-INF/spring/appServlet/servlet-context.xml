@@ -49,6 +49,9 @@
 	    </beans:property>
 	</beans:bean>
 	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLoginBO" class="com.teamone.ownit.vo.NaverLoginBO" />
+	
 </beans:beans>
 
 

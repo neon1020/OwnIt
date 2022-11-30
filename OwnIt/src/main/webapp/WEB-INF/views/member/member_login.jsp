@@ -30,6 +30,18 @@
 	 	function modalData2() {
 	 		let data = $("#member_phone").val();
 	 		location.href = "member_findEmail?member_phone=" + data;
+	 	}
+	 	
+	 	// 네이버 로그인
+// 		var naverLogin = new naver.LoginWithNaverId(
+// 			{
+// 				clientId: "e1NqYJZnZQcoVqr7LPpt",
+// 				callbackUrl: "http://localhost:8081/ownit/member_naverCallBack",
+// 				isPopup: false,
+// 				loginButton: {color: "white", type: 3, height: 60}
+// 			}
+// 		);
+// 		naverLogin.init();
 	 	}	 	
     </script>
 </head>
@@ -140,8 +152,9 @@
 							<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=ee04e57ce1c4f35a3eafd3052e7156e0&redirect_uri=http://localhost:8081/ownit/kakaoLogin&response_type=code">
 								<img src="resources/img/member/kakao.jpg" alt="카카오계정 로그인">
 							</a>
-							<a href="#"><img src="resources/img/member/naver.jpg"></a>
-						</div>              
+							<a href="${url}"><img src="resources/img/member/naver.jpg"></a>
+							<!-- <div id="naver_id_login" style="text-align: center;"></div> -->
+						</div>
 					</div>
 				</div>
 			</div>

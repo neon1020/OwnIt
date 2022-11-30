@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.NoticeMapper;
 import com.teamone.ownit.vo.NoticeVO;
+import com.teamone.ownit.vo.ReplyVO;
 
 @Service
 public class NoticeService {
@@ -54,6 +55,45 @@ public class NoticeService {
 	public int modifyNotice(NoticeVO notice) {
 		return mapper.updateNotice(notice);
 	}
+
+	
+	
+	// 정채연
+	public List<ReplyVO> getReplyList(int notice_idx, int startRow, int listLimit) {
+		System.out.println("NoticeService - getReplyList()");
+		return mapper.selectReplyList(notice_idx, startRow, listLimit);
+	}
+
+	public int getReplyListCount(int notice_idx) {
+		System.out.println("NoticeService - getReplyListCount()");
+		return mapper.selectReplyListCount(notice_idx);
+	}
+
+	public int addEventReply(ReplyVO reply) {
+		System.out.println("NoticeService - addEventReply()");
+		return mapper.insertEventReply(reply);
+	}
+
+	public int getMaxSeq(int reply_re_ref) {
+		System.out.println("NoticeService - getMaxSeq()");
+		return mapper.selectMaxSeq(reply_re_ref);
+	}
+	
+	public int add_re_Reply(int maxSeq, ReplyVO reply) {
+		System.out.println("NoticeService - add_re_Reply()");
+		return mapper.insert_re_Reply(maxSeq, reply);
+	}
+
+	public int removeEventReply(int reply_idx) {
+		System.out.println("NoticeService - removeEventReply()");
+		return mapper.deleteEventReply(reply_idx);
+	}
+
+	public Integer getReplyListCount2(int notice_idx, int startRow, int listLimit) {
+		System.out.println("NoticeService - getReplyListCount2()");
+		return mapper.selectReplyListCount2(notice_idx, startRow, listLimit);
+	}
+
 	
 	
 	

@@ -49,7 +49,7 @@ public interface MemberMapper {
 	
 	int updatePasswd(@Param("member_id") String member_id, @Param("secureNewPassword") String secureNewPassword);
 	
-	
+	int insertNaverMember(MemberVO member);
 	
 	
 	
@@ -313,6 +313,8 @@ public interface MemberMapper {
 	void insertImage(HashMap<String, Object> userInfo);
 
 
+
+	
 
 	
 

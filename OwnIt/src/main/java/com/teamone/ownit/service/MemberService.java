@@ -121,7 +121,10 @@ public class MemberService {
 		return mapper.updatePasswd(member_id, secureNewPassword);
 	}
 	
-	
+	public int joinNaverMember(MemberVO member) {
+		System.out.println("MemberService - joinNaverMember()");
+		return mapper.insertNaverMember(member);
+	}
 	
 	
 	

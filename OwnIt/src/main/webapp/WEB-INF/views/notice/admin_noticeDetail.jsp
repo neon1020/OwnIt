@@ -1,5 +1,7 @@
+<%@page import="com.teamone.ownit.vo.ReplyPageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +116,104 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    
+                                    <c:if test="${notice.notice_category eq '[이벤트]' }">
+	                                    <table class="table">
+	                                    	<thead>
+	                                            <tr style="text-align: center">
+	                                                <td width="20%">닉네임</td>
+	                                                <td width="60%">댓글 내용</td>
+	                                                <td width="20%">관리</td>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	<c:choose>
+	                                        		<c:when test="${listCount == 0 }">
+	                                        			<tr>
+	                                        				<td colspan="3">작성된 댓글이 없습니다.</td>
+	                                        			</tr>
+	                                        		</c:when>
+	                                        		<c:when test="${listCount != 0 }">
+			                                        	<c:forEach var="reply" items="${replyList }" varStatus="num">
+			                                        		<tr style="text-align: center">
+			                                        			<td>${reply.member_nickname }</td>
+			                                        			<td style="text-align: left;">
+			                                        				<c:if test="${reply.reply_re_lev == 1 }">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㄴ&nbsp;&nbsp;&nbsp;</c:if>${reply.reply_content }
+			                                        			</td>
+			                                        			<td>
+			                                        				<input type="button" value="삭제" class="btn btn-dark" data-toggle="modal" data-target="#deleteReply${num.index }">
+			                                        			
+			                                        				<!-- Modal -->
+								                                    <div class="modal fade" id="deleteReply${num.index }">
+								                                        <div class="modal-dialog" role="document">
+								                                            <div class="modal-content">
+								                                                <div class="modal-header">
+								                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+								                                                    </button>
+								                                                </div>
+								                                                <div class="modal-body">해당 댓글을 삭제 하시겠습니까?</div>
+								                                                <div class="modal-footer" style="text-align: center;">
+								                                                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+								                                                    <button type="button" class="btn btn-dark" onclick="location.href='event_replyDelete?notice_idx=${notice.notice_idx }&pageNum=${param.pageNum }&replyListNum=${pageInfo.replyListNum }&reply_idx=${reply.reply_idx }&board=admin'">삭제</button>
+								                                                </div>
+								                                            </div>
+								                                        </div>
+								                                    </div>
+								                                    <!-- Modal 끝 -->
+			                                        			</td>
+			                                        		</tr>
+			                                        	</c:forEach>
+	                                        		</c:when>
+	                                        	</c:choose>
+	                                        </tbody>
+	                                    </table>
+	                                    
+	                                    <!-- 페이징 태그 START -->
+										<div class="bootstrap-pagination">
+										<%ReplyPageInfo pageInfo = (ReplyPageInfo)request.getAttribute("pageInfo"); %>
+											<nav>
+												<ul class="pagination justify-content-center">
+													
+												<%if(pageInfo.getReplyListNum() > pageInfo.getStartPage()) {%>
+													<li class="page-item">
+														<a class="page-link" href="admin_noticeDetail?notice_idx=${notice.notice_idx }&pageNum=${param.pageNum }&replyListNum=${pageInfo.replyListNum - 1}">Previous</a>
+													</li>
+												<%} else{ %>
+													<li class="page-item disabled">
+														<a class="page-link" href="javascript:void(0)">Previous</a>
+													</li>
+												<%} %>
+												
+												<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+													<c:choose>
+														<c:when test="${i eq pageInfo.replyListNum }">
+															<li class="page-item active">
+																<a class="page-link" href="javascript:void(0)">${i } <span class="sr-only">(current)</span></a>
+															</li>
+														</c:when>
+														<c:otherwise>
+															<li class="page-item">
+																<a class="page-link" href="admin_noticeDetail?notice_idx=${notice.notice_idx }&pageNum=${param.pageNum }&replyListNum=${i }">${i }</a>
+															</li>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+												
+												<%if(pageInfo.getReplyListNum() < pageInfo.getMaxPage()) {%>
+													<li class="page-item">
+														<a class="page-link" href="admin_noticeDetail?notice_idx=${notice.notice_idx }&pageNum=${param.pageNum }&replyListNum=${pageInfo.replyListNum + 1}">Next</a>
+													</li>
+												<%} else{ %>
+													<li class="page-item disabled">
+														<a class="page-link" href="javascript:void(0)">Next</a>
+													</li>
+												<%} %>
+												</ul>
+											</nav>
+										</div>
+										<!-- 페이징 태그 END -->
+                                    </c:if>
+                                    
 <!--                                <button type="button" class="btn mb-1 btn-outline-secondary" onclick="isDelete()">삭제</button> -->
                                      <!-- 하이퍼링크에 사용할 글번호와 페이지번호는 URL 에 있는 파라미터 사용 -->
 									<div style="text-align: center;">
@@ -138,16 +238,7 @@
 	                                            </div>
 	                                        </div>
 	                                    </div>
-                                     
-                                     
-                                     
-                                     
-                                     
-                                     
-                                     
-                                     
-                                     
-                                     
+	                                    <!-- Modal 끝 -->
                                      </div>
                                 </div>
                             </div>
