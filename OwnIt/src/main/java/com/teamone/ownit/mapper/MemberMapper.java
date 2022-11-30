@@ -1,5 +1,7 @@
 package com.teamone.ownit.mapper;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.teamone.ownit.vo.AddressVO;
@@ -295,15 +297,22 @@ public interface MemberMapper {
 	
 	
 	
-	
-	
-	
-	
 	// 류혜지 - 300
-	// 이메일 찾기에 필요한 findEmail() 메서드 정의
-	MemberVO findEmail(String member_phone);
-
 	
+	
+	// 아이디 찾기
+	MemberVO findEmail(String member_phone);
+	
+	// 카카오 가입 정보 찾기
+	MemberVO findkakao(HashMap<String, Object> userInfo);
+	
+	// 카카오 가입 정보 저장
+	void kakaoinsert(HashMap<String, Object> userInfo);
+	
+	//카카오 가입시 프로필 사진 저장
+	void insertImage(HashMap<String, Object> userInfo);
+
+
 
 	
 

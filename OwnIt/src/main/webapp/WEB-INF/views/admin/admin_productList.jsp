@@ -16,6 +16,16 @@
 
 </head>
 <script type="text/javascript">
+
+
+	function finalCheck() {
+		if(confirm('변경하시겠습니까?')) {
+			return true;
+		}
+		return false;
+	}
+
+
 	
 	<!-- 체크박스 전체선택, 전체해제 -->
 	function checkAll(){
@@ -43,9 +53,7 @@
 		}
 		
 		if(confirm("상품을 삭제 하시겠습니까?")){
-			alert(deleteList);
-		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + ${param.pageNum};
-// 		    return deleteList;
+		    location.href="admin_productDelete?deleteList=" + deleteList + "&pageNum=" + '${param.pageNum}'
 		}
 	}
 	
@@ -53,6 +61,13 @@
 
 </script>
 <body>
+
+	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
+		<script>
+// 			alert("잘못된 접근입니다!");
+// 			location.href = "./";
+		</script>
+	</c:if>
 
     <!--*******************
         Preloader start
@@ -131,11 +146,42 @@
 	                        <div class="card-title">
 	                            <h2>Product List</h2>
 	                        </div>
-<!-- 							전체 | 판매중 | 판매중단 -->
+							<div style="text-align: center;">
+								<a href="admin_productList?status=0" style="cursor: pointer;"><i class="fa fa-circle-o text-info  mr-2"></i>
+									<c:choose>
+										<c:when test="${param.status eq 0 }">
+											<button type="button" class="btn mb-1 btn-outline-primary btn-sm">판매중</button>
+										</c:when>
+										<c:otherwise>판매중</c:otherwise>
+									</c:choose>
+								</a>
+									&nbsp;|&nbsp;
+								<a href="admin_productList?status=1" style="cursor: pointer;"><i class="fa fa-close text-danger mr-2"></i>
+									<c:choose>
+										<c:when test="${param.status eq 1 }">
+											<button type="button" class="btn mb-1 btn-outline-danger btn-sm">판매중단</button>
+										</c:when>
+										<c:otherwise>판매중단</c:otherwise>
+									</c:choose>
+								</a>
+							</div>
 	                        <!-- 검색기능 Start -->
 	                        <form action="admin_productList" method="get">
                                 <div class="input-group mb-3" style="float: right; width: 250px;">
-                                    <input type="text" name="keyword" class="form-control">
+                                    <input type="text" name="keyword" class="form-control" list="depList">
+                                    <datalist id="depList">
+								        <option value="APPLE"></option>
+								        <option value="BOSE"></option>
+								        <option value="LG"></option>
+								        <option value="SAMSUNG"></option>
+								        <option value="SONY"></option>
+								        <option value="노트북"></option>
+								        <option value="스마트워치"></option>
+								        <option value="스마트폰"></option>
+								        <option value="이어폰"></option>
+								        <option value="태블릿"></option>
+								        <option value="헤드폰"></option>
+								    </datalist>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-dark" type="submit">Search</button>
                                     </div>
@@ -173,17 +219,20 @@
 		                                    	<td>
 		                                    		<input type="checkbox" name="deleteList" value="${product.product_idx}" style="outline: 1px solid #000000">
 		                                    	</td>
-	                                        	<td>
+	                                        	<td onclick="location.href='product_detail?product_idx=${product.product_idx }'" style="cursor: pointer;">
 	                                        		<img class="mr-3" src="resources/img/product/${product.image_real_file1}" width="80" height="80">
 	                                        	</td>
 		                                        <td>${product.product_model_num }</td>
 		                                        <td>${product.product_brand }</td>
 		                                        <td>${product.product_type }</td>
-		                                        <td>${product.product_name }</td>
-			                                    <form action="admin_productLeftCountModify" method="post">
+		                                        <td onclick="location.href='product_detail?product_idx=${product.product_idx }'" style="cursor: pointer;">
+		                                        	${product.product_name }
+		                                       	</td>
+			                                    <form action="admin_productLeftCountModify" method="post" onsubmit="return finalCheck();">
 			                                    <input type="hidden" name="product_idx" value="${product.product_idx }" />
 	                                            <input type="hidden" name="pageNum" value="${param.pageNum }" />
-			                                        <td>
+												<input type="hidden" name="status" value="${param.status }" />                                        
+													<td>
 			                                        	<input type="number" min="0" style="width: 50px" class="form-control form-control-sm" name="product_left_count" value="${product.product_left_count }">
 			                                        </td>
 			                                        <td>
@@ -201,10 +250,9 @@
 			                                        </td>
 			                                    </form>
 		                                        <td onclick="location.href='admin_productModifyForm?product_idx=${product.product_idx }&pageNum=${pageInfo.pageNum}'" style="cursor: pointer;">
-		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-														<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-														<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-													</svg>
+		                                        	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+												  		<path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+												  	</svg>
 		                                        </td>
 		                                    </tr>
 	                                    </c:forEach>
@@ -224,7 +272,7 @@
 										
 									<%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum - 1}">Previous</a>
+											<a class="page-link" href="admin_productList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum - 1}">Previous</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">
@@ -241,7 +289,7 @@
 											</c:when>
 											<c:otherwise>
 												<li class="page-item">
-													<a class="page-link" href="admin_productList?pageNum=${i }">${i }</a>
+													<a class="page-link" href="admin_productList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${i }">${i }</a>
 												</li>
 											</c:otherwise>
 										</c:choose>
@@ -249,7 +297,7 @@
 									
 									<%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>
 										<li class="page-item">
-											<a class="page-link" href="admin_productList?pageNum=${pageInfo.pageNum + 1}">Next</a>
+											<a class="page-link" href="admin_productList?keyword=${param.keyword }&searchType=${param.searchType }&status=${param.status }&pageNum=${pageInfo.pageNum + 1}">Next</a>
 										</li>
 									<%} else{ %>
 										<li class="page-item disabled">

@@ -46,6 +46,10 @@
 		padding: 10px 10px;
 		margin-top: 150px;
 	}
+	#home:hover, #myPage:hover {
+		background-color: #353535;
+		border-color: #353535;
+	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
@@ -61,13 +65,13 @@
       <article class="container">
 	
 	 	<div class="row justify-content-center">
-          <div class="col-md-10 col-lg-8">
-          	 <div style="margin-top: 150px; text-align: center;">
-	          	<h1>Order Complete!</h1>
+          <div class="col-md-10 col-lg-8" style="margin-top: 100px;">
+          	 <div align="center">
+	          	<img src="resources/img/product/orderComplete.png" style="max-width: 70%;">
 	         </div>
 	         <div align="center">
-		         <a href="" class="btn btn-primary" id="home">홈으로</a>&nbsp;&nbsp;&nbsp;
-	          	 <a href="order_complete" class="btn btn-primary" id="myPage">마이페이지</a>
+		         <a href="./" class="btn btn-primary" id="home" style="margin-top: 0px;">홈으로</a>&nbsp;&nbsp;&nbsp;
+	          	 <a href="mypage?member_idx=${sessionScope.sIdx }" class="btn btn-primary" id="myPage" style="margin-top: 0px;">마이페이지</a>
           	 </div>
           </div>
         </div>

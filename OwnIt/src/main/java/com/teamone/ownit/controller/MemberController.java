@@ -288,6 +288,9 @@ public class MemberController {
 				// Session 객체에 sNick 저장
 				session.setAttribute("sNick", se_member.getMember_nickname());
 				
+				// Session 객체에 sPhone 저장
+				session.setAttribute("sPhone", se_member.getMember_phone());
+				
 				// 아이디 저장 여부에 따라 쿠키 객체 저장 및 삭제
 				if(save_email != null) {
 					Cookie cookie = new Cookie("cookieId", member.getMember_id());
@@ -590,25 +593,9 @@ public class MemberController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 류혜지 - 500
 	
-	
-    // 아이디 찾기 실행
+    // 아이디 찾기
 	@GetMapping(value="member_findEmail")
 	public String findEmailPro(@RequestParam String member_phone, Model model) {
 		System.out.println(member_phone + ", " + member_phone);
@@ -619,8 +606,28 @@ public class MemberController {
 		return "member/member_findEmail";
 	}
 	
-	
-	
+	// 카카오 로그인
+	@GetMapping(value="/kakaoLogin")
+	public String kakaoLogin(HttpSession session, @RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+		
+		String access_Token = service.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+		
+		MemberVO userInfo = service.getUserInfo(access_Token);
+		
+		System.out.println("###access_Token#### : " + access_Token);
+		// System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		// System.out.println("###email#### : " + userInfo.get("email"));
+		
+		// session.invalidate();
+		session.setAttribute("sNick", userInfo.getMember_nickname());
+		session.setAttribute("sIdx", userInfo.getMember_idx());
+		session.setAttribute("sId", userInfo.getMember_id());
+		session.setAttribute("sPhone", userInfo.getMember_phone());
+		
+		return "redirect:/";
+    	}	
 	
 	
 	

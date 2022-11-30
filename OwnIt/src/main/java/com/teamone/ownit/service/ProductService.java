@@ -76,6 +76,9 @@ public class ProductService {
 		return mapper.selectCartCount(product_idx);
 	}
 
+	public List<ProductVO> getListToMain() {
+		return mapper.getListToMain();
+	}
 
 
 
@@ -115,9 +118,6 @@ public class ProductService {
 
 
 
-
-	
-	
 	
 	
 	
@@ -519,6 +519,25 @@ public class ProductService {
 		return mapper.selectStyleCount(review_idx);
 	}
 
+	public List<Integer> getLikeMemberList(int review_idx) {
+		return mapper.getLikeMemberList(review_idx);
+	}
+
+	public void deleteReviewLike(int member_idx, int review_idx) {
+		mapper.deleteReviewLike(member_idx,review_idx);
+	}
+
+	public void insertReviewLike(int member_idx, int review_idx) {
+		mapper.insertReviewLike(member_idx,review_idx);
+	}
+
+	// 관심상품에 존재유무(혜지)
+	public int isContainedInWish(int member_idx, int product_idx) {
+		return mapper.isContainedInWish(member_idx, product_idx);
+	}
+
+	
+
 
 
 	
@@ -546,24 +565,6 @@ public class ProductService {
 	
 
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

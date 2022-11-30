@@ -36,7 +36,7 @@
 	<!-- 프로필 정보 불러오기	 -->
 	<select id="selectProfile" resultType="com.teamone.ownit.vo.MypageVO">
 		SELECT 
-			i.image_real_file1, m.member_id, m.member_nickname
+			i.image_real_file1, m.member_id, m.member_idx, m.member_nickname, m.member_phone
 				FROM member m
 					LEFT JOIN image i
 						ON m.member_idx = i.member_idx
@@ -56,10 +56,11 @@
 	<!-- 프로필 정보 수정하기(닉네임)	 -->		
     <update id="updateNickname">
 	    UPDATE member
-	      SET
-	        member_nickname = #{member_nickname}
-	      WHERE
-	        member_idx = #{member_idx}
+	    	SET
+					member_nickname = #{member_nickname},
+					member_phone = #{member_phone}
+	   		WHERE
+	      	member_idx = #{member_idx}
     </update>		
 	
 	<!-- 마이페이지 메인 - 프로필 -->	
@@ -194,6 +195,25 @@
 			WHERE w.member_idx=#{member_idx}
 	</select>
 	
+	<!-- 위시리스트에 존재하는지 확인 -->	 
+	<select id="isContainedInWish" resultType="int">
+		SELECT COUNT(*)
+			FROM wishlist 
+			WHERE 
+				member_idx = #{member_idx} 
+				AND 
+				product_idx = #{product_idx}
+	</select>
+	
+	<!-- 위시리스트 추가 -->	 
+	<insert id="addToWish">
+		INSERT INTO wishlist
+			VALUES(
+				#{member_idx}, 
+				#{product_idx}
+				)
+	</insert>		
+	
 	<!-- 장바구니에 존재하는지 확인 -->	 
 	<select id="isContainedInCart" resultType="int">
 		SELECT COUNT(*)
@@ -233,6 +253,7 @@
 					LEFT JOIN member m
 						ON a.member_idx = m.member_idx
 				WHERE m.member_idx=#{member_idx}
+				ORDER BY a.address_gb
 	</select>
 
 	<!-- 주소록 갯수 조회 -->
@@ -244,6 +265,13 @@
 
 	<!-- 주소록 추가 -->
 	<insert id="insertAddress">
+		<selectKey keyProperty="isMain" resultType="Integer" order="BEFORE">
+			SELECT COUNT(address_gb) FROM address
+				WHERE
+				member_idx = #{member_idx}
+				AND
+				address_gb = 0
+		</selectKey>
 		insert into address
 			values(
 				null,
@@ -251,7 +279,19 @@
 				#{address.address_zipcode},
 				#{address.address1},
 				#{address.address2},
-				'1',
+				<if test="addressCount == 0">
+					'0',
+				</if>
+				<if test="addressCount > 0">
+					<choose>
+						<when test="isMain == 0">
+							'0',
+						</when>
+						<when test="isMain > 0">
+							'1',
+						</when>
+					</choose>
+				</if>
 				#{address.address_nickname},
 				#{address.address_recipient}
 				)
@@ -297,10 +337,6 @@
 			WHERE 
 				address_idx = #{address_idx}
 	</delete>
-
-
-
-
 
 
 

@@ -11,7 +11,9 @@ import com.teamone.ownit.vo.Style_like_listVO;
 
 public interface ReviewMapper {
 
-	List<ReviewListVO> selectReviewList(int member_idx);
+	List<ReviewListVO> selectReviewList(
+			@Param("startRow") int startRow, @Param("listLimit") int listLimit, 
+			@Param("member_idx") int member_idx, @Param("keyword") String keyword);
 
 	ReviewListVO selectReview(int review_idx);
 
@@ -40,6 +42,8 @@ public interface ReviewMapper {
 	void updateReplycount(int review_idx);
 	
 	int insertReply(ReplyVO reply);
+	
+	int insertReplies(ReplyVO reply);
 
 	int selectReplyCount(int review_idx);
 
@@ -56,6 +60,8 @@ public interface ReviewMapper {
 	void insertLike(Style_like_listVO likeVO);
 
 	void updateOrderGb(int order_buy_idx);
+
+	
 
 	
 

@@ -84,23 +84,43 @@
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span id="span1">
-	          					진행상황
-	          				</span>
+	          				<c:choose>
+          						<c:when test="${orderSell.order_sell_gb eq 3 }">
+          							<span id="span1" style="color: red;">
+			          					판매 반려
+			          				</span>
+          						</c:when>
+          						<c:otherwise>
+			          				<span id="span1">
+			          					진행상황
+			          				</span>
+          						</c:otherwise>
+    						</c:choose>
 	          				<div>
-	          				<% Order_sellVO orderSell = (Order_sellVO)request.getAttribute("orderSell"); %>
-	          					<%	
-	          						int progressVal = 20;
-	          						String gb = orderSell.getOrder_sell_gb(); 
-	          						if(gb.equals("1")) progressVal = 50;
-	          						if(gb.equals("2")) progressVal = 100;
-	          						%>
-		          				<progress id="barr" value="<%=progressVal %>" max="100"></progress>
-		          				<div style="text-align: center;">
-			          					   <a style="float: left;">① 검수대기중</a> 
-			          					   <a>② 검수중</a> 
-			          					   <a style="float: right">③ 검수완료</a>
-			          			</div>
+	          					<c:choose>
+	          						<c:when test="${orderSell.order_sell_gb eq 0 }">
+	          						<progress id="barr" value="20" max="100" ></progress>
+	          						</c:when>
+	          						<c:when test="${orderSell.order_sell_gb eq 1 }">
+	          						<progress id="barr" value="52" max="100" ></progress>
+	          						</c:when>
+	          						<c:when test="${orderSell.order_sell_gb eq 2 }">
+	          						<progress id="barr" value="100" max="100" ></progress>
+	          						</c:when>
+	          						<c:when test="${orderSell.order_sell_gb eq 3 }">
+	          						<progress id="barr" value="0" max="100"></progress>
+	          						<div style="text-align: center;">
+			          					   <a style="float: left; color: red;">반려 사유 : 우측하단 관리자 채팅을 통해 문의 부탁드립니다.</a> 
+				          			</div>
+	          						</c:when>
+	          					</c:choose>
+		          					<c:if test="${orderSell.order_sell_gb ne 3 }">
+				          				<div style="text-align: center; color: black;">
+					          					   <a style="float: left;">① 검수대기중</a> 
+					          					   <a>② 검수중</a> 
+					          					   <a style="float: right">③ 검수완료</a>
+					          			</div>
+		          					</c:if>
 	          				</div>
 	          			</th>
 	          		</tr>
@@ -162,6 +182,7 @@
 	          				</span>
 	          				<span id="span1" style="float: right; font-size: 15px;">
 	          					<%
+	          					   Order_sellVO orderSell = (Order_sellVO)request.getAttribute("orderSell");
 	          					   SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 	          					   Date date = sdf.parse(orderSell.getOrder_sell_date());
 		          				   Calendar cal = Calendar.getInstance();
@@ -177,7 +198,7 @@
 		          	<a href="product_list" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		SHOP 바로가기
 		          	</a>
-		          	<a href="" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
+		          	<a href="mypage_sell?member_idx=${orderSell.member_idx }" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 		          		판매 목록보기
 		          	</a>
 	          	</div>

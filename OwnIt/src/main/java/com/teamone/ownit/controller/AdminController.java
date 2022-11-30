@@ -1,6 +1,6 @@
 package com.teamone.ownit.controller;
 
-import java.io.File; 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,7 +12,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
@@ -26,7 +32,24 @@ public class AdminController {
 	
 	// 관리자 메인으로 이동
 	@GetMapping(value = "admin")
-	public String admin() {
+	public String admin(Model model) {
+		
+		// Main - 거래
+		int salesCount = service.getSalesCount();
+		
+		// Main - 매출액
+		String salesMoney = service.getSalesMoeny() + "";
+		
+		// Main - 회원
+		int memberCount = service.getMemberCount();
+		
+		// Main - 리뷰
+		int reviewCount = service.getReviewCount();
+		
+		model.addAttribute("salesCount", salesCount);
+		model.addAttribute("salesMoney", salesMoney);
+		model.addAttribute("memberCount", memberCount);
+		model.addAttribute("reviewCount", reviewCount);
 		return "admin/admin_main";
 	}
 	
@@ -35,7 +58,9 @@ public class AdminController {
 	public String admin_productListAll(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status,
+			Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -50,11 +75,11 @@ public class AdminController {
 //		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
-		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword);
+		List<AdminProductVO> productList = service.getProductList(startRow, listLimit, searchType, keyword, status);
 		
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 상품 목록 갯수 조회
-		int listCount = service.getProductListCount(searchType, keyword);
+		int listCount = service.getProductListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행
 		// 전체 페이지 수 계산
@@ -161,12 +186,12 @@ public class AdminController {
 			
 			return "redirect:/admin_productList";
 		} else {
-			return "";
+			model.addAttribute("msg", "상품 등록 실패!");
+			return "notice/fail_back";
 		}
 	}
 	
-	
-	// Product 수정 폼으로 이동
+	// Product Modify 폼으로 이동
 	@GetMapping(value = "admin_productModifyForm")
 	public String admin_productModifyForm(@RequestParam int product_idx, Model model) {
 		AdminProductVO product = service.getProduct(product_idx);
@@ -174,7 +199,6 @@ public class AdminController {
 		
 		return "admin/admin_productModify";
 	}
-	
 	
 	// Product Modify 수정 작업 수행
 	@PostMapping(value = "admin_productModify")
@@ -281,10 +305,11 @@ public class AdminController {
 					e.printStackTrace();
 				}
 			}
+			return "redirect:/admin_productList?pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상품 수정 실패!");
+			return "notice/fail_back";
 		}
-		
-		
-		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
 	
@@ -295,7 +320,6 @@ public class AdminController {
 		System.out.println("삭제할 상품번호 목록 : " + deleteList);
         int[] deleteNum = Stream.of(deleteList.split(",")).mapToInt(Integer::parseInt).toArray();
 		
-        
 		for(int product_idx : deleteNum) {
 			String realFiles = service.getRealFiles(product_idx);
 			
@@ -312,20 +336,22 @@ public class AdminController {
 					File f = new File(saveDir, realFileList[i]);	
 					if(f.exists())  {f.delete();}
 				}
+				
 			} else {
-				System.out.println(product_idx + "번 삭제 실패!");
+				model.addAttribute("msg", "상품 삭제 실패!");
+				return "notice/fail_back";
 			}
 		}
 		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
-	
 	
 	// Order - BuyList(구매목록) 조회
 	@GetMapping(value = "admin_productBuyList")
 	public String admin_productBuyList(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status, Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -337,13 +363,12 @@ public class AdminController {
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
-//		int startRow = 1;
 
 		// Service 객체의 getProductList() 메서드를 호출하여 게시물 목록 조회
-		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword);
+		List<AdminOrderVO> buyList = service.getBuyList(startRow, listLimit, searchType, keyword, status);
 		// -------------------------------------------
 		// Service 객체의 getProductListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
-		int listCount = service.getBuyListCount(searchType, keyword);
+		int listCount = service.getBuyListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
@@ -354,24 +379,37 @@ public class AdminController {
 		
 		// 페이징 처리 정보를 저장하는 PageInfo 클래스 인스턴스 생성 및 데이터 저장
 		PageInfo pageInfo = new PageInfo(pageNum, listLimit, listCount, pageListLimit, maxPage, startPage, endPage);
-//		System.out.println(pageInfo);
 		//----------------------------------------------------------------------------------
-		List<AdminOrderGroup> orderGroup = service.getOneOrder(startRow, listLimit, searchType, keyword);
-		System.out.println(orderGroup);
-		// --------------------------------------------------------------------------------
 		model.addAttribute("buyList", buyList);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("orderGroup", orderGroup);
 		
 		return "admin/admin_productBuyList";
 	}
+	
+	
+	// ProductBuy 구매목록 상세조회
+	@GetMapping(value = "admin_productBuyDetail")
+	public String admin_productBuyDetail(@RequestParam int order_group_idx, Model model, HttpSession session) {
+		
+		System.out.println(order_group_idx);
+		
+		List<AdminOrderVO> buyList = service.getProductBuyDetail(order_group_idx);
+		List<AdminOrderVO> memberInfo = service.getMemberInfo(order_group_idx);
+		
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		return "admin/admin_productBuyDetail";
+	}
+	
 
 	// Order - SellList(판매목록) 조회
 	@GetMapping(value = "admin_productSellList")
 	public String admin_productSellList(
 			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@RequestParam(defaultValue = "") String status, Model model) {
 		
 		System.out.println("searchType : " + searchType);
 		System.out.println("keyword : " + keyword);
@@ -385,11 +423,11 @@ public class AdminController {
 		int startRow = (pageNum - 1) * listLimit;
 
 		// Service 객체의 getSellList() 메서드를 호출하여 목록 조회
-		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword);
+		List<AdminOrderVO> sellList = service.getSellList(startRow, listLimit, searchType, keyword, status);
 		
 		// -------------------------------------------
 		// Service 객체의 getSellListCount() 메서드를 호출하여 전체 게시물 목록 갯수 조회
-		int listCount = service.getSellListCount(searchType, keyword);
+		int listCount = service.getSellListCount(searchType, keyword, status);
 		
 		// 페이지 계산 작업 수행---------------------------------------------------------------
 		int maxPage = (int)Math.ceil((double)listCount / listLimit);
@@ -409,55 +447,130 @@ public class AdminController {
 		return "admin/admin_productSellList";
 	}	
 	
+	
 	// Order_Buy 상태 변경 (order_buy_gb)
 	@PostMapping(value = "admin_orderBuyModify")
-	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_orderBuyModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "")String status, Model model) {
 		
 		int updateCount = service.updateOrderBuy(adminOrder);
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productBuyList?pageNum=" + pageNum;
+			return "redirect:/admin_productBuyList?status=" + adminOrder.getOrder_buy_gb() + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상태 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";
 	}
 	
 	// Order_Sell 상태 변경 (order_sell_gb) + product_left_count
 	@PostMapping(value = "admin_orderSellModify")
-	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
+//		String page = "";
+//		
+//		switch (adminOrder.getOrder_sell_gb()) {
+//		case "0": page += "0"; break;
+//		case "1": page += "1"; break;
+//		case "2": page += "2"; break;
+//		case "3": page += ""; break;
+//		default:
+//			break;
+//		}
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productSellList?pageNum=" + pageNum;
+			return "redirect:/admin_productSellList?status=" + adminOrder.getOrder_sell_gb() + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "상태 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";
 	}
-	
+
 	// ProductList 재고변경
 	@PostMapping(value = "admin_productLeftCountModify")
-	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String admin_productLeftCountModify(@ModelAttribute ProductVO product, @RequestParam(defaultValue = "1") int pageNum, Model model, @RequestParam(defaultValue = "") String status) {
 		
 		int updateCount = service.updateProductLeftCount(product);
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productList?pageNum=" + pageNum;
+			return "redirect:/admin_productList?status=" + status + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "재고 변경 실패!");
+			return "notice/fail_back";
 		}
 		
-		return "";
 		
 	}
 	
+	// 제품 등록폼 - 상품명 중복확인
+	@RequestMapping("/checkProductName")
+	@ResponseBody
+	public Map<Object, Object> checkProductName(@RequestBody String productName) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkProductName(productName);
+		map.put("cnt", count);
+		
+		return map;
+	}
+
+	// 제품 등록폼 - 제품 번호 중복확인
+	@RequestMapping("/checkModelNum")
+	@ResponseBody
+	public Map<Object, Object> checkModelNum(@RequestBody String modelNum) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkModelNum(modelNum);
+		map.put("cnt", count);
+		
+		return map;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
 	
 
-
-	
-
-
 	
 	
 	
@@ -499,7 +612,92 @@ public class AdminController {
 	
 	
 	
-	// 정채연 - 500
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정채연 - 700
 	@GetMapping(value = "/admin_memberList")
 	public String memberList(Model model,
 			@RequestParam(defaultValue = "all") String searchType,

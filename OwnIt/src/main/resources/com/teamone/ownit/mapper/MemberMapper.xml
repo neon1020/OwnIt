@@ -314,35 +314,41 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- 류혜지 -->
-	<!-- 이메일찾기 -->
+	
+	<!-- 아이디 찾기 -->
 	<select id="findEmail" resultType="com.teamone.ownit.vo.MemberVO">
 		SELECT * FROM member
 			WHERE 
 				member_phone=#{member_phone}
 	</select>
+	
+	<!-- 카카오 가입 정보 찾기 -->
+	<select id="findkakao" parameterType="java.util.HashMap" resultType="com.teamone.ownit.vo.MemberVO">
+		select * from 
+		member 
+		where 
+		member_nickname=#{nickname} 
+		and 
+		member_id=#{email}
+	</select>
+
+	<!-- 카카오 가입 정보 저장 -->
+	<insert id="kakaoinsert" parameterType="java.util.HashMap">
+	INSERT INTO member
+		VALUES (
+			null,
+			#{email},
+			'1234',
+			#{nickname},
+			#{nickname},
+			'010-0000-0000',
+			'profile_default.png',
+			DATE_FORMAT(NOW(), '%y-%m-%d'),
+			'1',
+			'1'
+		)
+	</insert>
 
 
 
