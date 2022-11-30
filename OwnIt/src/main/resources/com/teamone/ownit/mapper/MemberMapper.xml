@@ -31,6 +31,23 @@
 	)
 </insert>
 
+<!-- 네이버 회원가입 : 회원가입 작업 수행 (member 테이블) -->
+<insert id="insertNaverMember">
+	INSERT INTO member
+	VALUES (
+		null,
+		#{member_id},
+		'1234',
+		#{member_name},
+		#{member_nickname},
+		#{member_phone},
+		'profile_default.png',
+		DATE_FORMAT(NOW(), '%y-%m-%d'),
+		'1',
+		'1'
+	)
+</insert>
+
 <!-- 회원가입 : 회원가입 작업 수행 (address 테이블) -->
 <insert id="insertAddress">
 	<selectKey keyProperty="se_member_idx" resultType="Integer" order="BEFORE">

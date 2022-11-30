@@ -105,7 +105,10 @@ public class MemberService {
 		return mapper.updatePasswd(member_id, secureNewPassword);
 	}
 	
-	
+	public int joinNaverMember(MemberVO member) {
+		System.out.println("MemberService - joinNaverMember()");
+		return mapper.insertNaverMember(member);
+	}
 	
 	
 	
@@ -307,6 +310,8 @@ public class MemberService {
 		public MemberVO findEmail(String member_phone) {
 			return mapper.findEmail(member_phone);
 		}
+
+		
 
 		
 

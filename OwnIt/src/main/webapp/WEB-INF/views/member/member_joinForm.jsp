@@ -43,7 +43,7 @@
 	    					$('#emailResult').html("이미 사용중인 이메일입니다.");
 	    					$('#emailResult').css("color", "orange");
 	    					$('#email').focus();
-	    					isDuplicateEmail = false;
+	    					isDuplicateEmail = true;
 	    				} else {
 	    					if(!emailRegex.exec(email)) {
 	    						$('#emailResult').html("이메일 형식을 확인해주세요.");
@@ -104,7 +104,7 @@
 	    					$('#nicknameResult').html("이미 사용중인 닉네임입니다.");
 	    					$('#nicknameResult').css("color", "orange");
 	    					$('#nickname').focus();
-	    					isDuplicateNickname = false;
+	    					isDuplicateNickname = true;
 	    				} else {
 	    					if(!nicknameRegex.exec(nickname)) {
 	    						$('#nicknameResult').html("2 ~ 12 글자 한글, 영문, 숫자만 입력 가능합니다.");
