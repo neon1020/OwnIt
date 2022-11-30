@@ -120,8 +120,8 @@ function checkForm(){
 	
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
-          	<div style="margin-top: 150px; width: ">
-	          	<h3 align="center" style="color: #6c757d;">주문확인서</h3>
+          	<div style="margin-top: 150px;">
+	          	<h3 align="center" style="color: black; font-family: 맑은고딕;">주문확인서</h3><br>
 	          	<table class="table">
 	          		<tr>
 	          		<c:forEach var="product" items="${productList }" begin="0" end="0">
@@ -131,7 +131,7 @@ function checkForm(){
 		          			 ${product.product_name }<br>
 		          			 <span style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
 	          			 </th>
-	          			 <td><div style="margin:0 auto; padding-top: 35px;">외 ${cnt } 상품</div></td>
+	          			 <td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt } 상품</div></td>
 	          		</c:forEach>
 	          		</tr>
 	          		<tr>
