@@ -11,7 +11,16 @@
                         FROM style_like_list s
                         WHERE member_idx = #{member_idx}) a
           ON r.review_idx = a.review_idx
-          ORDER BY review_date DESC
+          GROUP BY r.review_idx
+          <choose>
+              <when test="keyword.equals('new')">
+                ORDER BY review_date DESC
+              </when>
+              <when test="keyword.equals('pop')">
+                ORDER BY likeCount DESC
+              </when>
+          </choose>
+          LIMIT #{startRow}, #{listLimit}
     </select>
     
     <select id="selectReview" resultType="com.teamone.ownit.vo.ReviewListVO">
@@ -26,16 +35,19 @@
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file1 IS NOT NULL
             UNION ALL 
         SELECT review_idx, image_real_file2 as review_image1
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file2 IS NOT NULL
             UNION ALL
         SELECT review_idx, image_real_file3 as review_image1
             FROM image
             WHERE image_board_type = 'review'
               AND review_idx = #{review_idx}
+              AND image_real_file3 IS NOT NULL
     </select>
         
     <select id="selectReply" resultType="com.teamone.ownit.vo.ReplyVO">
@@ -48,7 +60,8 @@
           WHERE 
             r.review_idx = #{review_idx}
           ORDER BY 
-            r.reply_re_ref DESC
+            r.reply_re_ref DESC,
+            r.reply_re_seq ASC
     </select>
     
     <select id="selectProduct" resultType="com.teamone.ownit.vo.ReviewListVO">
@@ -107,7 +120,7 @@
     
     <select id="selectProfile" resultType="com.teamone.ownit.vo.ReviewListVO">
          SELECT DISTINCT member_nickname, member_image
-          FROM reviewList
+          FROM member
           WHERE
             member_idx = #{member_idx}
     </select>
@@ -162,8 +175,8 @@
     </update>
     
     <insert id="insertReply">
-      <selectKey keyProperty="reply_re_ref" resultType="integer" order="BEFORE">
-        SELECT MAX(reply_re_ref) FROM reply
+      <selectKey keyProperty="reply_idx" resultType="integer" order="BEFORE">
+        SELECT MAX(reply_idx) FROM reply
       </selectKey>
         INSERT 
           INTO reply
@@ -171,10 +184,31 @@
             #{review_idx},
             #{member_idx},
             #{reply_content},
-            #{reply_re_ref} + 1,
+            #{reply_idx} + 1,
             0,
             0,
-            DATE_FORMAT(now(), '%y-%m-%d %H:%i')
+            DATE_FORMAT(now(), '%y-%m-%d %H:%i'),
+            null,
+            #{reply_idx} + 1
+            )
+    </insert>
+    
+    <insert id="insertReplies">
+      <selectKey keyProperty="reply_idx" resultType="integer" order="BEFORE">
+        SELECT MAX(reply_idx) FROM reply
+      </selectKey>
+        INSERT 
+          INTO reply
+          VALUES (
+            #{review_idx},
+            #{member_idx},
+            #{reply_content},
+            #{reply_re_ref},
+            #{reply_re_lev} + 1,
+            #{reply_re_seq} + 1,
+            DATE_FORMAT(now(), '%y-%m-%d %H:%i'),
+            null,
+            ${reply_idx} + 1
             )
     </insert>
     
