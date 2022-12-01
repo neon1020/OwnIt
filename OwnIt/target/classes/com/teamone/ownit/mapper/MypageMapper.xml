@@ -77,7 +77,7 @@
 	<select id="selectMainOrder" resultType="com.teamone.ownit.vo.MypageMainVO">
 		SELECT 
 			m.member_idx, i.image_real_file1, p.product_idx, p.product_name, p.product_buy_price, 
-			ob.order_buy_idx, ob.order_buy_date, ob.order_buy_gb
+			ob.order_buy_idx, date_format(ob.order_buy_date, '%y-%m-%d') order_buy_date, ob.order_buy_gb
 				FROM order_buy ob
 					LEFT JOIN image i
 						ON ob.product_idx = i.product_idx
@@ -95,7 +95,7 @@
 	<select id="selectMainSell" resultType="com.teamone.ownit.vo.MypageMainVO">	
 		SELECT 
 			m.member_idx, i.image_real_file1, p.product_idx, p.product_name, p.product_sell_price, 
-			os.order_sell_idx, os.order_sell_date, os.order_sell_gb
+			os.order_sell_idx, date_format(os.order_sell_date, '%y-%m-%d') order_sell_date, os.order_sell_gb
 				FROM order_sell os
 					LEFT JOIN image i
 						ON os.product_idx = i.product_idx
@@ -253,6 +253,7 @@
 					LEFT JOIN member m
 						ON a.member_idx = m.member_idx
 				WHERE m.member_idx=#{member_idx}
+				ORDER BY a.address_gb
 	</select>
 
 	<!-- 주소록 갯수 조회 -->
@@ -264,6 +265,13 @@
 
 	<!-- 주소록 추가 -->
 	<insert id="insertAddress">
+		<selectKey keyProperty="isMain" resultType="Integer" order="BEFORE">
+			SELECT COUNT(address_gb) FROM address
+				WHERE
+				member_idx = #{member_idx}
+				AND
+				address_gb = 0
+		</selectKey>
 		insert into address
 			values(
 				null,
@@ -271,7 +279,19 @@
 				#{address.address_zipcode},
 				#{address.address1},
 				#{address.address2},
-				'1',
+				<if test="addressCount == 0">
+					'0',
+				</if>
+				<if test="addressCount > 0">
+					<choose>
+						<when test="isMain == 0">
+							'0',
+						</when>
+						<when test="isMain > 0">
+							'1',
+						</when>
+					</choose>
+				</if>
 				#{address.address_nickname},
 				#{address.address_recipient}
 				)
