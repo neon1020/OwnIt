@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,17 +122,24 @@ function checkForm(){
 	 	<div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
           	<div style="margin-top: 150px;">
-	          	<h3 align="center" style="color: black; font-family: 맑은고딕;">주문확인서</h3><br>
+	          	<h3 align="center" style="color: black; font-family: 맑은고딕;"><mark>주문확인서</mark></h3><br>
 	          	<table class="table">
 	          		<tr>
 	          		<c:forEach var="product" items="${productList }" begin="0" end="0">
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-		          			<span style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br>
-		          			 ${product.product_name }<br>
+		          			<span style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span>
+		          			<br>${product.product_name }<br>
 		          			 <span style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
 	          			 </th>
-	          			 <td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt } 상품</div></td>
+	          			 <c:choose>
+		          			<c:when test="${fn:length(productList) gt 1}">
+		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt-1 } 상품</div></td>
+		          			</c:when>
+		          			<c:otherwise>
+		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;"></div></td>
+		          			</c:otherwise>
+	          			</c:choose>
 	          		</c:forEach>
 	          		</tr>
 	          		<tr>
