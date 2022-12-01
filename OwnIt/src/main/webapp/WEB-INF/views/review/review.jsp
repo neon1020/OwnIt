@@ -27,20 +27,39 @@
     }
     var index = idx.id.split('_')[1];
     var sendData = {'review_idx' : index, 'heart' : that };
-    console.log(that);
     $.ajax({
       url     : 'heart',
       type    : 'POST',
       data    : sendData,
       success : function(data){
-        if(data == 1) {
-          $(".heart").prop("src", "resources/img/review/like.jpg");
-          location.reload();
-// 	        $("#divLike").load(location.href + " #divLike");
+    	  if(data == 1) {
+    		  debugger;
+    		  var a = $('#like_' + index);
+    		  var c = $('#lid_' + index);
+					a.removeClass('heart_None');
+					a.addClass('heart_Full');
+					a.attr('name', '1');
+					$('#like_' + index).html("<img src='resources/img/review/like2.jpg'>");
+					var cc = c.attr('class');
+					var ccc = cc.split('_')[1];
+					var d = parseInt(ccc) + 1;
+					$('.lclass_' + ccc).html(d);
+					c.removeClass('lclass_' + ccc);
+          c.addClass('lclass_' + d);
         } else {
-          $(".heart").prop("src", "resources/img/review/like_none.jpg");
-          location.reload();
-//           $("#divLike").load(location.href + " #divLike");
+        	debugger;
+					var a = $('#like_' + index);
+					var c = $('#lid_' + index);
+					a.removeClass('heart_Full');
+					a.addClass('heart_None');
+					a.attr('name', null);
+					$('#like_' + index).html("<img src='resources/img/review/like_none.jpg'>");
+					var cc = c.attr('class');
+          var ccc = cc.split('_')[1];
+          var d = parseInt(ccc) - 1;
+          $('.lclass_' + ccc).html(d);
+          c.removeClass('lclass_' + ccc);
+          c.addClass('lclass_' + d);
         }
       }
     });
@@ -77,7 +96,6 @@
         load_list();
       }
     });
-    
   });
   
   // 리뷰 목록 호출
@@ -94,18 +112,38 @@
     	  let result = "";
     	  for(var i = 0; i < reviewList.length; i++){
 	        let productPrice = reviewList[i].product_buy_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
-	       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
-	       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
-		       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
-		       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
-		       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
-		       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
-		       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
-		       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
-		       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
-		       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
-		       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
+	        result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+	        result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
+	        result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
+	        result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
+	        result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
+	        result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
+	        result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'>";
+	        if(reviewList[i].heartImg == 'like_none.jpg'){
+	          result += "<a class='heart_None' id='like_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
+	          result += "<img src='resources/img/review/" + reviewList[i].heartImg + "'></a>";
+	          result += "<span class='lclass_" + reviewList[i].likeCount + "' id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount;
+	        } else {
+	          result += "<a class='heart_Full' id='like_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
+	          result += "<img src='resources/img/review/" + reviewList[i].heartImg + "'></a>";
+	          result += "<span class='lclass_" + reviewList[i].likeCount + "' id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount;
+	        }
+	        result += "</span>&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
+	        result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
+	        result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
+	        result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
+// 	          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
+// 	       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
+// 	       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
+// 		       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
+// 		       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
+// 		       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
+// 		       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
+// 		       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
+// 		       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
+// 		       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
+// 		       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
+// 		       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
     	  }
     	  $("#reviewList").append(result);
       }
@@ -129,6 +167,7 @@
 	                display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;}
 	.like { width: 100%; float: left; margin: 10px 5px; }
 	.like img { margin: 0 5px 0 0; }
+	.likecount { width: 20px; height: 20px; }
 	/* 상단 정렬 메뉴 버튼 */
 	label { background-color: #FFF; border-color: #FFF; color: #101010; border-radius: 1em; 
           font-size: 20px; font-weight: 700; padding: 6px 14px; }
@@ -176,7 +215,8 @@
 			        <!-- ********************** 리뷰 내용 출력 *************************** -->
 			        <h3 class="card-content">${review.review_content }</h3>
 			        <div class="like" id="divLike">
-                <a class="heart"><img src="resources/img/review/${review.heartImg} " id="likeNone_${review.review_idx }" name="${review.num }" onclick="changeLike(this)"></a>${review.likeCount}&nbsp;&nbsp;
+                <a class="heart"><img src="resources/img/review/${review.heartImg} " class="lclass_${review.likeCount}" id="likeNone_${review.review_idx }" name="${review.num }" onclick="changeLike(this)"></a>
+                <span id="lcount_${review.review_idx }"></span>&nbsp;&nbsp;
                 <img src="resources/img/review/reply.jpg">${review.replyCount }
 			        </div>
 			        <!-- ********************** 상품 정보 출력 *************************** -->
