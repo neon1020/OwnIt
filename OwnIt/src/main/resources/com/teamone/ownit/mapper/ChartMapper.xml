@@ -77,7 +77,8 @@
 			GROUP BY 
 				date
             ORDER BY 
-            	date;
+            	date
+            LIMIT 1,9;
 	</select>
 	
 	<!-- 월별 매출액(판매) -->
@@ -90,7 +91,8 @@
 			GROUP BY 
 				date
             ORDER BY 
-            	date;
+            	date
+            LIMIT 1,9;
 	</select>
 
 	

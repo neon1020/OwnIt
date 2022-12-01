@@ -163,12 +163,12 @@
                                 	<!-- Start Col -->
                                 	<div class="row">
 			                            
-			                            <div class="col-md-6 col-lg-3">
+			                            <div class="col-md-8 col-lg-4">
 			                                <div class="card">
 			                                    <div class="card-body">
 			                                    	<label>Image<span class="text-danger"> *</span></label>
 			                                    	<div class="filebox clearfix">
-														<img src="resources/img/product/${product.image_real_file1 }" class="mr-3" id="preview" style="background-size: cover; width: 300px; height: 300px">		                                    	
+														<img src="resources/img/product/${product.image_real_file1 }" class="mr-3" id="preview" style="background-size: cover; width: 350px; height: 350px">		                                    	
 			                                    	</div>
 			                                    </div>
 			                                </div>
