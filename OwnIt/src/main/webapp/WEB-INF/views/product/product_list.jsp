@@ -5,6 +5,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 	<link rel="stylesheet" href="resources/css/vendor.css" />
@@ -87,7 +88,7 @@ select::-ms-expand {
 	width: 1.875rem;
 	height: 1.875rem;
 	text-align: right;
-	color: red; }
+	color: #f08080; }
 .product-like-full::before {
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
@@ -104,10 +105,10 @@ select::-ms-expand {
 	left: 0;
 	font-family: 'icomoon';
 	font-size: 0.875rem;
-	color: red; }
+	color: #f08080; }
 .product-like:hover::before {
 	content: "\ebde";
-	color: red; }
+	color: #f08080; }
 .product-action > a:hover {
 	cursor: pointer;
 }
@@ -248,23 +249,9 @@ function listByCategory() {
   <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
     <!-- 페이지 레벨 / breadcrumbs -->
-    <section class="breadcrumbs separator-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Listing</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 상품 목록 위 카테고리 관련 / listing -->
-    <section class="pt-6">
+    <section class="pt-6" style="margin-top: 100px;">
       <div class="container">
         <div class="row justify-content-end">
           <div class="col-lg-9">
@@ -325,7 +312,7 @@ function listByCategory() {
                     <div class="product-price">
                       <span><fmt:formatNumber value="${product.product_buy_price }" pattern="#,###"/>원</span>
                       <span class="product-action" id="${product.product_idx }">
-                        <a style="color: #101010;">장바구니에 추가</a>
+                        <a style="color: blue;">장바구니에 추가</a>
                       </span>
                     </div>
 	                  <c:choose>
@@ -340,7 +327,7 @@ function listByCategory() {
                    		  </span>
                    		</c:otherwise>
 	                  </c:choose>
-                    <a href="product_detail?product_idx=${product.product_idx }#review" class="style-icon" style="color: #101010; font-size: 0.85em;"><img src="resources/img/product/review_icon.png">Review</a>
+                    <a href="product_detail?product_idx=${product.product_idx }#review" class="style-icon" style="color: #101010; font-size: 0.85em;"><i class="bi bi-chat-left-text"></i> Review</a>
                   </div>
                 </div>
               </div>

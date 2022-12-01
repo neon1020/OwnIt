@@ -95,6 +95,12 @@
 		font-size: 20px;
 		color: black;
 	}
+	#emptySpan{
+		margin-left: 220px;
+		font: bold;
+		font-size: 20px;
+		color: skyblue;
+	}
 </style>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
@@ -137,14 +143,17 @@
 			
 	}
 	
-	function checkAll(){
-		if($(".checkAccount").text().length == 0){
+	function checkAccAdd(){
+		debugger;
+		var account = "${member.account_num }";
+		var address = "${member.address1 }";
+		if(account.length <= 0){
 		  alert("계좌를 추가해주세요!");
 		  $("#account").focus();
 		  return false;
 		}
-		if($(".checkAddress").text().length == 0){
-		  alert("주소를 입력해주세요!");
+		if(address.length <= 0){
+		  alert("주소를 추가해주세요!");
 		  $("#address2").focus();
 		  return false;
 		}
@@ -166,7 +175,7 @@
           	
           	
           	
-          	<form action="order_sellDetail" method="post" onsubmit="return checkAll()">
+          	<form action="order_sellDetail" method="post" onsubmit="return checkAccAdd()">
           		<input type="hidden" name="product_idx" value="${product.product_idx }">
           		<input type= "hidden" name="member_idx" value="${member.member_idx }">
           		<input type= "hidden" name="account_idx" value="${member.account_idx }">
@@ -197,23 +206,32 @@
 	          					+ 새 계좌 추가
 	          				</a>
 	          			</span><br>
+	          			<c:if test="${not empty member.account_num }">
           				<span id="sell_span2" style="float: right; font-size: 13px;">
 		          			<a id="address2" href="#" data-toggle="modal" data-target="#exampleModal-4" style="color: black; ">
 								변경
 							</a>
 		          		</span>
-		          		계좌별칭 : <span id="sell_span2" class="checkAccount">
-	          							${member.account_nickname}
-	          				  	   </span><br>
-	          			은행 : 	   <span id="sell_span2" class="checkAccount">
-	          							${member.account_bank}
-	          				   	   </span><br>
-	          			계좌번호 : 	   <span id="sell_span2">
-	          							${member.account_num }
-	          				   	   </span><br>
-	          			예금주 :   <span id="sell_span2">
-	          							${member.account_owner_name }
-	          					   </span>
+		          		</c:if>
+		          		<c:choose>
+		          			<c:when test="${empty member.account_num }">
+		          				<span id="emptySpan">계좌를 추가해주세요 !</span>
+		          			</c:when>
+		          			<c:otherwise>
+		        				계좌별칭 : <span id="sell_span2">
+			          							${member.account_nickname}
+			          				  	   </span><br>
+			          			은행 : 	   <span id="sell_span2" class="checkAccount">
+			          							${member.account_bank}
+			          				   	   </span><br>
+			          			계좌번호 : 	   <span id="sell_span2">
+			          							${member.account_num }
+			          				   	   </span><br>
+			          			예금주 :   <span id="sell_span2">
+			          							${member.account_owner_name }
+			          					   </span>
+		          			</c:otherwise>
+		          		</c:choose>
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -226,15 +244,24 @@
 									+ 새 주소 추가
 								</a>
 			          		</span><br>
+		          			<c:if test="${not empty member.address1 }">
 			          		<span id="sell_span2" style="float: right; font-size: 13px;">
 			          			<a id="address2" href="#" data-toggle="modal" data-target="#exampleModal-2" style="color: black; ">
 									변경
 								</a>
 			          		</span>
-				          		주소별칭 : <span id="sell_span2">${member.address_nickname }</span><br>
-			          			받는분 : <span id="sell_span2">${member.address_recipient }</span>	<br>
-			          			연락처 : <span id="sell_span2">${member.member_phone }</span><br>
-			          			반송주소 : <span id="sell_span2" class="checkAddress">${member.address1 } ${member.address2 }</span><br>
+			          		</c:if>
+			          		<c:choose>
+			          			<c:when test="${empty member.address1 }">
+			          				<span id="emptySpan">주소를 추가해주세요 !</span>
+			          			</c:when>
+			          			<c:otherwise>
+					          		주소별칭 : <span id="sell_span2">${member.address_nickname }</span><br>
+				          			받는분 : <span id="sell_span2">${member.address_recipient }</span>	<br>
+				          			연락처 : <span id="sell_span2">${member.member_phone }</span><br>
+				          			반송주소 : <span id="sell_span2" class="checkAddress">${member.address1 },${member.address2 }</span><br>
+			          			</c:otherwise>
+		          			</c:choose>
 	          			</th>
 	          		</tr>
 	          		<tr>
@@ -490,7 +517,7 @@
 	
 			<!--  주소 변경 버튼 클릭시 나오는 모달창 -->
 			<div class="modal fade" id="exampleModal-2" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document" style="width: 650px; max-width: 650px;">
+			  <div class="modal-dialog" role="document" style="max-width: 550px;">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <h5 class="modal-title" id="exampleModalLabel">주소록</h5>
@@ -509,7 +536,7 @@
 				          		<span id="sell_span2">${address.address_nickname }</span><br>
 			          			받는분 : <span id="sell_span2">${address.member_name }</span><br>
 			          			연락처 : <span id="sell_span2">${address.member_phone }</span><br>
-			          			반송주소 : <span id="sell_span2" class="checkAddress" style="font-size: 13px;">${address.address1 }, ${address.address2 }</span><br>
+			          			반송주소 : <span id="sell_span2" class="checkAddress" style="font-size: 15px;">${address.address1 }, ${address.address2 }</span><br>
 		          			</th>
 		          		</tr>      	
 			      	</c:forEach>

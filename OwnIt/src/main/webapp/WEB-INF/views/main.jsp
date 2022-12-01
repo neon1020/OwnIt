@@ -205,7 +205,7 @@ $(function() {
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <h2>Most Popular</h2>
+            <img src="resources/img/mostPopular.png">
           </div>
         </div>
 		<!-- 서성민 - 인기상품 4개  -->
@@ -213,17 +213,17 @@ $(function() {
           <div class="col-6 col-lg-3">
             <div class="product">
               <figure class="product-image">
-                <a href="#!">
+                <a href="">
                   <img src="<%=request.getContextPath() %>/resources/img/demo/product-1.jpg" alt="Image">
                   <img src="<%=request.getContextPath() %>/resources/img/demo/product-1-2.jpg" alt="Image">
                 </a>
               </figure>
               <div class="product-meta">
-                <h3 class="product-title"><a href="#!">Fawn Wool / Natural Mammoth Chair </a></h3>
+                <h3 class="product-title"><a href="">Fawn Wool / Natural Mammoth Chair </a></h3>
                 <div class="product-price">
                   <span>$2,268</span>
                   <span class="product-action">
-                    <a href="#!">Add to cart</a>
+                    <a href="">Add to cart</a>
                   </span>
                 </div>
               </div>
@@ -237,7 +237,7 @@ $(function() {
     <section class="pt-0" style="margin-bottom: 500px;">
       <div class="container">
         <div class="row">
-          <span class="title">Style Picks!</span><div class="hr1"><hr></div>
+          <img src="resources/img/stylePicks.png">
         </div>
         <div class="row masonry gutter-3" id="reviewList" style="margin-top: 50px;">
 	        <div class="col-md-6 col-lg-4">
