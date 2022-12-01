@@ -92,7 +92,7 @@
                   <div class="tab-pane fade show active" id="sidebar-1-4">
                     <div class="row">
                       <div class="col">
-                        <h3 class="mb-0">Accounts</h3>
+                        <h3 class="mb-0">판매 정산 계좌</h3>
                         <span class="eyebrow">${accountCount }개의 계좌가 있습니다.</span>
                       </div>
                     </div>
@@ -105,7 +105,7 @@
                           <div class="card-header card-header-options">
                             <div class="row align-items-center">
                               <div class="col">
-                                <h3 class="card-title"><c:if test="${account.account_gb == '0' }"><b style="color: #FF6666;">[Main]&nbsp;&nbsp;&nbsp;</b></c:if>${account.account_nickname }</h3>
+                                <h3 class="card-title"><c:if test="${account.account_gb == '0' }"><b style="color: #FF6666;">[기본]&nbsp;&nbsp;</b></c:if>${account.account_nickname }</h3>
                               </div>
                               <div class="col text-right">
                                 <div class="dropdown">
@@ -131,9 +131,9 @@
                           </div>
                           <div class="card-body w-75">
                             <h5 class="eyebrow text-muted">Account</h5>
-                            <p class="card-text"><b>${account.account_bank }</b> ${account.account_num }</p>
+                            <p class="card-text">${account.account_bank } ${account.account_num }</p>
                             <h5 class="eyebrow text-muted">Owner</h5>
-                            <p class="card-text"><b>${account.account_owner_name }</b></p>
+                            <p class="card-text">${account.account_owner_name }</p>
                           </div>
                         </div>
                       </div>
@@ -274,7 +274,7 @@
 					<input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
                     <div class="row">
                     	<div class="col">
-                    		<h3 class="mb-0">New Account</h3>
+                    		<h3 class="mb-0">새 계좌 추가</h3>
                     	</div>
                     </div>
                     <div class="row gutter-1">
