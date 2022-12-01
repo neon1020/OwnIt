@@ -104,10 +104,10 @@
 								        <div class="container-fluid">
 								          <div class="row gutter-0">
 								            <div class="col">
-								              <button type="submit" class="btn btn-block btn-dark btn-rounded" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
+								              <button type="submit" class="btn btn-block btn-dark" onclick="location.href='mypage_addCart?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
 								            </div>
 								            <div class="col">
-								              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
+								              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 								            </div>
 								          </div>
 								        </div>
@@ -133,10 +133,10 @@
 								        <div class="container-fluid">
 								          <div class="row gutter-0">
 								            <div class="col">
-								              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='deleteWishlist?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
+								              <button type="button" class="btn btn-block btn-dark" onclick="location.href='deleteWishlist?member_idx=${sessionScope.sIdx }&product_idx=${wishlist.product_idx}'">Yes</button>
 								            </div>
 								            <div class="col">
-								              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
+								              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 								            </div>
 								          </div>
 								        </div>
@@ -150,6 +150,7 @@
 					</div>       
           <!-- / content -->
 					<!-- 페이징 태그 START -->
+					<c:if test="${listCount > 0}">
 	        <div class="row" style="margin-left: 680px;">
 	          <div class="col">
 	            <nav class="d-inline-block">
@@ -167,6 +168,7 @@
 	            </nav>
 	          </div>
 	        </div>
+	        </c:if>
 					<!-- 페이징 태그 END -->			        
         </div>
       </div>

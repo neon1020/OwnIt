@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,9 +103,8 @@ $(document).ready(function() {
           		<input type="hidden" name="cbChecked" value="${cbChecked }">
 	          	<table class="table">
 	          		<tr>
-	          			<th style="font-size: 30px; font: bold; color: black;" colspan="2">
-		          			<span id="span1" style="color: red;">구매</span>
-		          			하시기 전에 꼭 확인하세요.
+	          			<th style="font-size: 30px; font: bold; color: black; font-family: monospace;" colspan="2">
+		          			<mark style="color: red; padding: 0em;">구매</mark>하시기 전에 꼭 확인하세요.
 	          			</th>
 	          		</tr>
 	          		
@@ -117,7 +117,14 @@ $(document).ready(function() {
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
 	          			</c:forEach>
-	          			<td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt } 상품</div></td>
+	          			<c:choose>
+		          			<c:when test="${fn:length(productList) gt 1}">
+		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt-1 } 상품</div></td>
+		          			</c:when>
+		          			<c:otherwise>
+		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;"></div></td>
+		          			</c:otherwise>
+	          			</c:choose>
 	          		</tr>
 	          		
 	          		<tr>

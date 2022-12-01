@@ -86,17 +86,9 @@
 	                        <div class="card card-data">
 	                          <div class="card-header card-header-options">
 	                            <div class="row align-items-center">
-	                              <div class="col" style="">
-	                                <h3 class="card-title">${address.address_nickname }</h3>
-	                                <c:choose>
-	                                	<c:when test="${address.address_gb == '0'}">
-	                                		<h5 style="color: gray; font-weight: bolder; font-size: x-small;">[대표 배송지]</h5>
-	                                	</c:when>
-	                                	<c:otherwise>
-	                                		<h5 style="color: gray; font-weight: bolder; font-size: x-small;">[기타 배송지]</h5>
-	                                	</c:otherwise>
-	                                </c:choose>
-	                              </div>
+                              <div class="col">
+                                <h3 class="card-title"><c:if test="${address.address_gb == '0' }"><b style="color: #FF6666;">[기본]&nbsp;&nbsp;</b></c:if>${address.address_nickname }</h3>
+                              </div>
 	                              <div class="col text-right">
 	                                <div class="dropdown">
 	                                  <button id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-lg btn-secondary btn-ico"><i class="icon-more-vertical"></i></button>
@@ -166,10 +158,10 @@
 												        <div class="container-fluid">
 												          <div class="row gutter-0">
 												            <div class="col">
-												              <button type="submit" class="btn btn-block btn-dark btn-rounded">Save</button>
+												              <button type="submit" class="btn btn-block btn-dark">Save</button>
 												            </div>
 												            <div class="col">
-												              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">Close</button>
+												              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">Close</button>
 												            </div>
 												          </div>
 												        </div>
@@ -196,10 +188,10 @@
 												        <div class="container-fluid">
 												          <div class="row gutter-0">
 												            <div class="col">
-												              <button type="button" class="btn btn-block btn-dark btn-rounded" onclick="location.href='deleteAddress?member_idx=${sessionScope.sIdx }&address_idx=${address.address_idx}'">Yes</button>
+												              <button type="button" class="btn btn-block btn-dark" onclick="location.href='deleteAddress?member_idx=${sessionScope.sIdx }&address_idx=${address.address_idx}'">Yes</button>
 												            </div>
 												            <div class="col">
-												              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
+												              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 												            </div>
 												          </div>
 												        </div>
@@ -228,10 +220,10 @@
 											        <div class="container-fluid">
 											          <div class="row gutter-0">
 											            <div class="col">
-										            	  <button type="submit" class="btn btn-block btn-dark btn-rounded">Yes</button>
+										            	  <button type="submit" class="btn btn-block btn-dark">Yes</button>
 											            </div>
 											            <div class="col">
-											              <button type="button" class="btn btn-block btn-outline-dark btn-rounded" data-dismiss="modal">No</button>
+											              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 											            </div>
 											          </div>
 											        </div>

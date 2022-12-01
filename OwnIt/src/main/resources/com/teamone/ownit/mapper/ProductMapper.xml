@@ -116,7 +116,7 @@
 		  FROM product p 
 		  INNER JOIN (SELECT product_idx, image_real_file1, image_real_file2 FROM image) i
 		    ON p.product_idx = i.product_idx
-		  ORDER BY my_wish DESC LIMIT 4;
+		  ORDER BY my_wish DESC LIMIT 8;
 	</select>
 
 
