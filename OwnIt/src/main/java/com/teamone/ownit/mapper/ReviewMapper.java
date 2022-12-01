@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
@@ -60,6 +61,8 @@ public interface ReviewMapper {
 	void insertLike(Style_like_listVO likeVO);
 
 	void updateOrderGb(int order_buy_idx);
+
+	ImageVO selectAllImage(int review_idx);
 
 	
 
