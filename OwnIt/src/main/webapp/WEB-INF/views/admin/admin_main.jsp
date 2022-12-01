@@ -259,17 +259,14 @@
 				</div>
            
         	
-        	
-        	
-        	
-        	<div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Line chart with area</h4>
-                        <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
-                    </div>
-                </div>
-            </div>
+<!-- 	        	<div class="col-lg-6"> -->
+<!-- 	                <div class="card"> -->
+<!-- 	                    <div class="card-body"> -->
+<!-- 	                        <h4 class="card-title">Line chart with area</h4> -->
+<!-- 	                        <div id="chart-with-area" class="ct-chart ct-golden-section"></div> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	            </div> -->
             <!-- #/ container -->
         <!--**********************************
             Content body end

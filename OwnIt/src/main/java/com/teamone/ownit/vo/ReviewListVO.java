@@ -20,7 +20,7 @@ public class ReviewListVO {
 	
 	private String review_content;
 	private String review_date;
-	private int review_reply_count;
+	private int replyCount;
 	private int likeCount;
 	private String heartImg;
 	private int num;
@@ -29,8 +29,8 @@ public class ReviewListVO {
 
 	public ReviewListVO(int review_idx, int member_idx, int product_idx, String review_image1, String review_image2,
 			String review_image3, String member_image, String product_image, String member_id, String member_nickname,
-			String product_name, String product_buy_price, String review_content, String review_date,
-			int review_reply_count, int likeCount, String heartImg, int num) {
+			String product_name, String product_buy_price, String review_content, String review_date, int replyCount,
+			int likeCount, String heartImg, int num) {
 		super();
 		this.review_idx = review_idx;
 		this.member_idx = member_idx;
@@ -46,7 +46,7 @@ public class ReviewListVO {
 		this.product_buy_price = product_buy_price;
 		this.review_content = review_content;
 		this.review_date = review_date;
-		this.review_reply_count = review_reply_count;
+		this.replyCount = replyCount;
 		this.likeCount = likeCount;
 		this.heartImg = heartImg;
 		this.num = num;
@@ -164,14 +164,14 @@ public class ReviewListVO {
 		this.review_date = review_date;
 	}
 
-	public int getReview_reply_count() {
-		return review_reply_count;
+	public int getReplyCount() {
+		return replyCount;
 	}
 
-	public void setReview_reply_count(int review_reply_count) {
-		this.review_reply_count = review_reply_count;
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
-	
+
 	public int getLikeCount() {
 		return likeCount;
 	}
@@ -179,7 +179,7 @@ public class ReviewListVO {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	
+
 	public String getHeartImg() {
 		return heartImg;
 	}
@@ -187,7 +187,7 @@ public class ReviewListVO {
 	public void setHeartImg(String heartImg) {
 		this.heartImg = heartImg;
 	}
-	
+
 	public int getNum() {
 		return num;
 	}
@@ -203,10 +203,9 @@ public class ReviewListVO {
 				+ review_image3 + ", member_image=" + member_image + ", product_image=" + product_image + ", member_id="
 				+ member_id + ", member_nickname=" + member_nickname + ", product_name=" + product_name
 				+ ", product_buy_price=" + product_buy_price + ", review_content=" + review_content + ", review_date="
-				+ review_date + ", review_reply_count=" + review_reply_count + ", likeCount=" + likeCount
-				+ ", heartImg=" + heartImg + ", num=" + num + "]";
+				+ review_date + ", replyCount=" + replyCount + ", likeCount=" + likeCount + ", heartImg=" + heartImg
+				+ ", num=" + num + "]";
 	}
 
 	
-
 }

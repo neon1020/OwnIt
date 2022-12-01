@@ -102,7 +102,7 @@
 			        <h3 class="card-content">${myStyle.review_content }</h3>
 			        <div class="like" id="divLike">
 				        <a class="heart"><img src="resources/img/review/${myStyle.heartImg} " id="likeNone_${myStyle.review_idx }" name="${myStyle.num }" onclick="changeLike(this)"></a>${myStyle.likeCount}&nbsp;&nbsp;
-				        <img src="resources/img/review/reply.jpg">${myStyle.review_reply_count }
+				        <img src="resources/img/review/reply.jpg">${myStyle.replyCount }
 			        </div>
 			        <!-- ********************** 상품 정보 출력 *************************** -->
 			        <h4 class="card-title"><a href="product_detail?product_idx=${myStyle.product_idx }">
@@ -113,18 +113,6 @@
 			  </div>
 			</c:forEach>
 			</div>
-		  <div class="row">
-		    <div class="col">
-		      <nav class="d-inline-block">
-		        <ul class="pagination">
-		          <li class="page-item active"><a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a></li>
-		          <li class="page-item" aria-current="page"><a class="page-link" href="#!">2</a></li>
-		          <li class="page-item"><a class="page-link" href="#!">3</a></li>
-		          <li class="page-item"><a class="page-link" href="#!">4</a></li>
-		        </ul>
-		      </nav>
-		    </div>
-		  </div>
 		</div>
 	</section>
 

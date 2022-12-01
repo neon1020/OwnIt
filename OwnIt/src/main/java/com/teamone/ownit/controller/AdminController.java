@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.AdminService;
@@ -334,16 +337,12 @@ public class AdminController {
 					if(f.exists())  {f.delete();}
 				}
 				
-			return "redirect:/admin_productList?pageNum=" + pageNum;
-			
 			} else {
 				model.addAttribute("msg", "상품 삭제 실패!");
 				return "notice/fail_back";
 			}
 		}
-		model.addAttribute("msg", "상품 삭제 실패!");
-		return "notice/fail_back";
-		
+		return "redirect:/admin_productList?pageNum=" + pageNum;
 	}
 	
 	// Order - BuyList(구매목록) 조회
@@ -469,19 +468,19 @@ public class AdminController {
 	public String admin_orderSellModify(@ModelAttribute AdminOrderVO adminOrder, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String status, Model model) {
 		
 		int updateCount = service.updateOrderSell(adminOrder);
-		String page = "";
-		
-		switch (adminOrder.getOrder_sell_gb()) {
-		case "0": page += "0"; break;
-		case "1": page += "1"; break;
-		case "2": page += "2"; break;
-		case "3": page += ""; break;
-		default:
-			break;
-		}
+//		String page = "";
+//		
+//		switch (adminOrder.getOrder_sell_gb()) {
+//		case "0": page += "0"; break;
+//		case "1": page += "1"; break;
+//		case "2": page += "2"; break;
+//		case "3": page += ""; break;
+//		default:
+//			break;
+//		}
 		
 		if(updateCount > 0) {
-			return "redirect:/admin_productSellList?status=" + page + "&pageNum=" + pageNum;
+			return "redirect:/admin_productSellList?status=" + adminOrder.getOrder_sell_gb() + "&pageNum=" + pageNum;
 		} else {
 			model.addAttribute("msg", "상태 변경 실패!");
 			return "notice/fail_back";
@@ -505,12 +504,32 @@ public class AdminController {
 		
 	}
 	
+	// 제품 등록폼 - 상품명 중복확인
+	@RequestMapping("/checkProductName")
+	@ResponseBody
+	public Map<Object, Object> checkProductName(@RequestBody String productName) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkProductName(productName);
+		map.put("cnt", count);
+		
+		return map;
+	}
+
+	// 제품 등록폼 - 제품 번호 중복확인
+	@RequestMapping("/checkModelNum")
+	@ResponseBody
+	public Map<Object, Object> checkModelNum(@RequestBody String modelNum) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		int count = service.checkModelNum(modelNum);
+		map.put("cnt", count);
+		
+		return map;
+	}
 
 
 	
-
-
-	
 	
 	
 	
@@ -552,27 +571,6 @@ public class AdminController {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

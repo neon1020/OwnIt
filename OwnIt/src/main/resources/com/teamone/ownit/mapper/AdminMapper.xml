@@ -358,6 +358,9 @@
 					<when test='status.equals("2")'>
 						AND os.order_sell_gb = '2'
 					</when>
+					<when test='status.equals("3")'>
+						AND os.order_sell_gb = '3'
+					</when>
 				</choose>
 			</if>	
 			<if test="!keyword.equals('')">
@@ -410,6 +413,9 @@
 					</when>
 					<when test='status.equals("2")'>
 						AND os.order_sell_gb = '2'
+					</when>
+					<when test='status.equals("3")'>
+						AND os.order_sell_gb = '3'
 					</when>
 				</choose>
 			</if>	
@@ -520,76 +526,19 @@
 		    where review_date LIKE '22%';
 	</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 상품명 중복확인 -->
+	<select id="selectProductName" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM product 
+			WHERE product_name = #{product_name }
+	</select>
+	
+	<!-- 제품 번호 중복확인 -->
+	<select id="selectModelNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM product 
+			WHERE product_model_num = #{product_model_num }
+	</select>
 
 
 

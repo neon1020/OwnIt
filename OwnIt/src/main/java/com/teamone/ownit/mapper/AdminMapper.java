@@ -121,28 +121,20 @@ public interface AdminMapper {
 	// Main - 리뷰수
 	int selectReviewCount();
 
+	// 제품 등록폼 - 상품명 중복확인
+	int selectProductName(String productName);
+
+	// 제품 등록폼 - 제품 번호 중복확인
+	int selectModelNum(String modelNum);
 	
+
 	
 
 
 
-	
-
-	
 
 
 
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -314,6 +306,11 @@ public interface AdminMapper {
 	Integer selectMemberListCount2(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType, @Param("keyword") String keyword);
 
 	int deleteMember(int member_idx);
+
+
+	
+
+
 
 
 	
