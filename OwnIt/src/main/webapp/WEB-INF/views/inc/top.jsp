@@ -140,7 +140,7 @@ function delFromCart(item) {
 	              <ul class="navbar-nav mr-auto">
 	              
 	                <li class="nav-item"><a class="nav-link" href="noticeList">Customer Center</a></li>
-	                <li class="nav-item"><a class="nav-link" href="./">About</a></li>
+	                <li class="nav-item"><a class="nav-link" href="about_ownit">About</a></li>
 	<!--                 <li class="nav-item"> -->
 	<!--                   <a class="nav-link" href="#">Docs</a> -->
 	<!--                 </li> -->

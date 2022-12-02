@@ -27,20 +27,39 @@
     }
     var index = idx.id.split('_')[1];
     var sendData = {'review_idx' : index, 'heart' : that };
-    console.log(that);
     $.ajax({
       url     : 'heart',
       type    : 'POST',
       data    : sendData,
       success : function(data){
         if(data == 1) {
-          $(".heart").prop("src", "resources/img/review/like.jpg");
-          location.reload();
-//          $("#divLike").load(location.href + " #divLike");
+          debugger;
+          var a = $('#like_' + index);
+          var c = $('#lid_' + index);
+          a.removeClass('heart_None');
+          a.addClass('heart_Full');
+          a.attr('name', '1');
+          $('#like_' + index).html("<img src='resources/img/review/like2.jpg'>");
+          var cc = c.attr('class');
+          var ccc = cc.split('_')[1];
+          var d = parseInt(ccc) + 1;
+          $('.lclass_' + ccc).html(d);
+          c.removeClass('lclass_' + ccc);
+          c.addClass('lclass_' + d);
         } else {
-          $(".heart").prop("src", "resources/img/review/like_none.jpg");
-          location.reload();
-//           $("#divLike").load(location.href + " #divLike");
+          debugger;
+          var a = $('#like_' + index);
+          var c = $('#lid_' + index);
+          a.removeClass('heart_Full');
+          a.addClass('heart_None');
+          a.attr('name', null);
+          $('#like_' + index).html("<img src='resources/img/review/like_none.jpg'>");
+          var cc = c.attr('class');
+          var ccc = cc.split('_')[1];
+          var d = parseInt(ccc) - 1;
+          $('.lclass_' + ccc).html(d);
+          c.removeClass('lclass_' + ccc);
+          c.addClass('lclass_' + d);
         }
       }
     });
@@ -100,10 +119,21 @@
 			        <img src="resources/img/member/${myStyle.member_image }"><span class="eyebrow text-muted">${myStyle.member_nickname }</span></a>
 			        <!-- ********************** 리뷰 내용 출력 *************************** -->
 			        <h3 class="card-content">${myStyle.review_content }</h3>
-			        <div class="like" id="divLike">
-				        <a class="heart"><img src="resources/img/review/${myStyle.heartImg} " id="likeNone_${myStyle.review_idx }" name="${myStyle.num }" onclick="changeLike(this)"></a>${myStyle.likeCount}&nbsp;&nbsp;
-				        <img src="resources/img/review/reply.jpg">${myStyle.replyCount }
-			        </div>
+		          <div class="like" id="divLike">
+			        <c:choose>
+			          <c:when test="${myStyle.heartImg == 'like_none.jpg'}">
+					        <a class="heart_None" id="like_${myStyle.review_idx }" name="${myStyle.num}" onclick="changeLike(this)">
+					        <img src="resources/img/review/${myStyle.heartImg}"></a>
+	                <span class="lclass_${myStyle.likeCount }" id="lid_${myStyle.review_idx }">${myStyle.likeCount }</span>&nbsp;&nbsp;
+                </c:when>
+	              <c:otherwise>
+	                <a class="heart_Full" id="like_${myStyle.review_idx }" name="${myStyle.num}" onclick="changeLike(this)">
+	                <img src="resources/img/review/${myStyle.heartImg}"></a>
+	                <span class="lclass_${myStyle.likeCount }" id="lid_${myStyle.review_idx }">${myStyle.likeCount }</span>&nbsp;&nbsp;
+	              </c:otherwise>
+              </c:choose>
+                <img src="resources/img/review/reply.jpg">${myStyle.replyCount }
+              </div>
 			        <!-- ********************** 상품 정보 출력 *************************** -->
 			        <h4 class="card-title"><a href="product_detail?product_idx=${myStyle.product_idx }">
 			        <img src="resources/img/product/${myStyle.product_image }"><div class="subject">${myStyle.product_name }<br>
