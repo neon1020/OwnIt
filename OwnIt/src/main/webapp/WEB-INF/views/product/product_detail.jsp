@@ -499,7 +499,6 @@
         </div>
       </div>
     </section>
-	
 	<hr>
 	
 	
@@ -600,9 +599,10 @@
     	}
     	
     </script>
+    
     <c:if test="${not empty reviewList}">
     <!-- STYLE 시작 -->
-	 <section class="hero hero-small">
+	 <section class="hero hero-small" id="review">
       <div class="container">
         <div class="row">
           <div class="col text-center">
@@ -612,7 +612,7 @@
       </div>
       <br>
     <!-- 인기 최신 -->
-      <div class="container">
+      <div class="container" >
         <div class="row">
           <div class="col text-center">
            	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1(1)">
@@ -629,7 +629,7 @@
     <!--  인기 최신 끝 -->
     <%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
     
-    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
+    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;">
       <div class="container">
         <div class="row masonry gutter-3" id="reviewchange">
           <c:forEach var="review" items="${reviewList }">
