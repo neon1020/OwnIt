@@ -5,7 +5,7 @@
     <select id="selectReviewList" resultType="com.teamone.ownit.vo.ReviewListVO">
         SELECT * , 
           CASE WHEN a.num IS NULL THEN 'like_none.jpg' 
-                                  ELSE 'like.jpg' END AS heartImg
+                                  ELSE 'like2.jpg' END AS heartImg
           FROM reviewList r
           LEFT JOIN (SELECT review_idx, '1' as num
                         FROM style_like_list s
@@ -120,7 +120,7 @@
     
     <select id="selectProfile" resultType="com.teamone.ownit.vo.ReviewListVO">
          SELECT DISTINCT member_nickname, member_image
-          FROM member
+          FROM reviewList
           WHERE
             member_idx = #{member_idx}
     </select>
@@ -225,7 +225,7 @@
           WHERE
             review_idx = #{review_idx}
             AND
-            reply_re_ref = #{reply_re_ref}
+            reply_idx = #{reply_idx}
     </delete>
     
     <update id="updateReplycount2">
@@ -283,5 +283,12 @@
           WHERE
             order_buy_idx = #{order_buy_idx}
     </update>
+    
+    <select id="selectAllImage" resultType="com.teamone.ownit.vo.ImageVO">
+        SELECT * 
+          FROM image
+          WHERE 
+            review_idx = #{review_idx};
+    </select>
 
 </mapper> 
