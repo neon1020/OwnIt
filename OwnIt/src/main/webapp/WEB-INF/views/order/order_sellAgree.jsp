@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>판매 동의</title>
 <style type="text/css">
+
 	#disabled{
 		background: black; 
 		color: white;
@@ -16,6 +17,8 @@
 	float: right; 
 	width: 20px; 
 	height: 20px;
+    accent-color: #101010;
+    border-color: #101010;
 	}
 	
 	span1{

@@ -19,6 +19,8 @@
 	float: right; 
 	width: 20px; 
 	height: 20px;
+	accent-color: #101010;
+    border-color: #101010;
 	}
 	#R-1500A5{
 		 float: right; 
@@ -310,7 +312,7 @@
 	          			<th>
 	          				<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
 	          				<span id="sell_spanFont13">
-		          				거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 KREAM으로 발송을 완료한 후<br>
+		          				거래가 체결되면 일요일 · 공휴일을 제외하고 48시간 내에 OwnIt으로 발송을 완료한 후<br>
 		          				발송 정보를 정확히 입력해야 합니다.
 	          				</span>
 	          			</th>
