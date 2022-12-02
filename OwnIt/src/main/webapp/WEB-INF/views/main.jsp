@@ -53,7 +53,7 @@ $(function() {
 				html += "<div class='product-price'>";
 				html += "<span>"+ buyPrice+"원</span>";
 				html += "<span class='product-action' id='"+ prd[index].product_idx +"' style='cursor: pointer;'>"
-                html += "<a style='color: #101010;'>장바구니에 추가</a></span>"
+                html += "<a style='color: blue;'>장바구니에 추가</a></span>"
 				html += "</div></div></div></div>";
 			});
 			$('#prdList').html(html);
@@ -243,14 +243,14 @@ $(function() {
 	        <div class="col-md-6 col-lg-4">
 	          <article class="card card-post">
 	            <figure class="equal equal-50">
-	              <a class="image image-fade" href="#!">
-	              <img src="resources/img/review/"></a>
+	              <a class="image image-fade" href="">
+	              <img src=""></a>
 	            </figure>
 	            <div class="card-body">
-	              <a class="profile" href="#!">
-	                <img src="resources/img/member/"><span class="eyebrow text-muted"></span></a>
+	              <a class="profile" href="">
+	                <img src=""><span class="eyebrow text-muted"></span></a>
 	              <div class="like" id="divLike">
-	                <img src="resources/img/review/like.jpg">
+	                <img src="">
 	              </div>
 	            </div>
 	          </article>
