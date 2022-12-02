@@ -41,7 +41,7 @@
 								</div>
 								<form action="mypage_sell" method="get" style="float: right;">
 								<input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
-									<input style="font-size: 14px;" type="date" id="date1" name="date1">  ~  <input style="font-size: 14px;" type="date" id="date2" name="date2">
+									<input style="font-size: 14px;" type="date" id="date1" name="date1" required="required">  ~  <input style="font-size: 14px;" type="date" id="date2" name="date2" required="required">
 									
 									<button type="submit" class="btn btn-dark btn-rounded btn-sm">					                        
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

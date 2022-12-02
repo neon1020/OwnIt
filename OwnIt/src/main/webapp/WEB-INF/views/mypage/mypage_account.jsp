@@ -185,10 +185,10 @@
 					        <div class="container-fluid">
 					          <div class="row gutter-0">
 					            <div class="col">
-					              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">취소</button>
+					              <button type="submit" class="btn btn-block btn-dark">저장</button>
 					            </div>
 					            <div class="col">
-					              <button type="submit" class="btn btn-block btn-primary">저장</button>
+					              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">취소</button>
 					            </div>
 					          </div>
 					        </div>
@@ -218,10 +218,10 @@
 					        <div class="container-fluid">
 					          <div class="row gutter-0">
 					            <div class="col">
-					              <button type="submit" class="btn btn-block btn-primary">Yes</button>
+					              <button type="submit" class="btn btn-block btn-dark">Yes</button>
 					            </div>
 					            <div class="col">
-					              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
+					              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 					            </div>
 					          </div>
 					        </div>
@@ -251,10 +251,10 @@
 					        <div class="container-fluid">
 					          <div class="row gutter-0">
 					            <div class="col">
-					              <button type="submit" class="btn btn-block btn-primary">Yes</button>
+					              <button type="submit" class="btn btn-block btn-dark">Yes</button>
 					            </div>
 					            <div class="col">
-					              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">No</button>
+					              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">No</button>
 					            </div>
 					          </div>
 					        </div>
