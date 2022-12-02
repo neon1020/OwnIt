@@ -112,7 +112,7 @@ $(document).ready(function() {
 	          			<c:forEach var="product" items="${productList }" begin="0" end="0">
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
-	          				<span id="span1">${product.product_brand }</span><br> 
+	          				<span id="span1" style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
