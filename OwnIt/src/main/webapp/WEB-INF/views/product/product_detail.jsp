@@ -104,32 +104,64 @@
 	    #title1{
 	    	font-size: 13px; font: bold;
 	    }
+	    #title2{
+	    	font-size: 13px; font: bold;
+	    	padding: 5px;
+	    }
 	    #btn1{
 	   		background: #F06464; 
 	   		border-radius: 15px; 
 	   		color: white; 
-	   		width: 220px;
+	   		width: 210px;
 	    }
 	    #btn2{
 	    	background: #46BD7B; 
 	    	border-radius: 15px; 
 	    	color: white; 
-	    	width: 220px;
+	    	width: 210px;
+	    	margin-left: 10px;
 	    }
 	    #btn3{
 	    	background: white; 
 	    	border: 0.5px black solid;
 	    	border-radius: 15px; 
 	    	color: black;
-	    	width: 460px;
+	    	width: 210px;
 	    	margin-top: 15px;
 	    	
 	    }
+	    #btn4{
+	    	background: white; 
+	    	border: 0.5px black solid;
+	    	border-radius: 15px; 
+	    	color: black;
+	    	width: 210px;
+	    	margin-top: 15px;
+	    	margin-left: 10px;
+	    }
+	    .product_cart > a:hover {
+			cursor: pointer;
+		}
+ 	    #btn4:hover{ 
+ 	    	background: black; 
+	    	color: white; 
+	    } 
+	    #btnimg:hover{
+	    	cursor: pointer;
 	    
-/* 	    #btn3:hover{ */
-/* 	    	background: black; */
-/* 	    	color: white; */
-/* 	    } */
+	    }
+	    #detailNotice{
+	    	font: bold;
+	    	color: black;
+	    }
+	    #noticeImg{
+	    	width: 35px;
+	    	height: 35px;
+	    	float: left;
+	    }
+	    #noticePadding{
+	    
+	    }
     </style>
   </head>
 <!-- kakao sdk 호출 -->
@@ -171,42 +203,38 @@
 	      ],
 	    })
   }
+  
+  // 장바구니 추가
+  $(document).on("click", ".product_cart", function() {
+		if(${not empty sessionScope.sId}) {
+			debugger;
+			var index = $(this).attr('id');
+			$.ajax({
+				url:'addCart',
+				type:'GET',
+				data:{
+					product_idx:index
+				},
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success:function(result){
+					if(result == 'Added') {
+						alert("장바구니에 상품을 담았습니다.");
+					} else {
+						alert("이미 장바구니에 담긴 상품입니다.")
+					}
+				checkCart();
+				}
+			});
+		} else alert("로그인 후 이용가능합니다");
+	});
 </script>
   <body>
 
     <!-- header -->
 	<jsp:include page="../inc/top.jsp"></jsp:include>
 
-    <!-- breadcrumbs -->
-    <section class="breadcrumbs">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                	<a href="./"
-                		>Home
-                	</a>
-                </li>
-                <li class="breadcrumb-item">
-                	<a href="product_list">
-                		Shop
-                	</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                	Product
-                </li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
    <!-- product  상품 메인이미지 -->
-    <section class="hero pt-5">
+    <section class="hero pt-5" style="margin-top: 150px;">
       <div class="container">
         <div class="row gutter-2 gutter-md-4 justify-content-between">
 			
@@ -248,6 +276,22 @@
             <div class="row">
               <div class="col-12">
                 <h4 class="item-title">${product.product_brand }</h4>
+              <div style="float: right;">
+                <ul>
+                  <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                   		<img id="btnimg" src="https://cdn-icons-png.flaticon.com/512/2894/2894457.png" style="width: 30px; height: 30px;">
+                    </a>
+                    <ul class="dropdown-menu" style="width: 50px;">
+                      <li>
+                        <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn">
+                        <img id="btnimg" src="resources/img/product/detailKakao.png"><span style="font-size: 13px; color: black;"> 카카오톡 공유</span></a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                </div>
+                    
              					    <p>${product.product_name }</p>
                 
                 <!-- 구매 판매 버튼-->
@@ -272,31 +316,9 @@
 						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
 					</p>
 				</button>
-				<!-- 위시리스트 추가 버튼(혜지) -->
-				<form action="mypage_addWish" method="post">
-				<c:if test="${not empty sessionScope.sId }">
-					<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
-				</c:if>
-			  <input type="hidden" name="member_idx" value="0" />	
-			  <input type="hidden" name="product_idx" value="${product.product_idx }" />
-					<button id="btn3" type="submit" class="btn">
-						<p>
-							<c:choose>
-								<c:when test="${isContainedInWish eq 0 }">
-									<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-			  					<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/></svg>
-								</c:when>
-								<c:otherwise>
-									<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/></svg>							
-								</c:otherwise>
-							</c:choose>
-							관심상품 | <fmt:formatNumber value="${wishCount }" pattern="#,###"/>
-						</p>
-					</button>
-				</form>
-              </div>
-            </div>
+				
+		            </div>
+           		 </div>
 				
             <div class="row">
               <div class="col-12">
@@ -350,8 +372,8 @@
 			                  <div class="card-body"  id="title1" >
 			                 	 OwnIt은 최대한 빠르게 모든 상품을 배송하기 위해 노력하고 있습니다.
 			                 	 <br>배송 시간은 판매자가 검수를 위하여 상품을 검수센터로 보내는 속도에 따라 차이가 있습니다.<br>
-							     <br>[빠른배송 구매]
-								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 Ownit의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.
+							     <br>[빠른배송 구매]<br>
+								 <br>- 판매자가 보관 신청한 상품 중 검수에 합격한 상품을 Ownit의 전용 창고에 보관합니다. 보관 상품에 한하여 바로 구매와 95점 구매가 가능합니다.<br>
 								 <br>- 오늘(오후 11:59까지) 결제하면 내일 바로 출고되어 빠른 배송이 가능합니다. (연휴 및 공휴일, 천재지변, 택배사 사유 등 예외적으로 출고일이 변경될 수 있습니다. 빠른배송 안내
 			                  </div>
 			                </div>
@@ -359,15 +381,15 @@
 			              <div class="card">
 			                <div class="card-header" id="heading-2-2">
 			                  <h2 class="mb-0">
-			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapse-2-2">
+			                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="false" aria-controls="collapse-2-2">
 			                      <span id="title1">검수 안내</span>
 			                    </button>
 			                  </h2>
 			                </div>
-			                <div id="collapse-2-2" class="collapse show" aria-labelledby="heading-2-2" data-parent="#accordion-2">
+			                <div id="collapse-2-2" class="collapse" aria-labelledby="heading-2-2" data-parent="#accordion-2">
 			                  <div class="card-body" id="title1">
-			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.
-			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.
+			                    판매자의 상품이 검수센터에 도착하면 전담 검수팀이 철저한 분석과 검사로 정가품 확인을 진행합니다.<br>
+			                    <br>- 검수센터에서는 정가품 여부를 확인하기 위하여, 지속적으로 데이터를 쌓고 분석하여 기록하고 있습니다.<br>
 								<br>- 업계 전문가로 구성된 검수팀은 박스와 상품의 라벨에서 바느질, 접착, 소재 등 모든 것을 검수합니다.
 			                  </div>
 			                </div>
@@ -382,47 +404,76 @@
 			                </div>
 			                <div id="collapse-2-3" class="collapse" aria-labelledby="heading-2-3" data-parent="#accordion-2">
 			                  <div class="card-body" id="title1">
-			                     OwnIt은 익명 거래를 기반으로 판매자가 판매하는 상품을 구매자가 실시간으로 구매하여 거래를 체결합니다.
-								<br>- 단순 변심이나 실수에 의한 취소/교환/반품이 불가능합니다. 
-								<br>- 상품을 원하지 않으시는 경우 언제든지 OwnIt에서 재판매를 하실 수 있습니다.
+			                     OwnIt은 익명 거래를 기반으로 판매자가 판매하는 상품을 구매자가 실시간으로 구매하여 거래를 체결합니다.<br>
+								<br>- 단순 변심이나 실수에 의한 취소/교환/반품이 불가능합니다.<br>
+								<br>- 상품을 원하지 않으시는 경우 언제든지 OwnIt에서 재판매를 하실 수 있습니다.<br>
 								<br>- 상품 수령 후, 이상이 있는 경우 OwnIt 고객센터로 문의해주시기 바랍니다.
 			                  </div>
 			                </div>
 			              </div>
+			              <div class="card-body" id="title2">
+			              		<div style="display: block; width: 50px; height: 255px; float: left; margin-top: 15px;">
+			              			<img id="noticeImg" src="https://cdn-icons-png.flaticon.com/512/6811/6811217.png">
+			              			<img id="noticeImg" src="https://cdn-icons-png.flaticon.com/512/46/46389.png" style="margin-top: 50px;">
+			              			<img id="noticeImg" src="https://cdn-icons-png.flaticon.com/512/3363/3363959.png" style="margin-top: 50px;">
+			              		</div>
+			                     <span id="detailNotice">100% 정품 보증</span>
+								<br>
+								<span id="detailNotice">Ownit</span>에서 검수한 상품이 정품이 아닐 경우, 구매가의 3배를 보상합니다.
+								<br><br>
+								<span id="detailNotice">엄격한 다중 검수</span>
+								<br>
+								모든 상품은 검수센터에 도착한 후, 상품별 전문가 그룹의 체계적인 시스템을 거쳐 검수를 진행합니다.
+								<br>
+								<br><br>
+								<span id="detailNotice">정품 인증 패키지</span>
+								<br>
+								검수에 합격한 경우에 한하여 <span id="detailNotice">Ownit</span>의 정품 인증 패키지가 포함된 상품이 배송됩니다.
+		                  </div>
 			            </div> 
 			          </div>
 			        </div>
 			      </div>
 			    </div>
 			    <!--  오른쪽 버튼 끝 -->
-    
+    			
+    			<!-- 위시리스트 추가 버튼(혜지) -->
+				<div>
+					<button id="btn4" class="btn">
+						<p>
+							<span class="product_cart" id="${product.product_idx }">
+		                      장바구니에 추가
+		                    </span>
+						</p>
+					</button>
+					<form action="mypage_addWish" method="post" style="width: 220px; display: inline; margin-left: 10px;">
+					<c:if test="${not empty sessionScope.sId }">
+						<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
+					</c:if>
+					  <input type="hidden" name="member_idx" value="0" />	
+					  <input type="hidden" name="product_idx" value="${product.product_idx }" />
+							<button id="btn3" type="submit" class="btn">
+								<p>
+									<c:choose>
+										<c:when test="${isContainedInWish eq 0 }">
+											<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+					  					<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/></svg>
+										</c:when>
+										<c:otherwise>
+											<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/></svg>							
+										</c:otherwise>
+									</c:choose>
+									관심상품 | <fmt:formatNumber value="${wishCount }" pattern="#,###"/>
+								</p>
+							</button>
+						</form>
+							
+	              </div>
               </div>
             </div>
             
          
-            <div>
-              <div class="col-lg-12">
-            </div>
-              <img src="resources/img/product/productDetailNotice.png"><hr>
-              <div class="col-12 mt-1">
-                <ul class="nav nav-actions">
-                  <li class="nav-item">
-                    	<span id="title1" style="color:black;">
-                    		상품 공유하기
-                    	</span>
-                    <ul style="width: 150px;">
-                      <li>
-                      	<br>
-                        <a href="javascript:kakaoShare()" id="kakaotalk-sharing-btn">
-                        <img id="btnimg" src="resources/img/product/detailKakao.png"></a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img id="btnimg" src="resources/img/product/detailNaver.png">
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
             
           </div>
         </div>
@@ -586,7 +637,7 @@
         
 		<div class="row">
               	
-          <div class="col" id="pageChange">
+          <div class="col" id="pageChange" style="text-align: center;">
             <nav class="d-inline-block">
               <ul class="pagination">
               	<li class="page-item active"><input class="page-link" type="button" value="이전" <%if(pageInfo.getPageNum2() > pageInfo.getStartPage()) {%>onclick="onclick1(${pageInfo.pageNum2 - 1})"<%} %>></li>

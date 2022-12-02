@@ -108,20 +108,54 @@
 													<fmt:formatNumber value="${mainOrder.product_buy_price }" pattern="#,###"/>원
 												</td>
 												<td style="font-size:14px; color: black; width: 160px; padding: 3px 0px 3px 0px; vertical-align:middle;">
-                          <c:choose>
-                          	<c:when test="${mainOrder.order_buy_gb == '0'}">
-                          		배송대기
-                          	</c:when>
-                          	<c:when test="${mainOrder.order_buy_gb == '1'}">
-                          		배송 중
-                          	</c:when>
-                          	<c:when test="${mainOrder.order_buy_gb == '2'}">
-                          		배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm">
-                          	</c:when>
-                          	<c:when test="${mainOrder.order_buy_gb == '3'}">
-                          		구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="">
-                          	</c:when>              
-                          </c:choose>										
+												<c:choose>
+                        	<c:when test="${mainOrder.order_buy_gb == '0'}">
+                        		배송 대기
+                        	</c:when>
+                        	<c:when test="${mainOrder.order_buy_gb == '1'}">
+                        		배송 중
+                        	</c:when>
+                        	<c:when test="${mainOrder.order_buy_gb == '2'}">
+                        		배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#buy_fix${num.index }">
+                        	</c:when>
+                        	<c:when test="${mainOrder.order_buy_gb == '3'}">
+                        		구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='review_writeForm?order_buy_idx=${mainOrder.order_buy_idx}'">
+                        	</c:when>
+                        	<c:when test="${mainOrder.order_buy_gb == '4'}">
+                        		구매확정 <input type="button" value="리뷰보기" class="btn btn-outline-dark btn-sm" onclick="location.href='goReview?product_idx=${mainOrder.product_idx}&member_idx=${mainOrder.member_idx }'">
+                        	</c:when>
+                        </c:choose>								
+                      <!-- modal 창 시작 -->
+											<div class="modal fade" id="buy_fix${num.index }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">구매확정</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">×</span>
+															</button>
+														</div>
+														<form action="buyFix" method="post">
+															<input type="hidden" name="member_idx" value="${mainOrder.member_idx }">
+															<input type="hidden" name="order_buy_idx" value="${mainOrder.order_buy_idx }">
+															<div class="modal-body">
+																<p><span style="color: #FF6666;">구매확정 이후에는 반품 및 교환이 불가능하므로<br>반드시 상품을 받으신 후 진행해 주세요.</span><br><br>
+																구매확정을 진행하시겠습니까?</p>
+															</div>
+															<div class="modal-footer">
+																<div class="container-fluid">
+																	<div class="row gutter-0">
+																		<div class="col">
+																			<button type="submit" class="btn btn-block btn-dark btn-rounded">확인</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<!-- modal 창 끝 -->										
 												</td>
 											</tr>
 											</c:forEach>
@@ -178,9 +212,9 @@
 									<!-- 위시리스트 시작-->
 									<div class="row">
 									<div class="col-md-6" style="margin-top: 50px;">
-										<h1 style="width: 600px; font-size: 1rem; font-weight: 550;">관심상품</h1>	
+										<h1 style="width: 600px; font-size: 1rem; font-weight: 550; padding-left: 15px;">관심상품</h1>	
 									</div>
-									<div class="col-md-6" style="margin-top: 50px; text-align: right; padding-right: 20px;">
+									<div class="col-md-6" style="margin-top: 50px; text-align: right; padding-right: 50px;">
 										<a href="wishlist?member_idx=${sessionScope.sIdx }" style="font-size: 0.75rem; font-weight: 550; color: gray;">더보기
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
 										  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>

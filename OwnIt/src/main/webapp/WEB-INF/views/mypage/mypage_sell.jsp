@@ -36,9 +36,11 @@
 								<div class="row">
 									<div class="col-12">
 										<h3 class="mb-0">판매내역</h3>
-										<span class="eyebrow">${sellCount }개의 판매내역이 있습니다</span>
+										<span class="eyebrow">${sellCount }개의 판매내역이 있습니다.</span>
 									</div>
 								</div>
+							
+								<c:if test="${sellCount > 0}">
 								<form action="mypage_sell" method="get" style="float: right;">
 								<input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
 									<input style="font-size: 14px;" type="date" id="date1" name="date1" required="required">  ~  <input style="font-size: 14px;" type="date" id="date2" name="date2" required="required">
@@ -84,16 +86,17 @@
 										</td>
 									</tr>
 									</c:forEach>
-								</table>		  	
+								</table>		
+							</c:if>  	
 							</div>
 							<!-- mypage_sell -->
-							
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- /content -->
 					<!-- 페이징 태그 START -->
+					<c:if test="${sellCount > 0}">
 	        <div class="row" style="margin-left: 680px;">
 	          <div class="col">
 	            <nav class="d-inline-block">
@@ -111,6 +114,7 @@
 	            </nav>
 	          </div>
 	        </div>
+					</c:if>
 					<!-- 페이징 태그 END -->
 				</div>
 			</div>

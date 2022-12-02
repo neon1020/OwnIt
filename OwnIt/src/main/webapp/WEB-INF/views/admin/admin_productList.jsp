@@ -199,14 +199,14 @@
 	                            <table class="table">
 	                                <thead>
 	                                    <tr>
-	                                    	<th width="20px">
+	                                    	<th width="10px">
 	                                    		<input id="th_checkAll" type="checkbox" name="checkAll" onclick="checkAll();" style="outline: 1px solid #000000">
 	                                    	</th>
 	                                        <th style="width: 80px"></th>
 	                                    	<th>모델번호</th>
 	                                    	<th>Brand</th>
-	                                    	<th>Type</th>
-	                                        <th>상품명</th>
+	                                    	<th style="width: 100px">Type</th>
+	                                        <th style="width: 500px">상품명</th>
 	                                        <th>재고수량</th>
 	                                        <th>판매상태</th>
 	                                        <th width="100px"></th>

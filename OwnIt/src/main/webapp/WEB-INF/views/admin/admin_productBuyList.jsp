@@ -164,12 +164,12 @@
                                         <tr>
                                             <th scope="col">No.</th>
                                             <th scope="col">고객명</th>
-                                            <th scope="col" width="450px">상품명</th>
+                                            <th scope="col" width="460px">상품명</th>
 <!--                                             <th scope="col">Price</th> -->
-                                            <th scope="col" width="250px">배송지</th>
+                                            <th scope="col" width="280px">배송지</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col"></th>
+                                            <th scope="col" width="160px">Status</th>
+                                            <th scope="col" width="100px"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

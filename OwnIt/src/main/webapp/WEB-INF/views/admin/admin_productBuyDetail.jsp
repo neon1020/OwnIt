@@ -55,9 +55,9 @@
 						<th style="width: 20px">No.</th>
 						<th style="width: 80px">이미지</th>
 						<th>상품명</th>
-						<th>수량</th>
+						<th style="width: 80px">수량</th>
 						<th style="width: 150px">가격</th>
-						<th>상태</th>
+						<th style="width: 150px">상태</th>
 					</tr>
 				</thead>
 	           	<tbody>

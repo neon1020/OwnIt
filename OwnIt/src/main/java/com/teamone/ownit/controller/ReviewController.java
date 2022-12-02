@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamone.ownit.service.ReviewService;
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
@@ -52,7 +53,6 @@ public class ReviewController {
 			@RequestParam(defaultValue = "") String keyword, 
 			@RequestParam(defaultValue = "1") int pageNum, 
 			Model model, HttpServletResponse response, HttpSession session) {
-		System.out.println("keyword : " + keyword);
 		int listLimit = 12; 
 		int startRow = (pageNum - 1) * listLimit;
 		
@@ -61,7 +61,7 @@ public class ReviewController {
 		
     	List<ReviewListVO> reviewList = service.getReviewList(startRow, listLimit, member_idx, keyword);
     	model.addAttribute("reviewList", reviewList);
-		
+    	
 		JSONArray jsonArray = new JSONArray();
 
 		for(ReviewListVO review : reviewList) {
@@ -281,6 +281,8 @@ public class ReviewController {
 		model.addAttribute("review", review);
 		List<ReviewListVO> reviewImage = service.getReviewImage(review_idx);
         model.addAttribute("reviewImage", reviewImage);
+        ImageVO allImage = service.getAllImage(review_idx);
+        model.addAttribute("allImage", allImage);
 		return "review/review_modifyForm";
 	}
 	
@@ -415,7 +417,7 @@ public class ReviewController {
 	@GetMapping(value = "/review_replyDelete")
 	public String replyDelete(
 			Model model, @ModelAttribute ReplyVO reply, HttpSession session,
-			@RequestParam int review_idx, @RequestParam int reply_re_ref) {
+			@RequestParam int review_idx, @RequestParam int reply_idx) {
 		int deleteCount = service.removeReply(reply);
 		
 		if(deleteCount > 0) { 

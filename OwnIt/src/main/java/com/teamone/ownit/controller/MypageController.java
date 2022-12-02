@@ -369,8 +369,13 @@ public class MypageController {
 		if(sId != null && !sId.equals("")) {
 			int isContained = service.isContainedInWish(member_idx, product_idx);
 			if(isContained > 0) {
-				model.addAttribute("msg", "이미 관심상품에 존재하는 상품 입니다");
-				return "notice/fail_back";
+				int deleteCount = service.deleteWishlist(member_idx, product_idx);
+				if(deleteCount == 0) {
+					model.addAttribute("msg", "삭제 실패!");
+					return "notice/fail_back";
+				}
+				return "redirect:/product_detail?product_idx=" + product_idx;				
+				
 			} else {
 				int insertCount = service.addToWish(member_idx, product_idx);
 				if(insertCount > 0) {

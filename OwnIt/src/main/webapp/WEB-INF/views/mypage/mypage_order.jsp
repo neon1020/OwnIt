@@ -51,7 +51,7 @@
 <!-- 										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path> -->
 <!-- 										</svg> -->
 <!-- 								</form> -->
-								
+							<c:if test="${listCount > 0}">							
 								<form action="mypage_order" method="get" style="float: right;">
 									<input type="hidden" name="member_idx" value="${sessionScope.sIdx }">
 									<input type="date" id="date1" name="date1" required="required">  ~  <input type="date" id="date2" name="date2" required="required">
@@ -132,7 +132,8 @@
 											<!-- modal 창 끝 -->
 										</td>
 									</c:forEach>
-								</table>	
+								</table>
+							</c:if>  		
 							</div>
 						</div>
 					</div>
@@ -140,6 +141,7 @@
 			</div>			
 					
 			<!-- 페이징 태그 START -->
+					<c:if test="${listCount > 0}">
 	        <div class="row" style="margin-left: 680px;">
 	          <div class="col">
 	            <nav class="d-inline-block">
@@ -157,6 +159,7 @@
 	            </nav>
 	          </div>
 	        </div>
+	        </c:if>
 			<!-- 페이징 태그 END -->
               		</div>
               	</div>
