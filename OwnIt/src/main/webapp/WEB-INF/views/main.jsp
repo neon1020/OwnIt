@@ -243,14 +243,14 @@ $(function() {
 	        <div class="col-md-6 col-lg-4">
 	          <article class="card card-post">
 	            <figure class="equal equal-50">
-	              <a class="image image-fade" href="#!">
-	              <img src="resources/img/review/"></a>
+	              <a class="image image-fade" href="">
+	              <img src=""></a>
 	            </figure>
 	            <div class="card-body">
-	              <a class="profile" href="#!">
-	                <img src="resources/img/member/"><span class="eyebrow text-muted"></span></a>
+	              <a class="profile" href="">
+	                <img src=""><span class="eyebrow text-muted"></span></a>
 	              <div class="like" id="divLike">
-	                <img src="resources/img/review/like.jpg">
+	                <img src="">
 	              </div>
 	            </div>
 	          </article>
