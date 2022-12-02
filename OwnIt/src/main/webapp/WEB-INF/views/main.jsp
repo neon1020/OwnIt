@@ -53,7 +53,7 @@ $(function() {
 				html += "<div class='product-price'>";
 				html += "<span>"+ buyPrice+"원</span>";
 				html += "<span class='product-action' id='"+ prd[index].product_idx +"' style='cursor: pointer;'>"
-                html += "<a style='color: #101010;'>장바구니에 추가</a></span>"
+                html += "<a style='color: blue;'>장바구니에 추가</a></span>"
 				html += "</div></div></div></div>";
 			});
 			$('#prdList').html(html);
