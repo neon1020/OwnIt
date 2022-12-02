@@ -98,7 +98,6 @@
 		color: black;
 	}
 	#emptySpan{
-		margin-left: 220px;
 		font: bold;
 		font-size: 20px;
 		color: skyblue;
@@ -184,7 +183,7 @@
           		
 	          	<table class="table">
 	          		<tr>
-	          			<th style="font-size: 30px; font: bold; color: black;">
+	          			<th style="font-size: 30px; font: bold; color: black; border-top: none;">
 		          			<span style="color: skyblue;">판매</span>
 		          			확인서
 	          			</th>
@@ -217,7 +216,9 @@
 		          		</c:if>
 		          		<c:choose>
 		          			<c:when test="${empty member.account_num }">
-		          				<span id="emptySpan">계좌를 추가해주세요 !</span>
+		          				<div style="text-align: center;">
+		          					<span id="emptySpan">계좌를 추가해주세요 !</span>
+		          				</div>
 		          			</c:when>
 		          			<c:otherwise>
 		        				계좌별칭 : <span id="sell_span2">
@@ -255,7 +256,9 @@
 			          		</c:if>
 			          		<c:choose>
 			          			<c:when test="${empty member.address1 }">
+			          			<div style="text-align: center;">
 			          				<span id="emptySpan">주소를 추가해주세요 !</span>
+			          			</div>
 			          			</c:when>
 			          			<c:otherwise>
 					          		주소별칭 : <span id="sell_span2">${member.address_nickname }</span><br>
@@ -300,14 +303,7 @@
 		          			</span>
 	          			</th>
 	          		</tr>
-	          		<tr>
-	          			<th>
-	          				<input type="checkbox"  id="checkAll" onchange="checkForm()">
-	          				<span id="sell_span" style="font-size: 13px; color: gray;">
-	          					전체 동의
-	          				</span>
-	          			</th>
-	          		</tr>
+	          		
 	          		<tr>
 	          			<th>
 	          				<input type="checkbox" id="check1" name="check-box" onchange="checkForm()">
@@ -351,12 +347,11 @@
 	          		</tr>
 	          		<tr>
 	          			<th>
-	          				<span style="color: black; font-size: 15px;">
-	          					정산금액
+							<input type="checkbox"  id="checkAll" onchange="checkForm()">
+	          				<span id="sell_span" style="font-size: 13px; color: gray;">
+	          					전체 동의
 	          				</span>
-	          				<span style="float: right;color: #00A5FF;">
-	          					<fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
-	          				</span>
+	          				<br><br>
 	          				<input type="submit" value="판매하기" id="disabled" class="btn btn-lg btn-primary btn-block mt-1">
 	          			</th>
 	          		</tr>

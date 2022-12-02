@@ -101,7 +101,7 @@
           			<input type="hidden" name="product_idx" value="${product.product_idx }">
 		          	<table class="table">
 		          		<tr>
-		          			<th style="font-size: 30px; font: bold; color: black;">
+		          			<th style="font-size: 30px; font: bold; color: black; border-top: none;">
 			          			<span id="span1" style="color: skyblue;">
 			          				판매
 			          			</span>
@@ -173,7 +173,7 @@
 		          				<input type="checkbox" id="checkAll" onchange="checkForm()">
 			          			<span id="sell_span" style="font-size: 13px; color: gray;">
 			          				전체동의
-			          			</span>
+			          			</span><br><br>
 		          				<input type="submit" value="판매 계속" id="disabled" class="btn btn-lg btn-primary btn-block mt-1" style="background: black; color: white;">
 		          			</th>
 		          		</tr>
