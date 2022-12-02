@@ -130,7 +130,7 @@ function checkForm(){
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 		          			<span style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span>
 		          			<br>${product.product_name }<br>
-		          			 <span style="font: bold; color: black; font-size: 15px;">${product.product_model_num }</span>
+		          			 <span>${product.product_model_num }</span>
 	          			 </th>
 	          			 <c:choose>
 		          			<c:when test="${fn:length(productList) gt 1}">
@@ -170,7 +170,7 @@ function checkForm(){
 	          		</tr>
 	          		<tr>
 	          			<th colspan="2">
-	          				<span style="font-size: 15px; color: black;">총 결제금액</span><br>
+	          				<span style="font-size: 15px; color: black;">총 결제금액</span>
 	          				<span style="float: right; font-size: 18px;color: red;"><fmt:formatNumber value="${countTimesPrice }" pattern="#,###"/> 원</span>
 	          			</th>
 	          		</tr>

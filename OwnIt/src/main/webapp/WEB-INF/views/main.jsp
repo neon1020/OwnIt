@@ -53,7 +53,7 @@ $(function() {
 				html += "<div class='product-price'>";
 				html += "<span>"+ buyPrice+"원</span>";
 				html += "<span class='product-action' id='"+ prd[index].product_idx +"' style='cursor: pointer;'>"
-                html += "<a style='color: #101010;'>장바구니에 추가</a></span>"
+                html += "<a style='color: blue;'>장바구니에 추가</a></span>"
 				html += "</div></div></div></div>";
 			});
 			$('#prdList').html(html);
@@ -80,7 +80,7 @@ $(function() {
         result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
         result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
         result += "<div class='like' id='divLike'>";
-        result += "<img src='resources/img/review/like.jpg'>" + reviewList[i].likeCount + "</div>";
+        result += "<img src='resources/img/review/like2.jpg'>" + reviewList[i].likeCount + "</div>";
         result += "</div></article></div>";
       }
     $("#reviewList").html(result);
