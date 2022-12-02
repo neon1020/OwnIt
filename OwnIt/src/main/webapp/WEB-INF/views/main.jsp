@@ -80,7 +80,7 @@ $(function() {
         result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
         result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
         result += "<div class='like' id='divLike'>";
-        result += "<img src='resources/img/review/like.jpg'>" + reviewList[i].likeCount + "</div>";
+        result += "<img src='resources/img/review/like2.jpg'>" + reviewList[i].likeCount + "</div>";
         result += "</div></article></div>";
       }
     $("#reviewList").html(result);
