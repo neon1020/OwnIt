@@ -62,8 +62,7 @@ function requestPay() {
 		var obj = { // param
 			pg: 'kcp',
 			pay_method: 'card',
-			merchant_uid: "${maxGroupIdx}",
-	// 		merchant_uid: "15",
+			merchant_uid: "OwnIt_${maxGroupIdx}",
 			name: "${productList[0].product_name}",
 			amount: ${countTimesPrice },
 			buyer_email: "${member.member_id}",
