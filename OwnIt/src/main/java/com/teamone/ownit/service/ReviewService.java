@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamone.ownit.mapper.ReviewMapper;
+import com.teamone.ownit.vo.ImageVO;
 import com.teamone.ownit.vo.ReplyVO;
 import com.teamone.ownit.vo.ReviewListVO;
 import com.teamone.ownit.vo.ReviewVO;
@@ -136,6 +137,11 @@ public class ReviewService {
 	// 리뷰 작성 후 GB 업데이트
 	public void modifyOrderGb(int order_buy_idx) {
 		mapper.updateOrderGb(order_buy_idx);
+	}
+
+	// 리뷰 수정폼 이미지 호출
+	public ImageVO getAllImage(int review_idx) {
+		return mapper.selectAllImage(review_idx);
 	}
 
 	

@@ -537,7 +537,7 @@ public class ProductController {
 				//각 리뷰에 대한 좋아요 member_idx 추출
 				List<Integer> memberLikeList = service.getLikeMemberList(reviewList.get(i).getReview_idx());
 				if(memberLikeList.contains(member_idx)) { // 사용자가 좋아요를 누른 리뷰일 시 image 변경
-					reviewList.get(i).setHeartImg("like.jpg");
+					reviewList.get(i).setHeartImg("like2.jpg");
 				}else {
 					reviewList.get(i).setHeartImg(heartImg);
 				}
@@ -575,7 +575,7 @@ public class ProductController {
 				//각 리뷰에 대한 좋아요 member_idx 추출
 				List<Integer> memberLikeList = service.getLikeMemberList(reviewList.get(i).getReview_idx());
 				if(memberLikeList.contains(member_idx)) { // 사용자가 좋아요를 누른 리뷰일 시 image 변경
-					reviewList.get(i).setHeartImg("like.jpg");
+					reviewList.get(i).setHeartImg("like2.jpg");
 				}else {
 					reviewList.get(i).setHeartImg(heartImg);
 				}
@@ -618,14 +618,14 @@ public class ProductController {
 		
 		if(member_idx > 0) { // 로그인 중일경우에만 실행
 			// 좋아요를 누른 member일시
-			if(heartImg.equals("like.jpg")) {
+			if(heartImg.equals("like2.jpg")) {
 				service.deleteReviewLike(member_idx,review_idx);
 				style_like_count -= 1;
 				heartImg = "like_none.jpg";
 			} else {//안누른 member일시
 				service.insertReviewLike(member_idx,review_idx);
 				style_like_count += 1;
-				heartImg = "like.jpg";
+				heartImg = "like2.jpg";
 			}
 			Product_ReviewListVO review = new Product_ReviewListVO();
 			review.setHeartImg(heartImg);

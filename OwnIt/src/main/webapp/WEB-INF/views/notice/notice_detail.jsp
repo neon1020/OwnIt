@@ -86,7 +86,7 @@
 						    	<input type="hidden" name="replyListNum" value="${pageInfo.replyListNum }">
 						    	<input type="hidden" name="pageNum" value="${param.pageNum }">
 							    <input type="text" class="form-control" id="reply_content" name="reply_content" style="width: 82%; float: left;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
-							    <button type="submit" class="btn btn-primary btn-rounded btn-reply" style="width: 150px; float: left; margin-left: 20px;">댓글 등록</button>
+							    <button type="submit" class="btn btn-dark btn-rounded" style="width: 150px; float: left; margin-left: 20px;">댓글 등록</button>
 							</form>
 						</div>
 						
@@ -114,7 +114,7 @@
 											  
 											  	<!-- 본인 댓글일 때 삭제 버튼 표시 -->
 											  	<c:if test="${reply.member_idx eq sessionScope.sIdx }">
-												    <button type="button" name="writeReply" style="width: 150px; margin-left: 20px;" class="btn btn-primary btn-rounded btn-reply" data-toggle="modal" data-target="#exampleModal${num.index }">댓글 삭제</button>
+												    <button type="button" name="writeReply" style="width: 150px; margin-left: 20px;" class="btn btn-outline-dark btn-rounded" data-toggle="modal" data-target="#exampleModal${num.index }">댓글 삭제</button>
 												    
 											    	<!-- modal 시작 -->
 													<div class="modal fade" id="exampleModal${num.index }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -131,10 +131,10 @@
 													        <div class="container-fluid">
 													          <div class="row gutter-0">
 													            <div class="col">
-													              <button type="button" class="btn btn-primary btn-modal1" data-dismiss="modal">취소</button>
+													              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">취소</button>
 													            </div>
 													            <div class="col">
-													              <button type="button" class="btn btn-primary btn-modal2" 
+													              <button type="button" class="btn btn-block btn-dark" 
 													                onclick="location.href='event_replyDelete?notice_idx=${notice.notice_idx }&pageNum=${param.pageNum }&replyListNum=${pageInfo.replyListNum }&reply_idx=${reply.reply_idx }'">댓글 삭제</button>
 													            </div>
 													          </div>
@@ -148,7 +148,7 @@
 												
 												<!-- 다른 사람 댓글일 때 답글 작성 버튼 표시 -->
 												<c:if test="${reply.member_idx ne sessionScope.sIdx && reply.reply_re_lev != 1 }">
-													<button type="button" id="reply_add" name="re_reply" onclick="reply('${reply.reply_re_ref }', '${num.index }'); this.onclick='';" style="width: 150px; margin-left: 20px;" class="btn btn-primary btn-rounded btn-reply">답글 작성</button>
+													<button type="button" id="reply_add" name="re_reply" onclick="reply('${reply.reply_re_ref }', '${num.index }'); this.onclick='';" style="width: 150px; margin-left: 20px;" class="btn btn-dark btn-rounded">답글 작성</button>
 												</c:if>
 											  </td>
 											</tr>

@@ -49,6 +49,11 @@ public class MemberController {
 	private MemberService service;
 
 	// 정채연
+	@GetMapping(value = "/about_ownit")
+	public String about() {
+		return "about";
+	}
+	
 	@GetMapping(value = "/member_joinForm")
 	public String joinForm() {
 		return "member/member_joinForm";

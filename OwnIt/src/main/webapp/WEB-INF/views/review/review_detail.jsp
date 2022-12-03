@@ -19,7 +19,7 @@
   $(document).ready(function(){
     // 좋아요가 되어 있을 때
     if(heartval > 0) {
-      $("#like_none").prop("src", "resources/img/review/like_b.jpg");
+      $("#like_none").prop("src", "resources/img/review/like2_b.jpg");
       $(".heart").prop('name', heartval)
     } else { // 좋아요가 안되어 있을 때
       $("#like_none").prop("src", "resources/img/review/like_none_b.jpg");
@@ -36,7 +36,7 @@
         success : function(data){
           that.prop('name',data);
           if(data == 1) {
-            $("#like_none").prop("src", "resources/img/review/like_b.jpg");
+            $("#like_none").prop("src", "resources/img/review/like2_b.jpg");
             location.reload();
           } else {
             $("#like_none").prop("src", "resources/img/review/like_none_b.jpg");
@@ -150,6 +150,7 @@
          	result += "<button type='button' class='btn btn-primary btn-rounded btn-reply' id='reComment"+reply[i].reply_re_ref+"' style='float: left; margin: 7px auto;'>답글등록</button></div></td></tr>";
         }
         $("#replyList").html(result);
+        location.reload();
       }
     });
 	}
@@ -170,7 +171,7 @@
 	.card-title a { font-size: 15px; font-weight: 600; }
 	.card-post .card-title a:hover { color: #101010; }
 	.card-title .subject { margin: 10px 5px; width: 350px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; float: left; }
-	.card-content { font-size: 18px; width: 800px; float: left; margin: 10px 5px; }
+	.card-content { font-size: 18px; width: 800px; float: left; margin: 10px 5px; border: 1px solid #D5D5D5; padding: 30px 30px; }
 	.like { width: 100%; float: left; margin: 10px 5px; }
 	.like img { margin: 0 5px 0 0; width: 30px; }
 	/* **************************** 등록, 수정, 삭제 버튼 ************************** */
@@ -281,11 +282,11 @@
 						        <div class="container-fluid">
 						          <div class="row gutter-0">
 						            <div class="col">
-						              <button type="button" class="btn btn-primary btn-modal1" data-dismiss="modal">취소</button>
+						              <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">취소</button>
 						            </div>
 						            <div class="col">
-						              <button type="button" class="btn btn-primary btn-modal2" 
-						                onclick="location.href='review_replyDelete?review_idx=${review.review_idx}&reply_re_ref=${re.reply_re_ref }'">삭제</button>
+						              <button type="button" class="btn btn-block btn-dark" 
+						                onclick="location.href='review_replyDelete?review_idx=${review.review_idx}&reply_idx=${re.reply_idx }'">삭제</button>
 						            </div>
 						          </div>
 						        </div>
@@ -305,8 +306,8 @@
 			<!-- **************************** 댓글 작성 ****************************** -->
 			</table>
 			<div class="form-group">
-			  <input type="text" class="form-control" id="reply_content" id="exampleInputEmail1" style="width: 700px; float: left;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
-			  <button type="button" class="btn btn-primary btn-rounded btn-reply" onclick="forwardReply()" style="float: left; margin: 7px auto;">댓글등록</button>
+			  <input type="text" class="form-control" id="reply_content" id="exampleInputEmail1" style="width: 680px; float: left; margin-right: 10px;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">
+			  <button type="button" class="btn btn-primary btn-rounded btn-reply" onclick="forwardReply()" style="float: left; margin: 10px auto;">댓글등록</button>
 			</div> <!-- ******************* 리뷰 글쓴이에게만 보이는 버튼 ***************** -->
 			<c:if test="${(sessionScope.sId == review.member_id) && not empty sessionScope.sId }">
 				<button type="button" class="btn btn-primary btn-rounded on" style="float: right;" data-toggle="modal" data-target="#exampleModal-1">삭제</button>
@@ -330,10 +331,10 @@
 			  <div class="container-fluid">
 			    <div class="row gutter-0">
 			      <div class="col">
-			        <button type="button" class="btn btn-primary btn-modal1" data-dismiss="modal">취소</button>
+			        <button type="button" class="btn btn-block btn-outline-dark" data-dismiss="modal">취소</button>
 			      </div>
 			      <div class="col">
-			        <button type="button" class="btn btn-primary btn-modal2" onclick="location.href='review_delete?review_idx=${review.review_idx}'">삭제</button>
+			        <button type="button" class="btn btn-block btn-dark" onclick="location.href='review_delete?review_idx=${review.review_idx}'">삭제</button>
 			      </div>
 			    </div>
 			  </div>

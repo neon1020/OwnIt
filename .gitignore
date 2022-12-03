@@ -1,0 +1,5 @@
+OwnIt/src/main/webapp/META-INF/maven/com.teamone/ownit/pom.properties
+OwnIt/src/main/webapp/META-INF/maven/com.itwillbs/mvc_board/pom.properties
+OwnIt/src/main/webapp/META-INF/MANIFEST.MF
+*.class
+OwnIt/.settings/org.eclipse.jdt.apt.core.prefs
