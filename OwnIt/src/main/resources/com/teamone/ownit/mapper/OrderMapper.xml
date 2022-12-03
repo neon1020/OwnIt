@@ -27,7 +27,7 @@ from address WHERE address_gb = 0) addr ON m.member_idx = addr.member_idx WHERE 
 </select>
 
 <select id="getMaxGroupIdx" resultType="int">
-SELECT MAX(order_group_idx)+1 from order_buy;
+SELECT IFNULL(MAX(order_group_idx),0)+1 from order_buy;
 </select>
 
 <update id="updateProductCount">
