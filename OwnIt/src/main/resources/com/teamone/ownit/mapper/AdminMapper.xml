@@ -490,11 +490,11 @@
 	<select id="selectSalesCount" resultType="integer">
 		SELECT 
 			(SELECT COUNT(*) 
-				FROM ORDER_SELL 
+				FROM order_sell 
 		        WHERE order_sell_date LIKE '22%')
 		    +
-		    (SELECT SUM(ORDER_BUY_COUNT) 
-				FROM ORDER_BUY 
+		    (SELECT SUM(order_buy_count) 
+				FROM order_buy
 		        WHERE order_buy_date LIKE '22%');
 	</select>
 
@@ -507,8 +507,8 @@
                     ON os.product_idx = p.product_idx
 		        WHERE order_sell_date LIKE '22%')
 		    +
-		    (SELECT SUM(ORDER_BUY_price) * 0.02
-				FROM ORDER_BUY 
+		    (SELECT SUM(order_buy_price) * 0.02
+				FROM order_buy
 		        WHERE order_buy_date LIKE '22%');
 	</select>
 	
