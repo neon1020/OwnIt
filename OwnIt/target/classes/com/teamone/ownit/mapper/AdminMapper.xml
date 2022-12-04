@@ -87,7 +87,7 @@
 	<!-- Product 등록 (글쓰기) -->
 	<insert id="insertProduct">
 		<selectKey keyProperty="product_idx" resultType="integer" order="BEFORE">
-			SELECT MAX(product_idx) FROM product
+			SELECT IFNULL(MAX(product_idx),0) FROM product
 		</selectKey>
 		INSERT 
 			INTO product
@@ -110,7 +110,7 @@
 	<!-- Product 등록 (글쓰기) + 다중 파일 업로드 -->
 	<insert id="insertProductImage">
 		<selectKey keyProperty="image_idx" resultType="integer" order="BEFORE">
-			SELECT MAX(image_idx) FROM image
+			SELECT IFNULL(MAX(image_idx),0) FROM image
 		</selectKey>
 		INSERT 
 			INTO image
@@ -490,11 +490,11 @@
 	<select id="selectSalesCount" resultType="integer">
 		SELECT 
 			(SELECT COUNT(*) 
-				FROM ORDER_SELL 
+				FROM order_sell 
 		        WHERE order_sell_date LIKE '22%')
 		    +
-		    (SELECT SUM(ORDER_BUY_COUNT) 
-				FROM ORDER_BUY 
+		    (SELECT SUM(order_buy_count) 
+				FROM order_buy
 		        WHERE order_buy_date LIKE '22%');
 	</select>
 
@@ -507,8 +507,8 @@
                     ON os.product_idx = p.product_idx
 		        WHERE order_sell_date LIKE '22%')
 		    +
-		    (SELECT SUM(ORDER_BUY_price) * 0.02
-				FROM ORDER_BUY 
+		    (SELECT SUM(order_buy_price) * 0.02
+				FROM order_buy
 		        WHERE order_buy_date LIKE '22%');
 	</select>
 	
