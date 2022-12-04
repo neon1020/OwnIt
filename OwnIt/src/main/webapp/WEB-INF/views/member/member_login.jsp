@@ -42,7 +42,7 @@
 // 			}
 // 		);
 // 		naverLogin.init();
-	 	}	 	
+
     </script>
 </head>
 <body>
