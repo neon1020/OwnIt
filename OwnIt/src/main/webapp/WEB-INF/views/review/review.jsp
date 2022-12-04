@@ -132,18 +132,6 @@
 	        result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
 	        result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
 	        result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
-// 	          result += "<div class='col-md-6 col-lg-4'><article class='card card-post'><figure class='equal equal-50'>";
-// 	       	  result += "<a class='image image-fade' href='review_detail?review_idx=" + reviewList[i].review_idx + "'>";
-// 	       	  result += "<img src='resources/img/review/" + reviewList[i].review_image1 + "'></a></figure><div class='card-body'>";
-// 		       	result += "<a class='profile' href='review_mystyle?member_idx=" + reviewList[i].member_idx + "'>";
-// 		       	result += "<img src='resources/img/member/" + reviewList[i].member_image + "'>";
-// 		       	result += "<span class='eyebrow text-muted'>" + reviewList[i].member_nickname + "</span></a>";
-// 		       	result += "<h3 class='card-content'>" + reviewList[i].review_content + "</h3><div class='like' id='divLike'><a class='heart'>";
-// 		       	result += "<img src='resources/img/review/" + reviewList[i].heartImg + "' id='likeNone_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
-// 		       	result += "</a>" + reviewList[i].likeCount + "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
-// 		       	result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
-// 		       	result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
-// 		       	result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";
     	  }
     	  $("#reviewList").append(result);
       }

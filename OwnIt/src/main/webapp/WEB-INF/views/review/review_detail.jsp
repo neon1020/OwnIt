@@ -122,7 +122,7 @@
     	  let result = "";
         for(var i = 0; i < reply.length; i++){
        	  if((reply[i].reply_re_lev) > 0) {
-       		  result += "<tr><td style='width: 230px;'><img id='replyImage' src='resources/img/review/reply-ico.png'>";
+       		  result += "<tr><td style='width: 230px;'><img id='replyImage' src='resources/img/review/reply_icon.jpg'>";
             result += "<a class='profile_reply' href='review_mystyle?member_idx="+reply[i].member_idx+"'><img src='resources/img/member/"+reply[i].image_real_file1+"'>";
             result += "<span class='eyebrow text-muted'>"+reply[i].member_nickname+"</span>";
             result += "</a></td><td style='width: 400px;'>"+reply[i].reply_content+"</td><td style='float: right;'>";
@@ -246,7 +246,7 @@
         <c:choose>
           <c:when test="${re.reply_re_lev > 0 }">
 					  <td style="width: 230px;">
-	            <img id="replyImage" src="resources/img/review/reply-ico.png">
+	            <img id="replyImage" src="resources/img/review/reply_icon.jpg">
 					    <a class="profile_reply" href="review_mystyle?member_idx=${re.member_idx }"><img src="resources/img/member/${re.image_real_file1 }">
 					    <span class="eyebrow text-muted">${re.member_nickname }</span></a>
 					  </td>
