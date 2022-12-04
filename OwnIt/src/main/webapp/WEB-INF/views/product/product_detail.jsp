@@ -182,10 +182,10 @@
 	        title: '${product.product_brand}',
 	        description: '${product.product_name}',
 	        imageUrl:
-	          'https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F7c%2F1d%2Fc9%2F7c1dc952fc68ecbf71dfb5a488714b09.jpg&type=a340',
+	          'http://itwillbs16.cafe24.com/OwnIt/resources/img/product/${product.image_real_file1}',
 	        link: {
-	          mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
-	          webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	          mobileWebUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
+	          webUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
 	        },
 	      },
 	      social: {
@@ -196,8 +196,8 @@
 	        {
 	          title: '웹으로 보기',  //첫 번째 버튼 
 	          link: {
-	            mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',  //버튼 클릭 시 이동 링크
-	            webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	            mobileWebUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',  //버튼 클릭 시 이동 링크
+	            webUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
 	          },
 	        },
 	      ],
