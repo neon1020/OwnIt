@@ -217,7 +217,7 @@
 				},
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success:function(result){
-					if(result == 'Added') {
+					if(result.length == 5 || result == 'Added' ) {
 						alert("장바구니에 상품을 담았습니다.");
 					} else {
 						alert("이미 장바구니에 담긴 상품입니다.")
@@ -227,6 +227,10 @@
 			});
 		} else alert("로그인 후 이용가능합니다");
 	});
+  
+  function emptySid(){
+		  location.href="member_login";
+  }
 </script>
   <body>
 
@@ -311,11 +315,22 @@
 		                </button>
                 	</c:otherwise>
                 </c:choose>
-				<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
-					<p>
-						판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
-					</p>
-				</button>
+                <c:choose>
+                	<c:when test="${empty sessionScope.sId }">
+                		<button id="btn2" type="button" class="btn" onclick="emptySid()" >
+							<p>
+								판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+							</p>
+						</button>
+                	</c:when>
+                	<c:otherwise>
+						<button id="btn2" type="button" class="btn" onclick="location.href='order_sellAgree?product_idx=${product.product_idx}'" >
+							<p>
+								판매 | <fmt:formatNumber value="${product.product_sell_price }" pattern="#,###"/> 원
+							</p>
+						</button>
+                	</c:otherwise>
+                </c:choose>
 				
 		            </div>
            		 </div>
