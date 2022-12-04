@@ -142,10 +142,10 @@
 	    .product_cart > a:hover {
 			cursor: pointer;
 		}
- 	    #btn4:hover{ 
- 	    	background: black; 
-	    	color: white; 
-	    } 
+/*  	    #btn4:hover{  */
+/*  	    	background: black;  */
+/* 	    	color: white;  */
+/* 	    }  */
 	    #btnimg:hover{
 	    	cursor: pointer;
 	    
@@ -182,10 +182,10 @@
 	        title: '${product.product_brand}',
 	        description: '${product.product_name}',
 	        imageUrl:
-	          'https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F7c%2F1d%2Fc9%2F7c1dc952fc68ecbf71dfb5a488714b09.jpg&type=a340',
+	          'http://itwillbs16.cafe24.com/OwnIt/resources/img/product/${product.image_real_file1}',
 	        link: {
-	          mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
-	          webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	          mobileWebUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
+	          webUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
 	        },
 	      },
 	      social: {
@@ -196,8 +196,8 @@
 	        {
 	          title: '웹으로 보기',  //첫 번째 버튼 
 	          link: {
-	            mobileWebUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',  //버튼 클릭 시 이동 링크
-	            webUrl: 'http://localhost:8081/ownit/product_detail?product_idx=${product.product_idx}',
+	            mobileWebUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',  //버튼 클릭 시 이동 링크
+	            webUrl: 'http://itwillbs16.cafe24.com/OwnIt/product_detail?product_idx=${product.product_idx}',
 	          },
 	        },
 	      ],
@@ -205,29 +205,32 @@
   }
   
   // 장바구니 추가
-  $(document).on("click", ".product_cart", function() {
-		if(${not empty sessionScope.sId}) {
+  function cartVTN(idx){
+		if(${empty sessionScope.sId}) {
+			alert("로그인 후 이용가능합니다");
+			return;
+		} else {
 			debugger;
-			var index = $(this).attr('id');
+			var index = idx.id;
 			$.ajax({
 				url:'addCart',
 				type:'GET',
 				data:{
-					product_idx:index
+					product_idx:index,
 				},
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success:function(result){
 					if(result.length == 5 || result == 'Added' ) {
 						alert("장바구니에 상품을 담았습니다.");
 					} else {
-						alert("이미 장바구니에 담긴 상품입니다.")
+						alert("이미 장바구니에 담긴 상품입니다.");
 					}
 				checkCart();
+				return;
 				}
 			});
-		} else alert("로그인 후 이용가능합니다");
-	});
-  
+		}
+  }
   function emptySid(){
 		  location.href="member_login";
   }
@@ -454,13 +457,15 @@
     			
     			<!-- 위시리스트 추가 버튼(혜지) -->
 				<div>
+					<div style="display: inline;"class="product_cart" onclick="cartVTN(this)" id="${product.product_idx }">
 					<button id="btn4" class="btn">
 						<p>
-							<span class="product_cart" id="${product.product_idx }">
+							<span >
 		                      장바구니에 추가
 		                    </span>
 						</p>
 					</button>
+					</div>
 					<form action="mypage_addWish" method="post" style="width: 220px; display: inline; margin-left: 10px;">
 					<c:if test="${not empty sessionScope.sId }">
 						<input type="hidden" name="member_idx" value="${sessionScope.sIdx }" />
@@ -494,7 +499,6 @@
         </div>
       </div>
     </section>
-	
 	<hr>
 	
 	
@@ -595,9 +599,10 @@
     	}
     	
     </script>
+    
     <c:if test="${not empty reviewList}">
     <!-- STYLE 시작 -->
-	 <section class="hero hero-small">
+	 <section class="hero hero-small" id="review">
       <div class="container">
         <div class="row">
           <div class="col text-center">
@@ -607,7 +612,7 @@
       </div>
       <br>
     <!-- 인기 최신 -->
-      <div class="container">
+      <div class="container" >
         <div class="row">
           <div class="col text-center">
            	<input type="radio" class="btn-check" name="btnradio" id="btnradio1"  checked onclick="onclick1(1)">
@@ -624,7 +629,7 @@
     <!--  인기 최신 끝 -->
     <%Product_DetailPageInfoVO pageInfo = (Product_DetailPageInfoVO)request.getAttribute("pageInfo"); %>
     
-    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;"id="review">
+    <section class="pt-0" style="width: 1350px; padding: 100px 100px 100px 100px;">
       <div class="container">
         <div class="row masonry gutter-3" id="reviewchange">
           <c:forEach var="review" items="${reviewList }">

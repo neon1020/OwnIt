@@ -76,7 +76,7 @@
     
     <insert id="insertReview">
       <selectKey keyProperty="review_idx" resultType="integer" order="BEFORE">
-        SELECT MAX(review_idx) FROM review
+        SELECT IFNULL(MAX(review_idx), 0) FROM review
       </selectKey>
          INSERT 
            INTO review
@@ -92,7 +92,7 @@
     
     <insert id="insertReviewImage">
       <selectKey keyProperty="image_idx" resultType="integer" order="BEFORE">
-        SELECT MAX(image_idx) FROM image
+        SELECT IFNULL(MAX(image_idx), 0) FROM image
       </selectKey>
         INSERT 
           INTO image
@@ -176,7 +176,7 @@
     
     <insert id="insertReply">
       <selectKey keyProperty="reply_idx" resultType="integer" order="BEFORE">
-        SELECT MAX(reply_idx) FROM reply
+        SELECT IFNULL(MAX(reply_idx), 0) FROM reply
       </selectKey>
         INSERT 
           INTO reply
@@ -195,7 +195,7 @@
     
     <insert id="insertReplies">
       <selectKey keyProperty="reply_idx" resultType="integer" order="BEFORE">
-        SELECT MAX(reply_idx) FROM reply
+        SELECT IFNULL(MAX(reply_idx), 0) FROM reply
       </selectKey>
         INSERT 
           INTO reply
