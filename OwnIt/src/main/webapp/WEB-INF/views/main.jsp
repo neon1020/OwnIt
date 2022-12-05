@@ -105,9 +105,15 @@ $(function() {
 	    index = 1;  //인덱스가 초과되면 1로 변경
 	  }   
 	  x[index-1].style.display = "block";  //해당 인덱스는 block으로
-	  setTimeout(slideShow, 3000);   //함수를 2초마다 호출
+	  setTimeout(slideShow, 3000);   //함수를 3초마다 호출
 	}
 // -----------------------------------------------------------------------------------------------------
+
+
+	function testOpen(URL) {
+		window.open(URL, "_blank", "width=800,height=900");
+	}
+
 </script>
 
 <style type="text/css">
@@ -196,7 +202,8 @@ $(function() {
 	  <div>
 	    <ul>
 	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_1.jpg"></li>
-	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_2.jpg"></li>      
+	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_3.jpg" onclick="testOpen('mbti_test')" style="cursor: pointer;"></li>      
+	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_2.jpg"></li>
 	    </ul>
 	  </div>
 
