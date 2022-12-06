@@ -136,7 +136,7 @@ public class ReviewController {
 	
 	@ResponseBody 
 	@PostMapping(value = "/heart", produces = "application/json")
-	public int heart(@RequestParam int review_idx, @RequestParam int heart, HttpSession session) {
+	public int heart(@RequestParam int review_idx, @RequestParam int heart, Model model, HttpSession session) {
 		int member_idx = (int)session.getAttribute("sIdx");
 		
 		Style_like_listVO likeVO = new Style_like_listVO();
@@ -153,6 +153,15 @@ public class ReviewController {
         }
 		
 		return heart;
+	}
+	
+	@ResponseBody 
+	@GetMapping(value = "/cnt", produces = "application/json")
+	public int cnt(@RequestParam int review_idx) {
+		
+		int cnt = service.getLikeCount(review_idx);
+		
+		return cnt;
 	}
 	
 	@GetMapping(value = "/review_mystyle")
@@ -178,7 +187,14 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_writeForm")
-	public String reviewWrite(@RequestParam int order_buy_idx, Model model) {
+	public String reviewWrite(@RequestParam int order_buy_idx, @RequestParam int member_idx, HttpSession session, Model model) {
+		int member_idx2 = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+		
+		if(member_idx != member_idx2 || member_idx2 == 0) {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			return "notice/fail_back";
+		}
+		
 		ReviewListVO product = service.getProduct(order_buy_idx);
 		model.addAttribute("product", product);
 		return "review/review_writeForm";
@@ -281,8 +297,6 @@ public class ReviewController {
 		model.addAttribute("review", review);
 		List<ReviewListVO> reviewImage = service.getReviewImage(review_idx);
         model.addAttribute("reviewImage", reviewImage);
-        ImageVO allImage = service.getAllImage(review_idx);
-        model.addAttribute("allImage", allImage);
 		return "review/review_modifyForm";
 	}
 	
