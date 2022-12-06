@@ -562,7 +562,10 @@ WHERE member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})
 	<select id="selectOrderSell" resultType="com.teamone.ownit.vo.Order_sellVO">
 		SELECT *
 			FROM order_sell
-			WHERE product_idx=#{product_idx}
+			WHERE TRUE
+			  <if test="order_sell_idx == null and order_sell_idx.equals(0)">
+			  </if>
+			  AND product_idx=#{product_idx}
 			  AND member_idx=#{member_idx}
 			  <if test="order_sell_date!=null and !order_sell_date.equals('')">
 			  AND order_sell_date=#{order_sell_date}

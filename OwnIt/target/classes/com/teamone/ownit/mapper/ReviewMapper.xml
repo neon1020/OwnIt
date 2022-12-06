@@ -119,16 +119,18 @@
     </delete>
     
     <select id="selectProfile" resultType="com.teamone.ownit.vo.ReviewListVO">
-         SELECT DISTINCT member_nickname, member_image
-          FROM reviewList
-          WHERE
-            member_idx = #{member_idx}
+         SELECT member_nickname, image_real_file1 member_image
+            FROM member m
+            LEFT JOIN image i
+                  ON m.member_idx = i.member_idx
+                  WHERE 
+                    m.member_idx =  #{member_idx}
     </select>
     
     <select id="selectMystyleList" resultType="com.teamone.ownit.vo.ReviewListVO">
 		    SELECT * , 
           CASE WHEN a.num IS NULL THEN 'like_none.jpg' 
-                                  ELSE 'like.jpg' END AS heartImg
+                                  ELSE 'like2.jpg' END AS heartImg
           FROM reviewList r
           LEFT JOIN (SELECT review_idx, '1' as num
                         FROM style_like_list s
