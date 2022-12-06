@@ -62,16 +62,4 @@ public interface ReviewMapper {
 
 	void updateOrderGb(int order_buy_idx);
 
-	ImageVO selectAllImage(int review_idx);
-
-	
-
-	
-
-
-
-	
-
-
-	
 }

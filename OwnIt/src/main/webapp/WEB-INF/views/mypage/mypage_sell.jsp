@@ -71,16 +71,16 @@
 										<td style="font-size:14px; color: black; width: 160px; padding: 3px 0px 3px 0px; vertical-align:middle;">
                       <c:choose>
                       	<c:when test="${mysell.order_sell_gb == '0'}">
-                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수대기</a>
+                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}&order_sell_idx=${mysell.order_sell_idx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수대기</a>
                       	</c:when>
                       	<c:when test="${mysell.order_sell_gb == '1'}">
-                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수  중</a>
+                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}&order_sell_idx=${mysell.order_sell_idx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수  중</a>
                       	</c:when>
                       	<c:when test="${mysell.order_sell_gb == '2'}">
-                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수완료</a>
+                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}&order_sell_idx=${mysell.order_sell_idx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px;">검수완료</a>
                       	</c:when>
                       	<c:when test="${mysell.order_sell_gb == '3'}">
-                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px; color: red;">판매반려</a>
+                      		<a href="order_sellDetail?product_idx=${mysell.product_idx }&member_idx=${sessionScope.sIdx}&order_sell_idx=${mysell.order_sell_idx}" class="btn btn-outline-dark btn-sm" style="width: 93.2px; color: red;">판매반려</a>
                       	</c:when>                               	                                	                                	
                       </c:choose>										
 										</td>

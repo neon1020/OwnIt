@@ -64,8 +64,8 @@
 
 	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
 		<script>
-// 			alert("잘못된 접근입니다!");
-// 			location.href = "./";
+			alert("잘못된 접근입니다!");
+			location.href = "./";
 		</script>
 	</c:if>
 
@@ -149,7 +149,7 @@
 							<div style="text-align: center;">
 								<a href="admin_productList?status=0" style="cursor: pointer;"><i class="fa fa-circle-o text-info  mr-2"></i>
 									<c:choose>
-										<c:when test="${param.status eq 0 }">
+										<c:when test="${param.status eq '0' }">
 											<button type="button" class="btn mb-1 btn-outline-primary btn-sm">판매중</button>
 										</c:when>
 										<c:otherwise>판매중</c:otherwise>
@@ -158,7 +158,7 @@
 									&nbsp;|&nbsp;
 								<a href="admin_productList?status=1" style="cursor: pointer;"><i class="fa fa-close text-danger mr-2"></i>
 									<c:choose>
-										<c:when test="${param.status eq 1 }">
+										<c:when test="${param.status eq '1' }">
 											<button type="button" class="btn mb-1 btn-outline-danger btn-sm">판매중단</button>
 										</c:when>
 										<c:otherwise>판매중단</c:otherwise>
@@ -206,10 +206,10 @@
 	                                    	<th>모델번호</th>
 	                                    	<th>Brand</th>
 	                                    	<th style="width: 100px">Type</th>
-	                                        <th style="width: 500px">상품명</th>
+	                                        <th style="width: 480px">상품명</th>
 	                                        <th>재고수량</th>
 	                                        <th>판매상태</th>
-	                                        <th width="100px"></th>
+	                                        <th width="90px"></th>
 	                                        <th width="10px"></th>
 	                                    </tr>
 	                                </thead>
@@ -261,8 +261,6 @@
 	                            </table>
 	                            <hr>
 	                        </div>
-	                        <button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
-	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction()">선택 삭제</button>
 							
 							<!-- 페이징 처리 Start -->
 							<div class="bootstrap-pagination">
@@ -308,6 +306,9 @@
 								</nav>
 							</div>
 							<!-- 페이징 처리 End -->
+							<button type="button" class="btn mb-1 btn-outline-dark" style="float: right" onclick="location.href='admin_productWriteForm'">+Product</button>
+	                        <button type="button" class="btn mb-1 btn-outline-danger" style="float: right; margin: 0 5px" onclick="deleteAction()">선택 삭제</button>
+							
 	                    </div>
 	                </div>
 	            </div>

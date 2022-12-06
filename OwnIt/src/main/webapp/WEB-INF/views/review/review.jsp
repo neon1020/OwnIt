@@ -33,36 +33,32 @@
       data    : sendData,
       success : function(data){
     	  if(data == 1) {
-    		  debugger;
     		  var a = $('#like_' + index);
-    		  var c = $('#lid_' + index);
 					a.removeClass('heart_None');
 					a.addClass('heart_Full');
 					a.attr('name', '1');
 					$('#like_' + index).html("<img src='resources/img/review/like2.jpg'>");
-					var cc = c.attr('class');
-					var ccc = cc.split('_')[1];
-					var d = parseInt(ccc) + 1;
-					$('.lclass_' + ccc).html(d);
-					c.removeClass('lclass_' + ccc);
-          c.addClass('lclass_' + d);
+					likeCount(index);
         } else {
-        	debugger;
 					var a = $('#like_' + index);
-					var c = $('#lid_' + index);
 					a.removeClass('heart_Full');
 					a.addClass('heart_None');
 					a.attr('name', null);
 					$('#like_' + index).html("<img src='resources/img/review/like_none.jpg'>");
-					var cc = c.attr('class');
-          var ccc = cc.split('_')[1];
-          var d = parseInt(ccc) - 1;
-          $('.lclass_' + ccc).html(d);
-          c.removeClass('lclass_' + ccc);
-          c.addClass('lclass_' + d);
+					likeCount(index);
         }
       }
     });
+  }
+  function likeCount(index) {
+	  $.ajax({
+      url     : 'cnt',
+      type    : 'GET',
+      data    : { 'review_idx' : index },
+      success : function(cnt){
+    	  $('#lid_' + index).html(cnt);
+      }
+	  });
   }
 </script>
 
@@ -122,13 +118,13 @@
 	        if(reviewList[i].heartImg == 'like_none.jpg'){
 	          result += "<a class='heart_None' id='like_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
 	          result += "<img src='resources/img/review/" + reviewList[i].heartImg + "'></a>";
-	          result += "<span class='lclass_" + reviewList[i].likeCount + "' id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount;
+	          result += "<span id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount + "</span>";
 	        } else {
 	          result += "<a class='heart_Full' id='like_" + reviewList[i].review_idx + "' name='" + reviewList[i].num + "' onclick='changeLike(this)'>";
 	          result += "<img src='resources/img/review/" + reviewList[i].heartImg + "'></a>";
-	          result += "<span class='lclass_" + reviewList[i].likeCount + "' id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount;
+	          result += "<span id='lid_" + reviewList[i].review_idx + "'>" + reviewList[i].likeCount + "</span>";
 	        }
-	        result += "</span>&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
+	        result += "&nbsp;&nbsp;<img src='resources/img/review/reply.jpg'>" + reviewList[i].replyCount + "</div>";
 	        result += "<h4 class='card-title'><a href='product_detail?product_idx=" + reviewList[i].product_idx + "'>";
 	        result += "<img src='resources/img/product/" + reviewList[i].product_image + "'><div class='subject'>" + reviewList[i].product_name + "<br>";
 	        result += productPrice + "&nbsp;원</div></a></h4></div></article></div>";

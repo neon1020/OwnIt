@@ -17,6 +17,7 @@
     var fileNum = 0;
     // 업로드 이미지 미리보기
     $("#AddImgs").change(function(e){
+    	debugger;
       $('#Preview').empty();
       var files = e.target.files;
       var arr = Array.prototype.slice.call(files);
@@ -45,40 +46,40 @@
         return true;
       }
       // 미리보기 구현
-      function preview(arr){
-        var fileNum = 0;
-        arr.forEach(function(f){
-          // div에 이미지 추가
-          var str = '<li class="ui-state-default">';
-          if(f.type.match('image.*')){
-            // 파일을 읽기 위한 FileReader객체 생성
-            var reader = new FileReader(); 
-            arr.push(f);
-            reader.onload = function(e){ 
-            // 파일 읽어들이기 성공시 호출되는 이벤트 핸들러
-              str += '<img src="'+e.target.result+'" id="img' + fileNum +'" title="'+f.name+'" width=80 height=80>';
-              str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
-              str += '</li>';
-              $(str).appendTo('#Preview');
-              fileNum++;
-            }
-          reader.readAsDataURL(f);
-          } 
-        });
-      }
+	    function preview(arr){
+	      var fileNum = 0;
+	      arr.forEach(function(f){
+	        // div에 이미지 추가
+	        var str = '<li class="ui-state-default">';
+	        if(f.type.match('image.*')){
+	          // 파일을 읽기 위한 FileReader객체 생성
+	          var reader = new FileReader(); 
+	          arr.push(f);
+	          reader.onload = function(e){ 
+	          // 파일 읽어들이기 성공시 호출되는 이벤트 핸들러
+	            str += '<img src="'+e.target.result+'" id="img' + fileNum +'" title="'+f.name+'" width=80 height=80>';
+	            str += '<span class="delBtn" id="file' + fileNum + '" onclick="delImg(\'file' + fileNum + '\')">x</span>';
+	            str += '</li>';
+	            $(str).appendTo('#Preview');
+	            fileNum++;
+	          }
+	        reader.readAsDataURL(f);
+	        } 
+	      });
+	    }
     });
   });
   //이미지 삭제
-    function delImg(fileNum){
-      var dataTransfer = new DataTransfer();
-      var no = fileNum.replace(/[^0-9]/g, "");
-      var files = $('#AddImgs')[0].files;
-      var arr = Array.prototype.slice.call(files);
-      arr.splice(fileNum, 1);
-      arr.forEach(files => { dataTransfer.items.add(files); });
-      $('#AddImgs')[0].files = dataTransfer.files;
-      $('#' + fileNum).remove();
-      $('#img' + no).remove();
+  function delImg(fileNum){
+    var dataTransfer = new DataTransfer();
+    var no = fileNum.replace(/[^0-9]/g, "");
+    var files = $('#AddImgs')[0].files;
+    var arr = Array.prototype.slice.call(files);
+    arr.splice(fileNum, 1);
+    arr.forEach(files => { dataTransfer.items.add(files); });
+    $('#AddImgs')[0].files = dataTransfer.files;
+    $('#' + fileNum).remove();
+    $('#img' + no).remove();
   };
 </script>
 
@@ -112,7 +113,6 @@
     <!-- ****************************** 리뷰 작성 부분 ******************************* -->
     <form action="review_modifyPro" method="post" enctype="multipart/form-data">
       <input type="hidden" name="review_idx" value="${review.review_idx }" />
-      <input type="hidden" name="review_idx" value="${image.review_image1 }" />
      
       <section id="component-1">
         <div class="component">

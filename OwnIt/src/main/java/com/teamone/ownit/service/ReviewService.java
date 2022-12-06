@@ -139,24 +139,5 @@ public class ReviewService {
 		mapper.updateOrderGb(order_buy_idx);
 	}
 
-	// 리뷰 수정폼 이미지 호출
-	public ImageVO getAllImage(int review_idx) {
-		return mapper.selectAllImage(review_idx);
-	}
-
-	
-
-	
-
-	
-	
-
-
-	
-
-
-
-
-
 	
 }
