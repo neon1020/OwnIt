@@ -323,7 +323,7 @@
 		
 		// pie chart	
 		var ctx = document.getElementById("pieChart");
-	    ctx.height = 200;
+	    ctx.height = 240;
 	    var myChart = new Chart(ctx, {
 	        type: 'pie',
 	        data: {

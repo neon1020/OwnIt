@@ -81,8 +81,8 @@
 	
 	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
 		<script>
-// 			alert("잘못된 접근입니다!");
-// 			location.href = "./";
+			alert("잘못된 접근입니다!");
+			location.href = "./";
 		</script>
 	</c:if>
 	
@@ -251,7 +251,7 @@
 	                    <div class="card">
 	                        <div class="card-body">
 	                            <h4 class="card-title">구매 제품 비중</h4>
-	                            <canvas id="pieChart" width="500" height="350"></canvas>
+	                            <canvas id="pieChart" width="500" height="500"></canvas>
 	                        </div>
 	                    </div>
 	                </div>

@@ -109,7 +109,6 @@ $(function() {
 	}
 // -----------------------------------------------------------------------------------------------------
 
-
 	function testOpen(URL) {
 		window.open(URL, "_blank", "width=800,height=900");
 	}
@@ -203,7 +202,7 @@ $(function() {
 	    <ul>
 	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_1.jpg"></li>
 	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_3.jpg" onclick="testOpen('mbti_test')" style="cursor: pointer;"></li>      
-	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_2.jpg"></li>
+	      <li><img class="main_banner" src="<%=request.getContextPath() %>/resources/img/banner_2.jpg" onclick="location.href='noticeDetail?notice_idx=10'" style="cursor: pointer;"></li>
 	    </ul>
 	  </div>
 

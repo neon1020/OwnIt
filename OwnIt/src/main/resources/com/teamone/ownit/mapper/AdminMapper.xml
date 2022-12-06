@@ -80,7 +80,7 @@
 				</choose>
 			</if>
 			ORDER BY 
-				p.product_idx
+				p.product_idx DESC
 			LIMIT #{startRow}, #{listLimit}
 	</select>
 	
@@ -290,7 +290,7 @@
 			GROUP BY
 				order_group_idx
 			ORDER BY 
-				order_group_idx DESC
+				order_buy_date DESC
 			LIMIT #{startRow}, #{listLimit}
 	</select>
 	
@@ -443,7 +443,7 @@
 				</choose>
 			</if>
 			ORDER BY 
-				order_sell_idx DESC
+				order_sell_date DESC
 			LIMIT #{startRow}, #{listLimit}
 	</select>
 	
@@ -505,11 +505,11 @@
 				FROM order_sell os
 					LEFT JOIN product p
                     ON os.product_idx = p.product_idx
-		        WHERE order_sell_date LIKE '22%')
+		        WHERE order_sell_date LIKE '22%' AND order_sell_gb = '2')
 		    +
 		    (SELECT SUM(order_buy_price) * 0.02
 				FROM order_buy
-		        WHERE order_buy_date LIKE '22%');
+		        WHERE order_buy_date LIKE '22%' AND (order_buy_gb = '3' OR order_buy_gb = '4'));
 	</select>
 	
 	<!-- Main - 회원수 -->
