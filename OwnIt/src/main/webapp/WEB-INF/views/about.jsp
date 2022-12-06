@@ -134,6 +134,6 @@
     <jsp:include page="inc/footer.jsp"></jsp:include>
 	
     <script src="<%=request.getContextPath() %>/resources/js/vendor.min.js"></script>
-    <script src="<%=request.getContextPath() %>/resources/js/app.js"></script>c="assets/js/app.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/js/app.js"></script>
   </body>
 </html>

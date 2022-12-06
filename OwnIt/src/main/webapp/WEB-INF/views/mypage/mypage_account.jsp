@@ -54,24 +54,14 @@
 
     <!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
-
-    <!-- hero -->
-<!--     <section class="hero hero-small bg-purple text-white"> -->
-<!--       <div class="container"> -->
-<!--         <div class="row gutter-2 gutter-md-4 align-items-end"> -->
-<!--           <div class="col-md-6 text-center text-md-left"> -->
-<!--             <h1 class="mb-0">Michael Campbell</h1> -->
-<!--             <span class="text-muted">New York, USA</span> -->
-<!--           </div> -->
-<!--           <div class="col-md-6 text-center text-md-right"> -->
-<!--             <a href="#!" class="btn btn-sm btn-outline-white">Sign out</a> -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--     </section> -->
-
-
+	<!-- /header -->
+	
+	<c:if test="${empty sessionScope.sIdx }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
 
     <!-- listing -->
     <section class="pt-5" style="margin-top: 100px;">
