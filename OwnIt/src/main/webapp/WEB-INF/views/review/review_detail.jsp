@@ -37,10 +37,10 @@
           that.prop('name',data);
           if(data == 1) {
             $("#like_none").prop("src", "resources/img/review/like2_b.jpg");
-            location.reload();
+            $(".lcnt").load(location.href + " .lcnt");
           } else {
             $("#like_none").prop("src", "resources/img/review/like_none_b.jpg");
-            location.reload();
+            $(".lcnt").load(location.href + " .lcnt");
           }
         }
       });
@@ -228,7 +228,7 @@
 			<div class="card-body">
         <div class="like">
         <!-- ************************* 리뷰 좋아요 *************************** -->
-          <a class="heart"><img src="" id="like_none" onclick="changeLike()"></a>${likeCount}&nbsp;&nbsp;
+          <a class="heart"><img src="" id="like_none" onclick="changeLike()"></a><span class="lcnt">${likeCount}</span>&nbsp;&nbsp;
           <img src="resources/img/review/reply_b.jpg">${replyCount}
         </div>
         <h3 class="card-content">${review.review_content }</h3>

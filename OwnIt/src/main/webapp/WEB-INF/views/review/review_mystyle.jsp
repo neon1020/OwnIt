@@ -33,34 +33,30 @@
       data    : sendData,
       success : function(data){
         if(data == 1) {
-          debugger;
           var a = $('#like_' + index);
-          var c = $('#lid_' + index);
           a.removeClass('heart_None');
           a.addClass('heart_Full');
           a.attr('name', '1');
           $('#like_' + index).html("<img src='resources/img/review/like2.jpg'>");
-          var cc = c.attr('class');
-          var ccc = cc.split('_')[1];
-          var d = parseInt(ccc) + 1;
-          $('.lclass_' + ccc).html(d);
-          c.removeClass('lclass_' + ccc);
-          c.addClass('lclass_' + d);
+          likeCount(index);
         } else {
-          debugger;
           var a = $('#like_' + index);
-          var c = $('#lid_' + index);
           a.removeClass('heart_Full');
           a.addClass('heart_None');
           a.attr('name', null);
           $('#like_' + index).html("<img src='resources/img/review/like_none.jpg'>");
-          var cc = c.attr('class');
-          var ccc = cc.split('_')[1];
-          var d = parseInt(ccc) - 1;
-          $('.lclass_' + ccc).html(d);
-          c.removeClass('lclass_' + ccc);
-          c.addClass('lclass_' + d);
+          likeCount(index);
         }
+      }
+    });
+  }
+  function likeCount(index) {
+    $.ajax({
+      url     : 'cnt',
+      type    : 'GET',
+      data    : { 'review_idx' : index },
+      success : function(cnt){
+        $('#lid_' + index).html(cnt);
       }
     });
   }
