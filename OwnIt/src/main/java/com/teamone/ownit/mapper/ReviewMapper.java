@@ -62,4 +62,8 @@ public interface ReviewMapper {
 
 	void updateOrderGb(int order_buy_idx);
 
+	int selectOrderBuy(@Param("order_buy_idx") int order_buy_idx, @Param("member_idx") int member_idx);
+
+	int selectReviewMember(@Param("review_idx") int review_idx, @Param("member_idx") int member_idx);
+
 }
