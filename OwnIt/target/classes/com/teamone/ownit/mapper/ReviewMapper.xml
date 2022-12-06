@@ -128,7 +128,7 @@
     <select id="selectMystyleList" resultType="com.teamone.ownit.vo.ReviewListVO">
 		    SELECT * , 
           CASE WHEN a.num IS NULL THEN 'like_none.jpg' 
-                                  ELSE 'like.jpg' END AS heartImg
+                                  ELSE 'like2.jpg' END AS heartImg
           FROM reviewList r
           LEFT JOIN (SELECT review_idx, '1' as num
                         FROM style_like_list s
