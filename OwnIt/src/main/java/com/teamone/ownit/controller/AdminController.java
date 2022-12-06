@@ -68,7 +68,7 @@ public class AdminController {
 		// -------------------------------------------------------------------
 		// 페이징 처리를 위한 계산 작업
 		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
-		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
@@ -359,7 +359,7 @@ public class AdminController {
 		// -------------------------------------------------------------------
 		// 페이징 처리를 위한 계산 작업
 		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
-		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;
@@ -417,7 +417,7 @@ public class AdminController {
 		// -------------------------------------------------------------------
 		// 페이징 처리를 위한 계산 작업
 		int listLimit = 10; // 한 페이지 당 표시할 게시물 목록 갯수 
-		int pageListLimit = 10; // 한 페이지 당 표시할 페이지 목록 갯수
+		int pageListLimit = 5; // 한 페이지 당 표시할 페이지 목록 갯수
 		
 		// 조회 시작 게시물 번호(행 번호) 계산
 		int startRow = (pageNum - 1) * listLimit;

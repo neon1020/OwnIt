@@ -37,8 +37,8 @@
 
 	<c:if test="${sessionScope.sId eq null or sessionScope.sId ne'admin'}">
 		<script>
-// 			alert("잘못된 접근입니다!");
-// 			location.href = "./";
+			alert("잘못된 접근입니다!");
+			location.href = "./";
 		</script>
 	</c:if>
 
@@ -122,17 +122,17 @@
 	                        </div>
 	                        
 	                        <div style="text-align: center;">
-								<c:if test="${param.status eq 0 }">
+								<c:if test="${param.status eq '0' }">
 		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
 	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 20%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
 	                                </div>
 								</c:if>
-								<c:if test="${param.status eq 1 }">
+								<c:if test="${param.status eq '1' }">
 		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
 	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 55%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
 	                                </div>
 								</c:if>
-								<c:if test="${param.status eq 2 }">
+								<c:if test="${param.status eq '2' }">
 		                        	<div class="progress mb-3" style="height: 13px; width: 300px; margin: auto;">
 	                                    <div class="progress-bar bg-primary active progress-bar-striped" style="width: 100%;" role="progressbar"><span class="sr-only">60% Complete</span></div>
 	                                </div>
