@@ -529,7 +529,11 @@ public class AdminController {
 	}
 
 
-	
+	// mbti_test 페이지로 이동
+	@GetMapping(value = "mbti_test")
+	public String mbti_test() {
+		return "mbti/mbti_main";
+	}
 	
 	
 	
@@ -571,10 +575,6 @@ public class AdminController {
 	
 	
 
-	
-	
-	
-	
 	
 	
 	

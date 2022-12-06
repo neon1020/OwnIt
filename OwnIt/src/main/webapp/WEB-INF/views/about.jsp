@@ -40,8 +40,8 @@
           </div>
           <div class="col-6">
             <figure class="equal equal-125">
-              <a class="image image-scale" href="resources/img/about_2.jpg" 
-                style="background-image: url(resources/img/about_2.jpg);">
+              <a class="image image-scale" href="resources/img/about_5.jpg" 
+                style="background-image: url(resources/img/about_5.jpg);">
               </a>
             </figure>
           </div>
@@ -100,28 +100,29 @@
       <div class="container">
         <div class="row gutter-2 gutter-md-4" style="text-align: center;">
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">50</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+			<!-- <span class="h1 font-weight-bold">50</span> -->
+			<span><img src="resources/img/face1.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Kim Sohee<br>hiyayeah502@gmail.com</p>
           </div>
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">120</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+            <span><img src="resources/img/face2.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Kim Jinsook<br>jim584800@gmail.com</p>
           </div>
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">20</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+            <span><img src="resources/img/face3.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Ryu Hyejee<br>hyejee92@gmail.com</p>
           </div>
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">50</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+            <span><img src="resources/img/face4.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Park Judalm<br>wnekfa1004@naver.com</p>
           </div>
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">120</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+            <span><img src="resources/img/face5.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Seo Seongmin<br>blussm@kakao.com</p>
           </div>
           <div class="col-md-6 col-lg-4">
-            <span class="h1 font-weight-bold">20</span>
-            <p>Collective years experience — Working with clients like Google and Amazon.</p>
+            <span><img src="resources/img/face6.png" width="120px" height="120px" style="margin-bottom: 20px;"></span>
+            <p>Jeong Chaeyeon<br>neo3111@naver.com</p>
           </div>
         </div>
       </div>
