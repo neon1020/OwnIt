@@ -119,7 +119,7 @@
                         		배송완료 <input type="button" value="구매확정" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#buy_fix${num.index }">
                         	</c:when>
                         	<c:when test="${mainOrder.order_buy_gb == '3'}">
-                        		구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='review_writeForm?order_buy_idx=${mainOrder.order_buy_idx}'">
+                        		구매확정 <input type="button" value="리뷰작성" class="btn btn-outline-dark btn-sm" onclick="location.href='review_writeForm?order_buy_idx=${mainOrder.order_buy_idx}&member_idx=${mainOrder.member_idx }'">
                         	</c:when>
                         	<c:when test="${mainOrder.order_buy_gb == '4'}">
                         		구매확정 <input type="button" value="리뷰보기" class="btn btn-outline-dark btn-sm" onclick="location.href='goReview?product_idx=${mainOrder.product_idx}&member_idx=${mainOrder.member_idx }'">
