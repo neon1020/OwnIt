@@ -209,7 +209,7 @@ public class MemberController {
 		
 		// 인증 메일 발송에 사용될 정보(수신자 메일주소, 메일 제목, 메일 본문) 생성
 		String subject = "[OwnIt] OwnIt 가입 인증 메일";
-		String content = "<a href='http://localhost:8081/ownit/MemberAuth?id=" + id +"&authCode=" + auth_code + "'><b>클릭하여 인증을 진행해주세요.</b></a>";
+		String content = "<a href='http://itwillbs16.cafe24.com/MemberAuth?id=" + id +"&authCode=" + auth_code + "'><b>클릭하여 인증을 진행해주세요.</b></a>";
 		
 		// 인증 메일 발송을 위해 SendMail 클래스 인스턴스 생성 및 sendMail() 메소드 호출하여 메일 발송
 		SendMail sendMail = new SendMail();
@@ -353,7 +353,7 @@ public class MemberController {
 			// 인증 메일 발송에 사용될 정보(수신자 메일주소, 메일 제목, 메일 본문) 생성
 			String subject = "[OwnIt] OwnIt 비밀번호 찾기 메일";
 			String content = "새로운 비밀번호는 " + newPass + " 입니다.<br>"
-					+ "<a href='http://localhost:8081/ownit/member_login'><b>로그인 페이지로 이동</b></a>";
+					+ "<a href='http://itwillbs16.cafe24.com/member_login'><b>로그인 페이지로 이동</b></a>";
 			
 			// 인증 메일 발송을 위해 SendMail 클래스 인스턴스 생성 및 sendMail() 메소드 호출하여 메일 발송
 			SendMail sendMail = new SendMail();

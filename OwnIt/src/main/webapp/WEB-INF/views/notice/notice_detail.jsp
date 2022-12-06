@@ -36,7 +36,7 @@
            '	   <input type="hidden" name="replyListNum" value="${pageInfo.replyListNum }">'+
            '	   <input type="hidden" name="pageNum" value="${param.pageNum }">'+
            '       <input type="text" class="form-control" id="reply_content" name="reply_content" style="width: 590px; float: left;" aria-describedby="emailHelp" placeholder="댓글을 남겨주세요.">'+
-           '       <button type="submit" name="add_re_Reply" style="width: 150px; margin-left: 20px; float: left;" class="btn btn-primary btn-rounded btn-reply">답글 등록</button>'+
+           '       <button type="submit" name="add_re_Reply" style="width: 150px; margin-left: 20px; float: left;" class="btn btn-dark btn-rounded">답글 등록</button>'+
            '	 </form>'+
            '   </td>'+
            '</tr>';
