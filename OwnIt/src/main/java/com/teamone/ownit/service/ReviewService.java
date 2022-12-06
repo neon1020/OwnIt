@@ -139,5 +139,15 @@ public class ReviewService {
 		mapper.updateOrderGb(order_buy_idx);
 	}
 
+	// review_writeForm 서블릿 차단
+	public int getOrderBuy(int order_buy_idx, int member_idx) {
+		return mapper.selectOrderBuy(order_buy_idx, member_idx);
+	}
+
+	// review_modifyForm 서블릿 차단
+	public int getReviewMember(int review_idx, int member_idx) {
+		return mapper.selectReviewMember(review_idx, member_idx);
+	}
+
 	
 }

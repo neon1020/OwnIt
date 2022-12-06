@@ -188,9 +188,11 @@ public class ReviewController {
 	
 	@GetMapping(value = "/review_writeForm")
 	public String reviewWrite(@RequestParam int order_buy_idx, @RequestParam int member_idx, HttpSession session, Model model) {
+		// 서블릿 차단 검사용
 		int member_idx2 = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+		int result = service.getOrderBuy(order_buy_idx, member_idx);
 		
-		if(member_idx != member_idx2 || member_idx2 == 0) {
+		if(member_idx != member_idx2 || member_idx2 == 0 || result == 0) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			return "notice/fail_back";
 		}
@@ -292,7 +294,16 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/review_modifyForm")
-	public String reviewModify(@RequestParam int review_idx, Model model) {
+	public String reviewModify(@RequestParam int review_idx, @RequestParam int member_idx, HttpSession session, Model model) {
+		// 서블릿 차단 검사용
+		int member_idx2 = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+		int result = service.getReviewMember(review_idx, member_idx);
+		
+		if(member_idx != member_idx2 || member_idx2 == 0 || result == 0) {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			return "notice/fail_back";
+		}
+		
 		ReviewListVO review = service.getReview(review_idx);
 		model.addAttribute("review", review);
 		List<ReviewListVO> reviewImage = service.getReviewImage(review_idx);
