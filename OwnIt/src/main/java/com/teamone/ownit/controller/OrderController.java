@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mysql.cj.Session;
 import com.teamone.ownit.service.OrderService;
 import com.teamone.ownit.vo.AccountVO;
 import com.teamone.ownit.vo.AddressVO;
@@ -640,20 +641,37 @@ public class OrderController {
 	}
 	//상품 판매 성공시 redirect방식 호출(새로고침 중복 INSERT 방지)
 	@GetMapping(value = "/order_sellDetail")
-	public String order_sellDetail(Model model,@RequestParam int product_idx, @RequestParam int member_idx, @RequestParam(defaultValue = "0") int order_sell_idx) {
-		ProductVO product = service.productDetail(product_idx);
-		model.addAttribute("product", product);
-		Order_sellVO orderSell = new Order_sellVO();
+	public String order_sellDetail(HttpSession session,Model model,@RequestParam int product_idx, @RequestParam int member_idx, @RequestParam(defaultValue = "0") int order_sell_idx) {
 		
-		if(order_sell_idx > 0) {
-			orderSell.setOrder_sell_idx(order_sell_idx);
+		int sIdx = (session.getAttribute("sIdx")!=null) ? (int)session.getAttribute("sIdx") : 0;
+		
+			
+		if(sIdx == member_idx) { // url에서 member_idx를 조작했을 경우
+			ProductVO product = service.productDetail(product_idx);
+			if(product == null) { // 없는 product_idx를 url에서 조작했을 경우
+				model.addAttribute("msg","잘못된 접근입니다");
+				return "order/fail_back";
+			}
+			model.addAttribute("product", product);
+			Order_sellVO orderSell = new Order_sellVO();
+			
+			if(order_sell_idx > 0) {
+				orderSell.setOrder_sell_idx(order_sell_idx);
+			}
+			orderSell.setMember_idx(member_idx);
+			orderSell.setProduct_idx(product_idx);
+			orderSell = service.selectOrderSell(orderSell);
+			if(orderSell == null) {
+				model.addAttribute("msg","잘못된 접근입니다");
+				return "order/fail_back";
+			}
+			model.addAttribute("orderSell",orderSell);
+			
+			return "order/order_sellDetail";
+		} else {
+			model.addAttribute("msg","잘못된 접근입니다");
+			return "order/fail_back";
 		}
-		orderSell.setMember_idx(member_idx);
-		orderSell.setProduct_idx(product_idx);
-		orderSell = service.selectOrderSell(orderSell);
-		model.addAttribute("orderSell",orderSell);
-		
-		return "order/order_sellDetail";
 	}
 	
 
