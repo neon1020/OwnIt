@@ -14,35 +14,40 @@
 <body>
 	<!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-<%--     <jsp:include page="../inc/cart_inTop.jsp"></jsp:include> --%>
-	<!-- /header -->  
+	<!-- /header -->
+	
+	<c:if test="${empty sessionScope.sIdx }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>
 
     <!-- listing -->
 	<section class="pt-5" style="margin-top: 100px;">
-		<div class="container">
-			<div class="row gutter-4 justify-content-between">
+	<div class="row gutter-4 justify-content-between">
 
- 			<!-- sidebar -->
-			<jsp:include page="../inc/sidebar_mypage.jsp"></jsp:include>
-			<!-- /sidebar -->
+	<!-- sidebar -->
+	<jsp:include page="../inc/sidebar_mypage.jsp"></jsp:include>
+	<!-- /sidebar -->
 
-			<!-- content -->
-			<div class="col-lg-9">
-				<div class="row">
-					<div class="col">
-						<div class="tab-content" id="myTabContent">
+	<!-- content -->
+	<div class="col-lg-9">
+		<div class="row">
+			<div class="col">
+				<div class="tab-content" id="myTabContent">
 
-							<!-- mypage_order -->
-							<div class="tab-pane fade show active" id="sidebar-1-2" role="tabpanel" aria-labelledby="sidebar-1-2">
-								<div class="row">
-									<div class="col-12">
-										<h3 class="mb-0">구매내역</h3>
-										<span class="eyebrow">${listCount }개의 구매내역이 있습니다.</span>
-									</div>
-								</div>
-	
-	
-								<!-- 본문 시작 -->
+					<!-- mypage_order -->
+					<div class="tab-pane fade show active" id="sidebar-1-2" role="tabpanel" aria-labelledby="sidebar-1-2">
+						<div class="row">
+							<div class="col-12">
+								<h3 class="mb-0">구매내역</h3>
+								<span class="eyebrow">${listCount }개의 구매내역이 있습니다.</span>
+							</div>
+						</div>
+
+
+						<!-- 본문 시작 -->
 <!-- 								<form action="mypage_order" method="get"> -->
 <%-- 									<input type="hidden" name="member_idx" value="${sessionScope.sIdx }"> --%>
 <!-- 									<input type="date" id="date1" name="date1">  ~  <input type="date" id="date2" name="date2"> -->
@@ -125,44 +130,45 @@
 																	</div>
 																</div>
 															</div>
-														</form>
+														</div>
 													</div>
-												</div>
+												</form>
 											</div>
-											<!-- modal 창 끝 -->
-										</td>
-									</c:forEach>
-								</table>
-							</c:if>  		
-							</div>
-						</div>
+										</div>
+									</div>
+									<!-- modal 창 끝 -->
+								</td>
+							</c:forEach>
+						</table>
+					</c:if>  		
 					</div>
 				</div>
-			</div>			
-					
-			<!-- 페이징 태그 START -->
-					<c:if test="${listCount > 0}">
-	        <div class="row" style="margin-left: 680px;">
-	          <div class="col">
-	            <nav class="d-inline-block">
-	              <ul class="pagination">
-	              	<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
-	              	<li class="page-item active"><input class="page-link" type="button" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum - 1}'"<%} %>></li>
-					<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
-						<c:choose>
-							<c:when test="${i eq pageInfo.pageNum }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
-							<c:otherwise><li class="page-item active"><a class="page-link" href="mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<li class="page-item active"><input class="page-link" type="button" value="&raquo;" <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum + 1}'"<%} %>></li>
-	              </ul>
-	            </nav>
-	          </div>
-	        </div>
-	        </c:if>
-			<!-- 페이징 태그 END -->
-              		</div>
-              	</div>
+			</div>
+		</div>
+	</div>			
+			
+	<!-- 페이징 태그 START -->
+	<c:if test="${listCount > 0}">
+       <div class="row" style="margin-left: 680px;">
+         <div class="col">
+           <nav class="d-inline-block">
+             <ul class="pagination">
+             	<%PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo"); %>
+             	<li class="page-item active"><input class="page-link" type="button" value="&laquo;" <%if(pageInfo.getPageNum() > pageInfo.getStartPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum - 1}'"<%} %>></li>
+				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+					<c:choose>
+						<c:when test="${i eq pageInfo.pageNum }"><li class="page-item"><a class="page-link">${i }</a></li></c:when>
+						<c:otherwise><li class="page-item active"><a class="page-link" href="mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${i }">${i }<span class="sr-only">(current)</span></a></li></c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<li class="page-item active"><input class="page-link" type="button" value="&raquo;" <%if(pageInfo.getPageNum() < pageInfo.getMaxPage()) {%>onclick="location.href='mypage_order?member_idx=${sessionScope.sIdx }&pageNum=${pageInfo.pageNum + 1}'"<%} %>></li>
+             </ul>
+           </nav>
+         </div>
+       </div>
+    </c:if>
+	<!-- 페이징 태그 END -->
+  </div>
 	<!-- /content -->
 </section>
    <!-- listing -->
