@@ -100,12 +100,18 @@
     			location.href="member_remove";
     		}
     	}
-	</script>    
+	</script>   	 
 </head>
 <body>
 		<!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
-		<!-- /header -->   
+		<!-- /header -->  
+	<c:if test="${not empty sessionScope.sId }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>				 
 
   	<!-- listing -->
 		<section class="pt-5" style="margin-top: 100px;">

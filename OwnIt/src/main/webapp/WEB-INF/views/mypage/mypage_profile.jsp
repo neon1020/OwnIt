@@ -19,6 +19,12 @@
 		<!-- header -->
     <jsp:include page="../inc/top.jsp"></jsp:include>
 		<!-- /header -->   
+	<c:if test="${not empty sessionScope.sId }">
+		<script type="text/javascript">
+			alert("잘못된 접근입니다!");
+			location.href = "./";
+		</script>
+	</c:if>		
 
   	<!-- listing -->
 		<section class="pt-5" style="margin-top: 100px;">
@@ -49,20 +55,19 @@
 											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">프로필 사진</td>
 											<td>
 												<img src="resources/img/member/${mypage.image_real_file1 }" style="width: 120px; height: 120px; border-radius: 10em; margin-bottom: 20px; margin-left: 90px;"><br>
-												<input type="file" name="file" class="btn btn-outline-secondary btn-sm" style="text-align: center;"><br>
-<!-- 												<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" style="width: 303px;"> -->
+												<input type="file" name="file" class="btn btn-outline-secondary btn-sm" style="text-align: center;" required="required"><br>
 											</td>
 										</tr>
 										<tr>
 											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">닉네임</td>
 											<td >
-												<input type="text" class="form-control form-control-sm" name="member_nickname" style="width: 303px;" value="${mypage.member_nickname }">
+												<input type="text" class="form-control form-control-sm" name="member_nickname" style="width: 303px;" value="${mypage.member_nickname }" required="required">
 											</td>
 										</tr>
 										<tr>
 											<td class="table-active" style="vertical-align:middle; text-align: center; color: black; padding-left: 0px; padding-right: 0px;">휴대전화</td>
 											<td >
-												<input type="text" class="form-control form-control-sm" name="member_phone" style="width: 303px;" value="${mypage.member_phone }">
+												<input type="text" class="form-control form-control-sm" name="member_phone" style="width: 303px;" value="${mypage.member_phone }" required="required">
 											</td>
 										</tr>
 									</table>
