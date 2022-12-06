@@ -148,7 +148,7 @@
 							</div>									
 						</div>
 						<div style="text-align: center;">              
-							<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=ee04e57ce1c4f35a3eafd3052e7156e0&redirect_uri=http://itwillbs16.cafe24.com/kakaoLogin&response_type=code">
+							<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=ee04e57ce1c4f35a3eafd3052e7156e0&redirect_uri=http://localhost:8081/ownit/kakaoLogin&response_type=code">
 								<img src="resources/img/member/kakao.jpg" alt="카카오계정 로그인">
 							</a>
 							<a href="${url}"><img src="resources/img/member/naver.jpg"></a>
