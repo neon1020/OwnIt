@@ -55,7 +55,7 @@
     <jsp:include page="../inc/top.jsp"></jsp:include>
 		<!-- header -->
 		
-	<c:if test="${not empty sessionScope.sId }">
+	<c:if test="${empty sessionScope.sId }">
 		<script type="text/javascript">
 			alert("잘못된 접근입니다!");
 			location.href = "./";
