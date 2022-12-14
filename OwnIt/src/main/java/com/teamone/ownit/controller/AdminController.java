@@ -315,7 +315,7 @@ public class AdminController {
 	
 	// Product Delete 삭제 작업 수행
 	@GetMapping(value = "admin_productDelete")
-	public String admin_productDelete(@ModelAttribute AdminProductVO product, @RequestParam String deleteList, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String admin_productDelete(@ModelAttribute AdminProductVO product, @RequestParam String deleteList, @RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
 		
 		System.out.println("삭제할 상품번호 목록 : " + deleteList);
         int[] deleteNum = Stream.of(deleteList.split(",")).mapToInt(Integer::parseInt).toArray();
