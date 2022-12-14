@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.teamone.ownit.mapper.ProductMapper">
+<!-- 서성민 -->
 	<select id="getProductList" resultType="com.teamone.ownit.vo.ProductVO">
       SELECT p.product_idx, product_brand, product_name, product_buy_price, i.image_real_file1, i.image_real_file2,
       		(SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS my_wish
@@ -13,37 +14,46 @@
    </select>
 
 	<select id="getCategorisedProduct" resultType="com.teamone.ownit.vo.ProductVO">
-      SELECT p.product_idx, product_type, product_brand, product_name, product_buy_price, i.image_real_file1, i.image_real_file2,
-      (SELECT COUNT(*) FROM wishlist ww WHERE ww.product_idx = p.product_idx AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS my_wish
-		  FROM product p 
-		  LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
-		    ON p.product_idx = w.product_idx
-		  INNER JOIN (SELECT product_idx, image_real_file1, image_real_file2 FROM image) i
-		    ON p.product_idx = i.product_idx
-		    WHERE 1=1
-		  <if test="brands.size != 0">
-		  	AND product_brand IN
+	  SELECT p.product_idx
+		   , product_type
+		   , product_brand
+		   , product_name
+		   , product_buy_price
+		   , i.image_real_file1
+		   , i.image_real_file2
+		   , (SELECT COUNT(*) 
+			    FROM wishlist ww 
+			   WHERE ww.product_idx = p.product_idx 
+			     AND ww.member_idx = (SELECT member_idx FROM member WHERE member_id = #{sId})) AS my_wish
+		FROM product p 
+		LEFT OUTER JOIN (SELECT product_idx ,COUNT(*) wish FROM wishlist group by product_idx) w
+		  ON p.product_idx = w.product_idx
+	   INNER JOIN (SELECT product_idx, image_real_file1, image_real_file2 FROM image) i
+		  ON p.product_idx = i.product_idx
+	   WHERE 1=1
+	   <if test="brands.size != 0">
+		 AND product_brand IN
 		  	<foreach collection="brands" item="brand" open='(' close=')' separator=','>
 		  		#{brand}
 		  	</foreach>
-		  </if>
-		  <if test="!category.equals('')">
-	  		AND product_type = #{category}
-		  </if>
-		  <choose>
-		  	<when test="productListing.equals('product_popular') or productListing.equals('')">
-		  		ORDER BY wish DESC
-		  	</when>
-		  	<when test="productListing.equals('price_high')">
-		  		ORDER BY ABS(product_buy_price) DESC
-		  	</when>
-		  	<when test="productListing.equals('price_low')">
-		  		ORDER BY ABS(product_buy_price)
-		  	</when>
-		  	<when test="productListing.equals('product_new')">
-		  		ORDER BY product_date DESC
-		  	</when>
-		  </choose>
+	   </if>
+	   <if test="!category.equals('')">
+	     AND product_type = #{category}
+	   </if>
+	   <choose>
+	       <when test="productListing.equals('product_popular') or productListing.equals('')">
+	   ORDER BY wish DESC
+	       </when>
+	       <when test="productListing.equals('price_high')">
+	   ORDER BY ABS(product_buy_price) DESC
+	       </when>
+	       <when test="productListing.equals('price_low')">
+	   ORDER BY ABS(product_buy_price)
+	       </when>
+	       <when test="productListing.equals('product_new')">
+	   ORDER BY product_date DESC
+	       </when>
+      </choose>
    </select>
 
 	<select id="checkLike" resultType="int">
@@ -119,385 +129,6 @@
 		  ORDER BY my_wish DESC LIMIT 8;
 	</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- 박주닮 -->
 	<select id="productDetail" resultType="com.teamone.ownit.vo.ProductVO">
 		SELECT *
@@ -507,9 +138,6 @@
         	  AND image.product_idx=#{product_idx};
 		
 	</select>
-
-
-
 	<!--  상품 상세정보 하단 리뷰 리스트 목록 체크한 값에대한 동적처리 -->
 	<select id="selectReviewList" resultType="com.teamone.ownit.vo.Product_ReviewListVO">
 		 SELECT r.review_idx AS review_idx, 
@@ -573,7 +201,6 @@
 		FROM wishlist 
 		WHERE product_idx=#{product_idx};
 	</select>
-
 	
 	<select id="selectStyleCount" resultType="integer">
 		SELECT count(s.review_idx) styleLikeCount 
@@ -607,294 +234,5 @@
 				AND 
 				product_idx = #{product_idx}
 	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </mapper>
