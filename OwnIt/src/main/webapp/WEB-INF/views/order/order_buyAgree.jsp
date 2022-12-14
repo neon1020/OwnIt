@@ -44,9 +44,6 @@ function func1(){
 		window.open('notice_authPolicy', '검수과정', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
 	}
 
-
-
-		
 function checkForm(){
 var checked = false;
 	$("#disabled").attr("disabled",true); 
@@ -79,7 +76,6 @@ $(document).ready(function() {
 	});
 });
 
-
 </script>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link rel="stylesheet" href="resources/css/vendor.css" />
@@ -108,24 +104,17 @@ $(document).ready(function() {
 	          			</th>
 	          		</tr>
 	          		
+       			<c:forEach var="product" items="${productList }" varStatus="status">
 	          		<tr> <!-- 이부분 폼 고치기 -->
-	          			<c:forEach var="product" items="${productList }" begin="0" end="0">
 	          			<th>
 	          				<img src="resources/img/product/${product.image_real_file1 }" style="width: 90px; height: 90px; float: left; border-radius: 15px;">
 	          				<span id="span1" style="font: bold; color: black; font-size: 15px;">${product.product_brand }</span><br> 
 	          				${product.product_name }<br>
 	          				<span id="span1">${product.product_model_num }</span>
 	          			</th>
-	          			</c:forEach>
-	          			<c:choose>
-		          			<c:when test="${fn:length(productList) gt 1}">
-		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;">외 ${cnt-1 } 상품</div></td>
-		          			</c:when>
-		          			<c:otherwise>
-		          				<td><div style="margin:0 auto; padding-top: 35px; width: 80px;"></div></td>
-		          			</c:otherwise>
-	          			</c:choose>
+						<td style="padding-top: 50px;">${cartCount[status.index]}개 상품</td>
 	          		</tr>
+       			</c:forEach>
 	          		
 	          		<tr>
 	          			<th colspan="2">
